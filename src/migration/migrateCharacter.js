@@ -2,11 +2,13 @@ import { CharacterMoves } from "../actors/character/CharacterMoves.js";
 import { info } from "../utils/logger.js";
 import { toSlug } from "../utils/slug.js";
 import { CharacterPossessions } from "../actors/character/CharacterPossessions.js";
+import { ContainerOutfitSync } from "../actors/character/ContainerOutfitSync.js";
 import { CharacterArcana } from "../actors/character/CharacterArcana.js";
 import { CharacterFollowers } from "../actors/character/CharacterFollowers.js";
 import { ActorOutfitItems } from "../actors/character/ActorOutfitItems.js";
 import { ResourceController } from "../actors/character/ResourceController.js";
 import { migrateChoiceRow } from "./migrateChoices.js";
+import { ChoiceGroupDefs } from "../model/data/ChoiceGroupDefs.js";
 import { Selection } from "../model/data/Selection.js";
 
 const SCOPE = "stonetop";
@@ -39,6 +41,18 @@ export async function migrateFollowerItemType(actor) {
 	await actor.deleteEmbeddedDocuments("Item", legacy.map(i => i._id));
 }
 
+// Flag-era follower state kept its choice values in a map keyed by group name. A group declares its
+// own namespace, so re-key the stored map onto whatever group the item actually carries rather than
+// naming it here. With no group to map onto, the legacy keys pass through untouched — the values are
+// the player's, and dropping them would be worse than leaving them where they already were.
+function _namespacedValues(groups, values) {
+	if (!values || !Object.keys(values).length) return {};
+	const namespace = groups?.[0]?.slug;
+	if (!namespace) return { ...values };
+	const [legacyKey] = Object.keys(values);
+	return { [namespace]: values[legacyKey] };
+}
+
 function _logArcanumFlipped(actor, label) {
 	const arcanums = [...actor.items].filter(i => i.type === "arcanum");
 	for (const a of arcanums) info(`  [${label}] ${a.system?.slug}: flipped=${a.system?.flipped}`);
@@ -50,16 +64,23 @@ export async function migrateCharacter(actor, repos, insertRepo = null) {
 	await migrateCharacterFlags(actor);
 	await migrateEmbeddedMoveSlugs(actor);
 	await migrateCharacterMoves(actor, repos.moves, insertRepo);
+	await migrateReferenceMoveCategories(actor, repos.moves);
+	await migrateMovePackData(actor, repos.moves);
 	await migratePlaybookSpecialPossessions(actor);
 	await migratePlaybookChoices(actor, repos.playbooks);
 	await migratePlaybookIntroductions(actor, repos.playbooks);
 
 	const outfitItems         = new ActorOutfitItems(actor);
 	const resourceController  = new ResourceController(actor);
+	// Refreshing a container from the pack changes what it grants, so each refresh below recomputes its
+	// grant through this. Same registrations as the composition root, and idempotent either way.
+	const outfitSync = new ContainerOutfitSync(outfitItems)
+		.register("possession", CharacterPossessions.outfitGrantFor)
+		.register("arcanum",    CharacterArcana.outfitGrantFor);
 
 	await migrateArcana(actor, repos.arcana, repos.followers);
 	_logArcanumFlipped(actor, "after migrateArcana");
-	await migrateArcanumPackData(actor, repos.arcana);
+	await migrateArcanumPackData(actor, repos.arcana, outfitSync);
 	_logArcanumFlipped(actor, "after migrateArcanumPackData");
 	await migrateArcanaMoves(actor, repos.arcana, repos.moves);
 	_logArcanumFlipped(actor, "after migrateArcanaMoves");
@@ -67,10 +88,15 @@ export async function migrateCharacter(actor, repos, insertRepo = null) {
 	await migrateFollowers(actor, repos.followers, resourceController);
 	_logArcanumFlipped(actor, "after migrateFollowers");
 	await migrateArcanaFollowerPackData(actor, repos.followers);
+	await migrateArcanaOwnedFollowers(actor, repos.followers, resourceController);
 
 	const moves = new CharacterMoves(repos.moves, actor, null);
 	await migratePossessions(actor, repos.possessions, moves, outfitItems);
 	_logArcanumFlipped(actor, "after migratePossessions");
+	// Refresh authored fields before stamping the group slug: the refresh replaces `choices` wholesale
+	// (slug included), so the stamp has to run after it to correct a pack that ever drifts.
+	await migratePossessionPackData(actor, repos.possessions, outfitSync);
+	await migratePossessionChoiceSlugs(actor);
 
 	if (insertRepo) await migrateInsert(actor, insertRepo, moves);
 	await migrateInsertMoveCategories(actor);
@@ -125,6 +151,20 @@ export async function migrateEmbeddedMoveSlugs(actor) {
 		.filter(i => i.type === "move" && !i.system?.slug)
 		.map(i => ({ _id: i._id, system: { slug: toSlug(i.name) } }));
 	if (updates.length) await actor.updateEmbeddedDocuments("Item", updates);
+}
+
+// ── B0.5. Reference categories added after the character was made ─────────────
+
+// Reference moves are seeded at creation, so a character made before a category existed never gets
+// it (expedition, added in 0.15) — migrateCharacterMoves below bails for anyone already on embedded
+// moves. Seeds only categories the character has NOTHING from: a GM who deleted a single reference
+// move meant it, and a migration must not hand it back.
+export async function migrateReferenceMoveCategories(actor, moveRepo) {
+	const moves = new CharacterMoves(moveRepo, actor, null, null);
+	for (const categoryKey of CharacterMoves.REFERENCE_CATEGORIES) {
+		const present = [...actor.items].some(i => i.type === "move" && i.system?.categoryKey === categoryKey);
+		if (!present) await moves.seedReferenceCategory(categoryKey);
+	}
 }
 
 // ── B. Embedded move items ────────────────────────────────────────────────────
@@ -240,7 +280,7 @@ export async function migratePossessions(actor, possessionRepo, moves, outfitIte
 		preselected: sp.preselected ?? [],
 	};
 
-	const possessions = new CharacterPossessions(actor, moves, outfitItems, possessionRepo);
+	const possessions = new CharacterPossessions(actor, moves, possessionRepo);
 	await possessions.addPossessionsFromPlaybook(spNew, playbookSlug);
 
 	// Apply mutable state from flags
@@ -288,7 +328,7 @@ export async function migrateArcana(actor, arcanaRepo, followerRepo) {
 
 	const resourceController = new ResourceController(actor);
 	const followers = new CharacterFollowers(actor, followerRepo, resourceController);
-	const arcana = new CharacterArcana(actor, arcanaRepo, null, null, followers);
+	const arcana = new CharacterArcana(actor, arcanaRepo, null, followers);
 
 	for (const slug of ownedSlugs) {
 		await arcana.addArcanum(slug);
@@ -344,6 +384,27 @@ export async function migrateArcanaMoves(actor, arcanaRepo, moveRepo) {
 // but the group is namespaced by the arcanum slug everywhere else in the pipeline (write, read,
 // side-effect def lookup). The mismatch made the choice-group side effect silently no-op, so ticking
 // a follower box never embedded the follower. Idempotent; only touches items that actually differ.
+/**
+ * A possession's granted gear is computed by reading each choice group's values under THAT group's own
+ * slug, but both weapons-of-war possessions shipped `choices.slug: "weapons-of-war"` while their values
+ * are stored under the possession's own slug. Left alone, an existing character silently stops granting
+ * its picked weapons. Stored `pickValues` are untouched — they were already keyed by the possession
+ * slug, which is what the group slug is being corrected to.
+ */
+export async function migratePossessionChoiceSlugs(actor) {
+	const items = [...actor.items].filter(i =>
+		i.type === "possession" && i.system?.choices?.slug && i.system?.slug &&
+		i.system.choices.slug !== i.system.slug);
+	if (!items.length) return;
+
+	const updates = items.map(item => ({
+		_id: item._id,
+		system: { choices: { ...item.system.choices, slug: item.system.slug } },
+	}));
+	info(`Migrating ${updates.length} possession choice-group slug(s) to match their possession.`);
+	await actor.updateEmbeddedDocuments("Item", updates);
+}
+
 export async function migrateArcanumChoiceGroupSlugs(actor) {
 	const updates = [];
 	for (const item of actor.items) {
@@ -380,7 +441,9 @@ export async function migrateFollowers(actor, followerRepo, resourceController) 
 					damage: s.damage ?? "",
 					instinct: "", loyalty: { value: 0, max: 3 },
 					choices: blank?.choices ?? null, specialQuality: "",
-					choiceValues: { choices: s.values?.choices ?? {} },
+					// Legacy flag state stored these under the key "choices"; they belong in whatever
+					// namespace the follower's own group declares.
+					choiceValues: _namespacedValues(blank?.choices, s.values),
 					owned: true,
 				},
 			}]);
@@ -399,7 +462,10 @@ export async function migrateFollowers(actor, followerRepo, resourceController) 
 		if (s.armor != null) update.system.armor = String(s.armor);
 		if (s.damage != null) update.system.damage = s.damage;
 		if (s.name  != null) update.name = s.name;
-		if (s.values?.choices) update.system.choiceValues = { choices: s.values.choices };
+		// Flag-era state stored these under the key "choices"; they belong in whatever namespace this
+		// follower's own choice group declares.
+		if (s.values && Object.keys(s.values).length)
+			update.system.choiceValues = _namespacedValues(item.system?.choices, s.values);
 		await actor.updateEmbeddedDocuments("Item", [update]);
 	}
 }
@@ -592,7 +658,7 @@ export async function migratePlaybookChoices(actor, playbookRepo) {
 // follower `back.choices`. Player state (`flipped` + `choiceValues`: marked circles, picks, follower
 // selections) lives outside front/back, so a front/back-only merge update preserves it. Idempotent —
 // runs once per world migration (also covers the old case of an item left with an empty front).
-export async function migrateArcanumPackData(actor, arcanaRepo) {
+export async function migrateArcanumPackData(actor, arcanaRepo, outfitSync = null) {
 	const items = [...actor.items].filter(i => i.type === "arcanum" && i.system?.slug);
 	const updates = [];
 	for (const item of items) {
@@ -600,7 +666,62 @@ export async function migrateArcanumPackData(actor, arcanaRepo) {
 		if (!raw?.front) continue;
 		updates.push({ _id: item._id, system: { front: raw.front, back: raw.back } });
 	}
-	if (updates.length) await actor.updateEmbeddedDocuments("Item", updates);
+	if (!updates.length) return;
+	await actor.updateEmbeddedDocuments("Item", updates);
+
+	// Refreshing the card is not enough: the gear it granted is a SEPARATE embedded document, written
+	// when the card was flipped. A card item that gained a resource (or changed at all) in a later pack
+	// regen keeps the old copy on the character until the grant is recomputed. Re-read each arcanum
+	// AFTER the update so the grant comes from the refreshed card; the sync is idempotent.
+	for (const { _id } of updates) {
+		const item = [...actor.items].find(i => i._id === _id);
+		if (item) await outfitSync?.syncItem(item);
+	}
+}
+
+// ── O. Refresh an embedded possession's authored fields from the pack ─────────
+// An embedded possession is a copy taken when the playbook granted it, so regenerating the pack never
+// reaches it: a description added later never shows, and gear hung off a pick the player already ticked
+// never appears. Authored fields come from the repo (matched by slug); player state is preserved by
+// omission — selected, uses, pickValues, choiceUses, preselected and playbookSlug all survive Foundry's
+// merge. `name` is deliberately left alone so a GM rename is not clobbered.
+//
+// Refreshing the data is not enough on its own: the grant has to be recomputed, or gear the pack just
+// added to an already-ticked pick would sit there unmaterialised. The sync is idempotent, so re-running
+// this cannot double-grant. Scoped to possessions the repo knows; drag-dropped custom ones are skipped.
+export async function migratePossessionPackData(actor, possessionRepo, outfitSync = null) {
+	const items = [...actor.items].filter(i => i.type === "possession" && i.system?.slug);
+	if (!items.length) return;
+
+	const bySlug = new Map((await possessionRepo.findBySlugs(items.map(i => i.system.slug))).map(p => [p.slug, p]));
+	const updates = [];
+	const refreshed = [];
+	for (const item of items) {
+		const p = bySlug.get(item.system.slug);
+		if (!p) continue;
+		updates.push({
+			_id: item._id,
+			system: {
+				description: p.description ?? "",
+				outfitItems: p.outfitItems ?? [],
+				choices:     p.choices     ?? null,
+				resource:    p.resource    ?? null,
+				scaling:     p.scaling     ?? null,
+				sortOrder:   p.sortOrder   ?? null,
+			},
+		});
+		refreshed.push(item._id);
+	}
+	if (!updates.length) return;
+
+	info(`Refreshing ${updates.length} embedded possession(s) from pack data.`);
+	await actor.updateEmbeddedDocuments("Item", updates);
+
+	// Re-read each item AFTER the update so the grant is computed from the refreshed definition.
+	for (const id of refreshed) {
+		const item = [...actor.items].find(i => i._id === id);
+		if (item) await outfitSync?.syncItem(item);
+	}
 }
 
 // ── N. Refresh an acquired arcana follower's authored stat block from the pack ─
@@ -610,6 +731,7 @@ export async function migrateArcanumPackData(actor, arcanaRepo) {
 // is preserved by omission — loyalty, current HP (hp.value), owned, choiceValues (which moves/picks are
 // checked), inventory, members, companion all stay (Foundry merges the partial update). Scoped to arcana
 // followers (arcanaSlug set); playbook/custom followers aren't parsed from the book. Idempotent.
+
 export async function migrateArcanaFollowerPackData(actor, followerRepo) {
 	const items = [...actor.items].filter(i => i.type === "follower" && i.system?.arcanaSlug && i.system?.slug);
 	if (!items.length) return;
@@ -626,7 +748,7 @@ export async function migrateArcanaFollowerPackData(actor, followerRepo) {
 				instinct:       Selection.fromStored(f.instinct, { multi: false }).toRaw(),
 				cost:           Selection.fromStored(f.cost,     { multi: false }).toRaw(),
 				moves:          f.moves ?? "",
-				choices:        f.choices ?? [{ slug: "choices", list: [] }],
+				choices:        f.choices ?? [],
 				armor:          f.armor ?? "",
 				damage:         f.damage ?? "",
 				specialQuality: f.specialQuality ?? "",
@@ -636,4 +758,73 @@ export async function migrateArcanaFollowerPackData(actor, followerRepo) {
 		});
 	}
 	if (updates.length) await actor.updateEmbeddedDocuments("Item", updates);
+}
+
+// A card owns every follower it references (the Ring, the Cloak, choice followers); a mark only toggles
+// the tab. Back-fill: embed any referenced follower an owned arcanum is missing, off the tab — leaving
+// already-owned ones (and their marked tab placement) alone.
+export async function migrateArcanaOwnedFollowers(actor, followerRepo, resourceController) {
+	const arcana = [...actor.items].filter(i => i.type === "arcanum");
+	if (!arcana.length) return;
+	const followers = new CharacterFollowers(actor, followerRepo, resourceController);
+	for (const arc of arcana) {
+		for (const link of ChoiceGroupDefs.followerLinks(arc.system ?? {})) {
+			for (const slug of link.slugs) {
+				const item = [...actor.items].find(i => i.type === "follower" && i.system?.slug === slug);
+				// Embed a missing follower off the tab; fix a card-bound one that an old path left on the
+				// tab. A tab follower's marked placement is left alone (addFollower is idempotent).
+				if (!item?.system?.owned) await followers.addFollower(slug, { showOnTab: false });
+				else if (link.hideFromFollowersTab && item.system?.showOnTab !== false) {
+					await followers.addFollower(slug, { showOnTab: false });
+				}
+			}
+		}
+	}
+}
+
+// ── Q. Refresh an embedded move's authored fields from the pack ───────────────
+// An embedded move is a copy taken when it was seeded or granted, so regenerating the pack never
+// reaches a character already in play: prose corrected later never shows, and links added to a move
+// (Death's Door → the Revenant/Ghost/Thrall inserts) stay unclickable. Reference moves can't be
+// re-added by hand — they seed once, at character creation — so refreshing in place is the only
+// route open to an existing character.
+//
+// Authored fields come from the pack (matched by slug); player state is preserved by omission —
+// acquired, instanceCount, categoryKey/Label/Note, sortOrder, compendiumId and pickValues all
+// survive Foundry's merge. `name` is deliberately left alone so a GM rename is not clobbered.
+// Scoped to moves the repo knows, so homebrew moves are skipped; a GM's hand-edits to a PACK move on
+// a character are overwritten, the same trade the possession/arcana refreshes already make.
+export async function migrateMovePackData(actor, moveRepo) {
+	const items = [...actor.items].filter(i => i.type === "move" && i.system?.slug);
+	if (!items.length) return;
+
+	const bySlug = await moveRepo.buildSlugIndex();
+	const updates = [];
+	for (const item of items) {
+		const move = bySlug.get(item.system.slug);
+		if (!move) continue;
+		// The index carries a subset of fields; the definition has to come from the document itself so
+		// nothing authored (xpOnMiss, result tiers) is silently dropped on the way through.
+		const doc = await moveRepo.getReferencedMoveDocument(move.id);
+		const sys = doc?.toObject?.().system ?? doc?.system ?? null;
+		if (!sys) continue;
+		updates.push({
+			_id: item._id,
+			system: {
+				description: sys.description ?? "",
+				moveResults: sys.moveResults ?? null,
+				rollStat:    sys.rollStat    ?? null,
+				requirement: sys.requirement ?? null,
+				resource:    sys.resource    ?? null,
+				choices:     sys.choices     ?? null,
+				repeatMax:   sys.repeatMax   ?? 1,
+				// "Mark XP on a 6- unless the move says otherwise" — a move says otherwise with false.
+				xpOnMiss:    sys.xpOnMiss !== false,
+			},
+		});
+	}
+	if (!updates.length) return;
+
+	info(`Refreshing ${updates.length} embedded move(s) from pack data.`);
+	await actor.updateEmbeddedDocuments("Item", updates);
 }

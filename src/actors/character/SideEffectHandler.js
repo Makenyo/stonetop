@@ -1,45 +1,22 @@
-import { EmbeddedOutfitItemBuilder } from "../../model/data/character/EmbeddedOutfitItem.js";
+import { FollowerLink } from "../../model/data/FollowerLink.js";
 
+/**
+ * Toggles the tab placement of the followers a choice row grants. The follower is already owned (the
+ * card grants it up front); marking the row puts it on the roster tab, un-marking takes it off — a
+ * card-bound follower (hideFromFollowersTab) stays off either way. Subscribes to choice-value changes
+ * and decides relevance itself: it needs the row that changed, so it ignores writes with no row.
+ */
 export class FollowerSideEffectHandler {
 	constructor(followers) {
 		this._followers = followers;
 	}
 
-	async apply(target, namespace, optionSlug, count) {
-		const slugs = target.followers ?? [];
-		for (const slug of slugs) {
-			if (count > 0) await this._followers.addFollower(slug);
-			else           await this._followers.removeFollower(slug);
-		}
-	}
-}
-
-export class OutfitItemSideEffectHandler {
-	constructor(sourcePrefix, items) {
-		this._sourcePrefix = sourcePrefix;
-		this._items        = items;
-	}
-
-	async apply(target, namespace, optionSlug, count) {
-		if (!target.outfitItems?.length) return;
-		const source = `${this._sourcePrefix}:${namespace}:${optionSlug}`;
-		if (count > 0) {
-			// Choice outfit items are stored flat ({slug,name,weight,…}); wrap each as a proper
-			// `outfitItem` Item payload (type + system + source) before creating, else the embedded
-			// Item fails validation ("type: may not be undefined").
-			const itemsData = target.outfitItems.map(oi => new EmbeddedOutfitItemBuilder()
-				.withSlug(oi.slug)
-				.withName(oi.name)
-				.withWeight(oi.weight ?? 1)
-				.withNote(oi.note ?? null)
-				.withInventoryColumn(oi.inventoryColumn ?? "regular")
-				.withResource(oi.resource ?? null)
-				.withTwoCol(oi.twoCol ?? false)
-				.withSource(source)
-				.build());
-			await this._items.sync(source, itemsData);
-		} else {
-			await this._items.deleteBySource(source);
+	async handle(change) {
+		if (!change.affectsCounts || !change.target) return;
+		const link = FollowerLink.fromRaw(change.target.followers);
+		if (!link) return;
+		for (const grant of link.grants()) {
+			await this._followers.addFollower(grant.slug, { showOnTab: change.count > 0 ? grant.showOnTab : false });
 		}
 	}
 }

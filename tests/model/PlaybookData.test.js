@@ -2,10 +2,9 @@ import { describe, it, expect } from "vitest";
 import { PlaybookData } from "../../src/data/PlaybookData.js";
 
 describe("PlaybookData defaults", () => {
-	it("defaults slug and actorType to null", () => {
+	it("defaults slug to null", () => {
 		const d = new PlaybookData();
 		expect(d.slug).toBeNull();
-		expect(d.actorType).toBeNull();
 	});
 
 	it("defaults description, statsNote, startingMovesNote to empty string", () => {
@@ -61,7 +60,7 @@ describe("PlaybookData.migrateData", () => {
 		PlaybookData.migrateData(source);
 		expect(source.choices[0].list[0].type).toBe("entry");
 		expect(source.choices[0].list[0].content.subtitle).toBe("H");
-		expect(source.specialPossessions.list[0].followers).toEqual(["enfys"]);
+		expect(source.specialPossessions.list[0].followers).toEqual({ slugs: ["enfys"], inlineDisplay: false, hideFromFollowersTab: false });
 	});
 
 	it("normalizes the introductions step4/step6 choice groups", () => {

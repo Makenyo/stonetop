@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { CharacterInserts } from "../../../src/actors/character/CharacterInserts.js";
-import { ChoiceGroupFactory } from "../../../src/actors/character/ChoiceGroupFactory.js";
+import { ChoiceGroupControllerFactory } from "../../../src/actors/character/ChoiceGroupControllerFactory.js";
 import { FakeCharacterActorBuilder } from "../../fakes/FakeCharacterActorBuilder.js";
 import { FakeMoves } from "../../fakes/FakeMoves.js";
 import { FakeInsertRepository } from "../../fakes/FakeInsertRepository.js";
@@ -13,7 +13,7 @@ const GHOST    = new TestInsertItemBuilder().withId("insert-item-2").withSlug("g
 
 function makeInserts({ items = [], moves = new FakeMoves(), repo = null } = {}) {
 	const actor = new FakeCharacterActorBuilder().withItems(items).build();
-	return { actor, inserts: new CharacterInserts(actor, new ChoiceGroupFactory(actor), moves, repo) };
+	return { actor, inserts: new CharacterInserts(actor, new ChoiceGroupControllerFactory(actor), moves, repo) };
 }
 
 // ── onInsertDropped ───────────────────────────────────────────────────────────
@@ -245,5 +245,52 @@ describe("CharacterInserts.syncPlaybookInserts", () => {
 		const { actor, inserts } = makeInserts({ items: [manual], repo: new FakeInsertRepository([INVOC]) });
 		await inserts.syncPlaybookInserts("the-lightbearer", ["invoc"]);
 		expect([...actor.items].some(i => i.system?.slug === "revenant")).toBe(true);
+	});
+});
+
+// ── resolveBonus ──────────────────────────────────────────────────────────────
+
+// Dark Succor rolls +Favor, and Favor is the Thrall's own track: the insert lists the `favor` move,
+// that move carries the track. So the insert can answer for a stat none of the character's six cover.
+describe("CharacterInserts.resolveBonus", () => {
+	const THRALL = new TestInsertItemBuilder()
+		.withId("insert-thrall").withSlug("thrall").withName("Thrall")
+		.withMoves(["favor", "urges", "dark-succor", "unholy-vessel"])
+		.build();
+
+	function thrallWith(favor) {
+		return makeInserts({ items: [THRALL], moves: new FakeMoves().withTrack("favor", favor) });
+	}
+
+	it("resolves a stat named by one of its moves' tracks", () => {
+		expect(thrallWith(2).inserts.resolveBonus("favor")).toBe(2);
+	});
+
+	// 0 Favor is a real bonus to roll with — it must not read as "no such stat".
+	it("resolves an empty track as 0, not null", () => {
+		expect(thrallWith(0).inserts.resolveBonus("favor")).toBe(0);
+	});
+
+	it("is null for a move the insert grants that has no track", () => {
+		expect(thrallWith(2).inserts.resolveBonus("urges")).toBeNull();
+	});
+
+	it("is null for a stat no insert names", () => {
+		expect(thrallWith(2).inserts.resolveBonus("str")).toBeNull();
+	});
+
+	it("is null when the character carries no inserts", () => {
+		const { inserts } = makeInserts({ moves: new FakeMoves().withTrack("favor", 3) });
+		expect(inserts.resolveBonus("favor")).toBeNull();
+	});
+
+	// The track has to be granted BY an insert — a move the character picked up some other way is
+	// not an insert stat.
+	it("ignores a track whose move no insert grants", () => {
+		const { inserts } = makeInserts({
+			items: [REVENANT],
+			moves: new FakeMoves().withTrack("favor", 3),
+		});
+		expect(inserts.resolveBonus("favor")).toBeNull();
 	});
 });

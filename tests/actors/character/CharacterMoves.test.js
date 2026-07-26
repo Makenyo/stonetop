@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {CharacterMoves} from "../../../src/actors/character/CharacterMoves.js";
-import {ChoiceGroupFactory} from "../../../src/actors/character/ChoiceGroupFactory.js";
+import {ChoiceGroupControllerFactory} from "../../../src/actors/character/ChoiceGroupControllerFactory.js";
 import {ResourceController} from "../../../src/actors/character/ResourceController.js";
 import {FakeMoveRepository} from "../../fakes/FakeMoveRepository.js";
 import {FakeCharacterActorBuilder} from "../../fakes/FakeCharacterActorBuilder.js";
@@ -37,7 +37,7 @@ function makeMoves({
 	vitals = {level: 1},
 } = {}) {
 	const res = new ResourceController(actor);
-	const m   = new CharacterMoves(repo, actor, res, new ChoiceGroupFactory(actor));
+	const m   = new CharacterMoves(repo, actor, res, new ChoiceGroupControllerFactory(actor));
 	m.setVitals(vitals);
 	return m;
 }
@@ -406,9 +406,10 @@ describe("CharacterMoves.initBasicMoves", () => {
 		expect(actor.createdDocs.length).toBe(docsAfterFirst);
 	});
 
-	it("also seeds special and follower moves as side-bar categories under basic", async () => {
+	it("also seeds expedition, special and follower moves as side-bar categories under basic", async () => {
 		const repo = new FakeMoveRepository([], [
 			new FakeCompendiumMoveBuilder().withName("Defy Danger").withMoveType("basic").asStarting().build(),
+			new FakeCompendiumMoveBuilder().withName("Make Camp").withMoveType("expedition").asStarting().build(),
 			new FakeCompendiumMoveBuilder().withName("Death's Door").withMoveType("special").asStarting().build(),
 			new FakeCompendiumMoveBuilder().withName("Order Followers").withMoveType("follower").asStarting().build(),
 		]);
@@ -418,13 +419,32 @@ describe("CharacterMoves.initBasicMoves", () => {
 
 		const cats = (await m.buildSnapshot()).categories;
 		const byKey = Object.fromEntries(cats.map(c => [c.key, c]));
-		// All three are side-bar, ordered basic → special → follower.
-		expect(cats.map(c => c.key)).toEqual(["basic", "special", "follower"]);
+		// All four are side-bar, ordered basic → expedition → special → follower.
+		expect(cats.map(c => c.key)).toEqual(["basic", "expedition", "special", "follower"]);
+		expect(byKey.expedition.renderStyle).toBe("side-bar");
 		expect(byKey.special.renderStyle).toBe("side-bar");
 		expect(byKey.follower.renderStyle).toBe("side-bar");
+		expect(byKey.expedition.moves[0].name).toBe("Make Camp");
 		expect(byKey.special.moves[0].name).toBe("Death's Door");
 		expect(byKey.follower.moves[0].name).toBe("Order Followers");
 		expect(actor.createdDocs.find(d => d.name === "Death's Door").system.categoryKey).toBe("special");
+	});
+
+	it("seeds the expedition category acquired, labelled, and not open to additional moves", async () => {
+		const repo = new FakeMoveRepository([], [
+			new FakeCompendiumMoveBuilder().withName("Chart a Course").withMoveType("expedition").asStarting().build(),
+		]);
+		const actor = makeActor();
+		const m = makeMoves({repo, actor});
+		await m.initBasicMoves();
+
+		const cat = (await m.buildSnapshot()).categories.find(c => c.key === "expedition");
+		expect(cat.label).toBe("Expedition Moves");
+		expect(cat.allowAdditional).toBe(false);
+		expect(cat.note).toBe(null);
+		expect(cat.moves[0].selection.value).toBe(1);
+		expect(actor.createdDocs[0].system.categoryKey).toBe("expedition");
+		expect(actor.createdDocs[0].system.acquired).toBe(true);
 	});
 
 	it("is idempotent across all reference categories", async () => {
@@ -841,6 +861,43 @@ describe("CharacterMoves.setMoveResourceCurrent", () => {
 	});
 });
 
+// ── resourceValue ─────────────────────────────────────────────────────────────
+
+// What a move rolled against its own track reads (Dark Succor's +Favor), so "the character has no
+// such track" has to stay distinguishable from "the track is at 0".
+describe("CharacterMoves.resourceValue", () => {
+	const withTrack = () => new FakeMoveRepository([
+		new FakeCompendiumMoveBuilder().withName("Favor").asStarting()
+			.withResource({max: 3, title: "Favor", labels: []}).build(),
+	]);
+
+	it("is the track's current value", async () => {
+		const repo = withTrack();
+		const m = makeMoves({repo});
+		await initPlaybook(m, repo);
+		await m.setMoveResourceCurrent("favor", 2);
+		expect(m.resourceValue("favor")).toBe(2);
+	});
+
+	it("is 0 for an owned track never ticked", async () => {
+		const repo = withTrack();
+		const m = makeMoves({repo});
+		await initPlaybook(m, repo);
+		expect(m.resourceValue("favor")).toBe(0);
+	});
+
+	it("is null for an owned move that has no track", async () => {
+		const repo = new FakeMoveRepository([new FakeCompendiumMoveBuilder().withName("Urges").asStarting().build()]);
+		const m = makeMoves({repo});
+		await initPlaybook(m, repo);
+		expect(m.resourceValue("urges")).toBeNull();
+	});
+
+	it("is null for a move the character doesn't own", async () => {
+		expect(makeMoves().resourceValue("favor")).toBeNull();
+	});
+});
+
 // ── onDropMove ────────────────────────────────────────────────────────────────
 
 describe("CharacterMoves.onDropMove", () => {
@@ -927,7 +984,7 @@ describe("CharacterMoves.buildSnapshot — choices", () => {
 		const repo = new FakeMoveRepository([new FakeCompendiumMoveBuilder().withName("Potential for Greatness").withChoices(CHOICES_DATA).build()]);
 		const m = makeMoves({repo});
 		await initPlaybook(m, repo);
-		await m.setMoveChoiceText("potential-for-greatness", "stat1-input", "level 2");
+		await m.controllerFor("potential-for-greatness")?.setText("potential", "stat1-input", "level 2");
 		const row = (await m.buildSnapshot()).categories[0].moves[0].choices.list.find(r => r.slug === "stat1");
 		expect(row.input.value).toBe("level 2");
 		expect(row.input.slug).toBe("stat1-input");
@@ -938,7 +995,7 @@ describe("CharacterMoves.buildSnapshot — choices", () => {
 		const repo = new FakeMoveRepository([new FakeCompendiumMoveBuilder().withName("Potential for Greatness").withChoices(CHOICES_DATA).build()]);
 		const m = makeMoves({repo});
 		await initPlaybook(m, repo);
-		await m.setMoveChoiceCount("potential-for-greatness", "stat1", 1);
+		await m.controllerFor("potential-for-greatness")?.setCount("potential", "stat1", 1);
 		const row = (await m.buildSnapshot()).categories[0].moves[0].choices.list.find(r => r.slug === "stat1");
 		expect(row.track.checks[0]).toBe(true);
 	});
@@ -1052,5 +1109,35 @@ describe("CharacterMoves — rich-text enrichment (integration)", () => {
 		}
 
 		expect(move.description.render()).toContain('<a class="content-link">the Barrow</a>');
+	});
+});
+
+// ── sendToChat ────────────────────────────────────────────────────────────────
+
+describe("CharacterMoves.sendToChat", () => {
+	it("finds the owned move by stored slug and hands it to the actor's chat surface", async () => {
+		const actor = new FakeCharacterActorBuilder()
+			.addItem({_id: "m1", type: "move", name: "Aid Someone", system: {slug: "aid-someone", categoryKey: "basic"}})
+			.build();
+		const moves = makeMoves({actor});
+		expect(await moves.sendToChat("aid-someone")).toBe(true);
+		expect(actor.chatItems).toHaveLength(1);
+		expect(actor.chatItems[0]._id).toBe("m1");
+	});
+
+	it("falls back to toSlug(name) for a legacy move without a stored slug", async () => {
+		const actor = new FakeCharacterActorBuilder()
+			.addItem({_id: "m2", type: "move", name: "Old Move", system: {categoryKey: "other"}})
+			.build();
+		const moves = makeMoves({actor});
+		expect(await moves.sendToChat("old-move")).toBe(true);
+		expect(actor.chatItems[0]._id).toBe("m2");
+	});
+
+	it("returns false (and posts nothing) when no owned move carries the slug", async () => {
+		const actor = makeActor();
+		const moves = makeMoves({actor});
+		expect(await moves.sendToChat("not-a-move")).toBe(false);
+		expect(actor.chatItems).toHaveLength(0);
 	});
 });

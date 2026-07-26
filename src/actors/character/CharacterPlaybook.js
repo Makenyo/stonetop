@@ -1,6 +1,7 @@
 import {PlaybookSnapshotBuilder} from "../../model/snapshot/character/CharacterSnapshot.js";
 import {IntroductionsSnapshot} from "../../model/snapshot/character/PlaybookSnapshot.js";
-import {ChoiceGroup, ChoiceValues} from "../../model/snapshot/character/ChoiceGroup.js";
+import {ChoiceValues} from "../../model/snapshot/character/ChoiceGroup.js";
+import {buildChoiceGroup} from "../../model/snapshot/character/buildChoiceGroup.js";
 import {InstinctController} from "./InstinctController.js";
 import {rich} from "../../model/snapshot/RichText.js";
 
@@ -9,7 +10,7 @@ export class CharacterPlaybook {
 		this._actor = actor;
 		this._background = background;
 		this._origin = origin;
-		this._ctrl = factory.forItemType("playbook", "choiceValues");
+		this._ctrl = factory.forSingleton("playbook", "choiceValues");
 		this._instinct = new InstinctController(this._ctrl);
 	}
 
@@ -65,15 +66,21 @@ export class CharacterPlaybook {
 		}
 	}
 
+	/** The controller for the playbook's choice values (lore, appearance, introductions, …). */
+	controller() { return this._ctrl; }
+
+	/** The playbook's instinct group is exclusive with its write-in box. */
+	instinctController() { return this._instinct; }
+
 	async selectChoice(groupSlug, optionSlug, siblingsCsv) {
 		if (groupSlug === "instinct")
-			await this._instinct.selectOption(optionSlug, siblingsCsv);
+			await this._instinct.selectOption(groupSlug, optionSlug, siblingsCsv);
 		else
 			await this._ctrl.selectOption(groupSlug, optionSlug, siblingsCsv);
 	}
 
 	async selectCustomInstinct(text) {
-		await this._instinct.selectCustom(text);
+		await this._instinct.selectCustom("instinct", text);
 	}
 
 	async setChoiceCount(groupSlug, optionSlug, count) {
@@ -82,7 +89,7 @@ export class CharacterPlaybook {
 
 	async setChoiceText(groupSlug, optionSlug, text) {
 		if (groupSlug === "instinct")
-			await this._instinct.setText(optionSlug, text);
+			await this._instinct.setText(groupSlug, optionSlug, text);
 		else
 			await this._ctrl.setText(groupSlug, optionSlug, text);
 	}
@@ -91,16 +98,16 @@ export class CharacterPlaybook {
 		const data = await this.getData();
 		if (!data) return null;
 		const choiceValues = new ChoiceValues(data.choiceValues ?? {});
-		const instinctGroup = data.instinct ? ChoiceGroup.fromPackData(data.instinct, choiceValues) : null;
+		const instinctGroup = data.instinct ? buildChoiceGroup(data.instinct, choiceValues) : null;
 		const instinctSelected = InstinctController.computeSelected(instinctGroup, choiceValues);
-		const choices = (data.choices ?? []).map(g => ChoiceGroup.fromPackData(g, choiceValues));
-		const appearanceGroup  = data.appearance ? ChoiceGroup.fromPackData(data.appearance, choiceValues) : null;
+		const choices = (data.choices ?? []).map(g => buildChoiceGroup(g, choiceValues));
+		const appearanceGroup  = data.appearance ? buildChoiceGroup(data.appearance, choiceValues) : null;
 		const loreGroups = choices;
 		const introData = data.introductions && !Array.isArray(data.introductions) && data.introductions.step4 ? data.introductions : null;
 		const introductions = introData ? new IntroductionsSnapshot(
 			rich(introData.step3 ?? null),
-			introData.step4 ? ChoiceGroup.fromPackData(introData.step4, choiceValues) : null,
-			introData.step6 ? ChoiceGroup.fromPackData(introData.step6, choiceValues) : null,
+			introData.step4 ? buildChoiceGroup(introData.step4, choiceValues) : null,
+			introData.step6 ? buildChoiceGroup(introData.step6, choiceValues) : null,
 		) : null;
 		const background = await this._background.buildSnapshot(data.backgrounds ?? []);
 		return new PlaybookSnapshotBuilder()

@@ -67,12 +67,12 @@ export class FakeSteadingBuilder {
 					],
 				},
 				placesOfInterest: [
-					{ name: "The Stone",              journalReference: "" },
-					{ name: "The Granary",            journalReference: "" },
-					{ name: "Public House & Stables", journalReference: "" },
-					{ name: "Cistern",                journalReference: "" },
-					{ name: "Pavilion of the Gods",   journalReference: "" },
-					{ name: "Watchtowers",            journalReference: "" },
+					{ name: "The Stone",              linkUuid: "" },
+					{ name: "The Granary",            linkUuid: "" },
+					{ name: "Public House & Stables", linkUuid: "" },
+					{ name: "Cistern",                linkUuid: "" },
+					{ name: "Pavilion of the Gods",   linkUuid: "" },
+					{ name: "Watchtowers",            linkUuid: "" },
 				],
 				neighborPlaces: [
 					{ slug: "marshedge",    name: "Marshedge",       subtitle: "",                                  note: "", names: "Abben, Ailen, Brin, Brogan, Catlin, Coln, Daedre, Dermos, Ennin, Finnen, Gilor, Isbeal, Kiran, Lile, Lim, Mathuin, Mirne, Noren, Owan, Ragan, Renan, Seadha, Seann, Tierney, Ulliam" },
@@ -147,6 +147,13 @@ export class FakeSteadingBuilder {
 			for (let i = items.length - 1; i >= 0; i--) if (idSet.has(items[i]._id)) items.splice(i, 1);
 			return ids;
 		};
+
+		// Recorders for StonetopActor's chat surface (sendItemToChat / sendDescriptionToChat) — the
+		// domain classes call these on the actor; the real posting lives in StonetopActor/ActorRolling.
+		actor.chatItems = [];
+		actor.chatDescriptions = [];
+		actor.sendItemToChat = async item => { actor.chatItems.push(item); };
+		actor.sendDescriptionToChat = async (label, description) => { actor.chatDescriptions.push({ label, description }); };
 		return actor;
 	}
 }

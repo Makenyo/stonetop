@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { CharacterBackgrounds } from "../../../src/actors/character/CharacterBackgrounds.js";
-import { ChoiceGroupFactory } from "../../../src/actors/character/ChoiceGroupFactory.js";
+import { ChoiceGroupControllerFactory } from "../../../src/actors/character/ChoiceGroupControllerFactory.js";
 import { FollowerSideEffectHandler } from "../../../src/actors/character/SideEffectHandler.js";
 import { ResourceController } from "../../../src/actors/character/ResourceController.js";
 import { FakeCharacterActorBuilder } from "../../fakes/FakeCharacterActorBuilder.js";
@@ -19,8 +19,8 @@ function makePbItem(backgroundValues = {}, backgrounds = []) {
 function makeBg(selectedSlug = "", backgroundValues = {}, followers = null, resourceCtrl = null, pbBackgrounds = []) {
 	const actor = new FakeCharacterActorBuilder().withItems([makePbItem(backgroundValues, pbBackgrounds)]).build();
 	actor.system.background = { selected: selectedSlug };
-	const factory = new ChoiceGroupFactory(actor);
-	if (followers) factory.register(new FollowerSideEffectHandler(followers));
+	const factory = new ChoiceGroupControllerFactory(actor);
+	if (followers) factory.subscribe(new FollowerSideEffectHandler(followers));
 	return new CharacterBackgrounds(actor, factory, resourceCtrl ?? makeResourceController());
 }
 
@@ -34,7 +34,7 @@ const FOLLOWER_CHOICES_DATA = [{
 	choices: {
 		slug: "initiate",
 		list: [
-			{ type: "entry", slug: "enfys", followers: ["enfys"], inlineDisplay: false, content: { text: "Enfys, your acolyte" }, track: { max: 1 } },
+			{ type: "entry", slug: "enfys", followers: { slugs: ["enfys"], inlineDisplay: false }, content: { text: "Enfys, your acolyte" }, track: { max: 1 } },
 			{ type: "entry", slug: "afon",  followers: ["afon"],  inlineDisplay: false, content: { text: "Afon, Fae-touched"   }, track: { max: 1 } },
 		],
 	},
@@ -87,12 +87,13 @@ describe("CharacterBackgrounds.setChoiceValue", () => {
 		expect(followers.isOwned("enfys")).toBe(true);
 	});
 
-	it("removes the follower when count is set to 0 on a follower-type row", async () => {
+	it("toggles the follower off the tab when count is set to 0 on a follower-type row", async () => {
 		const followers = new FakeFollowers();
 		const bg = makeBg("", {}, followers, null, FOLLOWER_CHOICES_DATA);
 		await bg.setChoiceValue("initiate", "enfys", 1);
 		await bg.setChoiceValue("initiate", "enfys", 0);
-		expect(followers.isOwned("enfys")).toBe(false);
+		expect(followers.isOwned("enfys")).toBe(true);
+		expect(followers.showOnTab("enfys")).toBe(false);
 	});
 
 	it("does not add to followers for non-follower (heading) rows", async () => {

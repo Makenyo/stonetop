@@ -1,4 +1,5 @@
-import { ChoiceGroup, ChoiceValues } from "../../model/snapshot/character/ChoiceGroup.js";
+import { ChoiceValues } from "../../model/snapshot/character/ChoiceGroup.js";
+import { buildChoiceGroup } from "../../model/snapshot/character/buildChoiceGroup.js";
 import { InsertSnapshotBuilder } from "../../model/snapshot/character/InsertSnapshot.js";
 import { InstinctController } from "./InstinctController.js";
 import { rich } from "../../model/snapshot/RichText.js";
@@ -53,39 +54,59 @@ export class CharacterInserts {
 		if (slug) await this._moves.removeCategory(`insert-${slug}`);
 	}
 
+	// A stat a move rolls that is none of the character's six: an insert's own track, like the
+	// Thrall's Favor (Dark Succor rolls +Favor). The insert names the move, the move owns the track,
+	// so nothing here needs a second place to declare the stat. Null when no insert grants it.
+	resolveBonus(stat) {
+		for (const item of this._insertItems()) {
+			if ((item.system?.moves ?? []).includes(stat)) return this._moves.resourceValue(stat);
+		}
+		return null;
+	}
+
+	_insertItems() {
+		return [...this._actor.items].filter(i => i.type === "insert");
+	}
+
+	/** The controller for one insert's choice values. An insert's instinct group is exclusive with its
+	 *  write-in box, so that group resolves to the controller that enforces it. */
+	controllerFor(itemId, groupSlug) {
+		const ctrl = this._factory.forDocument(itemId, "choiceValues");
+		return groupSlug === "instinct" ? new InstinctController(ctrl) : ctrl;
+	}
+
 	async setCount(itemId, groupSlug, optionSlug, count) {
-		await this._factory.forItem(itemId, "choiceValues").setCount(groupSlug, optionSlug, count);
+		await this._factory.forDocument(itemId, "choiceValues").setCount(groupSlug, optionSlug, count);
 	}
 
 	async selectOption(itemId, groupSlug, optionSlug, siblingSlugsCsv) {
-		const ctrl = this._factory.forItem(itemId, "choiceValues");
+		const ctrl = this._factory.forDocument(itemId, "choiceValues");
 		if (groupSlug === "instinct")
-			await new InstinctController(ctrl).selectOption(optionSlug, siblingSlugsCsv);
+			await new InstinctController(ctrl).selectOption(groupSlug, optionSlug, siblingSlugsCsv);
 		else
 			await ctrl.selectOption(groupSlug, optionSlug, siblingSlugsCsv);
 	}
 
 	async selectCustomInstinct(itemId, text) {
-		const ctrl = this._factory.forItem(itemId, "choiceValues");
-		await new InstinctController(ctrl).selectCustom(text);
+		const ctrl = this._factory.forDocument(itemId, "choiceValues");
+		await new InstinctController(ctrl).selectCustom("instinct", text);
 	}
 
 	async setText(itemId, groupSlug, optionSlug, text) {
-		await this._factory.forItem(itemId, "choiceValues").setText(groupSlug, optionSlug, text);
+		await this._factory.forDocument(itemId, "choiceValues").setText(groupSlug, optionSlug, text);
 	}
 
 	async buildSnapshot() {
-		const insertItems = [...this._actor.items].filter(i => i.type === "insert");
-		return Promise.all(insertItems.map(item => this._buildOne(item)));
+		return Promise.all(this._insertItems().map(item => this._buildOne(item)));
 	}
 
 	async _buildOne(item) {
 		const slug             = item.system?.slug ?? null;
 		const values           = new ChoiceValues(item.system?.choiceValues ?? {});
 		const instinct         = item.system?.instinct ?? null;
-		const instinctGroup    = instinct ? ChoiceGroup.fromPackData(instinct, values) : null;
+		const instinctGroup    = instinct ? buildChoiceGroup(instinct, values) : null;
 		const instinctSelected = InstinctController.computeSelected(instinctGroup, values);
-		const choices          = (item.system?.choices ?? []).map(g => ChoiceGroup.fromPackData(g, values));
+		const choices          = (item.system?.choices ?? []).map(g => buildChoiceGroup(g, values));
 		const moves            = await this._moves.getMoveSnapshotsForCategory(`insert-${slug}`);
 		return new InsertSnapshotBuilder()
 			.withId(item._id)

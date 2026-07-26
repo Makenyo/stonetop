@@ -7,7 +7,6 @@
   "flags": {},
   "system": {
     "slug": "the-blessed",
-    "actorType": "character",
     "description": "Danu, the Great Mother, provides. We need only learn her secrets: the names by which the trees call each other; the mark made with redberry juice to ward off impure spirits; the language of the wolves. A thousand such secrets Danu keeps, to share with only her true children. Her Blessed.",
     "startingMovesNote": "You start with Spirit Tongue, Call the Spirits, 1 from your Background, and 1 of your choice.",
     "damage": {
@@ -114,7 +113,6 @@
           "list": [
             {
               "slug": "enfys",
-              "inlineDisplay": false,
               "track": {
                 "max": 1
               },
@@ -123,13 +121,16 @@
                 "title": null,
                 "text": "Enfys, your acolyte, beloved by birds"
               },
-              "followers": [
-                "enfys"
-              ]
+              "followers": {
+                "slugs": [
+                  "enfys"
+                ],
+                "inlineDisplay": false,
+                "hideFromFollowersTab": false
+              }
             },
             {
               "slug": "afon",
-              "inlineDisplay": false,
               "track": {
                 "max": 1
               },
@@ -138,13 +139,16 @@
                 "title": null,
                 "text": "Afon, strange and Fae-touched"
               },
-              "followers": [
-                "afon"
-              ]
+              "followers": {
+                "slugs": [
+                  "afon"
+                ],
+                "inlineDisplay": false,
+                "hideFromFollowersTab": false
+              }
             },
             {
               "slug": "gwendyl",
-              "inlineDisplay": false,
               "track": {
                 "max": 1
               },
@@ -153,13 +157,16 @@
                 "title": null,
                 "text": "Gwendyl, your mentor, a talented healer"
               },
-              "followers": [
-                "gwendyl"
-              ]
+              "followers": {
+                "slugs": [
+                  "gwendyl"
+                ],
+                "inlineDisplay": false,
+                "hideFromFollowersTab": false
+              }
             },
             {
               "slug": "olwin",
-              "inlineDisplay": false,
               "track": {
                 "max": 1
               },
@@ -168,13 +175,16 @@
                 "title": null,
                 "text": "Olwin, your anointed lover, seer of fates"
               },
-              "followers": [
-                "olwin"
-              ]
+              "followers": {
+                "slugs": [
+                  "olwin"
+                ],
+                "inlineDisplay": false,
+                "hideFromFollowersTab": false
+              }
             },
             {
               "slug": "seren-the-eldest",
-              "inlineDisplay": false,
               "track": {
                 "max": 1
               },
@@ -183,9 +193,13 @@
                 "title": null,
                 "text": "Seren the Eldest, wise and hard as winter"
               },
-              "followers": [
-                "seren-the-eldest"
-              ]
+              "followers": {
+                "slugs": [
+                  "seren-the-eldest"
+                ],
+                "inlineDisplay": false,
+                "hideFromFollowersTab": false
+              }
             }
           ]
         }

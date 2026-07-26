@@ -15,11 +15,14 @@ import { deterministicId } from "../ids.js";
 const MD = { b: ["**", "**"], i: ["*", "*"], bi: ["**_", "_**"] };
 const emphOf = (f) => (isItalic(f) && isBoldBody(f) ? "bi" : isItalic(f) ? "i" : isBoldBody(f) ? "b" : "");
 
-function mdSpans(spans) {
+function mdSpans(spans, { keepDiamonds = false } = {}) {
 	const toks = [];
 	for (const s of spans) {
-		if (isDingbat(s.font) || s.font === "marker") continue;
-		const emph = emphOf(s.font);
+		// Marker/dingbat glyphs are layout artifacts, not prose — except an inline ◇, which the book
+		// uses as an item-weight marker inside a sentence ("Retrieve an ◇◇ acorn"); a caller that
+		// wants those keeps them as plain-text tokens via keepDiamonds.
+		if ((isDingbat(s.font) || s.font === "marker") && !(keepDiamonds && s.text.trim() === "◇")) continue;
+		const emph = s.font === "marker" ? "" : emphOf(s.font);
 		const last = toks[toks.length - 1];
 		if (last && last.emph === emph) last.text += s.text;
 		else toks.push({ emph, text: s.text });
@@ -33,11 +36,13 @@ function mdSpans(spans) {
 	return out;
 }
 
-/** Join lines to one markdown string; de-hyphenate, keep "…" options on their own line. */
-export function joinMd(lines) {
+/** Join lines to one markdown string; de-hyphenate, keep "…" options on their own line.
+ *  `keepDiamonds` preserves inline ◇ item-weight markers in the text (leading bullet glyphs are
+ *  still stripped), setting adjacent ones tight ("◇◇") as printed. */
+export function joinMd(lines, { keepDiamonds = false } = {}) {
 	let out = "", prev = null;
 	for (const l of lines) {
-		const h = mdSpans(l.spans).replace(/^[□◻◇○◯]\s*/, "").trim();
+		const h = mdSpans(l.spans, { keepDiamonds }).replace(/^[□◻◇○◯]\s*/, "").trim();
 		const raw = l.text.trim();
 		if (prev == null) out = h;
 		else if (/^(?:…|\.\.\.)/.test(raw)) out += "\n" + h;
@@ -46,7 +51,9 @@ export function joinMd(lines) {
 		prev = raw;
 	}
 	// Straighten curly double-quotes (the book's typography) to ASCII " — keeps the JSON clean.
-	return out.replace(/[“”]/g, '"').replace(/[ \t]{2,}/g, " ").trim();
+	out = out.replace(/[“”]/g, '"').replace(/[ \t]{2,}/g, " ").trim();
+	// Kept diamonds arrive as one glyph per vector marker ("◇ ◇") — set them tight, as printed.
+	return keepDiamonds ? out.replace(/◇(?:\s+◇)+/g, (m) => m.replace(/\s+/g, "")) : out;
 }
 
 // ─── pure helpers ─────────────────────────────────────────────────────────────
@@ -116,6 +123,7 @@ export function parseTrack(raw) {
 export function stripLoyalty(costRaw) {
 	return (costRaw || "")
 		.replace(/\(\s*loyalty[:\s○◯l]*\)/ig, " ")   // a parenthesized "(Loyalty …)" anywhere
+		.replace(/\(\s*loyalty[:\s○◯l]*$/i, " ")      // an unclosed trailing "(Loyalty" (its pips/")" were stranded in another block)
 		.replace(/\bloyalty[:\s○◯l]*$/i, " ")         // a bare trailing "Loyalty ◯◯◯" (loyalty-only cost)
 		.replace(/[○◯]/g, " ")                         // any leftover stray circle markers
 		.replace(/\s{2,}/g, " ")
@@ -124,10 +132,16 @@ export function stripLoyalty(costRaw) {
 }
 
 // ─── follower wiring / detection ────────────────────────────────────────────────
-/** The single-pick choice row that links an arcanum back to one of its followers — the follower IS
- *  the row (empty content, `inlineDisplay`). Mirrors the hand-authored `beautiful-scroll` back. */
-export function followerChoiceEntry(followerSlug) {
-	return { type: "entry", slug: followerSlug, content: { title: null, text: "" }, track: { max: 1 }, inlineDisplay: true, followers: [followerSlug] };
+/** The single-pick choice row that links an arcanum to one of its followers — the follower IS
+ *  the row (empty content, full card shown inline). Mirrors the hand-authored `beautiful-scroll`
+ *  back. `hideFromFollowersTab` keeps a card-resident follower (the Ring) off the followers tab. */
+export function followerChoiceEntry(followerSlug, { hideFromFollowersTab = false, owned = false } = {}) {
+	const entry = { type: "entry", slug: followerSlug, content: { title: null, text: "" },
+		followers: { slugs: [followerSlug], inlineDisplay: true, hideFromFollowersTab } };
+	// A choice-gated follower gets a checkbox (track: gain it when checked). An owned-by-default,
+	// card-resident follower (the Ring) has no checkbox — the arcanum grants it outright.
+	if (!owned) entry.track = { max: 1 };
+	return entry;
 }
 
 /** The back-side choice group that inlines an arcanum's follower(s), or null if it has none. Same
@@ -146,6 +160,30 @@ export function isArcanaFollower(block) {
 	if (!(typeof w === "number" && w < 25)) return false;
 	const first = (block.lines || []).find((l) => (l.text || "").trim());
 	return !!first && !/^\d+$/.test(first.text.trim());
+}
+
+/** Match a page's marker icons to named follower headings. A back-side MAJOR follower (Astor/Halix on
+ *  the Blackwood Fetishes back, the Mighty Servant on the Mindgem back) prints an ~18px creature marker
+ *  immediately left of its name heading, on the same baseline — but the layout parser doesn't recognize
+ *  these as stat blocks (they're hand-authored), so `isArcanaFollower`'s icon path never sees them.
+ *  This locates the marker sitting just left of each named heading so build-arcana can stamp it onto the
+ *  preserved follower doc. A marker is a small image (`w < 25`); it pairs with the heading whose
+ *  normalized text equals one of `names` and whose left edge sits just right of the marker on the same
+ *  baseline. Returns [{ name, iconFile }] (the caller's original `names` spelling, with its icon file). */
+export function matchFollowerIcons(lines, images, names) {
+	const targets = new Map((names || []).map((n) => [toSlug(n), n])); // slug -> original spelling
+	const markers = (images || []).filter((im) => im?.file && typeof im.w === "number" && im.w < 25);
+	const out = [];
+	for (const im of markers) {
+		const right = im.x + im.w;
+		const line = (lines || []).find((l) => {
+			const slug = toSlug((l.text || "").trim());
+			if (!targets.has(slug)) return false;
+			return Math.abs((l.bbox?.[1] ?? 0) - im.y) <= 8 && (l.bbox?.[0] ?? 0) - right >= 0 && (l.bbox?.[0] ?? 0) - right < 25;
+		});
+		if (line) out.push({ name: targets.get(toSlug(line.text.trim())), iconFile: im.file });
+	}
+	return out;
 }
 
 /** The item tags line under a title → an outfit-item-shaped object (name = arcanum name, weight from
@@ -313,9 +351,68 @@ const markerKind = (line) => { const t = (line?.text || "").trim(); return /^[�
 const rawOf = (lines) => (lines || []).map((l) => l.text).join(" ");
 const isHead = (b, re) => (b?.type === "heading" || b?.type === "title") && re.test(b.line.text.trim());
 
+/** Split a front-side follower stat block out of a major front's block stream (the Ring of Daagon
+ *  prints its follower on the card FRONT — "The ring itself becomes a follower"). The segment is a
+ *  SECOND heading (the follower's name; the first is the card's own) followed by a tags-flagged
+ *  para, and runs to the end of the front. Because the column split scrambles the card's tail, the
+ *  segment's list items are triaged: a pure checkbox run is the unlock's Marks track (re-attached
+ *  to the remaining front blocks as its own list), a letter-less ○-pip run is the cost line's
+ *  stranded "(Loyalty ○○○)" (counted, dropped), and everything else (the ä move bullets) belongs
+ *  to the stat block. A lone short italic para is the CARD's displaced tag line (printed under the
+ *  title, stranded here by the split) — returned separately for `front.tags`. Rules, images and
+ *  side labels drop (the follower's marker icon is resolved separately, off its name heading, via
+ *  matchFollowerIcons).
+ *  Returns { blocks, followerLines, loyaltyMax, cardTagsMd }. */
+export function splitFrontFollower(blocks) {
+	let at = -1, seenHeading = false;
+	for (let i = 0; i < blocks.length && at < 0; i++) {
+		const b = blocks[i];
+		if (b.type !== "heading" && b.type !== "title") continue;
+		if (isHead(b, /^(front|back)$/i)) continue;
+		if (!seenHeading) { seenHeading = true; continue; } // the card's own name heading
+		const next = blocks.slice(i + 1, i + 3).find((n) => n.type === "para" || n.type === "list");
+		if (next?.type === "para" && next.tags) at = i;
+	}
+	if (at < 0) return { blocks, followerLines: null, loyaltyMax: 0, cardTagsMd: null };
+
+	const remaining = blocks.slice(0, at);
+	const followerLines = [blocks[at].line];
+	let loyaltyMax = 0, cardTagsMd = null;
+	for (const b of blocks.slice(at + 1)) {
+		if (b.type === "image") continue; // marker icon drops (resolved via matchFollowerIcons off the name heading)
+		if (b.type === "para") {
+			const md = joinMd(b.lines);
+			if (/^\*[^*]+\*$/.test(md) && md.length < 40) { cardTagsMd = cardTagsMd ?? md; continue; }
+			followerLines.push(...b.lines);
+		} else if (b.type === "list") {
+			for (const item of b.items) {
+				const raw = rawOf(item);
+				const { max, text } = parseTrack(raw);
+				const residualLetters = /[a-z]/i.test(stripMarkers(raw).replace(/[()]/g, ""));
+				if (max > 0 && !text && !/[○◯]/.test(raw)) remaining.push({ type: "list", items: [item] });
+				else if (max > 0 && /[○◯]/.test(raw) && !residualLetters) loyaltyMax += (raw.match(/[○◯]/g) || []).length;
+				else followerLines.push(...item);
+			}
+		}
+		// rules / side labels / tables drop
+	}
+	return { blocks: remaining, followerLines, loyaltyMax, cardTagsMd };
+}
+
 /** Build the front side from its blocks (already bounded to one card's front). */
 export function parseFront(blocks, { name, slug }) {
 	const front = { title: name, item: null, tags: null, description: null, unlock: null };
+	// A card that prints its follower on the FRONT (the Ring of Daagon) carries a second stat-block
+	// heading + tags para inside the front span. Pull it out before parsing the unlock, and stash the
+	// raw follower lines on the front for build-arcana to turn into a follower doc + unlock entry.
+	const ff = splitFrontFollower(blocks);
+	if (ff.followerLines) {
+		blocks = ff.blocks;
+		front._frontFollower = { lines: ff.followerLines, loyaltyMax: ff.loyaltyMax };
+		// ff.cardTagsMd is the arcanum's own "*magical*" tag, stranded in the follower span by the column
+		// split. No major front captures a tags line (the parser drops them uniformly), so it's discarded
+		// here too — pulling it aside just keeps it out of the follower's moves.
+	}
 	let item = null, pips = 0;
 	const seq = []; // ordered { kind, text?, lines? }
 
@@ -420,6 +517,7 @@ function parseMajorBack(blocks, { slug, name, unlockAt }) {
 	const abbr = toSlug((name || "").trim().split(/\s+/).pop() || "c") || "c"; // "Twisted Spear" → "spear"
 	let section = null; // null | "moves" | "consequences"
 	let cur = null;     // the move/consequence currently accreting following paras/bullets
+	const consX = [];   // each consequence row's start x0, parallel to back.consequences.list
 	const flush = () => {
 		if (!cur) return;
 		const text = cur.text.replace(/\n{3,}/g, "\n\n").trim();
@@ -434,6 +532,7 @@ function parseMajorBack(blocks, { slug, name, unlockAt }) {
 			const row = { type: "entry", slug: `${abbr}-c${back.consequences.list.length + 1}`, content: { title: null, text } };
 			if (cur.max > 0) row.track = { max: cur.max };
 			back.consequences.list.push(row);
+			consX.push(cur.x0 ?? null);
 		}
 		cur = null;
 	};
@@ -471,12 +570,19 @@ function parseMajorBack(blocks, { slug, name, unlockAt }) {
 				// aren't a consequence track (those are resource/loyalty markers elsewhere).
 				if (/^[○◯◇\s]*[□◻]/.test((it[0]?.text || "").trim())) {
 					flush();
-					cur = { kind: "consequence", max: (rawOf(it).match(/[□◻]/g) || []).length, text: stripMarkers(joinMd(it)) };
+					cur = { kind: "consequence", max: (rawOf(it).match(/[□◻]/g) || []).length, text: stripMarkers(joinMd(it)), x0: it[0]?.bbox?.[0] ?? null };
 				} else if (cur) cur.text += bullet(it);
 			} else if (b.type === "para" && cur) cur.text += "\n\n" + stripMarkers(joinMd(b.lines));
 		}
 	}
 	flush();
+	// An escalation consequence is tabbed in under its parent, ~13.5px right of the column base. Compare
+	// each row's x0 against every sibling in the section, not a per-block base: an indented row can open
+	// its own list block (mindgem's post-table pair), while a wrapped line misread as a row sits <8px in.
+	if (back.consequences) back.consequences.list.forEach((row, i) => {
+		const x = consX[i];
+		if (x != null && consX.some((b) => b != null && x - b >= 8 && x - b <= 20)) row.indent = true;
+	});
 	// The book titles every major back "Mysteries of the X", but the heading isn't reliably tagged as a
 	// heading for a few cards (staff / redwood / ineffable extract without it) — derive it when the title
 	// heading wasn't captured. Cards whose heading IS captured keep it verbatim (e.g. the possessive

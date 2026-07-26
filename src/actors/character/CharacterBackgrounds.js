@@ -2,7 +2,8 @@ import {
 	BackgroundOptionSnapshotBuilder,
 	BackgroundSection,
 } from "../../model/snapshot/character/CharacterSnapshot.js";
-import { ChoiceGroup, ChoiceValues } from "../../model/snapshot/character/ChoiceGroup.js";
+import { ChoiceValues } from "../../model/snapshot/character/ChoiceGroup.js";
+import { buildChoiceGroup } from "../../model/snapshot/character/buildChoiceGroup.js";
 import { rich } from "../../model/snapshot/RichText.js";
 import { toSlug } from "../../utils/slug.js";
 
@@ -10,9 +11,7 @@ export class CharacterBackgrounds {
 	constructor(actor, factory, resourceController) {
 		this._actor              = actor;
 		this._resourceController = resourceController;
-		this._ctrl               = factory.forItemType("playbook", "backgroundValues",
-			(ns, item) => item?.system?.backgrounds?.find(b => b.slug === ns)?.choices ?? null,
-		);
+		this._ctrl               = factory.forSingleton("playbook", "backgroundValues");
 	}
 
 	get selectedSlug() {
@@ -22,6 +21,9 @@ export class CharacterBackgrounds {
 	async selectBackground(slug) {
 		await this._actor.update({ "system.background.selected": slug });
 	}
+
+	/** The controller for background choice values — one store on the playbook item. */
+	controller() { return this._ctrl; }
 
 	async setChoiceValue(namespace, optionSlug, count) {
 		await this._ctrl.setCount(namespace, optionSlug, count);
@@ -38,7 +40,7 @@ export class CharacterBackgrounds {
 
 		const options = [];
 		for (const b of (backgroundsData ?? [])) {
-			const choices = b.choices ? ChoiceGroup.fromPackData(b.choices, values) : null;
+			const choices = b.choices ? buildChoiceGroup(b.choices, values) : null;
 			options.push(new BackgroundOptionSnapshotBuilder()
 				.withSlug(b.slug)
 				.withLabel(rich(b.label))

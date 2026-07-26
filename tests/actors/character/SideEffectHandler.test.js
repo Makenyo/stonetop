@@ -1,84 +1,86 @@
 import { describe, it, expect } from "vitest";
-import { FollowerSideEffectHandler, OutfitItemSideEffectHandler } from "../../../src/actors/character/SideEffectHandler.js";
+import { FollowerSideEffectHandler } from "../../../src/actors/character/SideEffectHandler.js";
+import { ChoiceValueChange } from "../../../src/model/data/ChoiceValueChange.js";
+import { ChoiceValues } from "../../../src/model/snapshot/character/ChoiceGroup.js";
 import { FakeFollowers } from "../../fakes/FakeFollowers.js";
-import { FakeOutfitItems } from "../../fakes/FakeOutfitItems.js";
 
-// ── FollowerSideEffectHandler ─────────────────────────────────────────────────
+// The follower effect is a subscriber: it owns its own relevance test, so it must ignore writes that
+// carry no row (a namespace clear) and writes that cannot change a count (text).
+
+/** An item whose one choice group holds `row` — so the change resolves a real target. */
+function changeFor(row, { count = 1, kind = "count", optionSlug = "opt" } = {}) {
+	const item = {
+		_id: "i1", type: "insert",
+		system: { choices: { slug: "ns", list: [{ type: "entry", slug: "opt", ...row }] } },
+	};
+	return new ChoiceValueChange({
+		item, namespace: "ns", optionSlug, count, kind, values: new ChoiceValues({}),
+	});
+}
 
 describe("FollowerSideEffectHandler", () => {
-	it("adds followers from target.followers when count > 0", async () => {
+	it("marking a row puts its followers on the tab (count > 0)", async () => {
 		const followers = new FakeFollowers();
-		const handler = new FollowerSideEffectHandler(followers);
-		await handler.apply({ followers: ["enfys", "afon"] }, "ns", "opt", 1);
-		expect(followers.isOwned("enfys")).toBe(true);
-		expect(followers.isOwned("afon")).toBe(true);
+		await new FollowerSideEffectHandler(followers).handle(
+			changeFor({ followers: { slugs: ["enfys", "afon"] } }, { count: 1 }));
+		expect(followers.showOnTab("enfys")).toBe(true);
+		expect(followers.showOnTab("afon")).toBe(true);
 	});
 
-	it("removes followers from target.followers when count === 0", async () => {
+	it("un-marking toggles the follower off the tab but keeps it owned (count === 0)", async () => {
 		const followers = new FakeFollowers();
 		await followers.addFollower("enfys");
-		const handler = new FollowerSideEffectHandler(followers);
-		await handler.apply({ followers: ["enfys"] }, "ns", "opt", 0);
-		expect(followers.isOwned("enfys")).toBe(false);
+		await new FollowerSideEffectHandler(followers).handle(
+			changeFor({ followers: { slugs: ["enfys"] } }, { count: 0 }));
+		expect(followers.isOwned("enfys")).toBe(true);
+		expect(followers.showOnTab("enfys")).toBe(false);
 	});
 
-	it("no-ops when target has no followers field", async () => {
+	it("a card-bound follower (hideFromFollowersTab) stays off the tab even when marked", async () => {
 		const followers = new FakeFollowers();
-		const handler = new FollowerSideEffectHandler(followers);
-		await handler.apply({ type: "entry", slug: "opt" }, "ns", "opt", 1);
+		await new FollowerSideEffectHandler(followers).handle(
+			changeFor({ followers: { slugs: ["the-cloak"], hideFromFollowersTab: true } }, { count: 1 }));
+		expect(followers.isOwned("the-cloak")).toBe(true);
+		expect(followers.showOnTab("the-cloak")).toBe(false);
+	});
+
+	it("no-ops when the target row has no followers field", async () => {
+		const followers = new FakeFollowers();
+		await new FollowerSideEffectHandler(followers).handle(changeFor({}));
 		expect(followers.owned).toHaveLength(0);
 	});
 
-	it("no-ops when target.followers is empty array", async () => {
+	it("no-ops when the follower link has no slugs", async () => {
 		const followers = new FakeFollowers();
-		const handler = new FollowerSideEffectHandler(followers);
-		await handler.apply({ followers: [] }, "ns", "opt", 1);
+		await new FollowerSideEffectHandler(followers).handle(
+			changeFor({ followers: { slugs: [], inlineDisplay: true } }));
 		expect(followers.owned).toHaveLength(0);
 	});
-});
 
-// ── OutfitItemSideEffectHandler ───────────────────────────────────────────────
-
-const SWORD = { slug: "sword", name: "Sword" };
-
-describe("OutfitItemSideEffectHandler", () => {
-	it("syncs items when count > 0", async () => {
-		const items = new FakeOutfitItems();
-		const handler = new OutfitItemSideEffectHandler("bg", items);
-		await handler.apply({ outfitItems: [SWORD] }, "initiate", "enfys", 1);
-		expect(items.hasSource("bg:initiate:enfys")).toBe(true);
+	it("no-ops on an unmigrated legacy slug array (migration owns the conversion)", async () => {
+		const followers = new FakeFollowers();
+		await new FollowerSideEffectHandler(followers).handle(changeFor({ followers: ["enfys"] }));
+		expect(followers.owned).toHaveLength(0);
 	});
 
-	it("wraps each outfit item as a proper outfitItem payload (type + system + source)", async () => {
-		const items = new FakeOutfitItems();
-		const handler = new OutfitItemSideEffectHandler("bg", items);
-		await handler.apply({ outfitItems: [SWORD] }, "initiate", "enfys", 1);
-		const [created] = items.getItems("bg:initiate:enfys");
-		expect(created.type).toBe("outfitItem");                 // was undefined → validation error
-		expect(created.name).toBe("Sword");
-		expect(created.system.slug).toBe("sword");
-		expect(created.system.source).toBe("bg:initiate:enfys"); // so deleteBySource can find it
+	it("ignores a text write — text never changes what a choice grants", async () => {
+		const followers = new FakeFollowers();
+		await new FollowerSideEffectHandler(followers).handle(
+			changeFor({ followers: { slugs: ["enfys"] } }, { kind: "text" }));
+		expect(followers.owned).toHaveLength(0);
 	});
 
-	it("deletes items when count === 0", async () => {
-		const items = new FakeOutfitItems();
-		await items.sync("bg:initiate:enfys", [SWORD]);
-		const handler = new OutfitItemSideEffectHandler("bg", items);
-		await handler.apply({ outfitItems: [SWORD] }, "initiate", "enfys", 0);
-		expect(items.hasSource("bg:initiate:enfys")).toBe(false);
+	it("ignores a namespace clear — it names no row to act on", async () => {
+		const followers = new FakeFollowers();
+		await new FollowerSideEffectHandler(followers).handle(
+			changeFor({ followers: { slugs: ["enfys"] } }, { kind: "clear", optionSlug: null }));
+		expect(followers.owned).toHaveLength(0);
 	});
 
-	it("no-ops when target.outfitItems is absent", async () => {
-		const items = new FakeOutfitItems();
-		const handler = new OutfitItemSideEffectHandler("bg", items);
-		await handler.apply({ type: "entry", slug: "opt" }, "ns", "opt", 1);
-		expect(items.hasSource("bg:ns:opt")).toBe(false);
-	});
-
-	it("no-ops when target.outfitItems is empty", async () => {
-		const items = new FakeOutfitItems();
-		const handler = new OutfitItemSideEffectHandler("bg", items);
-		await handler.apply({ outfitItems: [] }, "ns", "opt", 1);
-		expect(items.hasSource("bg:ns:opt")).toBe(false);
+	it("no-ops when no row matches the option that changed", async () => {
+		const followers = new FakeFollowers();
+		await new FollowerSideEffectHandler(followers).handle(
+			changeFor({ followers: { slugs: ["enfys"] } }, { optionSlug: "nope" }));
+		expect(followers.owned).toHaveLength(0);
 	});
 });

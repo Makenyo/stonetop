@@ -27,11 +27,17 @@
 	{{/if}}
 	<strong class="stonetop-item-name">{{name}}</strong>
 	{{#if sourceLabel}}<span class="stonetop-item-source">{{sourceLabel}}</span>{{/if}}
-	{{#if (and (gt selection.value 0) rollStat)}}
+	{{!-- Any move that rolls shows its die, ticked or not: the check marks what the character has
+	      taken, not what the table is allowed to roll. --}}
+	{{#if rollStat}}
 	<span class="rollable move-rollable" data-roll="{{rollStat}}" data-mod="">
 		<i class="fas fa-dice-d6"></i>
 	</span>
 	{{/if}}
+	<a class="stonetop-move-chat" data-action="moveToChat" data-move-slug="{{slug}}"
+	   title="{{localize 'stonetop.character.moves.sendToChat'}}">
+		<i class="fas fa-comment"></i>
+	</a>
 	{{#if (and (or alwaysShowResource (gt selection.value 0)) resource)}}
 	<span class="stonetop-item-resources">
 		{{#each (resourceChecks resource)}}
@@ -55,9 +61,9 @@
 {{#if requirement}}<div class="stonetop-item-requirement{{#unless requirement.met}} stonetop-item-requirement--unmet{{/unless}}">{{localize "stonetop.character.moves.requires"}}: {{requiresLabel}}{{#unless requirement.met}} ({{localize "stonetop.character.moves.notMet"}}){{/unless}}</div>{{/if}}
 <div class="stonetop-item-description">{{rich description}}</div>
 {{#if choices}}
-<div class="stonetop-move-choices">
+<div class="stonetop-move-choices" data-move-slug="{{slug}}">
 	{{#each choices.list}}
-	{{> "stonetop.choice-row" cgContext="move" cgGroup=../slug namePrefix=../slug}}
+	{{> "stonetop.choice-row" cgContext="move" cgGroup=../choices.slug namePrefix=../slug}}
 	{{/each}}
 </div>
 {{/if}}

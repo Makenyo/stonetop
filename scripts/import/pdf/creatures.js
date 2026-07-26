@@ -258,6 +258,9 @@ export function toFollowerDoc(creature, { arcanaSlug = null, slug, id, key, img 
 	// A follower stores current HP 0 (the sheet fills it); only the book max matters. parseStatBlock
 	// sets value === max (the printed number), so take the max explicitly.
 	const hp = { value: 0, max: creature.hp?.max || creature.hp?.value || 0 };
+	// A stat block with no HP/Armor/Damage lines at all (the Ring — an object, not a creature) is an
+	// OBJECT follower (kind: "object"): the sheet hides the combat-stat row and the inventory for it.
+	const isObject = !hp.max && !creature.armor && !creature.damage;
 	// Canonicalize the group tag and pull out its "(N)" count: "Group (3)" -> tag "group" + 3 crew
 	// members, each starting at the group's shared max HP (mirrors CharacterFollowers.addMember). A
 	// group tag with no count leaves members empty (the player adds them on the sheet).
@@ -266,7 +269,8 @@ export function toFollowerDoc(creature, { arcanaSlug = null, slug, id, key, img 
 	const members = groupCount ? Array.from({ length: groupCount }, () => newMember(hp.max)) : null;
 	// Fixed moves stay in the markdown list; □-boxed *pickable* moves become entries in the follower
 	// choice group (choices[0]) so the player checks the ones this follower has — they are NOT also added
-	// to the moves list. A single checkbox each (track.max 1); state lives in choiceValues["choices"].
+	// to the moves list. A single checkbox each (track.max 1). The group's slug is its namespace within
+	// THIS follower's choiceValues — stores are per-document, so it only has to be unique on this item.
 	const movesMd = (list) => list.map((m) => (m.prose ? `\n${m.text}\n` : `- ${m.text}`)).join("\n").replace(/\n{3,}/g, "\n\n").trim();
 	const fixedMoves = (creature.moves || []).filter((m) => !m.selectable);
 	const moveChoices = (creature.moves || []).filter((m) => m.selectable && !m.prose)
@@ -296,6 +300,7 @@ export function toFollowerDoc(creature, { arcanaSlug = null, slug, id, key, img 
 				? selection([], false, creature.costOptions)
 				: selection(cost ? [cost] : [], false),
 			loyalty: { value: 0, max: 3 },
+			...(isObject ? { kind: "object" } : {}),
 			choices: [{ slug: "choices", list: moveChoices }],
 			moves: movesMd(fixedMoves),
 			description: creature.description,

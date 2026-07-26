@@ -80,6 +80,11 @@ export function createStonetopCharacterSheetClass(Base) {
 				},
 
 				// --- one-call domain actions ---
+				// Not edit-gated: posting a move's text to chat mutates nothing, so it works on a
+				// locked sheet too.
+				moveToChat(ev, target) {
+					return this._stonetopCharacter.sendMoveToChat(target.dataset.moveSlug);
+				},
 				selectOriginName: editOnly(function (ev, target) {
 					return this._stonetopCharacter.origin.selectName(target.textContent.trim());
 				}),
@@ -267,7 +272,6 @@ export function createStonetopCharacterSheetClass(Base) {
 					return char.setChoicePickFor(ChoiceTarget.fromElement(el), el.checked);
 				},
 				cgText:        el => char.setChoiceTextFor(ChoiceTarget.fromElement(el), el.value),
-				followerCheck: el => char.setChoiceTrackFor(ChoiceTarget.fromFollowerCheck(el), el.dataset.index, el.checked),
 				arcanumBlank:  el => {
 					const card = el.closest(".stonetop-arcanum-card");
 					if (card) return char.setArcanumBlank(card.dataset.slug, el.dataset.blankKey, el.value);
@@ -286,10 +290,6 @@ export function createStonetopCharacterSheetClass(Base) {
 
 				// possessions
 				possessionCheck:    el => char.setPossessionSelected(el.dataset.slug, el.checked),
-				possessionSubCheck: el => char.setSubChoiceSelected(el.dataset.possessionSlug, el.dataset.choiceSlug, el.checked),
-				possessionSubRadio: el => char.selectSubChoiceExclusive(
-					el.dataset.possessionSlug, el.dataset.choiceSlug,
-					el.dataset.siblingSlugsCsv ? el.dataset.siblingSlugsCsv.split(",") : []),
 
 				// notes
 				bio:       el => char.setBio(el.value),

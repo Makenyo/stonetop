@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { CharacterFollowers } from "../../../src/actors/character/CharacterFollowers.js";
-import { ChoiceGroupFactory } from "../../../src/actors/character/ChoiceGroupFactory.js";
+import { ChoiceGroupControllerFactory } from "../../../src/actors/character/ChoiceGroupControllerFactory.js";
 import { ResourceController } from "../../../src/actors/character/ResourceController.js";
 import { FakeCharacterActorBuilder } from "../../fakes/FakeCharacterActorBuilder.js";
 import { FakeFollowerRepository } from "../../fakes/FakeFollowerRepository.js";
@@ -22,7 +22,7 @@ function makeCf(repo = null, resourceCtrl = null) {
 		actor,
 		repo ?? new FakeFollowerRepository(),
 		resourceCtrl ?? makeResourceController(),
-		new ChoiceGroupFactory(actor),
+		new ChoiceGroupControllerFactory(actor),
 	);
 }
 
@@ -233,7 +233,7 @@ describe("CharacterFollowers — state mutations", () => {
 	it("setChoiceValue marks option as checked in snapshot", async () => {
 		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
 		await cf.addFollower("enfys");
-		await cf.setChoiceValue("enfys", "choices", "she", null);
+		await cf.controllerFor("enfys")?.selectOption("choices", "she", null);
 		const [snap] = await cf.buildSnapshot();
 		const pickRow = snap.choices.list.find(r => r.type === "choice");
 		expect(pickRow.options.find(o => o.slug === "she").checked).toBe(true);
@@ -242,7 +242,7 @@ describe("CharacterFollowers — state mutations", () => {
 	it("setChoiceValue clears sibling slugs before setting the chosen option", async () => {
 		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
 		await cf.addFollower("enfys");
-		await cf.setChoiceValue("enfys", "choices", "she", "he,she,they");
+		await cf.controllerFor("enfys")?.selectOption("choices", "she", "he,she,they");
 		const [snap] = await cf.buildSnapshot();
 		const pickRow = snap.choices.list.filter(r => r.type === "choice")[0];
 		expect(pickRow.options.find(o => o.slug === "she").checked).toBe(true);
@@ -455,13 +455,6 @@ describe("CharacterFollowers.buildSnapshot", () => {
 		expect(snap.img).toBeNull();
 	});
 
-	it("a linked-but-unowned preview follower carries its pack img", async () => {
-		const withArt = new Follower({ slug: "preview-art", name: "Preview", img: "systems/stonetop/assets/content/icons/npc.png" });
-		const cf = makeCf(new FakeFollowerRepository([withArt]));
-		const [snap] = await cf.buildSnapshot(["preview-art"]);
-		expect(snap.img).toBe("systems/stonetop/assets/content/icons/npc.png");
-	});
-
 	it("hp defaults to hp.value when no state", async () => {
 		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
 		await cf.addFollower("enfys");
@@ -515,60 +508,61 @@ describe("CharacterFollowers.buildSnapshot", () => {
 	});
 });
 
-// -- Tests: extraSlugs (arcana-linked followers) -------------------------------
+// -- Tests: buildSnapshot renders OWNED followers only -------------------------
+// buildSnapshot derives its set entirely from the actor's owned follower items — nothing is passed in,
+// and an embedded-but-unowned follower (owned:false) is not rendered.
 
-describe("CharacterFollowers.buildSnapshot with extraSlugs", () => {
-	it("returns static snapshot for extra slug pre-embedded with owned=false", async () => {
+describe("CharacterFollowers.buildSnapshot — owned only", () => {
+	it("does not render an embedded follower that is not owned", async () => {
 		const actor = makeActor();
-		actor.items.push(makeFollowerItem(ENFYS_DATA));
+		actor.items.push(makeFollowerItem({ ...ENFYS_DATA, owned: false }));
 		const cf = new CharacterFollowers(actor, new FakeFollowerRepository(), makeResourceController());
-		const snaps = await cf.buildSnapshot(["enfys"]);
-		expect(snaps).toHaveLength(1);
-		expect(snaps[0].slug).toBe("enfys");
+		expect(await cf.buildSnapshot()).toEqual([]);
 	});
 
-	it("static snapshot uses embedded data for HP and loyalty", async () => {
-		const actor = makeActor();
-		actor.items.push(makeFollowerItem(ENFYS_DATA));
-		const cf = new CharacterFollowers(actor, new FakeFollowerRepository(), makeResourceController());
-		const [snap] = await cf.buildSnapshot(["enfys"]);
-		expect(snap.hp).toBe(6);
-		expect(snap.loyalty.current).toBe(0);
-	});
-
-	it("does not duplicate when extra slug is already owned", async () => {
+	it("renders an embedded follower once it is owned", async () => {
 		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
 		await cf.addFollower("enfys");
-		const snaps = await cf.buildSnapshot(["enfys"]);
-		expect(snaps).toHaveLength(1);
-	});
-
-	it("owned followers appear before extra static snapshots", async () => {
-		const actor = makeActor();
-		actor.items.push(makeFollowerItem(ENFYS_DATA));
-		const cf = new CharacterFollowers(actor, new FakeFollowerRepository([PICKER]), makeResourceController());
-		await cf.addFollower("test-picker");
-		const snaps = await cf.buildSnapshot(["enfys"]);
-		expect(snaps).toHaveLength(2);
-		expect(snaps[0].slug).toBe("test-picker");
-		expect(snaps[1].slug).toBe("enfys");
-	});
-
-	it("silently omits extra slug that is neither embedded nor in the repo", async () => {
-		const cf = makeCf(new FakeFollowerRepository());
-		const snaps = await cf.buildSnapshot(["nonexistent"]);
-		expect(snaps).toEqual([]);
-	});
-
-	it("returns a read-only repo preview for a linked slug that is not embedded", async () => {
-		const actor = makeActor();
-		const cf = new CharacterFollowers(actor, new FakeFollowerRepository([ENFYS]), makeResourceController());
-		const snaps = await cf.buildSnapshot(["enfys"]);
+		const snaps = await cf.buildSnapshot();
 		expect(snaps).toHaveLength(1);
 		expect(snaps[0].slug).toBe("enfys");
-		// Preview only — the follower is sourced from the repo, nothing is embedded on the actor.
-		expect([...actor.items].filter(i => i.type === "follower")).toHaveLength(0);
 	});
+});
+
+// -- Tests: buildFollowersSnapshot — the normalized { bySlug, tab } authority --
+
+const RING = new Follower({
+	slug: "the-ring", name: "The Ring", kind: "object", tags: null,
+	hp: { value: 0, max: 0 }, armor: "", damage: "", instinct: "", loyalty: { value: 0, max: 3 },
+});
+
+describe("CharacterFollowers.buildFollowersSnapshot — normalized { bySlug, tab }", () => {
+	it("bySlug holds every owned follower; tab lists only the showOnTab ones", async () => {
+		const cf = makeCf(new FakeFollowerRepository([ENFYS, RING]));
+		await cf.addFollower("enfys");                          // showOnTab default true
+		await cf.addFollower("the-ring", { showOnTab: false }); // card-only (the Ring)
+		const snap = await cf.buildFollowersSnapshot();
+		expect(Object.keys(snap.bySlug).sort()).toEqual(["enfys", "the-ring"]);
+		expect(snap.tab).toEqual(["enfys"]);                    // the-ring owned but off the tab
+		expect(snap.bySlug["the-ring"]).toBeTruthy();           // still resolvable for its inline card
+		expect(snap.bySlug["the-ring"].isObject).toBe(true);
+	});
+
+	it("tabCards resolves the tab slugs to shared bySlug references (no duplication)", async () => {
+		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
+		await cf.addFollower("enfys");
+		const snap = await cf.buildFollowersSnapshot();
+		expect(snap.tabCards).toHaveLength(1);
+		expect(snap.tabCards[0]).toBe(snap.bySlug["enfys"]);    // same object, not a copy
+	});
+
+	it("an owned follower carries its kind through to the card", async () => {
+		const cf = makeCf(new FakeFollowerRepository([RING]));
+		await cf.addFollower("the-ring", { showOnTab: false });
+		const snap = await cf.buildFollowersSnapshot();
+		expect(snap.get("the-ring").isObject).toBe(true);
+	});
+
 });
 
 // -- Tests: choices snapshot --------------------------------------------------
@@ -611,7 +605,7 @@ describe("CharacterFollowers — choices snapshot", () => {
 	it("saved pick value marks option as checked", async () => {
 		const cf = makeCf(new FakeFollowerRepository([PICKER]));
 		await cf.addFollower("test-picker");
-		await cf.setChoiceValue("test-picker", "choices", "bully", "bully,scheme");
+		await cf.controllerFor("test-picker")?.selectOption("choices", "bully", "bully,scheme");
 		const [snap] = await cf.buildSnapshot();
 		const pickRow = snap.choices.list[0];
 		expect(pickRow.options.find(o => o.slug === "bully").checked).toBe(true);
@@ -630,7 +624,7 @@ describe("CharacterFollowers — choices snapshot", () => {
 	it("saved pronoun choice is reflected in choices", async () => {
 		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
 		await cf.addFollower("enfys");
-		await cf.setChoiceValue("enfys", "choices", "she", "he,she,they");
+		await cf.controllerFor("enfys")?.selectOption("choices", "she", "he,she,they");
 		const [snap] = await cf.buildSnapshot();
 		const pickRows = snap.choices.list.filter(r => r.type === "choice");
 		const pronounRow = pickRows[0];
@@ -657,7 +651,7 @@ const BLANK_DATA = {
 	damage:  "",
 	instinct: "",
 	loyalty: { value: 0, max: 3 },
-	choices: [{ slug: "choices", list: [] }],
+	choices: [{ slug: "blank", list: [] }],
 };
 
 const BLANK = new Follower(BLANK_DATA);
@@ -774,7 +768,7 @@ describe("CharacterFollowers — addFromNpcActor", () => {
 			actor,
 			repo ?? new FakeFollowerRepository(),
 			makeResourceController(),
-			new ChoiceGroupFactory(actor),
+			new ChoiceGroupControllerFactory(actor),
 		);
 		return { actor, cf };
 	}
@@ -879,7 +873,7 @@ describe("CharacterFollowers.syncPlaybookFollowers", () => {
 			actor,
 			new FakeFollowerRepository(repoFollowers),
 			makeResourceController(),
-			new ChoiceGroupFactory(actor),
+			new ChoiceGroupControllerFactory(actor),
 		);
 		return { actor, cf };
 	}
@@ -1096,7 +1090,7 @@ function makeCfInv(invItems = OUTFIT) {
 	const actor = makeActor();
 	const cf = new CharacterFollowers(
 		actor, new FakeFollowerRepository([FOLLOWER_TMPL, FOLLOWER_TMPL_2]), makeResourceController(),
-		new ChoiceGroupFactory(actor), { getAll: async () => invItems },
+		new ChoiceGroupControllerFactory(actor), { getAll: async () => invItems },
 	);
 	return cf;
 }

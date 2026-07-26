@@ -8,6 +8,7 @@ import {
 	incrementMove,
 	decrementMove,
 	buildMoveSnapshot,
+	findMoveItemBySlug,
 } from "../embeddedMoves.js";
 import { ReferenceMoveSeeder } from "../ReferenceMoveSeeder.js";
 import { toSlug } from "../../utils/slug.js";
@@ -24,13 +25,20 @@ export class CharacterMoves {
 	setVitals(vitals) { this._vitals = vitals; }
 
 	// Reference moves are seeded onto every character and shown in the sidebar (not the moves
-	// tab): basic, plus the universal special moves and follower moves. Seeded once at actor
+	// tab): basic, plus the expedition, universal special, and follower moves. Seeded once at actor
 	// creation (CreateActor hook), NOT on render — thereafter they are ordinary owned items the GM
-	// can edit, delete, or re-add via drag-drop.
+	// can edit, delete, or re-add via drag-drop. One list, so a category added to the packs later
+	// reaches both new characters (here) and existing ones (migrateReferenceMoveCategories).
+	static REFERENCE_CATEGORIES = ["basic", "expedition", "special", "follower"];
+
 	async initBasicMoves() {
-		for (const moveType of ["basic", "special", "follower"]) {
-			await this._seeder.seed(moveType);
+		for (const moveType of CharacterMoves.REFERENCE_CATEGORIES) {
+			await this.seedReferenceCategory(moveType);
 		}
+	}
+
+	async seedReferenceCategory(categoryKey) {
+		await this._seeder.seed(categoryKey);
 	}
 
 	// A playbook owns its moves by slug (playbookData.moves) and marks a subset as starting
@@ -125,18 +133,28 @@ export class CharacterMoves {
 		await this._actor.deleteEmbeddedDocuments("Item", [item._id]);
 	}
 
-	async setMoveChoiceText(moveSlug, optionSlug, value) {
-		const item = _findMoveItemBySlug(this._actor, moveSlug);
-		if (!item?.system?.choices) return;
-		await this._factory.forItem(item._id, "pickValues")
-			.setText(item.system.choices.slug, optionSlug, value);
+	// Post the move's full text (description + all result tiers) to chat, without rolling. Returns
+	// false when no owned move item carries the slug (the caller may have a non-item fallback).
+	async sendToChat(moveSlug) {
+		const item = findMoveItemBySlug(this._actor, moveSlug);
+		if (!item) return false;
+		await this._actor.sendItemToChat(item);
+		return true;
 	}
 
-	async setMoveChoiceCount(moveSlug, optionSlug, count) {
-		const item = _findMoveItemBySlug(this._actor, moveSlug);
-		if (!item?.system?.choices) return;
-		await this._factory.forItem(item._id, "pickValues")
-			.setCount(item.system.choices.slug, optionSlug, count);
+	/** The controller for one move's picks, or null when the move is absent or has no choice group. */
+	controllerFor(moveSlug) {
+		const item = findMoveItemBySlug(this._actor, moveSlug);
+		return item?.system?.choices ? this._factory.forDocument(item._id, "pickValues") : null;
+	}
+
+	// The current value of a move's own track — the Thrall's Favor, say. Null when the character
+	// doesn't own the move or the move has no track, which keeps "no such stat" distinct from a
+	// track sitting at 0.
+	resourceValue(moveSlug) {
+		const item = findMoveItemBySlug(this._actor, moveSlug);
+		if (!item?.system?.resource) return null;
+		return this._resourceController.getCurrent("moves", moveSlug);
 	}
 
 	async setMoveResourceCurrent(moveSlug, current) {
@@ -252,15 +270,17 @@ function _acquiredSlugs(moveItems) {
 function _categoryOrder(key) {
 	if (key.startsWith("playbook-")) return 0;
 	if (key === "basic")             return 1;
-	if (key === "special")           return 2;
-	if (key === "follower")          return 3;
-	if (key.startsWith("insert-")) return 4;
-	if (key === "other")             return 5;
-	return 6;
+	if (key === "expedition")        return 2;
+	if (key === "special")           return 3;
+	if (key === "follower")          return 4;
+	if (key.startsWith("insert-")) return 5;
+	if (key === "other")             return 6;
+	return 7;
 }
 
 function _categoryMetadata(catKey, catItems) {
 	if (catKey === "basic")    return { key: "basic",    label: "Basic Moves",    renderStyle: "side-bar", allowAdditional: false, note: null };
+	if (catKey === "expedition") return { key: "expedition", label: "Expedition Moves", renderStyle: "side-bar", allowAdditional: false, note: null };
 	if (catKey === "special")  return { key: "special",  label: "Special Moves",  renderStyle: "side-bar", allowAdditional: false, note: null };
 	if (catKey === "follower") return { key: "follower", label: "Follower Moves", renderStyle: "side-bar", allowAdditional: false, note: null };
 	if (catKey === "other") return { key: "other", label: "Other Moves", renderStyle: "standard", allowAdditional: true,  note: null };
@@ -304,8 +324,3 @@ function _sortGroup(moves, groupNames) {
 	return result;
 }
 
-function _findMoveItemBySlug(actor, moveSlug) {
-	return [...actor.items].find(
-		i => i.type === "move" && (i.system?.slug ?? toSlug(i.name)) === moveSlug
-	) ?? null;
-}

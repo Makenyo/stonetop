@@ -1,6 +1,8 @@
 import { toSlug } from "../utils/slug.js";
 import { bindAll } from "../utils/bindAll.js";
-import { ChoiceGroup, ChoiceValues } from "../model/snapshot/character/ChoiceGroup.js";
+import { setField as setChoicesField, newGroup } from "../utils/choiceGroupEdit.js";
+import { ChoiceValues } from "../model/snapshot/character/ChoiceGroup.js";
+import { buildChoiceGroup } from "../model/snapshot/character/buildChoiceGroup.js";
 import { rich } from "../model/snapshot/RichText.js";
 import { enrichRichTextTree } from "../utils/enrichRichText.js";
 
@@ -16,16 +18,29 @@ export function moveSheetRichText(system) {
 	};
 }
 
-const ROLL_STAT_CHOICES = {
-	"":       "stonetop.item.move.rollStat.none",
-	str:      "stonetop.character.stats.abbr.str",
-	dex:      "stonetop.character.stats.abbr.dex",
-	con:      "stonetop.character.stats.abbr.con",
-	int:      "stonetop.character.stats.abbr.int",
-	wis:      "stonetop.character.stats.abbr.wis",
-	cha:      "stonetop.character.stats.abbr.cha",
-	ask:      "stonetop.item.move.rollStat.ask",
-	prompt:   "stonetop.item.move.rollStat.prompt",
+// Every key `resolveBonus` can answer, so a stored value always has an option to sit on. A key
+// missing here doesn't just display wrong — the select falls back to its first option and the next
+// submit writes that over the move's real roll (this is how Requisition/Dark Succor lost theirs).
+// The steading ratings are rolled by moves a CHARACTER makes (Requisition's +Fortunes), resolved
+// through the character's home steading.
+export const ROLL_STAT_CHOICES = {
+	"":         "stonetop.item.move.rollStat.none",
+	str:        "stonetop.character.stats.abbr.str",
+	dex:        "stonetop.character.stats.abbr.dex",
+	con:        "stonetop.character.stats.abbr.con",
+	int:        "stonetop.character.stats.abbr.int",
+	wis:        "stonetop.character.stats.abbr.wis",
+	cha:        "stonetop.character.stats.abbr.cha",
+	fortunes:   "stonetop.item.move.rollStat.fortunes",
+	prosperity: "stonetop.item.move.rollStat.prosperity",
+	population: "stonetop.item.move.rollStat.population",
+	defenses:   "stonetop.item.move.rollStat.defenses",
+	// An insert's own track. Listing it here is a stopgap: the key belongs to the Thrall, not to
+	// every move in the system, and the list can't grow a line per insert. Better would be building
+	// the choices from the same sources resolveBonus consults.
+	favor:      "stonetop.item.move.rollStat.favor",
+	ask:        "stonetop.item.move.rollStat.ask",
+	prompt:     "stonetop.item.move.rollStat.prompt",
 };
 
 // moveType is the resolution key for reference moves seeded by type (no container owns them).
@@ -33,6 +48,7 @@ const ROLL_STAT_CHOICES = {
 const MOVE_TYPE_CHOICES = {
 	"":           "stonetop.item.move.moveType.none",
 	basic:        "stonetop.item.move.moveType.basic",
+	expedition:   "stonetop.item.move.moveType.expedition",
 	homefront:    "stonetop.item.move.moveType.homefront",
 	special:      "stonetop.item.move.moveType.special",
 	follower:     "stonetop.item.move.moveType.follower",
@@ -40,15 +56,15 @@ const MOVE_TYPE_CHOICES = {
 };
 
 const DEFAULT_ROWS = {
-	entry: { type: "entry", slug: "", content: { title: null, text: null }, note: null, track: null, input: null, followers: [], outfitItems: [], inlineDisplay: false },
+	entry: { type: "entry", slug: "", content: { title: null, text: null }, note: null, track: null, input: null, followers: null, outfitItems: [] },
 	pick:  { type: "pick",  pickCount: 1, inline: false, options: [] },
 };
 
 const BLANK_OUTFIT_ITEM = { slug: "", name: "", weight: 0, inventoryColumn: "regular" };
-const BLANK_PICK_OPTION  = { slug: "", content: { title: null, text: null }, followers: [], outfitItems: [], note: null, type: null, inlineDisplay: false };
+const BLANK_PICK_OPTION  = { slug: "", content: { title: null, text: null }, followers: null, outfitItems: [], note: null, type: null };
 
 function _blankOption(n) {
-	return { ...BLANK_PICK_OPTION, slug: "option-" + n, content: { title: "Option " + n, text: null }, outfitItems: [], followers: [] };
+	return { ...BLANK_PICK_OPTION, slug: "option-" + n, content: { title: "Option " + n, text: null }, outfitItems: [], followers: null };
 }
 
 export function createStonetopMoveSheetClass(Base) {
@@ -82,7 +98,7 @@ export function createStonetopMoveSheetClass(Base) {
 			context.rich             = moveSheetRichText(this.item.system);
 			await enrichRichTextTree(context.rich, this.item?.getRollData?.() ?? {});
 			if (context.system.choices) {
-				context.choiceSnapshot = ChoiceGroup.fromPackData(context.system.choices, new ChoiceValues(), {});
+				context.choiceSnapshot = buildChoiceGroup(context.system.choices, new ChoiceValues());
 				context.choiceRows = context.system.choices.list.map((row, ri) => ({
 					...row,
 					_index: ri,
@@ -144,7 +160,7 @@ export function createStonetopMoveSheetClass(Base) {
 		}
 
 		async _addChoicesGroup() {
-			await this._saveChoices({ slug: toSlug(this.item.name) || "choices", list: [] });
+			await this._saveChoices(newGroup(this.item.system.slug));
 		}
 
 		async _removeChoicesGroup() {
@@ -226,17 +242,13 @@ export function createStonetopMoveSheetClass(Base) {
 			let value;
 			if      (el.type === "checkbox") value = el.checked;
 			else if (el.type === "number")   value = el.value ? Number(el.value) : null;
-			else if (field === "followers")  value = el.value ? el.value.split(",").map(s => s.trim()).filter(Boolean) : [];
+			else if (field === "followers.slugs") value = el.value ? el.value.split(",").map(s => s.trim()).filter(Boolean) : [];
 			else                             value = el.value || null;
 
-			const choices = this._choicesClone();
-			let obj;
-			if      (target === "group")  obj = choices;
-			else if (target === "row")    obj = choices.list[rowIndex];
-			else if (target === "option") obj = choices.list[rowIndex].options[optIndex];
-
-			foundry.utils.setProperty(obj, field, value);
-			await this._saveChoices(choices);
+			// Shared setField handles the followers-object seeding/collapse (see choiceGroupEdit).
+			await this._saveChoices(setChoicesField(this._choicesClone(), {
+				target, rowIndex, optionIndex: optIndex, field, value,
+			}));
 		}
 	};
 }

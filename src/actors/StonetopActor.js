@@ -45,19 +45,23 @@ export function createStonetopActorClass(BaseActor) {
 			if (!rollStat && !item) return false;
 
 			const rollMode = this.typedActor.rollMode;
-			const isDescription = event.target.getAttribute("data-show") === "description";
 
 			const request = item
 				? RollRequest.fromItem(item, rollStat, rollMode)
 				: RollRequest.fromStat(rollStat, rollMode);
 
-			await this._rolling.execute(request, {descriptionOnly: isDescription});
+			await this._rolling.execute(request);
 			return true;
 		}
 
-		static defaultName({type, parent, pack} = {}) {
-			const key = `stonetop.actor.defaultName.${type}`;
-			return game.i18n.has(key) ? game.i18n.localize(key) : super.defaultName({type, parent, pack});
+		// Post an owned item's full text (description + all result tiers) to chat, without rolling.
+		async sendItemToChat(item) {
+			await this._rolling.execute(RollRequest.fromItem(item, null, "normal"), {descriptionOnly: true});
+		}
+
+		// Post bare text to chat as this actor — for content with no item behind it (inline arcanum moves).
+		async sendDescriptionToChat(label, description) {
+			await this._rolling.postDescription(label, description);
 		}
 
 		async _onCreateDescendantDocuments(parent, collection, documents, data, options, userId) {

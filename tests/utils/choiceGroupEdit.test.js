@@ -5,12 +5,19 @@ import {
 	instinctOptions, instinctFromStrings,
 } from "../../src/utils/choiceGroupEdit.js";
 
-const g = () => newGroup("choices");
+const g = () => newGroup("test-group");
 
 describe("choiceGroupEdit", () => {
 	it("newGroup makes an empty {slug, list}", () => {
 		expect(newGroup("x")).toEqual({ slug: "x", list: [] });
-		expect(newGroup().slug).toBe("choices");
+	});
+
+	// The slug IS the namespace the group's values are stored under, so a group cannot be minted
+	// without one. It used to default to the literal "choices", which meant two groups added to the
+	// same item silently shared one value store.
+	it("newGroup refuses to mint a group with no slug", () => {
+		expect(() => newGroup()).toThrow(/slug/i);
+		expect(() => newGroup("")).toThrow(/slug/i);
 	});
 
 	it("addRow appends an entry (with a generated slug) and a pick (with one option)", () => {
@@ -74,6 +81,23 @@ describe("choiceGroupEdit", () => {
 		expect(group.list[0].pickCount).toBe(3);
 		group = setField(group, { target: "option", rowIndex: 0, optionIndex: 0, field: "content.title", value: "Hi" });
 		expect(group.list[0].options[0].content.title).toBe("Hi");
+	});
+
+	it("setField on a followers.* subfield seeds the grouped followers object on a blank row", () => {
+		let group = addRow(g(), "entry");
+		expect(group.list[0].followers).toBeNull();
+		group = setField(group, { target: "row", rowIndex: 0, field: "followers.slugs", value: ["enfys"] });
+		expect(group.list[0].followers).toEqual({ slugs: ["enfys"], inlineDisplay: false, hideFromFollowersTab: false });
+		group = setField(group, { target: "row", rowIndex: 0, field: "followers.hideFromFollowersTab", value: true });
+		expect(group.list[0].followers.hideFromFollowersTab).toBe(true);
+	});
+
+	it("setField collapses followers to null when the slugs empty", () => {
+		let group = addRow(g(), "entry");
+		group = setField(group, { target: "row", rowIndex: 0, field: "followers.slugs", value: ["enfys"] });
+		group = setField(group, { target: "row", rowIndex: 0, field: "followers.inlineDisplay", value: true });
+		group = setField(group, { target: "row", rowIndex: 0, field: "followers.slugs", value: [] });
+		expect(group.list[0].followers).toBeNull();
 	});
 
 	it("instinct: round-trips a list of strings through the choice-group shape", () => {

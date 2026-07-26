@@ -1,20 +1,24 @@
 {
 	"TYPES": {
 		"Actor": {
+			"character": "Character",
+			"npc": "NPC",
 			"steading": "Steading"
 		},
 		"Item": {
-			"steadfast": "Steadfast"
+			"move": "Move",
+			"arcanum": "Arcanum",
+			"playbook": "Playbook",
+			"insert": "Insert",
+			"improvement": "Improvement",
+			"steadfast": "Steadfast",
+			"follower": "Follower",
+			"npc": "NPC",
+			"outfitItem": "Outfit Item",
+			"possession": "Possession"
 		}
 	},
 	"stonetop": {
-		"actor": {
-			"defaultName": {
-				"character": "New Character",
-				"npc": "New NPC",
-				"steading": "New Steading"
-			}
-		},
 		"dialog": {
 			"roll": "Roll"
 		},
@@ -63,11 +67,18 @@
 			"dis": "Disadvantage"
 		},
 		"steading": {
-			"startsAt": "Starts at {value}"
+			"startsAt": "Starts at {value}",
+			"linkColumn": "Link",
+			"linkHint": "Drag a document onto an entry to link it.",
+			"linkDropTitle": "Drop an actor, journal, or item here to link it",
+			"unlink": "Unlink"
 		},
 		"followers": {
 			"empty": "Drag followers here from the Followers compendium.",
 			"remove": "Remove",
+			"kind": "Kind",
+			"kindCreature": "Creature",
+			"kindObject": "Object (no combat stats)",
 			"hp": "HP",
 			"armor": "Armor",
 			"damage": "Damage",
@@ -116,6 +127,65 @@
 			"removeInstinct": "Remove instinct",
 			"choices": "Choices",
 			"addChoices": "Add choices group"
+		},
+		"playbook": {
+			"tabs": {
+				"basics": "Basics",
+				"backgrounds": "Backgrounds",
+				"traits": "Traits",
+				"choices": "Choices",
+				"possessions": "Possessions",
+				"moves": "Moves",
+				"grants": "Grants",
+				"introductions": "Intro"
+			},
+			"namePlaceholder": "Playbook name",
+			"remove": "Remove",
+			"moveUp": "Move up",
+			"moveDown": "Move down",
+			"refMissing": "Not found — is the item in a loaded compendium or the world?",
+			"description": "Description",
+			"hp": "HP",
+			"damage": "Damage die",
+			"statsNote": "Stats note",
+			"startingMovesNote": "Starting moves note",
+			"backgrounds": "Backgrounds",
+			"addBackground": "Add background",
+			"backgroundLabel": "Background name",
+			"backgroundDescription": "Background description (markdown)",
+			"grantedMoves": "Granted moves",
+			"backgroundChoices": "Background choices",
+			"removeChoices": "Remove choices",
+			"addChoices": "Add choices group",
+			"origin": "Origin",
+			"addOrigin": "Add region",
+			"originRegion": "Region",
+			"originNames": "Names (one per line)",
+			"instinct": "Instinct",
+			"addInstinct": "Add instinct",
+			"appearance": "Appearance",
+			"addGroup": "Add group",
+			"removeGroup": "Remove group",
+			"choices": "Choices",
+			"possessions": "Special Possessions",
+			"enable": "Enable",
+			"pickCount": "Pick count",
+			"pickNote": "Pick note",
+			"possessionList": "Possessions",
+			"addPossession": "Add possession",
+			"preselected": "Starts selected (auto-added)",
+			"moves": "Moves",
+			"addMove": "Add move",
+			"startingMove": "Starts acquired at creation",
+			"startingHint": "Check a move to seed it acquired at character creation.",
+			"followers": "Followers",
+			"addFollower": "Add follower",
+			"inserts": "Inserts",
+			"addInsert": "Add insert",
+			"grantsHint": "Followers and inserts granted when this playbook is selected.",
+			"introStep3": "Step 3 (intro text)",
+			"introStep4": "Step 4 (NPC questions)",
+			"introStep6": "Step 6 (PC questions)"
 		},
 		"improvement": {
 			"namePlaceholder": "Improvement name",
@@ -258,7 +328,33 @@
 			},
 			"prosperity": "Prosperity",
 			"prosperityLacking": "(lacking)",
-			"prosperityLackingNote": "The steading is <em>lacking</em>: treat Prosperity as if it's 1 lower than it is."
+			"prosperityLackingNote": "The steading is <em>lacking</em>: treat Prosperity as if it's 1 lower than it is.",
+			"prosperityTable": {
+				"crude": "Gear is <em>crude</em>",
+				"piercing1": "<em>x</em> = 1 piercing",
+				"piercing2": "<em>x</em> = 2 piercing"
+			}
+		},
+		"outfitItem": {
+			"namePlaceholder": "Item name",
+			"weight": "Weight",
+			"weightHint": "Weight is how many diamonds the row shows — 0 for a weightless item.",
+			"column": "Column",
+			"columnRegular": "Regular",
+			"columnSmall": "Small items",
+			"twoCol": "Span both columns",
+			"tags": "Tags",
+			"tagsPlaceholder": "hand, thrown, near",
+			"note": "Note",
+			"notePlaceholder": "Parenthetical shown after the name",
+			"armor": "Armor",
+			"addArmor": "Add armor",
+			"removeArmor": "Remove armor",
+			"armorHint": "While carried: the highest base among your items, plus every modifier.",
+			"armorBase": "Base",
+			"armorModifier": "Modifier",
+			"edit": "Edit",
+			"done": "Done"
 		},
 		"settings": {
 			"hideRollMode": {
@@ -367,6 +463,7 @@
 				"otherMoves": "Other Moves",
 				"addMove": "Add Move",
 				"removeMove": "Remove Move",
+				"sendToChat": "Send to Chat",
 				"requires": "Requires",
 				"notMet": "Not Met"
 			},
@@ -401,17 +498,23 @@
 			"move": {
 				"namePlaceholder": "Move Name",
 				"rollStat": {
-					"none":   "— No Roll —",
-					"ask":    "Ask (player chooses)",
-					"prompt": "Prompt (no roll)"
+					"none":       "— No Roll —",
+					"ask":        "Ask (player chooses)",
+					"prompt":     "Prompt (no roll)",
+					"fortunes":   "Fortunes (steading)",
+					"prosperity": "Prosperity (steading)",
+					"population": "Population (steading)",
+					"defenses":   "Defenses (steading)",
+					"favor":      "Favor (Thrall)"
 				},
 				"moveType": {
-					"none":      "— Type —",
-					"basic":     "Basic",
-					"homefront": "Homefront",
-					"special":   "Special",
-					"follower":  "Follower",
-					"other":     "Other"
+					"none":       "— Type —",
+					"basic":      "Basic",
+					"expedition": "Expedition",
+					"homefront":  "Homefront",
+					"special":    "Special",
+					"follower":   "Follower",
+					"other":      "Other"
 				},
 				"results": {
 					"successPlaceholder": "What happens on a 10+…",
@@ -419,7 +522,7 @@
 					"failurePlaceholder": "What happens on a 6-…"
 				},
 				"details": {
-					"repeatMax":          "Checkboxes"
+					"repeatMax": "Checkboxes"
 				}
 			}
 		}

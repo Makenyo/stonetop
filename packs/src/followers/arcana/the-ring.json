@@ -1,0 +1,63 @@
+{
+	"_id": "IFe9XzX2z6fYnbsr",
+	"_key": "!items!IFe9XzX2z6fYnbsr",
+	"name": "The Ring",
+	"type": "follower",
+	"img": "systems/stonetop/assets/content/wonders/markers/marker-triskele.png",
+	"system": {
+		"slug": "the-ring",
+		"reference": null,
+		"arcanaSlug": "ring-of-daagon",
+		"tagList": {
+			"selected": [
+				"deep-wise",
+				"greedy",
+				"patient",
+				"knowledgeable",
+				"magical"
+			],
+			"options": [],
+			"multi": true,
+			"allowCustom": true
+		},
+		"hp": {
+			"value": 0,
+			"max": 0
+		},
+		"armor": "",
+		"damage": "",
+		"specialQuality": "",
+		"instinct": {
+			"selected": [
+				"to give nothing (not even secrets or info) away"
+			],
+			"options": [],
+			"multi": false,
+			"allowCustom": true
+		},
+		"cost": {
+			"selected": [
+				"devouring fallen, named creatures"
+			],
+			"options": [],
+			"multi": false,
+			"allowCustom": true
+		},
+		"loyalty": {
+			"value": 0,
+			"max": 3
+		},
+		"kind": "object",
+		"choices": [
+			{
+				"slug": "choices",
+				"list": []
+			}
+		],
+		"moves": "- Speak mind-to-mind\n- Reveal a secret, for a price\n- Know someone’s desires",
+		"description": "",
+		"notes": ""
+	},
+	"flags": {},
+	"folder": "BNaYX2Y4eMe7EOPK"
+}
