@@ -12,7 +12,7 @@ import { FakeMoves } from "../../fakes/FakeMoves.js";
 import { Stats } from "../../../src/model/data/character/Stats.js";
 import {
 	ArcanaSnapshot, ArcanaSectionSnapshot,
-	ArcanumSnapshot, ArcanumFrontSnapshot, ArcanumBackSnapshot,
+	ArcanumSnapshot, ArcanumSideSnapshot,
 	ChoiceGroup, EntryRow,
 } from "../../../src/model/snapshot/character/CharacterSnapshot.js";
 
@@ -58,11 +58,10 @@ function makeActor(items = []) {
 
 const FFYRNIG_SPHERE = {
 	slug: "huge-wooden-sphere",
+	name: "A Huge Wooden Sphere",
 	front: {
-		title: "A Huge Wooden Sphere",
 		item: { name: "A Huge Wooden Sphere", weight: null, note: "immobile", inventoryColumn: null },
-		description: "<p>Half-buried and largely overgrown.</p>",
-		unlock: {
+		choices: [{
 			slug: "huge-wooden-sphere",
 			list: [
 				{ type: "heading", content: { text: "The pictograms depict some sort of recipe, which you can learn but you must…" } },
@@ -72,16 +71,13 @@ const FFYRNIG_SPHERE = {
 				{ type: "heading", content: { text: "And then…" } },
 				{ type: "heading", slug: "risk-recipe",  content: { text: "… risk getting the recipe wrong." }, track: { max: 3 } },
 			],
-		},
+		}],
 	},
 	back: {
 		title: "Ffyrnig Tonic",
 		item: { name: "Ffyrnig Tonic", weight: 1, note: "magical", inventoryColumn: "regular" },
-		description: "<p>When you pickle fresh ffyrnig root…</p>",
 		resource: { max: 3, maxStat: null, title: "Ffyrnig Tonic", labels: [] },
-		moves: [
-			{ name: "When you take a draught of ffyrnig tonic", text: "<p>pick 1: regain HP or clear a debility.</p>" },
-		],
+		choices: [],
 	},
 };
 
@@ -191,65 +187,47 @@ describe("CharacterArcana.buildSnapshot()", () => {
 			return (await makeArcana([makeArcanumItem(FFYRNIG_SPHERE, overrides)]).buildSnapshot()).minor.items[0];
 		}
 
-		it("front is a ArcanumFrontSnapshot", async () => {
-			expect((await getItem()).front).toBeInstanceOf(ArcanumFrontSnapshot);
+		// The front's body is one choices group.
+		const unlock = async (overrides = {}) => (await getItem(overrides)).front.choices[0];
+
+		it("front is an ArcanumSideSnapshot", async () => {
+			expect((await getItem()).front).toBeInstanceOf(ArcanumSideSnapshot);
 		});
 
-		it("front has correct title, item, description", async () => {
+		it("front is headed by the arcanum's own document name, and carries its item", async () => {
 			const { front } = await getItem();
 			expect(front.title.raw).toBe("A Huge Wooden Sphere");
 			expect(front.item?.weight).toBeNull();
 			expect(front.item?.note.raw).toBe("immobile");
-			expect(front.description.raw).toContain("Half-buried");
 		});
 
-		it("front.unlock is a ChoiceGroup", async () => {
-			expect((await getItem()).front.unlock).toBeInstanceOf(ChoiceGroup);
+		it("the front group is a ChoiceGroup namespaced by the arcanum slug", async () => {
+			const g = await unlock();
+			expect(g).toBeInstanceOf(ChoiceGroup);
+			expect(g.slug).toBe("huge-wooden-sphere");
 		});
 
-		it("front.unlock.slug is the arcanum slug", async () => {
-			expect((await getItem()).front.unlock.slug).toBe("huge-wooden-sphere");
-		});
-
-		it("front.unlock.list first item is an EntryRow with the unlock description", async () => {
-			const row = (await getItem()).front.unlock.list[0];
+		it("the group's first item is an EntryRow with the recipe text", async () => {
+			const row = (await unlock()).list[0];
 			expect(row).toBeInstanceOf(EntryRow);
 			expect(row.content.text.raw).toBe("The pictograms depict some sort of recipe, which you can learn but you must…");
+			expect(row.track).toBeNull();
 		});
 
-		it("front.unlock.list has all entry nodes", async () => {
-			const { list } = (await getItem()).front.unlock;
+		it("the group's list has all entry nodes", async () => {
+			const { list } = await unlock();
 			expect(list).toHaveLength(6);
 			expect(list.every(r => r.type === "entry")).toBe(true);
 		});
 
-		it("entry row without track has null track field", async () => {
-			const row = (await getItem()).front.unlock.list[0];
-			expect(row).toBeInstanceOf(EntryRow);
-			expect(row.track).toBeNull();
-		});
-
-		it("entry row with track has slug and checks array", async () => {
-			const row = (await getItem()).front.unlock.list[2];
-			expect(row).toBeInstanceOf(EntryRow);
-			expect(row.track).not.toBeNull();
+		it("a tracked entry has slug + checks (defaults false, max:3 → length 3, reflects saved values)", async () => {
+			const row = (await unlock()).list[2];
 			expect(row.track.slug).toBe("dig-sphere");
 			expect(row.content.text.raw).toBe("… first dig up and clean the sphere.");
-		});
-
-		it("heading+track defaults checks to all false when no count saved", async () => {
-			const row = (await getItem()).front.unlock.list[2];
 			expect(row.track.checks).toEqual([false]);
-		});
-
-		it("heading+track with max:3 has checks array of length 3", async () => {
-			const row = (await getItem()).front.unlock.list[5];
-			expect(row.track.checks).toHaveLength(3);
-		});
-
-		it("heading+track checks reflect saved unlock values", async () => {
-			const row = (await getItem({ choiceValues: { "huge-wooden-sphere": { "dig-sphere": 1 } } })).front.unlock.list[2];
-			expect(row.track.checks).toEqual([true]);
+			expect((await unlock()).list[5].track.checks).toHaveLength(3);
+			const saved = (await unlock({ choiceValues: { "huge-wooden-sphere": { "dig-sphere": 1 } } })).list[2];
+			expect(saved.track.checks).toEqual([true]);
 		});
 	});
 
@@ -258,16 +236,15 @@ describe("CharacterArcana.buildSnapshot()", () => {
 			return (await makeArcana([makeArcanumItem(FFYRNIG_SPHERE, overrides)]).buildSnapshot()).minor.items[0];
 		}
 
-		it("back is a ArcanumBackSnapshot", async () => {
-			expect((await getItem()).back).toBeInstanceOf(ArcanumBackSnapshot);
+		it("back is an ArcanumSideSnapshot", async () => {
+			expect((await getItem()).back).toBeInstanceOf(ArcanumSideSnapshot);
 		});
 
-		it("back has correct title, item, description", async () => {
+		it("back has correct title and item", async () => {
 			const { back } = await getItem();
 			expect(back.title.raw).toBe("Ffyrnig Tonic");
 			expect(back.item?.weight).toBe(1);
 			expect(back.item?.note.raw).toBe("magical");
-			expect(back.description.raw).toContain("pickle fresh ffyrnig root");
 		});
 
 		it("back.resource is populated and defaults current to 0", async () => {
@@ -288,22 +265,8 @@ describe("CharacterArcana.buildSnapshot()", () => {
 			expect((await arcana.buildSnapshot()).minor.items[0].back.resource).toBeNull();
 		});
 
-		it("back.moves[0] is a MoveSnapshot with name and description (the raw text)", async () => {
-			const item = await getItem();
-			expect(item.back.moves[0]).toMatchObject({
-				name: "When you take a draught of ffyrnig tonic",
-			});
-			expect(item.back.moves[0].description.raw).toBe("<p>pick 1: regain HP or clear a debility.</p>");
-		});
-
-		it("back.moves is empty when absent in JSON", async () => {
-			const noMoves = { ...FFYRNIG_SPHERE, back: { ...FFYRNIG_SPHERE.back, moves: undefined } };
-			const arcana = new CharacterArcana(makeActor([makeArcanumItem(noMoves)]), new FakeArcanaRepository());
-			expect((await arcana.buildSnapshot()).minor.items[0].back.moves).toEqual([]);
-		});
-
-		it("back.choices is null when absent in JSON", async () => {
-			expect((await getItem()).back.choices).toBeNull();
+		it("back.choices is an empty array when absent in JSON", async () => {
+			expect((await getItem()).back.choices).toEqual([]);
 		});
 	});
 
@@ -344,11 +307,11 @@ describe("CharacterArcana.buildSnapshot()", () => {
 			expect(snap.minor.items[0].flipped).toBe(false);
 		});
 
-		it("setChoiceCount on the unlock group is reflected in buildSnapshot unlock check state", async () => {
+		it("setChoiceCount on the front group is reflected in buildSnapshot check state", async () => {
 			const arcana = makeArcana([makeArcanumItem(FFYRNIG_SPHERE)]);
 			await arcana.setChoiceCount("huge-wooden-sphere", "huge-wooden-sphere", "dig-sphere", 1);
 			const snap = await arcana.buildSnapshot();
-			const row = snap.minor.items[0].front.unlock.list[2];
+			const row = snap.minor.items[0].front.choices[0].list[2];
 			expect(row.track.checks).toEqual([true]);
 		});
 
@@ -356,7 +319,7 @@ describe("CharacterArcana.buildSnapshot()", () => {
 			const arcana = makeArcana([makeArcanumItem(CRACKED_FLUTE)]);
 			await arcana.setChoiceCount("cracked-flute", "cracked-flute", "andalau-of-the-flute", 1);
 			const snap = await arcana.buildSnapshot();
-			expect(snap.minor.items[0].back.choices.list[0].track.checks).toEqual([true]);
+			expect(snap.minor.items[0].back.choices[0].list[0].track.checks).toEqual([true]);
 		});
 
 		it("selectChoice writes the picked option under the group slug and clears its siblings", async () => {
@@ -410,8 +373,8 @@ describe("CharacterArcana.buildSnapshot()", () => {
 
 const CARVINGS_IN_A_CAVE = {
 	slug: "carvings-in-a-cave",
+	name: "Carvings in a Cave",
 	front: {
-		title: "Carvings in a Cave",
 		item: null,
 		description: "<p>Strange carvings.</p>",
 		unlock: { description: "Unlock by…", requirements: [] },
@@ -428,8 +391,8 @@ const CARVINGS_IN_A_CAVE = {
 
 const BOW_WITH_NO_STRING = {
 	slug: "bow-with-no-string",
+	name: "A Bow with No String",
 	front: {
-		title: "A Bow with No String",
 		item: { name: "A Bow with No String", weight: 1, note: null, inventoryColumn: "regular" },
 		description: "<p>An ancient bow.</p>",
 		unlock: { description: "Unlock by…", requirements: [] },
@@ -587,47 +550,45 @@ describe("CharacterArcana — outfitItems sync", () => {
 
 const CRACKED_FLUTE = {
 	slug: "cracked-flute",
+	name: "A cracked flute",
 	front: {
-		title: "A cracked flute",
 		item: null,
 		description: "<p>A cracked flute.</p>",
 		unlock: { slug: "cracked-flute", list: [] },
 	},
 	back: {
 		title: "Dancing Wind Spirit",
-		choices: {
+		choices: [{
 			slug: "cracked-flute",
 			list: [
-				{ type: "entry", slug: "andalau-of-the-flute", followers: { slugs: ["andalau-of-the-flute"], inlineDisplay: true }, content: {}, track: { max: 1 } },
+				{ type: "entry", slug: "andalau-of-the-flute", grants: [{ type: "follower", slug: "andalau-of-the-flute", locations: ["inline", "tab"] }], content: {}, track: { max: 1 } },
 			],
-		},
+		}],
 		item: null,
 		description: "<p>The andalau manifests.</p>",
 		resource: null,
-		move: null,
 	},
 };
 
 const STONE_IDOL = {
 	slug: "stone-idol",
+	name: "A stone idol",
 	front: {
-		title: "A stone idol",
 		item: null,
 		description: "<p>A tiny Fae.</p>",
 		unlock: { slug: "stone-idol", list: [] },
 	},
 	back: {
 		title: "The Angry Little God",
-		choices: {
+		choices: [{
 			slug: "stone-idol",
 			list: [
-				{ type: "entry", slug: "all-mighty-thistlewisk", followers: { slugs: ["all-mighty-thistlewisk"], inlineDisplay: true }, content: {}, track: { max: 1 } },
+				{ type: "entry", slug: "all-mighty-thistlewisk", grants: [{ type: "follower", slug: "all-mighty-thistlewisk", locations: ["inline", "tab"] }], content: {}, track: { max: 1 } },
 			],
-		},
+		}],
 		item: null,
 		description: "<p>It wakes.</p>",
 		resource: null,
-		move: null,
 	},
 };
 
@@ -760,7 +721,7 @@ describe("CharacterArcana — follower sync", () => {
 		// Unchecked: nothing embedded, but the card row still references the follower by slug (the card
 		// resolves it against followers.bySlug at render — CharacterFollowers builds the preview there).
 		let snap = await charArcana.buildSnapshot();
-		let row = snap.minor.items[0].back.choices.list.find(r => r.slug === "andalau-of-the-flute");
+		let row = snap.minor.items[0].back.choices[0].list.find(r => r.slug === "andalau-of-the-flute");
 		expect([...actor.items].filter(i => i.type === "follower")).toHaveLength(0);
 		expect(row.followers.slugs).toEqual(["andalau-of-the-flute"]);
 
@@ -769,7 +730,7 @@ describe("CharacterArcana — follower sync", () => {
 		const owned = [...actor.items].find(i => i.type === "follower" && i.system?.slug === "andalau-of-the-flute");
 		expect(owned?.system?.owned).toBe(true);
 		snap = await charArcana.buildSnapshot();
-		row = snap.minor.items[0].back.choices.list.find(r => r.slug === "andalau-of-the-flute");
+		row = snap.minor.items[0].back.choices[0].list.find(r => r.slug === "andalau-of-the-flute");
 		expect(row.followers.slugs).toEqual(["andalau-of-the-flute"]);
 	});
 });
@@ -780,19 +741,19 @@ describe("CharacterArcana.buildSnapshot() — back.choices", () => {
 	it("back.choices is null when arcanum has no back choices", async () => {
 		const { charArcana } = makeArcanaWithFollowers([makeArcanumItem(FFYRNIG_SPHERE)], [FFYRNIG_SPHERE]);
 		const snap = await charArcana.buildSnapshot();
-		expect(snap.minor.items[0].back.choices).toBeNull();
+		expect(snap.minor.items[0].back.choices).toEqual([]);
 	});
 
 	it("back.choices is a ChoiceGroup when arcanum has back.choices", async () => {
 		const { charArcana } = makeArcanaWithFollowers([makeArcanumItem(CRACKED_FLUTE)]);
 		const snap = await charArcana.buildSnapshot();
-		expect(snap.minor.items[0].back.choices).toBeInstanceOf(ChoiceGroup);
+		expect(snap.minor.items[0].back.choices[0]).toBeInstanceOf(ChoiceGroup);
 	});
 
-	it("back.choices.list contains EntryRow instances for follower rows", async () => {
+	it("back.choices[0].list contains EntryRow instances for follower rows", async () => {
 		const { charArcana } = makeArcanaWithFollowers([makeArcanumItem(CRACKED_FLUTE)]);
 		const snap = await charArcana.buildSnapshot();
-		const row = snap.minor.items[0].back.choices.list[0];
+		const row = snap.minor.items[0].back.choices[0].list[0];
 		expect(row).toBeInstanceOf(EntryRow);
 		expect(row.slug).toBe("andalau-of-the-flute");
 	});
@@ -801,21 +762,21 @@ describe("CharacterArcana.buildSnapshot() — back.choices", () => {
 		const { charArcana } = makeArcanaWithFollowers([makeArcanumItem(FFYRNIG_SPHERE)], [FFYRNIG_SPHERE]);
 		const snap = await charArcana.buildSnapshot();
 		// FFYRNIG_SPHERE has no back.choices at all; a link-carrying row would instead yield a reference.
-		expect(snap.minor.items[0].back.choices).toBeNull();
+		expect(snap.minor.items[0].back.choices).toEqual([]);
 	});
 
 	it("EntryRow.followers is a slug REFERENCE — resolution to a card is CharacterFollowers' job", async () => {
 		const { charArcana } = makeArcanaWithFollowers([makeArcanumItem(CRACKED_FLUTE)]);
 		const snap = await charArcana.buildSnapshot();
 		// buildSnapshot emits only the reference; no card data lives on the choice tree.
-		expect(snap.minor.items[0].back.choices.list[0].followers.slugs).toEqual(["andalau-of-the-flute"]);
-		expect(snap.minor.items[0].back.choices.list[0].followers.cards).toBeUndefined();
+		expect(snap.minor.items[0].back.choices[0].list[0].followers.slugs).toEqual(["andalau-of-the-flute"]);
+		expect(snap.minor.items[0].back.choices[0].list[0].followers.cards).toBeUndefined();
 	});
 
 	it("EntryRow.track.checks is [false] when backChoices count is 0", async () => {
 		const { charArcana } = makeArcanaWithFollowers([makeArcanumItem(CRACKED_FLUTE)]);
 		const snap = await charArcana.buildSnapshot();
-		expect(snap.minor.items[0].back.choices.list[0].track.checks).toEqual([false]);
+		expect(snap.minor.items[0].back.choices[0].list[0].track.checks).toEqual([false]);
 	});
 
 	it("EntryRow.track.checks is [true] when backChoices count is 1", async () => {
@@ -823,7 +784,7 @@ describe("CharacterArcana.buildSnapshot() — back.choices", () => {
 			makeArcanumItem(CRACKED_FLUTE, { choiceValues: { "cracked-flute": { "andalau-of-the-flute": 1 } } }),
 		]);
 		const snap = await charArcana.buildSnapshot();
-		expect(snap.minor.items[0].back.choices.list[0].track.checks).toEqual([true]);
+		expect(snap.minor.items[0].back.choices[0].list[0].track.checks).toEqual([true]);
 	});
 });
 
@@ -878,12 +839,18 @@ describe("CharacterArcana.onArcanumCreated", () => {
 	});
 });
 
-// -- Tests: mystery moves (major arcana) ---------------------------------------
+// -- Tests: moves granted by choice-group entries (major arcana) ---------------
 
 const AZURE_HAND = {
 	slug: "azure-hand", major: true, name: "Azure Hand",
-	front: { title: "Azure Hand", item: null, description: "<p>A staff.</p>", unlock: { slug: "azure-hand", list: [] } },
-	back:  { title: "Mysteries", item: null, description: "<p>The back.</p>", moveSlugs: ["battery", "resonance"] },
+	front: { item: null, description: "<p>A staff.</p>", unlock: { slug: "azure-hand", list: [] } },
+	back: {
+		title: "Mysteries", item: null, description: "<p>The back.</p>",
+		choices: [{ slug: "moves", title: "Moves", list: [
+			{ type: "entry", slug: "battery",   track: { max: 1 }, grants: [{ type: "move", slug: "battery",   locations: ["inline"] }] },
+			{ type: "entry", slug: "resonance", track: { max: 1 }, grants: [{ type: "move", slug: "resonance", locations: ["inline"] }] },
+		] }],
+	},
 };
 
 function makeArcanaWithMoves(items = [], moves = new FakeMoves(), arcana = [AZURE_HAND]) {
@@ -892,8 +859,8 @@ function makeArcanaWithMoves(items = [], moves = new FakeMoves(), arcana = [AZUR
 	return { actor, charArcana, moves };
 }
 
-describe("CharacterArcana — mystery moves", () => {
-	it("onArcanumCreated registers an arcana-<slug> move category from back.moveSlugs, seeded un-acquired", async () => {
+describe("CharacterArcana — granted moves", () => {
+	it("onArcanumCreated registers an arcana-<slug> move category from the card's move grants", async () => {
 		const { charArcana, moves } = makeArcanaWithMoves();
 		await charArcana.onArcanumCreated(makeArcanumItem(AZURE_HAND));
 		expect(moves.addedCategories).toEqual([
@@ -901,7 +868,7 @@ describe("CharacterArcana — mystery moves", () => {
 		]);
 	});
 
-	it("onArcanumCreated registers nothing for an arcanum without moveSlugs (minor/custom)", async () => {
+	it("onArcanumCreated registers nothing for an arcanum that grants no moves (minor/custom)", async () => {
 		const { charArcana, moves } = makeArcanaWithMoves();
 		await charArcana.onArcanumCreated(makeArcanumItem(FFYRNIG_SPHERE));
 		expect(moves.addedCategories).toEqual([]);
@@ -912,30 +879,11 @@ describe("CharacterArcana — mystery moves", () => {
 		await charArcana.removeArcanum("azure-hand");
 		expect(moves.removedCategories).toContain("arcana-azure-hand");
 	});
-
-	it("buildSnapshot renders the resolved real-move snapshots on the major card", async () => {
-		const moves = new FakeMoves();
-		const resolved = [{ name: "Battery" }, { name: "Resonance" }];
-		moves.setSnapshotsForCategory("arcana-azure-hand", resolved);
-		const { charArcana } = makeArcanaWithMoves([makeArcanumItem(AZURE_HAND)], moves);
-
-		const snap = await charArcana.buildSnapshot();
-		const card = snap.major.items.find(c => c.slug === "azure-hand");
-		expect(card.back.moves).toEqual(resolved);
-	});
-
-	it("buildSnapshot keeps the inline back.moves fallback for arcana without moveSlugs", async () => {
-		const { charArcana } = makeArcanaWithMoves([makeArcanumItem(FFYRNIG_SPHERE)], new FakeMoves(), [FFYRNIG_SPHERE]);
-		const snap = await charArcana.buildSnapshot();
-		const card = snap.minor.items.find(c => c.slug === "huge-wooden-sphere");
-		expect(card.back.moves).toHaveLength(1);
-		expect(card.back.moves[0].name).toBe("When you take a draught of ffyrnig tonic");
-	});
 });
 
-// ── sendMysteryMoveToChat ─────────────────────────────────────────────────────
+// ── sendArcanumMoveToChat ─────────────────────────────────────────────────────
 
-describe("CharacterArcana.sendMysteryMoveToChat", () => {
+describe("CharacterArcana.sendArcanumMoveToChat", () => {
 	function arcanumWithInlineMove() {
 		return makeArcanumItem({
 			slug: "silvery-ring",
@@ -949,7 +897,7 @@ describe("CharacterArcana.sendMysteryMoveToChat", () => {
 	it("posts the inline move's name + text through the actor's chat surface", async () => {
 		const actor = makeActor([arcanumWithInlineMove()]);
 		const arcana = new CharacterArcana(actor, new FakeArcanaRepository([]));
-		expect(await arcana.sendMysteryMoveToChat("move-abc12345")).toBe(true);
+		expect(await arcana.sendArcanumMoveToChat("move-abc12345")).toBe(true);
 		expect(actor.chatDescriptions).toEqual([
 			{ label: "Whispered Command", description: "Will someone to obey." },
 		]);
@@ -958,7 +906,7 @@ describe("CharacterArcana.sendMysteryMoveToChat", () => {
 	it("returns false (and posts nothing) when no owned arcanum carries the id", async () => {
 		const actor = makeActor([arcanumWithInlineMove()]);
 		const arcana = new CharacterArcana(actor, new FakeArcanaRepository([]));
-		expect(await arcana.sendMysteryMoveToChat("move-unknown")).toBe(false);
+		expect(await arcana.sendArcanumMoveToChat("move-unknown")).toBe(false);
 		expect(actor.chatDescriptions).toHaveLength(0);
 	});
 });

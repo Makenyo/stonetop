@@ -14,10 +14,11 @@ import { StonetopSteading } from "../../../src/actors/steading/StonetopSteading.
 import { applySteadfast, loadSteadfast } from "../../../src/actors/steading/applySteadfast.js";
 import { FakeSteadingBuilder } from "../../fakes/FakeSteadingBuilder.js";
 import { FakeMoveRepository } from "../../fakes/FakeMoveRepository.js";
+import { steadingRepos } from "../../fakes/FakeSteadingRepos.js";
 
 function make() {
 	const actor = new FakeSteadingBuilder().build();
-	const steading = new StonetopSteading(actor, { getBySlug: async () => null }, new FakeMoveRepository());
+	const steading = new StonetopSteading(actor, steadingRepos({ improvements: { getBySlug: async () => null }, moves: new FakeMoveRepository() }));
 	return { steading, actor };
 }
 
@@ -35,12 +36,36 @@ describe("StonetopSteading.applyDroppedItem", () => {
 		expect(applySteadfast).toHaveBeenCalledWith(actor, steadfast);
 	});
 
+	// Asserted through the item collection rather than by spying on a collaborator: the steading's
+	// composition is private, and what matters is that the move ends up owned and categorized.
 	it("routes a dropped move into the homefront list and reports handled", async () => {
-		const { steading } = make();
-		const addMove = vi.spyOn(steading.moves, "addMove").mockResolvedValue();
-		const move = { type: "move", name: "Trade" };
+		const { steading, actor } = make();
+		const move = {
+			type: "move", name: "Trade", system: { slug: "trade", moveType: "homefront" },
+			toObject: () => ({ name: "Trade", type: "move", system: { slug: "trade", moveType: "homefront" } }),
+		};
+
 		expect(await steading.applyDroppedItem(move)).toBe(true);
-		expect(addMove).toHaveBeenCalledWith(move);
+
+		const owned = [...actor.items].filter(i => i.type === "move");
+		expect(owned).toHaveLength(1);
+		expect(owned[0].system.categoryKey).toBe("homefront");
+	});
+
+	// A wonder improvement gained in play: it joins the owned slug list, never the item collection.
+	it("grants a dropped improvement by slug and reports handled", async () => {
+		const { steading, actor } = make();
+		const crucible = { type: "improvement", name: "Aetherium Crucible", system: { slug: "aetherium-crucible" } };
+		expect(await steading.applyDroppedItem(crucible)).toBe(true);
+		expect(actor.system.improvements).toContain("aetherium-crucible");
+		expect(actor.items).toHaveLength(0);
+	});
+
+	it("re-dropping an improvement the steading already owns does not duplicate it", async () => {
+		const { steading, actor } = make();
+		const palisade = { type: "improvement", name: "Palisade", system: { slug: "palisade" } };
+		expect(await steading.applyDroppedItem(palisade)).toBe(true);
+		expect(actor.system.improvements.filter(s => s === "palisade")).toHaveLength(1);
 	});
 
 	it("reports any other item type unhandled (caller falls back to the default embed)", async () => {

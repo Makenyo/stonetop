@@ -6,66 +6,9 @@
 	"system": {
 		"slug": "vein-of-milky-crystal",
 		"front": {
-			"title": "A vein of milky crystal",
 			"item": null,
-			"tags": "magical, beautiful, immobile",
-			"description": "Found in a cave, a mountain, or some rocky outcrop, likely considered sacred by the locals. It looks like cloudy white quartz, but glows faintly at night.",
-			"unlock": {
-				"slug": "vein-of-milky-crystal",
-				"list": [
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "You can unlock the mysteries of this vein and craft a talisman against the undead, but to do so you must..."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "… personally extract a large hunk of crystal (Value 1) from the vein."
-						},
-						"slug": "personally-extract",
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "… have a gemcutter shape and polish it into a perfect sphere (a Value 1 job)."
-						},
-						"slug": "have-gemcutter",
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "… learn the sacred words for imbuing a moonstone with light and then calling that light forth."
-						},
-						"slug": "learn-sacred",
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "… spend three nights under the full moon, speaking the sacred words, risking a mistake that ruins the moonstone or at least wastes your efforts this month."
-						},
-						"slug": "spend-three",
-						"track": {
-							"max": 1
-						}
-					}
-				]
-			}
+			"tags": null,
+			"choices": []
 		},
 		"back": {
 			"title": "Moonstone",
@@ -81,12 +24,21 @@
 					"labels": []
 				}
 			},
-			"description": "When you **_spend a night beneath the full moon,_** directing its light into the moonstone, it gains 1 hour of light (max 5).\n\nWhen you **_hold the moonstone aloft in darkness_** **_and utter a sacred word_**, it shines with pale white light (*area*, *near*) that shows no color, only shape and texture. The light reveals the undead, even spirits that have yet to manifest and entities masked by magic or disguise.\n\nWhen **_the moonstone is your only light source and_** **_you shout the proper word_**, it blazes with silvery light and all undead in range take 1d6 damage per hour of light remaining (ignores armor). The moonstone then goes dark, its light expended until you charge it again.",
 			"resource": null,
-			"moves": [],
-			"consequences": null,
-			"unlockAt": null,
-			"choices": null
+			"choices": [
+				{
+					"slug": "intro",
+					"list": [
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_spend a night beneath the full moon,_** directing its light into the moonstone, it gains 1 hour of light (max 5).\n\nWhen you **_hold the moonstone aloft in darkness_** **_and utter a sacred word_**, it shines with pale white light (*area*, *near*) that shows no color, only shape and texture. The light reveals the undead, even spirits that have yet to manifest and entities masked by magic or disguise.\n\nWhen **_the moonstone is your only light source and_** **_you shout the proper word_**, it blazes with silvery light and all undead in range take 1d6 damage per hour of light remaining (ignores armor). The moonstone then goes dark, its light expended until you charge it again."
+							}
+						}
+					]
+				}
+			]
 		}
 	},
 	"flags": {},

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseTrack, stripMarkers, tagText, stripLoyalty, parseItemLine, unlockSlug, followerChoiceEntry, followerChoices, isArcanaFollower, matchFollowerIcons, titleCase, majorMoveName, parseRequires, parseMoveRoll, resourceTracks, parseResourceLine, attachItemResource, parseNameFirstItem, detectUnlockAt, parseFront, parseBack, splitAssignRows, numberBlanks } from "../../../scripts/import/pdf/arcana-parse.js";
+import { parseTrack, stripMarkers, tagText, stripLoyalty, parseItemLine, unlockSlug, followerChoiceEntry, followerChoices, isArcanaFollower, matchFollowerIcons, titleCase, majorMoveName, runInName, parseRequires, parseMoveRoll, resourceTracks, frontMoveResources, parseResourceLine, attachItemResource, parseNameFirstItem, parseFront, parseBack, splitAssignRows, numberBlanks, statblockMoveTail } from "../../../scripts/import/pdf/arcana-parse.js";
 
 // Synthetic block factories (markers are literal glyphs in the line text, as the load pipeline injects).
 const _line = (text) => ({ text, bbox: [0, 0, 0, 0], spans: [{ font: "ACaslonPro-Regular", size: 9, text }] });
@@ -77,18 +77,28 @@ describe("majorMoveName", () => {
 	});
 });
 
-describe("detectUnlockAt (front 'marked N / last mark … unlock' phrase)", () => {
-	const line = (text) => ({ text, bbox: [0, 0, 0, 0], spans: [{ font: "ACaslonPro-Regular", size: 9, text }] });
-	const para = (...t) => ({ type: "para", lines: t.map(line) });
-	const list = (...items) => ({ type: "list", items: items.map((it) => it.map(line)) });
-	it("reads an explicit 'marked N' count", () => {
-		expect(detectUnlockAt([para("When you have marked 3 tasks, you unlock the mysteries.")])).toBe(3);
+describe("frontMoveResources (a front move's Casting-penalty pips)", () => {
+	it("reads the ○ pips + italic label off a bold ALL-CAPS front header baseline", () => {
+		const lines = [
+			{ font: "ACaslonPro-Bold",   text: "CAST A CODEX SPELL", bbox: [36, 359, 126, 0] },
+			{ font: "ACaslonPro-Italic", text: "Casting penalty",    bbox: [277, 359, 327, 0] },
+			{ font: "marker",            text: "○ ○ ○ ○ ○",          bbox: [330, 359, 362, 0] },
+		];
+		expect(frontMoveResources(lines)).toEqual([{ slug: "cast-a-codex-spell", max: 5, title: "Casting penalty" }]);
 	});
-	it("uses the standalone Marks-run length for 'the last mark'", () => {
-		expect(detectUnlockAt([para("mark 1:"), list(["l l l l l"]), para("When you make the last mark, you unlock the shield’s mysteries.")])).toBe(5);
+	it("ignores a bold ALL-CAPS header with no pips beside it", () => {
+		expect(frontMoveResources([{ font: "ACaslonPro-Bold", text: "CAST A CODEX SPELL", bbox: [36, 359, 126, 0] }])).toEqual([]);
 	});
-	it("is null when there is no unlock phrase", () => {
-		expect(detectUnlockAt([para("When you draw the sword, it leaps forth.")])).toBeNull();
+});
+
+describe("runInName (leading bold run-in → slug source)", () => {
+	it("pulls the bold run-in name without its trailing period", () => {
+		expect(runInName("**Call Up the Dead.** Touch a corpse.")).toBe("Call Up the Dead");
+		expect(runInName("**Serpentine.** Your soul slithers.")).toBe("Serpentine");
+	});
+	it("is null when there is no bold run-in", () => {
+		expect(runInName("Touch a corpse and it answers.")).toBeNull();
+		expect(runInName("")).toBeNull();
 	});
 });
 
@@ -104,13 +114,12 @@ describe("parseBack — major mysteries (moves + consequence tracks)", () => {
 		_list(["□ □ You lose yourself in a blood-rage. □"]),
 		_para("When you attack, advantage on damage."),
 		_list(["□ Pick someone who survives."]),
-	], { slug: "test-blade", name: "Test Blade", major: true, unlockAt: 3 });
+	], { slug: "test-blade", name: "Test Blade", major: true });
 
-	it("sets the major back scaffolding (itemSameAsFront, no item, unlockAt)", () => {
+	it("sets the major back scaffolding (itemSameAsFront, no item)", () => {
 		expect(back.title).toBe("Mysteries of the Test Blade");
 		expect(back.itemSameAsFront).toBe(true);
 		expect(back.item).toBeNull();
-		expect(back.unlockAt).toBe(3);
 	});
 	it("parses □ ALL-CAPS moves (title-cased + id) and folds sub-bullets instead of splitting them", () => {
 		expect(back.moves.map((m) => m.name)).toEqual(["Unquenched", "A Flickering Flame"]);
@@ -187,6 +196,50 @@ describe("parseBack — major mysteries (moves + consequence tracks)", () => {
 	});
 });
 
+describe("parseBack — Hec'tumel Codex: 'Spells of the Codex' + a marker-glued Consequences heading", () => {
+	// The column split (a) scatters the "Mysteries of…" title to the end of the stream, after the running
+	// header, and (b) strands the front's Marks pips onto the "Consequences" heading, so it arrives as a
+	// 1-item list ("○ ○ ○ ○ Consequences") rather than a bare heading — mirrors the real page 557 blocks.
+	const lineAt = (x0, text) => ({ ..._line(text), bbox: [x0, 0, 0, 0] });
+	const consAt = (...items) => ({ type: "list", items: items.map(([x0, text]) => [lineAt(x0, text)]) });
+	const back = parseBack([
+		_heading("Spells of the Codex"),
+		_list(["□ **Call Up the Dead.** Touch a corpse; you conjure its shade."]),
+		_list(["□ **Serpentine.** Your soul slithers from your mouth."]),
+		_list(["□ **Snuff the Spirit.** Name a living victim."]),
+		_list(["□ **Torpor.** Lock eyes with someone and whisper."]),
+		_heading("Moves"),
+		_list(["□ DARKSOME VESSEL", "When you cast a Codex spell, on a 12+ you can choose the Empowered effect."]),
+		_list(["○ ○ ○ ○ Consequences"]), // the marker-glued heading that used to swallow the section
+		consAt(
+			[432.9, "□ Over a few days, you lose all body hair."],
+			[446.4, "□ Over a few days, you lose all your remaining hair. Gain +1 armor."],
+			[432.9, "□ Your body temperature drops and your skin becomes cool."],
+		),
+		_heading("appendix d : major arcana"),   // running header ends back content
+		_heading("Mysteries of the Hec'tumel Codex"), // the real title, scrambled to the end of the stream
+	], { slug: "hectumel-codex", name: "Hec'tumel Codex", major: true, unlockAt: 4 });
+
+	it("takes the real 'Mysteries of…' title, not the 'Spells of the Codex' subheading", () => {
+		expect(back.title).toBe("Mysteries of the Hec'tumel Codex");
+	});
+	it("parses the spells into a titled back choice group of learnable (max-1) picks", () => {
+		expect(back.choices.slug).toBe("hectumel-codex"); // back.choices is namespaced by the arcanum slug
+		expect(back.choices.title).toBe("Spells of the Codex");
+		expect(back.choices.list.map((r) => r.slug)).toEqual(["call-up-the-dead", "serpentine", "snuff-the-spirit", "torpor"]);
+		expect(back.choices.list.every((r) => r.track?.max === 1)).toBe(true);
+		expect(back.choices.list[0].content.text).toBe("**Call Up the Dead.** Touch a corpse; you conjure its shade.");
+	});
+	it("still parses the mystery move", () => {
+		expect(back.moves.map((m) => m.name)).toEqual(["Darksome Vessel"]);
+	});
+	it("recovers the Consequences section despite the marker-glued heading, with escalation indents", () => {
+		expect(back.consequences.list).toHaveLength(3);
+		expect(back.consequences.list.map((r) => r.indent ?? false)).toEqual([false, true, false]);
+		expect(back.consequences.list[1].content.text).toBe("Over a few days, you lose all your remaining hair. Gain +1 armor.");
+	});
+});
+
 describe("parseRequires", () => {
 	it("pulls a leading (Requires: A, B) into requirement moves and strips it from the text", () => {
 		expect(parseRequires("(Requires: Battery, Eye of the Storm) When you unleash the storm."))
@@ -233,6 +286,17 @@ describe("parseMoveRoll", () => {
 	it("handles a comma inside the tier bold (suffering-unleashed shape)", () => {
 		const text = "When you **_feed the effigy_**, pick one and roll +CON: **on a 10+**, your target suffers that harm fully; **on a 7-9,** your target suffers that harm but pick 1; **on a 6-**, they suffer that harm but all 3 are true:\n- half the harm";
 		expect(parseMoveRoll(text).moveResults.partial.value).toBe("your target suffers that harm but pick 1");
+	});
+
+	it("ignores a tier named again as a back-reference inside a later outcome (call-up-the-deep-ones)", () => {
+		const text = "When you **_send them back whence they came_**, roll +CHA: **on a 10+**, they go, now; **on a 7-9**, they go,"
+			+ " but take their time and likely do some harm on their way; **on a 6-**, spend their Loyalty or mark a consequence"
+			+ " and they’ll eventually go (as on a 7-9); otherwise, this batch breaks free of your control and are no longer followers.";
+		expect(parseMoveRoll(text).moveResults).toEqual(results(
+			"they go, now",
+			"they go, but take their time and likely do some harm on their way",
+			"spend their Loyalty or mark a consequence and they’ll eventually go (as on a 7-9); otherwise, this batch breaks free of your control and are no longer followers.",
+		));
 	});
 
 	it("maps 'roll +nothing' to the prompt roll (the-flesh-remembers)", () => {
@@ -316,14 +380,15 @@ describe("parseFront — major unlock (Marks track + trigger + trailing trim)", 
 	], { name: "Azure Hand", slug: "azure-hand" });
 
 	it("keeps the standalone Marks run as one track entry with its true max", () => {
-		const marks = front.unlock.list.find((e) => e.slug === "marks");
+		const marks = front.choices[0].list.find((e) => e.slug === "marks");
 		expect(marks.track).toEqual({ max: 4 });
 		expect(marks.content.text).toBe("Marks");
 	});
-	it("drops the trailing 'last mark … unlock' instruction and keeps the trigger in unlock", () => {
-		expect(front.unlock.list.at(-1).slug).toBe("marks");
-		expect(front.unlock.list[0].content.text).toContain("bear the Azure Hand");
-		expect(front.description).toContain("thick staff");
+	it("folds the description into a leading content entry, keeps the trigger, drops the trailing unlock line", () => {
+		const list = front.choices[0].list;
+		expect(list.at(-1).slug).toBe("marks");                  // trailing 'last mark … unlock' dropped
+		expect(list[0].content.text).toContain("thick staff");   // description is the first entry now
+		expect(list[1].content.text).toContain("bear the Azure Hand");
 	});
 	it("counts inline ◇ pips on the item line so a 2-pip item weighs 2", () => {
 		const f = parseFront([
@@ -341,9 +406,9 @@ describe("parseFront — major unlock (Marks track + trigger + trailing trim)", 
 			_para("On a 6-, mark 1:"),
 			_list(["l l l l"]),
 		], { name: "Azure Hand", slug: "azure-hand" });
-		expect(f.unlock.list).toHaveLength(2); // the brandish trigger (+bullets+6-) and the Marks track
-		expect(f.unlock.list[0].content.text).toBe("When you **_brandish the Hand_**, choose 1:\n- Direct the energy\n- Discharge the energy\n\nOn a 6-, mark 1:");
-		expect(f.unlock.list[1].track).toEqual({ max: 4 });
+		expect(f.choices[0].list).toHaveLength(2); // the brandish trigger (+bullets+6-) and the Marks track
+		expect(f.choices[0].list[0].content.text).toBe("When you **_brandish the Hand_**, choose 1:\n- Direct the energy\n- Discharge the energy\n\nOn a 6-, mark 1:");
+		expect(f.choices[0].list[1].track).toEqual({ max: 4 });
 	});
 });
 
@@ -373,7 +438,7 @@ describe("parseFront — outfit item vs. disguise tags (the ◇ gate)", () => {
 		], { name: "A... key?", slug: "the-key" });
 		expect(f.item).toBeNull();
 		expect(f.tags).toBe("magical, terrifying");
-		expect(f.description).toContain("Makers'");
+		expect(f.choices[0].list[0].content.text).toContain("Makers'");   // description → leading content entry
 	});
 
 	it("counts a ◇ on its own line (pips-only block) so an item whose tags follow still weighs in", () => {
@@ -394,21 +459,23 @@ describe("parseFront — outfit item vs. disguise tags (the ◇ gate)", () => {
 		], { name: "A path in the woods", slug: "path-in-the-woods" });
 		expect(f.item).toBeNull();
 		expect(f.tags).toBeNull();
-		expect(f.description).toContain("Great Wood");
+		expect(f.choices[0].list[0].content.text).toContain("Great Wood");   // description → leading content entry
 	});
 });
 
 describe("followerChoiceEntry", () => {
-	it("builds the single-pick choice row that links an arcanum back to its follower", () => {
+	it("builds a checkbox entry that grants the follower inline (and on the tab)", () => {
 		expect(followerChoiceEntry("tulpa")).toEqual({
 			type: "entry", slug: "tulpa", content: { title: null, text: "" },
-			track: { max: 1 }, followers: { slugs: ["tulpa"], inlineDisplay: true, hideFromFollowersTab: false },
+			track: { max: 1 }, grants: [{ type: "follower", slug: "tulpa", locations: ["inline", "tab"] }],
 		});
 	});
 
-	it("marks a card-resident follower as hidden from the followers tab", () => {
-		expect(followerChoiceEntry("the-ring", { hideFromFollowersTab: true }).followers)
-			.toEqual({ slugs: ["the-ring"], inlineDisplay: true, hideFromFollowersTab: true });
+	it("a card-resident follower is granted inline but off the tab, with no checkbox when owned", () => {
+		expect(followerChoiceEntry("the-ring", { hideFromFollowersTab: true, owned: true })).toEqual({
+			type: "entry", slug: "the-ring", content: { title: null, text: "" },
+			grants: [{ type: "follower", slug: "the-ring", locations: ["inline"] }],
+		});
 	});
 });
 
@@ -618,20 +685,24 @@ describe("splitAssignRows (an 'assign one die to each' para → one list item pe
 });
 
 describe("numberBlanks (stable @Blank[n] tokens across an arcanum's text, front→back reading order)", () => {
+	// Both sides are one `choices` array of groups; blanks are numbered across every group's entry text.
 	const sys = () => ({
-		front: { description: "fill ____ here", unlock: { list: [{ content: { text: "Who benefits from __?" } }] } },
-		back: {
-			description: "- ____ **Onset**\n- ____ **Intensity**",
-			moves: [{ text: "roll ____ dice" }], choices: null, consequences: null,
-		},
+		front: { choices: [{ slug: "f", list: [
+			{ content: { text: "fill ____ here" } },
+			{ content: { text: "Who benefits from __?" } },
+		] }] },
+		back: { choices: [{ slug: "consequences", list: [
+			{ content: { text: "- ____ **Onset**\n- ____ **Intensity**" } },
+			{ content: { text: "roll ____ dice" } },
+		] }] },
 	});
 	it("numbers every blank in order and returns the count", () => {
 		const system = sys();
 		expect(numberBlanks(system)).toBe(5);
-		expect(system.front.description).toBe("fill @Blank[0] here");
-		expect(system.front.unlock.list[0].content.text).toBe("Who benefits from @Blank[1]?");
-		expect(system.back.description).toBe("- @Blank[2] **Onset**\n- @Blank[3] **Intensity**");
-		expect(system.back.moves[0].text).toBe("roll @Blank[4] dice");
+		expect(system.front.choices[0].list[0].content.text).toBe("fill @Blank[0] here");
+		expect(system.front.choices[0].list[1].content.text).toBe("Who benefits from @Blank[1]?");
+		expect(system.back.choices[0].list[0].content.text).toBe("- @Blank[2] **Onset**\n- @Blank[3] **Intensity**");
+		expect(system.back.choices[0].list[1].content.text).toBe("roll @Blank[4] dice");
 	});
 	it("is idempotent — a tokenised text has no bare underscore runs left to number", () => {
 		const system = sys();
@@ -700,5 +771,95 @@ describe("matchFollowerIcons (marker icon beside a major follower's name heading
 		const big = { file: "/tmp/art.png", x: 432, y: 300, w: 270, h: 162 };
 		expect(matchFollowerIcons(lines, [big], ["Astor"])).toEqual([]);                         // w ≥ 25 → not a marker
 		expect(matchFollowerIcons(lines, [marker(432, 402, "/tmp/m.png")], ["Astor"])).toEqual([]); // heading not targeted
+	});
+});
+
+describe("statblockMoveTail (a move trigger swallowed by an adjacent stat block)", () => {
+	// The Ring of Daagon's back prints the Servant of Daagon stat block + its 5d4 builder BETWEEN the
+	// CALL UP THE DEEP ONES move and that move's closing "send them back" trigger, so the layout parser
+	// folds the trigger into the stat block. Spans/fonts are the book's real ones (p.562): a trigger line
+	// mixes runs, and `line.font` reports the dominant one (BoldItalic) even though it opens Regular.
+	const plain = (font, text) => ({ text, font, bbox: [432, 0, 700, 12], spans: [{ font, size: 9, text }] });
+	const trigger = (...spans) => ({
+		text: spans.map(([, t]) => t).join(""), font: "ACaslonPro-BoldItalic", bbox: [432, 0, 700, 12],
+		spans: spans.map(([font, text]) => ({ font, size: 9, text })),
+	});
+	const SEND_BACK = trigger(
+		["ACaslonPro-Regular", "When you "],
+		["ACaslonPro-BoldItalic", "send them back whence they came"],
+		["ACaslonPro-Regular", ", roll +CHA: "],
+		["ACaslonPro-Bold", "on a 10+"],
+		["ACaslonPro-Regular", ", they go, now; "],
+		["ACaslonPro-Bold", "on a 7-9"],
+		["ACaslonPro-Regular", ", they go, "],
+	);
+	const servantBlock = (...extra) => ({ type: "statblock", lines: [
+		plain("ACaslonPro-Bold", "Instinct to devour"),
+		plain("ACaslonPro-Regular", "Each time you Call Up the Deep Ones, roll five d4s and assign each to a different aspect:"),
+		plain("ACaslonPro-Regular", "_____ Tags: 1 = +craven; 2 = +ravenous; 3 = +cunning; 4 = +exceptional"),
+		...extra,
+	] });
+
+	it("returns the trigger and every line after it, as markdown", () => {
+		const tail = statblockMoveTail(servantBlock(
+			SEND_BACK,
+			plain("ACaslonPro-Regular", "but take their time; on a 6-, spend their Loyalty."),
+		));
+		expect(tail).toBe("When you **_send them back whence they came_**, roll +CHA: **on a 10+**, they go, now;"
+			+ " **on a 7-9**, they go, but take their time; on a 6-, spend their Loyalty.");
+	});
+
+	it("ignores a stat block with no trailing trigger at all", () => {
+		expect(statblockMoveTail(servantBlock())).toBeNull();
+		expect(statblockMoveTail(null)).toBeNull();
+	});
+
+	it("ignores a bold-italic run that isn't rollable (ordinary stat-block prose)", () => {
+		expect(statblockMoveTail(servantBlock(
+			trigger(["ACaslonPro-Regular", "When you "], ["ACaslonPro-BoldItalic", "look upon it"], ["ACaslonPro-Regular", ", you know it hungers."]),
+		))).toBeNull();
+	});
+});
+
+describe("parseBack — a stat block inside Moves gives its swallowed trigger back to the move", () => {
+	const plain = (font, text) => ({ text, font, bbox: [432, 0, 700, 12], spans: [{ font, size: 9, text }] });
+	const back = parseBack([
+		_heading("Mysteries of the Ring of Daagon"),
+		_heading("Moves"),
+		_list(["□ CALL UP THE DEEP ONES", "When you stand in heavy fog, they appear."]),
+		_rule(),
+		_heading("Servant of Daagon"),
+		{ type: "statblock", lines: [
+			plain("ACaslonPro-Bold", "Instinct to devour"),
+			{ text: "When you send them back whence they came, roll +CHA: on a 10+, they go, now; on a 7-9, they go,",
+				font: "ACaslonPro-BoldItalic", bbox: [432, 0, 700, 12], spans: [
+					{ font: "ACaslonPro-Regular", size: 9, text: "When you " },
+					{ font: "ACaslonPro-BoldItalic", size: 9, text: "send them back whence they came" },
+					{ font: "ACaslonPro-Regular", size: 9, text: ", roll +CHA: on a 10+, they go, now; on a 7-9, they go," },
+				] },
+			plain("ACaslonPro-Regular", "but take their time; on a 6-, they break free of your control."),
+		] },
+		_heading("Consequences"),
+		_list(["□ Your skin becomes clammy."]),
+	], { slug: "ring-of-daagon", name: "Ring of Daagon", major: true });
+
+	it("re-attaches the trigger to the preceding move (the rule already flushed it)", () => {
+		expect(back.moves).toHaveLength(1);
+		expect(back.moves[0].text).toBe("When you stand in heavy fog, they appear."
+			+ "\n\nWhen you **_send them back whence they came_**, roll +CHA: on a 10+, they go, now; on a 7-9, they go,"
+			+ " but take their time; on a 6-, they break free of your control.");
+	});
+
+	it("makes the move rollable, with the tiers read off the re-attached trigger", () => {
+		const { rollStat, moveResults } = parseMoveRoll(back.moves[0].text);
+		expect(rollStat).toBe("cha");
+		expect(moveResults.success.value).toBe("they go, now");
+		expect(moveResults.partial.value).toBe("they go, but take their time");
+		expect(moveResults.failure.value).toBe("they break free of your control.");
+	});
+
+	it("still drops the rest of the stat block, and the Consequences section is unaffected", () => {
+		expect(back.moves[0].text).not.toContain("Instinct to devour");
+		expect(back.consequences.list).toHaveLength(1);
 	});
 });

@@ -18,6 +18,7 @@ import {ChoiceGroupControllerFactory} from "./ChoiceGroupControllerFactory.js";
 import {ContainerOutfitSync} from "./ContainerOutfitSync.js";
 import {FollowerSideEffectHandler} from "./SideEffectHandler.js";
 import {ChoiceStores} from "./ChoiceStores.js";
+import {applyPick} from "./ChoiceGroupController.js";
 
 export class StonetopCharacter {
 	constructor(actor, repos) {
@@ -107,16 +108,18 @@ export class StonetopCharacter {
 		const level = this._vitals.level;
 		const {checked} = this._inventory;
 		const actor = this._actor;
-		const [arcana, outfit, inserts, playbook, vitals, moves, possessions, followers] = await Promise.all([
+		const [arcana, outfit, inserts, playbook, playbookData, armorBreakdown, moves, possessions, followers] = await Promise.all([
 			this._arcana.buildSnapshot(checked, this._resourceController),
 			this._inventory.buildSnapshot(level),
 			this._inserts.buildSnapshot(),
 			this._playbook.buildPlaybookSnapshot(),
-			this._vitals.buildVitalsSnapshot(),
+			this._playbook.getData(),
+			this._inventory.getArmorBreakdown(),
 			this._moves.buildSnapshot(),
 			this._possessions.buildSnapshot(level),
 			this._followers.buildFollowersSnapshot()
 		]);
+		const vitals = await this._vitals.buildVitalsSnapshot(playbookData, armorBreakdown);
 		return new CharacterSnapshotBuilder()
 			.withName(actor.name)
 			.withPlaybook(playbook)
@@ -166,10 +169,10 @@ export class StonetopCharacter {
 	}
 
 	// The sheet's per-move chat button: owned move items first (moves tab, side-bar, major-arcana
-	// mysteries), then the inline arcanum mystery moves that have no item behind them.
+	// moves), then the inline arcanum moves that have no item behind them.
 	async sendMoveToChat(moveSlug) {
 		if (await this._moves.sendToChat(moveSlug)) return;
-		await this._arcana.sendMysteryMoveToChat(moveSlug);
+		await this._arcana.sendArcanumMoveToChat(moveSlug);
 	}
 
 	async setMoveResourceCurrent(moveSlug, current) {
@@ -398,14 +401,18 @@ export class StonetopCharacter {
 	async setChoicePickFor(target, checked = true) {
 		if (!target.context) return;
 		const ctrl = this._choiceStores.resolve(target);
-		if (!ctrl) return;
-		return target.siblingsCsv
-			? ctrl.selectOption(target.group, target.option, target.siblingsCsv)
-			: ctrl.setCount(target.group, target.option, checked ? 1 : 0);
+		return ctrl ? applyPick(ctrl, target, checked) : undefined;
 	}
 
 	async setChoiceTextFor(target, text) {
 		return this._choiceStores.resolve(target)?.setText(target.group, target.option, text);
+	}
+
+	// Re-clicking the option a "pick 1" row already holds releases it — radios cannot be unticked, so
+	// without this a pick made by mistake is permanent. Zero rather than a dropped key: Foundry
+	// deep-merges an update, so omitting it would leave the old value in place.
+	async clearChoicePickFor(target) {
+		return this.setChoiceCountFor(target, 0);
 	}
 
 	// --- Pip and check toggles ----------------------------------------------------------------

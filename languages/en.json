@@ -40,9 +40,7 @@
 			"collapseTop": "Collapse / expand header",
 			"notes": {
 				"bio": "Bio",
-				"bioPlaceholder": "Who is your character? Appearance, history, demeanor…",
-				"notes": "Notes",
-				"notesPlaceholder": "Session notes, reminders, goals…"
+				"notes": "Notes"
 			},
 			"playbook": {
 				"emptyHint": "Select or drag a playbook here to start.",
@@ -68,10 +66,21 @@
 		},
 		"steading": {
 			"startsAt": "Starts at {value}",
+			"colName": "Name",
+			"colOccupation": "Occupation",
+			"colTraits": "Traits",
+			"colHome": "Home",
 			"linkColumn": "Link",
 			"linkHint": "Drag a document onto an entry to link it.",
 			"linkDropTitle": "Drop an actor, journal, or item here to link it",
-			"unlink": "Unlink"
+			"unlink": "Unlink",
+			"improvementRemove": "Remove",
+			"seasons": {
+				"movesTitle": "Seasons Change",
+				"movesEmpty": "No seasonal moves assigned to this steading.",
+				"gainsTitle": "Seasonal gains",
+				"gainsHint": "Recording a pick doesn't change the steading's ratings."
+			}
 		},
 		"followers": {
 			"empty": "Drag followers here from the Followers compendium.",
@@ -272,6 +281,7 @@
 			"front": "Front",
 			"back": "Back",
 			"title": "Title",
+			"backTitle": "Mystery name",
 			"description": "Description",
 			"item": "Item",
 			"itemName": "Name",
@@ -287,7 +297,7 @@
 			"resourceLabels": "Labels",
 			"unlock": "Unlock",
 			"choices": "Choices",
-			"mysteryMoves": "Moves",
+			"moves": "Moves",
 			"consequences": "Consequences",
 			"unlockAt": "Unlock at",
 			"moveName": "Move name",
@@ -309,7 +319,7 @@
 			"smallItems": "Small Items",
 			"smallItemsNote": "Fit in a pocket, pouch, or boot.<p>When you Outfit, mark □ below equal to 4+Prosperity.</p>",
 			"otherItems": "Other Items",
-			"otherItemsNote":"(animals, kits, stashed items, etc.)",
+			"otherItemsNote": "(animals, kits, stashed items, etc.)",
 			"addItem": "Add item",
 			"addSmallItem": "Add small item",
 			"addItemName": "Name",
@@ -447,7 +457,26 @@
 				"damage": "Damage",
 				"armor": "Armor",
 				"xp": "XP",
-				"level": "Level"
+				"desc": {
+					"xp": "Short for “experience points.” You start with no XP. You mark XP when you roll for a move and get a 6- (unless the move says otherwise); as part of the End of Session move; and when another move says so."
+				},
+				"level": "Level",
+				"source": {
+					"hp": "Max HP {max} comes from your playbook, {playbook}.",
+					"hpManual": "Manually set to {max}. Your playbook, {playbook}, grants {playbookMax}.",
+					"hpNoPlaybook": "Manually set to {max}. Pick a playbook to inherit its max HP.",
+					"damage": "Damage die {die} comes from your playbook, {playbook}. It's rolled on its own — add anything moves or the fiction grant.",
+					"damageManual": "Manually set to {die}. Your playbook, {playbook}, grants {playbookDie}.",
+					"damageNoPlaybook": "Manually set to {die}. Pick a playbook to inherit its damage die.",
+					"damageUnsetWithPlaybook": "No damage die set. Your playbook, {playbook}, grants {playbookDie}.",
+					"damageUnset": "No damage die set. Pick a playbook to inherit its damage die.",
+					"armor": "Armor {value} from your checked gear: {items}. Only the highest base counts, plus every modifier.",
+					"armorManual": "Manually set to {armor}. Your checked gear adds up to {value}: {items}.",
+					"armorManualOnly": "Manually set to {armor}. No checked item grants armor.",
+					"armorNone": "No checked item grants armor.",
+					"armorBaseItem": "{name} {amount} (base)",
+					"armorModifierItem": "{name} {amount}"
+				}
 			},
 			"gear": {
 				"specialPossessions": "Special Possessions"
@@ -465,7 +494,9 @@
 				"removeMove": "Remove Move",
 				"sendToChat": "Send to Chat",
 				"requires": "Requires",
-				"notMet": "Not Met"
+				"notMet": "Not Met",
+				"selectedOnly": "Selected only",
+				"selectedOnlyHint": "Show only the moves this character has taken. Turn it off to take new ones."
 			},
 			"selection": {
 				"select": "Select",
@@ -498,23 +529,24 @@
 			"move": {
 				"namePlaceholder": "Move Name",
 				"rollStat": {
-					"none":       "— No Roll —",
-					"ask":        "Ask (player chooses)",
-					"prompt":     "Prompt (no roll)",
-					"fortunes":   "Fortunes (steading)",
+					"none": "— No Roll —",
+					"ask": "Ask (player chooses)",
+					"prompt": "Prompt (no roll)",
+					"fortunes": "Fortunes (steading)",
 					"prosperity": "Prosperity (steading)",
 					"population": "Population (steading)",
-					"defenses":   "Defenses (steading)",
-					"favor":      "Favor (Thrall)"
+					"defenses": "Defenses (steading)",
+					"favor": "Favor (Thrall)"
 				},
 				"moveType": {
-					"none":       "— Type —",
-					"basic":      "Basic",
+					"none": "— Type —",
+					"basic": "Basic",
 					"expedition": "Expedition",
-					"homefront":  "Homefront",
-					"special":    "Special",
-					"follower":   "Follower",
-					"other":      "Other"
+					"homefront": "Homefront",
+					"seasons": "Seasons Change",
+					"special": "Special",
+					"follower": "Follower",
+					"other": "Other"
 				},
 				"results": {
 					"successPlaceholder": "What happens on a 10+…",

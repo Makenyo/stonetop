@@ -30,7 +30,6 @@ export class CharacterArcana {
 				current:       resourceController?.getCurrent("inventory", a.slug) ?? 0,
 				checked:       checkedMap[a.slug] ?? false,
 				owned:         true,
-				moveSnapshots: await this._mysteryMoveSnapshots(a),
 			});
 			return ArcanumSnapshotBuilder.fromArcanum(a.definition(), ctx);
 		}));
@@ -40,17 +39,9 @@ export class CharacterArcana {
 		return new ArcanaSnapshot(minor, major);
 	}
 
-	// Major arcana own their mystery moves as real `move` items in an `arcana-<slug>` category (seeded
-	// un-acquired — the player ticks each to unlock). Minor/custom arcana (no moveSlugs) fall back to the
-	// inline back.moves shape in ArcanumBackSnapshotBuilder, so return null for them.
-	async _mysteryMoveSnapshots(arcanum) {
-		if (!this._moves || !arcanum.moveSlugs.length) return null;
-		return this._moves.getMoveSnapshotsForCategory(`arcana-${arcanum.slug}`);
-	}
-
-	async sendMysteryMoveToChat(moveId) {
+	async sendArcanumMoveToChat(moveId) {
 		for (const arcanum of OwnedArcanum.all(this._actor)) {
-			const move = arcanum.mysteryMove(moveId);
+			const move = arcanum.moveById(moveId);
 			if (move) {
 				await this._actor.sendDescriptionToChat(move.name, move.text);
 				return true;
@@ -82,8 +73,11 @@ export class CharacterArcana {
 			await this._followers?.addFollower(slug, { showOnTab: false });
 		}
 		await this._syncSideEffects(arcanum);
+		// Every move the card grants becomes a real, owned move item so it rolls. They're seeded ACQUIRED
+		// (startingSlugs = all): the "unlocked" checkbox is now the granting entry's ornamental choice track,
+		// not the move's acquire state.
 		if (arcanum.moveSlugs.length) {
-			await this._moves?.addCategory(`arcana-${arcanum.slug}`, arcanum.name ?? arcanum.slug, arcanum.moveSlugs, []);
+			await this._moves?.addCategory(`arcana-${arcanum.slug}`, arcanum.name ?? arcanum.slug, arcanum.moveSlugs, arcanum.moveSlugs);
 		}
 	}
 
@@ -108,7 +102,7 @@ export class CharacterArcana {
 		await this._syncSideEffects(arcanum);
 	}
 
-	// Every arcanum choice group (front.unlock, back.choices, back.consequences) shares the ONE
+	// Every arcanum choice group (front.choices[i] / back.choices[i]) shares the ONE
 	// `choiceValues` store, namespaced by each group's own slug — side effects fire via the factory's
 	// subscribers when a group carries them.
 	controllerFor(arcanumSlug) {

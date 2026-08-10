@@ -7,7 +7,6 @@
 	"system": {
 		"slug": "shield-of-the-wisent-witch",
 		"front": {
-			"title": "Shield of the Wisent Witch",
 			"item": {
 				"name": "Shield of the Wisent Witch",
 				"weight": 2,
@@ -16,149 +15,180 @@
 				"inventoryColumn": "regular"
 			},
 			"tags": null,
-			"description": "+1 Readiness on a 7+ to Defend\n\nA shield of horn-oak, glossy from long use, shod in bronze and adorned with a stylized wisent skull. It’s heavier than it looks, but its heft gives you a feeling of confidence, like anyone would be a fool to mess with a titan such as you.",
-			"unlock": {
-				"slug": "shield-of-the-wisent-witch",
-				"list": [
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_bear the Shield openly_**, natural creatures give you wide berth and treat you with the respect that they would give a 1,000-lb. bison."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_use the Shield to Defend with both feet planted firmly on the ground,_** so long as you hold Readiness you cannot be moved or tripped. When you **_spend Readiness to strike back at an attacker_**, you also break their momentum, knock them back, and/or send them reeling."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_perform the sacred rites of the forest witches_**, alone in the woods under a clear crescent moon, mark 1:"
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "marks",
-						"content": {
-							"title": null,
-							"text": "Marks"
+			"choices": [
+				{
+					"slug": "shield-of-the-wisent-witch",
+					"list": [
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "+1 Readiness on a 7+ to Defend\n\nA shield of horn-oak, glossy from long use, shod in bronze and adorned with a stylized wisent skull. It’s heavier than it looks, but its heft gives you a feeling of confidence, like anyone would be a fool to mess with a titan such as you."
+							}
 						},
-						"track": {
-							"max": 5
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_bear the Shield openly_**, natural creatures give you wide berth and treat you with the respect that they would give a 1,000-lb. bison."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_use the Shield to Defend with both feet planted firmly on the ground,_** so long as you hold Readiness you cannot be moved or tripped. When you **_spend Readiness to strike back at an attacker_**, you also break their momentum, knock them back, and/or send them reeling."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_perform the sacred rites of the forest witches_**, alone in the woods under a clear crescent moon, mark 1:"
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "marks",
+							"content": {
+								"title": null,
+								"text": "Marks"
+							},
+							"track": {
+								"max": 5
+							}
 						}
-					}
-				]
-			}
+					]
+				}
+			]
 		},
 		"back": {
 			"title": "Mysteries of the Shield of the Wisent Witch",
 			"item": null,
-			"description": null,
 			"resource": null,
 			"itemSameAsFront": true,
-			"choices": null,
-			"moveSlugs": [
-				"spirits-of-the-herd"
-			],
-			"consequences": {
-				"slug": "consequences",
-				"list": [
-					{
-						"type": "entry",
-						"slug": "witch-c1",
-						"content": {
-							"title": null,
-							"text": "You give off a strong, musky scent no matter how much you bathe. It is distinctive and easily recognized."
-						},
-						"track": {
-							"max": 1
+			"choices": [
+				{
+					"slug": "moves",
+					"title": "Moves",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "spirits-of-the-herd",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "spirits-of-the-herd",
+									"locations": [
+										"inline"
+									]
+								}
+							]
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "witch-c2",
-						"content": {
-							"title": null,
-							"text": "Over the next few days, you grow 4-6 inches."
+					]
+				},
+				{
+					"slug": "consequences",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "witch-c1",
+							"content": {
+								"title": null,
+								"text": "You give off a strong, musky scent no matter how much you bathe. It is distinctive and easily recognized."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "witch-c3",
-						"content": {
-							"title": null,
-							"text": "Over the next few days, your body mass doubles. Your size and relative strength remain mostly the same."
+						{
+							"type": "entry",
+							"slug": "witch-c2",
+							"content": {
+								"title": null,
+								"text": "Over the next few days, you grow 4-6 inches."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "witch-c4",
-						"content": {
-							"title": null,
-							"text": "You consume twice the normal amount of supplies or provisions each day."
+						{
+							"type": "entry",
+							"slug": "witch-c3",
+							"content": {
+								"title": null,
+								"text": "Over the next few days, your body mass doubles. Your size and relative strength remain mostly the same."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "witch-c5",
-						"content": {
-							"title": null,
-							"text": "You make an inordinate amount of noise; your voice booms, your feet stomp heavily, even your breathing is loud."
+						{
+							"type": "entry",
+							"slug": "witch-c4",
+							"content": {
+								"title": null,
+								"text": "You consume twice the normal amount of supplies or provisions each day."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "witch-c6",
-						"content": {
-							"title": null,
-							"text": "Your attacks all gain the *forceful* tag (and become more so if they already were *forceful*) and large weapons lose the *awkward* tag. Alas, you hardly know your own strength and must be careful to avoid breaking things (including your friends)."
+						{
+							"type": "entry",
+							"slug": "witch-c5",
+							"content": {
+								"title": null,
+								"text": "You make an inordinate amount of noise; your voice booms, your feet stomp heavily, even your breathing is loud."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "witch-c7",
-						"content": {
-							"title": null,
-							"text": "Predators sense that you would be delicious and will choose to attack and eat you before just about any other potential prey."
+						{
+							"type": "entry",
+							"slug": "witch-c6",
+							"content": {
+								"title": null,
+								"text": "Your attacks all gain the *forceful* tag (and become more so if they already were *forceful*) and large weapons lose the *awkward* tag. Alas, you hardly know your own strength and must be careful to avoid breaking things (including your friends)."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "witch-c8",
-						"content": {
-							"title": null,
-							"text": "You become territorial and overly defensive of your allies. When someone or thing **_disrespects you,_** **_challenges your authority, or directly threatens your allies_**, you have disadvantage to do anything other than set them straight."
+						{
+							"type": "entry",
+							"slug": "witch-c7",
+							"content": {
+								"title": null,
+								"text": "Predators sense that you would be delicious and will choose to attack and eat you before just about any other potential prey."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
+						{
+							"type": "entry",
+							"slug": "witch-c8",
+							"content": {
+								"title": null,
+								"text": "You become territorial and overly defensive of your allies. When someone or thing **_disrespects you,_** **_challenges your authority, or directly threatens your allies_**, you have disadvantage to do anything other than set them straight."
+							},
+							"track": {
+								"max": 1
+							}
 						}
-					}
-				]
-			},
-			"unlockAt": 5
+					],
+					"title": "Consequences"
+				}
+			]
 		},
 		"major": true
 	},

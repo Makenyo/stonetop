@@ -1,10 +1,12 @@
 // @vitest-environment happy-dom
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { createStonetopSteadingSheetClass } from "../../../src/actors/steading/StonetopSteadingSheet.js";
 import { StonetopSteading } from "../../../src/actors/steading/StonetopSteading.js";
 import { FakeSteadingBuilder } from "../../fakes/FakeSteadingBuilder.js";
 import { FakeMoveRepository } from "../../fakes/FakeMoveRepository.js";
 import { FakeCompendiumMoveBuilder } from "../../fakes/FakeCompendiumMoveBuilder.js";
+import { FakeCoreActorSheetBase } from "../../fakes/foundry/FakeCoreActorSheetBase.js";
+import { steadingRepos } from "../../fakes/FakeSteadingRepos.js";
 
 // Drives the WHOLE steading sheet _prepareContext (real StonetopSteading + every steading snapshot +
 // RichText + the one enrichRichTextTree pass) and proves a homefront move's @UUID and a default
@@ -12,30 +14,9 @@ import { FakeCompendiumMoveBuilder } from "../../fakes/FakeCompendiumMoveBuilder
 // mocked.
 function makeSheet(movesRepo) {
 	const actor = new FakeSteadingBuilder().build();
-	actor.typedActor = new StonetopSteading(actor, { getBySlug: async () => null }, movesRepo);
+	actor.typedActor = new StonetopSteading(actor, steadingRepos({ improvements: { getBySlug: async () => null }, moves: movesRepo }));
 
-	const Base = class {
-		get actor() { return actor; }
-		get isEditable() { return true; }
-		tabGroups = {};
-		element = document.createElement("form");
-		// Mini-core: ApplicationV2 seeds tabGroups from static TABS and hands context.tabs to a
-		// single-group application via _prepareTabs (the sheet itself declares TABS only).
-		_prepareTabs(group) {
-			const { tabs, initial } = this.constructor.TABS[group];
-			this.tabGroups[group] ??= initial;
-			return tabs.reduce((prepared, { id }) => {
-				const active = this.tabGroups[group] === id;
-				prepared[id] = { id, group, active, cssClass: active ? "active" : "" };
-				return prepared;
-			}, {});
-		}
-		async _prepareContext() { return { tabs: this._prepareTabs("primary") }; }
-		async _onFirstRender() {}
-		_onRender() {}
-		render = vi.fn();
-	};
-	return new (createStonetopSteadingSheetClass(Base))();
+	return new (createStonetopSteadingSheetClass(FakeCoreActorSheetBase))(actor);
 }
 
 describe("StonetopSteadingSheet._prepareContext — rich-text enrichment (integration)", () => {
@@ -48,7 +29,7 @@ describe("StonetopSteadingSheet._prepareContext — rich-text enrichment (integr
 				.build()
 		);
 		const sheet = makeSheet(movesRepo);
-		await sheet.actor.typedActor.moves.seedHomefrontMoves();   // create-time seed (no longer on render)
+		await sheet.actor.typedActor.onCreate();   // create-time seed (no longer on render)
 
 		const orig = foundry.applications.ux.TextEditor.implementation.enrichHTML;
 		foundry.applications.ux.TextEditor.implementation.enrichHTML =
@@ -61,7 +42,7 @@ describe("StonetopSteadingSheet._prepareContext — rich-text enrichment (integr
 		}
 
 		// Move description: @UUID → real anchor in the rendered HTML.
-		const move = ctx.stonetop.moves.moves[0];
+		const move = ctx.stonetop.moves[0].moves[0];
 		expect(move.description.render()).toContain('<a class="content-link">the Barrow</a>');
 
 		// A plain default note (fortunes) also flowed through enrich — html is filled, not null.
@@ -76,7 +57,7 @@ describe("StonetopSteadingSheet._prepareContext — rich-text enrichment (integr
 		const sheet = makeSheet(new FakeMoveRepository());
 
 		const first = await sheet._prepareContext({});
-		expect(Object.keys(first.tabs)).toEqual(["overview", "residents", "neighbors", "improvements", "moves", "notes"]);
+		expect(Object.keys(first.tabs)).toEqual(["overview", "residents", "neighbors", "improvements", "moves", "seasons", "notes"]);
 		expect(first.tabs.overview.active).toBe(true);
 		expect(first.tabs.overview.cssClass).toBe("active");
 		expect(first.tabs.residents.active).toBe(false);

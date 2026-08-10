@@ -24,6 +24,7 @@ import { onRenderChatMessage } from "./src/chat/xpMarkControl.js";
 import { onUpdateActor, onSteadingCreatedOrDeleted } from "./src/hooks/SteadingChanged.js";
 import { info } from "./src/utils/logger.js";
 import { rich, hasText } from "./src/model/snapshot/RichText.js";
+import { isGroupTag } from "./src/model/data/groupTag.js";
 import { registerDrawTableEnricher } from "./src/journal/drawTableEnricher.js";
 import { registerBlankFieldEnricher } from "./src/journal/blankFieldEnricher.js";
 import { CharacterData } from "./src/data/CharacterData.js";
@@ -108,6 +109,10 @@ Hooks.once("init", () => {
 	// Truthiness for an optional text field that may arrive as a bare string OR a RichText — used to
 	// guard optional notes/subtitles in the shared heading partials: {{#if (hasText note)}}.
 	Handlebars.registerHelper("hasText", hasText);
+
+	// A tag chip that marks a creature as a group ("group" / "horde") carries the group tooltip
+	// instead of the plain "remove" one: {{#if (isGroupTag this)}}.
+	Handlebars.registerHelper("isGroupTag", isGroupTag);
 
 	Handlebars.registerHelper("repeatChecks", move => {
 		const sel = move?.selection;
@@ -241,11 +246,13 @@ Hooks.once("init", () => {
 		"stonetop.choice-group":     "systems/stonetop/templates/actor/partials/choice-group.hbs",
 		"stonetop.choice-row":       "systems/stonetop/templates/actor/partials/choice-row.hbs",
 		"stonetop.improvement-group": "systems/stonetop/templates/actor/partials/improvement-group.hbs",
+		"stonetop.steading-improvement-panel": "systems/stonetop/templates/actor/partials/steading-improvement-panel.hbs",
 		"stonetop.choice-section":   "systems/stonetop/templates/actor/partials/lore-section.hbs",
 		"stonetop.section-heading":  "systems/stonetop/templates/actor/partials/section-heading.hbs",
 		"stonetop.panel-frame":              "systems/stonetop/templates/actor/partials/panel-frame.hbs",
 		"stonetop.steading-stat-panel":      "systems/stonetop/templates/actor/partials/steading-stat-panel.hbs",
 		"stonetop.steading-ratings-list":    "systems/stonetop/templates/actor/partials/steading-ratings-list.hbs",
+		"stonetop.steading-seasons":         "systems/stonetop/templates/actor/partials/steading-seasons.hbs",
 		"stonetop.steading-assets":          "systems/stonetop/templates/actor/partials/steading-assets.hbs",
 		"stonetop.steading-places-of-interest": "systems/stonetop/templates/actor/partials/steading-places-of-interest.hbs",
 		"stonetop.steading-neighbor-places": "systems/stonetop/templates/actor/partials/steading-neighbor-places.hbs",
@@ -259,7 +266,6 @@ Hooks.once("init", () => {
 		"stonetop.playbook-ref-row":      "systems/stonetop/templates/item/partials/playbook-ref-row.hbs",
 		"stonetop.arcanum-item-def":      "systems/stonetop/templates/item/partials/arcanum-item-def.hbs",
 		"stonetop.arcanum-resource":      "systems/stonetop/templates/item/partials/arcanum-resource.hbs",
-		"stonetop.arcanum-mystery-move":  "systems/stonetop/templates/item/partials/arcanum-mystery-move.hbs",
 		"stonetop.string-list-editor":         "systems/stonetop/templates/item/partials/string-list-editor.hbs",
 		"stonetop.follower-selection-field":   "systems/stonetop/templates/item/partials/follower-selection-field.hbs",
 		"stonetop.follower-member-editor":     "systems/stonetop/templates/item/partials/follower-member-editor.hbs",

@@ -61,30 +61,65 @@ describe("ArcanumData.migrateData — legacy value stores → choiceValues", () 
 });
 
 describe("ArcanumData.migrateData — choice-group normalization in front/back", () => {
-	it("groups legacy follower wiring in back.choices into the followers object", () => {
+	it("wraps a legacy single-group back.choices into an array and folds follower wiring into grants", () => {
 		const out = ArcanumData.migrateData({
 			back: { choices: { slug: "mindgem", list: [
 				{ type: "entry", slug: "the-mighty-servant", content: {}, track: { max: 1 },
 					inlineDisplay: true, followers: ["the-mighty-servant"] },
 			] } },
 		});
-		expect(out.back.choices.list[0].followers)
-			.toEqual({ slugs: ["the-mighty-servant"], inlineDisplay: true, hideFromFollowersTab: false });
-		expect(out.back.choices.list[0].inlineDisplay).toBeUndefined();
+		expect(Array.isArray(out.back.choices)).toBe(true);
+		expect(out.back.choices[0].list[0].grants)
+			.toEqual([{ type: "follower", slug: "the-mighty-servant", locations: ["inline", "tab"] }]);
+		expect(out.back.choices[0].list[0].followers).toBeUndefined();
+		expect(out.back.choices[0].list[0].inlineDisplay).toBeUndefined();
 	});
 
-	it("normalizes front.unlock rows the same way", () => {
+	it("renames front.unlock → front.choices (array) and normalizes its rows the same way", () => {
 		const out = ArcanumData.migrateData({
 			front: { unlock: { slug: "ring-of-daagon", list: [
 				{ type: "entry", slug: "the-ring", content: {}, track: { max: 1 },
 					inlineDisplay: true, followers: ["the-ring"] },
 			] } },
 		});
-		expect(out.front.unlock.list[0].followers.slugs).toEqual(["the-ring"]);
+		expect(out.front.unlock).toBeUndefined();
+		expect(out.front.choices[0].list[0].grants.map(g => g.slug)).toEqual(["the-ring"]);
+	});
+
+	it("folds a legacy `description` into a leading content entry and drops unlockAt", () => {
+		const out = ArcanumData.migrateData({
+			back: { description: "the tonic bubbles", unlockAt: 4, choices: [{ slug: "moves", list: [] }] },
+		});
+		expect(out.back.description).toBeUndefined();
+		expect(out.back.unlockAt).toBeUndefined();
+		expect(out.back.choices[0].list[0].content.text).toBe("the tonic bubbles");
 	});
 
 	it("leaves a partial diff without front/back untouched (migrate-on-diff safety)", () => {
 		const out = ArcanumData.migrateData({ flipped: true });
 		expect(out).toEqual({ flipped: true });
+	});
+});
+
+describe("ArcanumData.migrateData — front title and transient import fields", () => {
+	it("drops the front's redundant title (the document name is the front's heading)", () => {
+		const out = ArcanumData.migrateData({ front: { title: "A wolf pelt", tags: "warm" } });
+		expect(out.front.title).toBeUndefined();
+		expect(out.front.tags).toBe("warm");
+	});
+
+	it("keeps the back's own title (the mystery's name)", () => {
+		const out = ArcanumData.migrateData({ back: { title: "Call of the Hunt" } });
+		expect(out.back.title).toBe("Call of the Hunt");
+	});
+
+	it("drops `_frontFollower`, the transient import-parser field that leaked into pack data", () => {
+		const out = ArcanumData.migrateData({ front: { _frontFollower: { lines: [], loyaltyMax: 3 }, item: null } });
+		expect(out.front._frontFollower).toBeUndefined();
+	});
+
+	it("touches nothing when the diff omits front (migrate-on-diff safety)", () => {
+		const out = ArcanumData.migrateData({ back: { title: "Truth Seeds" } });
+		expect(out.front).toBeUndefined();
 	});
 });

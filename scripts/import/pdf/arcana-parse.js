@@ -96,13 +96,9 @@ export function numberBlanks(system) {
 	let n = 0;
 	const number  = (text) => (text == null ? text : text.replace(BLANK, () => `@Blank[${n++}]`));
 	const entries = (group) => { for (const row of group?.list ?? []) if (row?.content) row.content.text = number(row.content.text); };
-	const { front, back } = system;
-	if (front) { front.description = number(front.description); entries(front.unlock); }
-	if (back) {
-		back.description = number(back.description);
-		for (const m of back.moves ?? []) m.text = number(m.text);
-		entries(back.choices);
-		entries(back.consequences);
+	// Each side's body is one `choices` array of groups; number blanks across every group's entry text.
+	for (const side of [system.front, system.back]) {
+		for (const group of Array.isArray(side?.choices) ? side.choices : (side?.choices ? [side.choices] : [])) entries(group);
 	}
 	return n;
 }
@@ -136,8 +132,10 @@ export function stripLoyalty(costRaw) {
  *  the row (empty content, full card shown inline). Mirrors the hand-authored `beautiful-scroll`
  *  back. `hideFromFollowersTab` keeps a card-resident follower (the Ring) off the followers tab. */
 export function followerChoiceEntry(followerSlug, { hideFromFollowersTab = false, owned = false } = {}) {
+	// A follower GRANT: shown inline on the card; on the roster tab unless card-bound (the Ring).
+	const locations = ["inline", ...(hideFromFollowersTab ? [] : ["tab"])];
 	const entry = { type: "entry", slug: followerSlug, content: { title: null, text: "" },
-		followers: { slugs: [followerSlug], inlineDisplay: true, hideFromFollowersTab } };
+		grants: [{ type: "follower", slug: followerSlug, locations }] };
 	// A choice-gated follower gets a checkbox (track: gain it when checked). An owned-by-default,
 	// card-resident follower (the Ring) has no checkbox — the arcanum grants it outright.
 	if (!owned) entry.track = { max: 1 };
@@ -218,6 +216,14 @@ export function titleCase(s) {
 	return words.map((w, i) => (i > 0 && MINOR_WORDS.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
+/** A choice entry's leading bold run-in name → a stable, readable slug source. The book prints each
+ *  Codex spell as "**Name.** body…"; pull "Name" (without its trailing period). Returns null when the
+ *  text has no bold run-in. */
+export function runInName(md) {
+	const m = (md || "").match(/^\*\*\s*(.+?)\s*\.?\*\*/);
+	return m ? m[1].trim() : null;
+}
+
 /** A mystery move whose text begins "(Requires: A, B)" gates on those moves — pull the comma-listed
  *  move names into `requirement.moves` (display names, mirroring `call-the-spirits`) and strip the
  *  parenthetical from the text. Returns { moves: string[]|null, text }. */
@@ -245,11 +251,19 @@ const cleanTier = (s) => (s || "").replace(/^[\s,;:]+/, "").replace(/[\s,;]+$/, 
 /** Extract the three result-tier outcomes from a rollable move's text. Each tier's value runs from the
  *  end of its header to the next tier header OR the next newline, whichever comes first — the tiers are
  *  written inline on one "roll …:" sentence, so this captures the outcome and stops before the option
- *  bullets / trailing paragraphs that follow. Absent tiers get "". Returns null with no 10+ header. */
+ *  bullets / trailing paragraphs that follow. Absent tiers get "". Returns null with no 10+ header.
+ *
+ *  Only the FIRST header for each tier counts. A tier can be named again inside a later outcome as a
+ *  back-reference (Call Up the Deep Ones' 6-: "they'll eventually go (as on a 7-9)"), which would
+ *  otherwise both overwrite that tier's real outcome and truncate the one it sits in. */
 function extractMoveResults(text) {
 	const t = text || "";
 	const hits = [];
-	for (const m of t.matchAll(TIER_RE)) hits.push({ key: TIER_KEY(m[1]), start: m.index, end: m.index + m[0].length });
+	for (const m of t.matchAll(TIER_RE)) {
+		const key = TIER_KEY(m[1]);
+		if (hits.some((h) => h.key === key)) continue;
+		hits.push({ key, start: m.index, end: m.index + m[0].length });
+	}
 	if (!hits.some((h) => h.key === "success")) return null;
 	const values = { success: "", partial: "", failure: "" };
 	for (let i = 0; i < hits.length; i++) {
@@ -321,6 +335,26 @@ export function resourceTracks(lines) {
 	return tracks;
 }
 
+/** Read a FRONT move's right-aligned resource off a page's raw lines. A front move header is a bold
+ *  ALL-CAPS line (the Hec'tumel Codex's "CAST A CODEX SPELL"); its resource is a run of ○ pips on the
+ *  same baseline to the right, preceded by an italic label ("Casting penalty"). Unlike `resourceTracks`,
+ *  the pips sit in the left page column (x≈330), not the back's far-right column — so this keys off the
+ *  header baseline instead of a fixed x. Returns [{ slug, max, title }] (slug = the move's slug). */
+export function frontMoveResources(lines) {
+	const out = [];
+	const headers = lines.filter((l) => /Bold/.test(l.font || "") && /^[A-Z][A-Z0-9 '’]+$/.test((l.text || "").trim()));
+	for (const h of headers) {
+		const y = h.bbox[1];
+		const pips = lines.filter((l) => l.font === "marker" && l.text.includes("○") && Math.abs(l.bbox[1] - y) <= 5 && l.bbox[0] > h.bbox[2]);
+		const max = pips.reduce((n, p) => n + (p.text.match(/○/g) || []).length, 0);
+		if (!max) continue;
+		const pipX = Math.min(...pips.map((p) => p.bbox[0]));
+		const label = lines.find((l) => /Italic/.test(l.font || "") && Math.abs(l.bbox[1] - y) <= 5 && l.bbox[0] < pipX && l.bbox[2] <= pipX + 2);
+		out.push({ slug: toSlug(titleCase(h.text.trim())), max, title: label ? label.text.trim() : null });
+	}
+	return out;
+}
+
 /** Split a major move header line's leading ALL-CAPS run (the move name) from any inline remainder
  *  ("WHISPERS When you grip the shaft" → {name:"WHISPERS", rest:"When you grip the shaft"}). */
 export function majorMoveName(text) {
@@ -329,21 +363,6 @@ export function majorMoveName(text) {
 	while (n < words.length && /^[A-Z0-9][A-Z0-9'’-]*$/.test(words[n])) n++;
 	if (n < 1) return { name: "", rest: words.join(" ") };
 	return { name: words.slice(0, n).join(" "), rest: words.slice(n).join(" ") };
-}
-
-/** The front's mark-gate count for unlocking the mysteries: an explicit "marked N", or the length of
- *  the standalone Marks run for "the last mark". Stored on `back.unlockAt`. */
-export function detectUnlockAt(blocks) {
-	const text = blocks.map((b) => b.type === "list" ? rawOf(b.items.flat()) : (b.lines ? rawOf(b.lines) : (b.line?.text ?? ""))).join(" ");
-	if (!/unlock/i.test(text)) return null;
-	const m = text.match(/marked\s+(\d+)/i);
-	if (m) return Number(m[1]);
-	if (/last mark/i.test(text)) {
-		let max = 0;
-		for (const b of blocks) if (b.type === "list") for (const it of b.items) { const { max: mx, text: t } = parseTrack(rawOf(it)); if (!t && mx > max) max = mx; }
-		return max || null;
-	}
-	return null;
 }
 
 // ─── blocks → front/back ──────────────────────────────────────────────────────
@@ -401,7 +420,9 @@ export function splitFrontFollower(blocks) {
 
 /** Build the front side from its blocks (already bounded to one card's front). */
 export function parseFront(blocks, { name, slug }) {
-	const front = { title: name, item: null, tags: null, description: null, unlock: null };
+	// No `title`: the arcanum's document name IS the front's heading (only the back carries its own title).
+	// `name` is still needed below, to name the front's ◇ item and its front-granted move.
+	const front = { item: null, tags: null, description: null, unlock: null };
 	// A card that prints its follower on the FRONT (the Ring of Daagon) carries a second stat-block
 	// heading + tags para inside the front span. Pull it out before parsing the unlock, and stash the
 	// raw follower lines on the front for build-arcana to turn into a follower doc + unlock entry.
@@ -442,6 +463,49 @@ export function parseFront(blocks, { name, slug }) {
 	}
 	front.item = item;
 
+	// A rollable ALL-CAPS front header (the Hec'tumel Codex's "CAST A CODEX SPELL") is a front-granted
+	// MOVE, not an unlock option: pull that para (and its following option bullets) out of the seq into a
+	// move def + a move-grant unlock entry. Gated tightly — an ALL-CAPS bold run-in that is rollable
+	// (`roll +X`) — so only the Codex's front move matches. build-arcana emits the move file from `_frontMove`.
+	let frontMove = null;
+	{
+		const i = seq.findIndex((s) => {
+			if (s.kind !== "para") return false;
+			const md = joinMd(s.lines);
+			const nm = runInName(md);
+			return nm && /^[A-Z][A-Z0-9 '’-]+$/.test(nm) && !!parseMoveRoll(md).rollStat;
+		});
+		if (i >= 0) {
+			const md = joinMd(seq[i].lines);
+			const name = titleCase(runInName(md));
+			let text = stripMarkers(md).replace(/^\*\*[^*]+\*\*\s*/, "").trim();
+			let j = i + 1;
+			for (; j < seq.length && seq[j].kind === "li"; j++)
+				text += "\n- " + stripMarkers(joinMd(seq[j].lines)).replace(/^[ä••\-\s]+/, "");
+			frontMove = { id: toSlug(name), name, text };
+			seq.splice(i, j - i);
+		}
+	}
+	const attachFrontMove = () => {
+		if (!frontMove) return;
+		front._frontMove = frontMove;
+		(front.unlock ??= { slug, list: [] }).list.push({
+			type: "entry", slug: frontMove.id, content: { title: null, text: null },
+			grants: [{ type: "move", slug: frontMove.id, locations: ["inline"] }],
+		});
+	};
+	// Fold the parsed front into the ArcanumFront shape: one choices group whose FIRST entry is the
+	// description (a content-only entry), followed by the unlock rows. `_frontMove` is left for build-arcana.
+	const finalize = () => {
+		attachFrontMove();
+		const list = [];
+		if (front.description) list.push({ type: "entry", content: { title: null, text: front.description } });
+		list.push(...(front.unlock?.list ?? []));
+		front.choices = list.length ? [{ slug: front.unlock?.slug ?? slug, list }] : [];
+		delete front.description; delete front.unlock;
+		return front;
+	};
+
 	// MAJOR-style unlock: the options are bold-italic "When you **_…_**" trigger paragraphs, each
 	// accreting its following option bullets / continuation paras; task checkboxes and the Marks run are
 	// their own tracked entries. (Minors have no such triggers — they fall through to the li logic below.)
@@ -467,14 +531,14 @@ export function parseFront(blocks, { name, slug }) {
 		// Drop the trailing gate instruction ("When you make the last mark, you unlock …") after the track.
 		if (list.some((e) => e.track)) while (list.length && !list[list.length - 1].track) list.pop();
 		front.unlock = { slug, list };
-		return front;
+		return finalize();
 	}
 
 	// description = paras before the first option (li); unlock = the intro para + every li/para after.
 	const firstLi = seq.findIndex((s) => s.kind === "li");
 	if (firstLi < 0) {
 		front.description = seq.map((s) => joinMd(s.lines)).filter(Boolean).join("\n\n") || null;
-		return front;
+		return finalize();
 	}
 	// The intro entry is the para right before the first option; majors precede it with several
 	// bold-italic "When you **_…_**" trigger paras that are unlock entries too — pull them all in.
@@ -505,19 +569,35 @@ export function parseFront(blocks, { name, slug }) {
 	// the last mark, you unlock …") — they're informational, not unlock options.
 	if (list.some((e) => e.track)) while (list.length && !list[list.length - 1].track) list.pop();
 	front.unlock = { slug, list };
-	return front;
+	return finalize();
+}
+
+/** A move's closing trigger paragraph, swallowed by a follower stat block printed inside the Moves
+ *  section. The Ring of Daagon prints its Servant of Daagon stat block (and that servant's builder)
+ *  between the CALL UP THE DEEP ONES move and its final "When you send them back …, roll +CHA"
+ *  trigger; the layout parser folds that whole right-hand column into one `statblock`, so the trigger
+ *  never reaches the move it belongs to. Returns the trailing run — a bold-italic "When you …" line
+ *  plus every line after it — or null. Gated on the run being ROLLABLE (`roll +X`), so a stat block's
+ *  ordinary italic prose can never be mistaken for a move trigger. */
+export function statblockMoveTail(block) {
+	const lines = block?.lines ?? [];
+	const at = lines.findIndex((l) => /BoldItalic/.test(l.font || "") && /^when you\b/i.test((l.text || "").trim()));
+	if (at < 0) return null;
+	const text = stripMarkers(joinMd(lines.slice(at)));
+	return parseMoveRoll(text).rollStat ? text : null;
 }
 
 /** Build a MAJOR back: "Mysteries of X" with all-caps mystery moves and a consequence track. Majors
  *  share the front's item (itemSameAsFront) and have no separate back item/description/resource. Each
  *  move (a `□ ALL-CAPS NAME` list item) and each consequence (a `□`-marked list item) continues
  *  through the following paras until the next list item / rule / heading. `unlockAt` is front-derived. */
-function parseMajorBack(blocks, { slug, name, unlockAt }) {
-	const back = { title: null, item: null, description: null, resource: null, itemSameAsFront: true, choices: null, moves: [], consequences: null, unlockAt: unlockAt ?? null };
+function parseMajorBack(blocks, { slug, name }) {
+	const back = { title: null, item: null, description: null, resource: null, itemSameAsFront: true, choices: null, moves: [], consequences: null };
 	const abbr = toSlug((name || "").trim().split(/\s+/).pop() || "c") || "c"; // "Twisted Spear" → "spear"
-	let section = null; // null | "moves" | "consequences"
-	let cur = null;     // the move/consequence currently accreting following paras/bullets
-	const consX = [];   // each consequence row's start x0, parallel to back.consequences.list
+	let section = null;     // null | "moves" | "consequences" | "spells"
+	let spellsTitle = null; // the "Spells of the Codex" heading text → the spells choice-group title
+	let cur = null;         // the move/consequence currently accreting following paras/bullets
+	const consX = [];       // each consequence row's start x0, parallel to back.consequences.list
 	const flush = () => {
 		if (!cur) return;
 		const text = cur.text.replace(/\n{3,}/g, "\n\n").trim();
@@ -542,12 +622,31 @@ function parseMajorBack(blocks, { slug, name, unlockAt }) {
 			const t = b.line.text.trim();
 			if (/^moves$/i.test(t)) { flush(); section = "moves"; }
 			else if (/^consequences$/i.test(t)) { flush(); section = "consequences"; }
+			else if (/^spells of\b/i.test(t)) { flush(); section = "spells"; spellsTitle = t; } // the Hec'tumel Codex's pickable spells
 			else if (/^(front|back)$/i.test(t) || /^appendix [cd]/i.test(t)) { flush(); section = null; } // side label / running header ends back content
 			else if (!back.title) back.title = t;
 			continue;
 		}
+		// A section heading can arrive glued to stray leading markers as a 1-item list ("○ ○ ○ ○
+		// Consequences") when the column split strands markers onto it — treat it as the heading.
+		if (b.type === "list" && b.items.length === 1) {
+			const label = stripMarkers(joinMd(b.items[0])).trim();
+			if (/^moves$/i.test(label))        { flush(); section = "moves"; continue; }
+			if (/^consequences$/i.test(label)) { flush(); section = "consequences"; continue; }
+			if (/^spells of\b/i.test(label))   { flush(); section = "spells"; spellsTitle = label; continue; }
+		}
 		if (b.type === "rule") { flush(); continue; } // a rule separates moves / consequences
-		if (b.type === "boxstart" || b.type === "boxend" || b.type === "table" || b.type === "statblock" || b.type === "image") continue;
+		if (b.type === "statblock") {
+			// A stat block inside the Moves section can have swallowed the move's closing trigger — give it
+			// back to the move it belongs to (the preceding one; a rule has usually already flushed `cur`).
+			const tail = section === "moves" ? statblockMoveTail(b) : null;
+			if (tail) {
+				if (cur) cur.text += "\n\n" + tail;
+				else if (back.moves.length) back.moves[back.moves.length - 1].text += "\n\n" + tail;
+			}
+			continue;
+		}
+		if (b.type === "boxstart" || b.type === "boxend" || b.type === "table" || b.type === "image") continue;
 		if (section === "moves") {
 			if (b.type === "list") for (const it of b.items) {
 				const head = majorMoveName(it[0]?.text || "");
@@ -573,6 +672,21 @@ function parseMajorBack(blocks, { slug, name, unlockAt }) {
 					cur = { kind: "consequence", max: (rawOf(it).match(/[□◻]/g) || []).length, text: stripMarkers(joinMd(it)), x0: it[0]?.bbox?.[0] ?? null };
 				} else if (cur) cur.text += bullet(it);
 			} else if (b.type === "para" && cur) cur.text += "\n\n" + stripMarkers(joinMd(b.lines));
+		} else if (section === "spells") {
+			// Each spell is a self-contained "□ **Name.** body" list item you tick to learn it — a
+			// checkbox entry in the back's generic choice group, titled by the section heading.
+			if (b.type === "list") for (const it of b.items) {
+				const text = stripMarkers(joinMd(it));
+				if (!text) continue;
+				const nm = runInName(text);
+				// back.choices is namespaced by the arcanum slug everywhere (mindgem/blackwood followers,
+				// and migrateArcanumChoiceGroupSlugs force-corrects it) — the section heading is its `title`.
+				(back.choices ??= { slug, title: spellsTitle, list: [] });
+				back.choices.list.push({ type: "entry", slug: nm ? toSlug(nm) : unlockSlug(text), content: { title: null, text }, track: { max: 1 } });
+			} else if (b.type === "para" && back.choices?.list?.length) {
+				const last = back.choices.list[back.choices.list.length - 1];
+				last.content.text += "\n\n" + stripMarkers(joinMd(b.lines));
+			}
 		}
 	}
 	flush();
@@ -658,14 +772,14 @@ export function parseNameFirstItem(text) {
 
 /** Build the back side (the spell / mysteries) from its blocks. Stat blocks (followers) are handled
  *  by build-arcana via toFollowerDoc; here we collect moves/consequences/resource. */
-export function parseBack(blocks, { slug, name, major, unlockAt } = {}) {
-	if (major) return parseMajorBack(blocks, { slug, name, unlockAt });
+export function parseBack(blocks, { slug, name, major } = {}) {
+	if (major) return parseMajorBack(blocks, { slug, name });
 	// A minor arcanum's back is the "spell": a title, an optional item tags line, and flowing
 	// description — no named moves or consequence tracks (those are major-only, kept null/[] for shape).
 	// A clean dice table is promoted to a RollTable (build-arcana writes the pack file) and referenced
 	// inline via a player-rollable @DrawTableInline block (rows + roll button); the footer-strip false-positive tables don't qualify
 	// and are dropped as card furniture.
-	const back = { title: null, item: null, description: null, resource: null, moves: [], consequences: null, unlockAt: null };
+	const back = { title: null, item: null, description: null, resource: null, moves: [], consequences: null };
 	const rollTables = []; // transient RollTable specs; build-arcana emits the pack files, then strips this
 	const parts = [];      // description fragments in reading order (paras, lists, table links interleaved)
 	let resource = null;   // the first ○-pip track; attached to back.item.resource if a back item exists, else back.resource

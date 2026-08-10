@@ -34,13 +34,13 @@ function followerArcanumItem() {
 		_id: "arc1", type: "arcanum", name: "Mysteries of the Blackwood", major: true,
 		system: {
 			slug: "blackwood-fetishes", major: true, flipped: true,
-			front: { title: "Blackwood fetishes", description: null, item: null, unlock: null },
+			front: { description: null, item: null, unlock: null },
 			back: {
 				title: "The fetishes", description: "the back",
 				choices: {
 					slug: "blackwood-fetishes",
 					list: [
-						{ type: "entry", slug: "astor", followers: { slugs: ["astor"], inlineDisplay: true },
+						{ type: "entry", slug: "astor", grants: [{ type: "follower", slug: "astor", locations: ["inline", "tab"] }],
 							content: { title: null, text: "" }, track: { max: 1 } },
 					],
 				},
@@ -118,17 +118,17 @@ function ringArcanumItem() {
 		system: {
 			slug: "ring-of-daagon", major: true, flipped: false,
 			front: {
-				title: "Ring of Daagon", description: null, item: null,
-				unlock: {
+				item: null,
+				choices: [{
 					slug: "ring-of-daagon",
 					list: [
 						// No `track`: owned-by-default grant, not a choice-gated checkbox.
 						{ type: "entry", slug: "the-ring", content: { title: null, text: "" },
-							followers: { slugs: ["the-ring"], inlineDisplay: true, hideFromFollowersTab: true } },
+							grants: [{ type: "follower", slug: "the-ring", locations: ["inline"] }] },
 					],
-				},
+				}],
 			},
-			back: { title: "The Ring", description: "the back", choices: null },
+			back: { title: "The Ring", choices: [] },
 			choiceValues: {},
 		},
 	};
@@ -166,7 +166,7 @@ describe("StonetopCharacter — arcanum front-unlock object follower (integratio
 		await character._onCreateDescendantDocuments([arcanum]);
 		const snap = await character.buildSnapshot();
 		const card = snap.arcana.major.items.find(a => a.slug === "ring-of-daagon");
-		const row  = card.front.unlock.list.find(r => r.slug === "the-ring");
+		const row  = card.front.choices[0].list.find(r => r.slug === "the-ring");
 		expect(row.followers.inlineDisplay).toBe(true);
 		expect(row.followers.slugs).toEqual(["the-ring"]);        // the card holds a reference
 		const ring = snap.followers.bySlug["the-ring"];           // resolved once in the registry

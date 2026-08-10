@@ -7,7 +7,6 @@
 	"system": {
 		"slug": "blood-quenched-sword",
 		"front": {
-			"title": "Blood-quenched Sword",
 			"item": {
 				"name": "Blood-quenched Sword",
 				"weight": 1,
@@ -16,136 +15,186 @@
 				"inventoryColumn": "regular"
 			},
 			"tags": null,
-			"description": "An ancient blade of deep red bronze, its pommel etched with symbols like those that the Hillfolk use to decorate their drinking horns. It thrums in its scabbard, wanting nothing more than to be drawn and to burn like a fire, quenching itself in the blood of foes.",
-			"unlock": {
-				"slug": "blood-quenched-sword",
-				"list": [
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_draw the Blood-quenched Sword_**, it leaps from its sheath before any present have time to even blink, and must spill blood before you can return it to its sheath."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_spill your own blood in order to return the Sword to its sheath_**, take 1d4 damage (ignoring armor) and the scars from the cut never fade."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_strike first in a fight with the Blood-quenched Sword_**, gain advantage on your first roll."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_sheathe the Sword after using it to kill a living, bleeding foe_**, mark 1 unless you have already done so since the last sunset:"
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "marks",
-						"content": {
-							"title": null,
-							"text": "Marks"
+			"choices": [
+				{
+					"slug": "blood-quenched-sword",
+					"list": [
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "An ancient blade of deep red bronze, its pommel etched with symbols like those that the Hillfolk use to decorate their drinking horns. It thrums in its scabbard, wanting nothing more than to be drawn and to burn like a fire, quenching itself in the blood of foes."
+							}
 						},
-						"track": {
-							"max": 5
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_draw the Blood-quenched Sword_**, it leaps from its sheath before any present have time to even blink, and must spill blood before you can return it to its sheath."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_spill your own blood in order to return the Sword to its sheath_**, take 1d4 damage (ignoring armor) and the scars from the cut never fade."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_strike first in a fight with the Blood-quenched Sword_**, gain advantage on your first roll."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_sheathe the Sword after using it to kill a living, bleeding foe_**, mark 1 unless you have already done so since the last sunset:"
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "marks",
+							"content": {
+								"title": null,
+								"text": "Marks"
+							},
+							"track": {
+								"max": 5
+							}
 						}
-					}
-				]
-			}
+					]
+				}
+			]
 		},
 		"back": {
 			"title": "Mysteries of the Blood-quenched Sword",
 			"item": null,
-			"description": null,
 			"resource": null,
 			"itemSameAsFront": true,
-			"choices": null,
-			"moveSlugs": [
-				"unquenched",
-				"a-flickering-flame"
-			],
-			"consequences": {
-				"slug": "consequences",
-				"list": [
-					{
-						"type": "entry",
-						"slug": "sword-c1",
-						"content": {
-							"title": null,
-							"text": "You lose yourself in a blood-rage, no longer distinguishing between friend, foe, and bystander.\n\nWhen you **_attack the nearest living creature_**, you have advantage on damage rolls.\n\nWhen you **_attempt to stay your hand_**, roll +WIS: **on a 10+**, you do so, and can choose to calm yourself and end the rage with a few moments focus; **on a 7-9**, you stay your hand, but must choose a different target for your rage; **on a 6-**, attack without mercy or doubt."
+			"choices": [
+				{
+					"slug": "moves",
+					"title": "Moves",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "unquenched",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "unquenched",
+									"locations": [
+										"inline"
+									]
+								}
+							]
 						},
-						"track": {
-							"max": 3
+						{
+							"type": "entry",
+							"slug": "a-flickering-flame",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "a-flickering-flame",
+									"locations": [
+										"inline"
+									]
+								}
+							]
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "sword-c2",
-						"content": {
-							"title": null,
-							"text": "Pick someone who survives this battle (friend or foe). You are convinced that they covet the Blood-quenched Sword. Until you put them in their place, you are either *dazed* or *miserable* (your choice)."
+					]
+				},
+				{
+					"slug": "consequences",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "sword-c1",
+							"content": {
+								"title": null,
+								"text": "You lose yourself in a blood-rage, no longer distinguishing between friend, foe, and bystander.\n\nWhen you **_attack the nearest living creature_**, you have advantage on damage rolls.\n\nWhen you **_attempt to stay your hand_**, roll +WIS: **on a 10+**, you do so, and can choose to calm yourself and end the rage with a few moments focus; **on a 7-9**, you stay your hand, but must choose a different target for your rage; **on a 6-**, attack without mercy or doubt."
+							},
+							"track": {
+								"max": 3
+							}
 						},
-						"track": {
-							"max": 1
+						{
+							"type": "entry",
+							"slug": "sword-c2",
+							"content": {
+								"title": null,
+								"text": "Pick someone who survives this battle (friend or foe). You are convinced that they covet the Blood-quenched Sword. Until you put them in their place, you are either *dazed* or *miserable* (your choice)."
+							},
+							"track": {
+								"max": 1
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "sword-c3",
+							"content": {
+								"title": null,
+								"text": "Your instinct becomes \"Paranoia: to accuse someone of plotting against or wanting to steal the Blood-quenched Sword, and do something about it.\""
+							},
+							"track": {
+								"max": 1
+							},
+							"indent": true
+						},
+						{
+							"type": "entry",
+							"slug": "sword-c4",
+							"content": {
+								"title": null,
+								"text": "You can no longer sleep or rest without the Blood-quenched Sword at hand."
+							},
+							"track": {
+								"max": 1
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "sword-c5",
+							"content": {
+								"title": null,
+								"text": "You no longer gain sustenance from food. When you **_slay a living, bleeding creature with the_** **_Sword_**, hold 1 Sustenance (max 3). When you would consume a ration, lose 1 Sustenance instead."
+							},
+							"track": {
+								"max": 1
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "sword-c6",
+							"content": {
+								"title": null,
+								"text": "You can always ask the GM \"Does this NPC disrespect me or intend to do me harm?\" and the GM will answer honestly \"Yes\" or \"No.\" If they answer \"Yes,\" gain advantage to end their life and take disadvantage to do anything else."
+							},
+							"track": {
+								"max": 1
+							}
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "sword-c3",
-						"content": {
-							"title": null,
-							"text": "Your instinct becomes \"Paranoia: to accuse someone of plotting against or wanting to steal the Blood-quenched Sword, and do something about it.\""
-						},
-						"track": {
-							"max": 1
-						},
-						"indent": true
-					},
-					{
-						"type": "entry",
-						"slug": "sword-c4",
-						"content": {
-							"title": null,
-							"text": "You can no longer sleep or rest without the Blood-quenched Sword at hand."
-						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "sword-c5",
-						"content": {
-							"title": null,
-							"text": "You no longer gain sustenance from food. When you **_slay a living, bleeding creature with the_** **_Sword_**, hold 1 Sustenance (max 3). When you would consume a ration, lose 1 Sustenance instead."
-						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "sword-c6",
-						"content": {
-							"title": null,
-							"text": "You can always ask the GM \"Does this NPC disrespect me or intend to do me harm?\" and the GM will answer honestly \"Yes\" or \"No.\" If they answer \"Yes,\" gain advantage to end their life and take disadvantage to do anything else."
-						},
-						"track": {
-							"max": 1
-						}
-					}
-				]
-			},
-			"unlockAt": 5
+					],
+					"title": "Consequences"
+				}
+			]
 		},
 		"major": true
 	},

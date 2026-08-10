@@ -2,6 +2,7 @@ import { FoundryPlaybookRepository } from "./repositories/FoundryPlaybookReposit
 import { enrichRichTextTree } from "../../utils/enrichRichText.js";
 import { confirmDelete } from "../../utils/confirmDelete.js";
 import { ChangeActionRouter } from "../../utils/ChangeActionRouter.js";
+import { ChoiceGroupWiring } from "../../utils/ChoiceGroupWiring.js";
 import { ChoiceTarget } from "./ChoiceTarget.js";
 import { takeTagInputValue } from "../../utils/takeTagInputValue.js";
 
@@ -41,6 +42,9 @@ export function createStonetopCharacterSheetClass(Base) {
 		// Which follower inventory catalogs are expanded — sheet-instance state that survives
 		// re-render, so only the open follower renders the (large) outfit catalog.
 		_openFollowerInventories = new Set();
+		// Moves tab "selected only" filter. Held on the sheet because ticking a move re-renders the
+		// tab, which would otherwise drop the filter mid-review.
+		_hideUnselectedMoves = false;
 
 		constructor(...args) {
 			super(...args);
@@ -58,6 +62,9 @@ export function createStonetopCharacterSheetClass(Base) {
 				},
 				toggleMovesOverlay(ev, target) {
 					target.closest(".stonetop-sheet-layout")?.classList.toggle("moves-open");
+				},
+				toggleUnselectedMoves(ev, target) {
+					this._setHideUnselectedMoves(!this._hideUnselectedMoves, target.closest(".tab.moves"));
 				},
 				async openBasicMove(ev, target) {
 					// Once a move opens, dismiss the overlay so it doesn't cover the move sheet.
@@ -196,6 +203,7 @@ export function createStonetopCharacterSheetClass(Base) {
 			const context = await super._prepareContext(options);
 			context.actor    = this.actor;
 			context.editable = this.isEditable;
+			context.hideUnselectedMoves = this._hideUnselectedMoves;
 			this._stonetopCharacter.setOpenFollowerInventories(this._openFollowerInventories);
 			// The playbook list is independent of the snapshot build — load them in parallel.
 			const [stonetop, availablePlaybooks] = await Promise.all([
@@ -214,6 +222,11 @@ export function createStonetopCharacterSheetClass(Base) {
 		async _onFirstRender(context, options) {
 			await super._onFirstRender(context, options);
 			this._buildChangeRouter().attach(this.element);
+			// Every choice row on the sheet, through the one shared description of how one behaves.
+			new ChoiceGroupWiring(this._stonetopCharacter, {
+				when:   () => this.isEditable,
+				onPick: el => this._syncInstinctBox(el),
+			}).attach(this.element);
 		}
 
 		// submitOnChange (from the actor base) makes core submit the WHOLE form on every change.
@@ -264,14 +277,6 @@ export function createStonetopCharacterSheetClass(Base) {
 				selectBackground: el => char.selectBackground(el.value),
 				selectOrigin:     el => char.origin.select(el.value),
 				instinctCustom:   el => char.selectCustomInstinct(el.value.trim()),
-
-				// choice groups (shared partial rows; the ChoiceTarget owns the container routing)
-				cgTrack: el => char.setChoiceTrackFor(ChoiceTarget.fromElement(el), el.dataset.cgIndex, el.checked),
-				cgPick:  el => {
-					this._syncInstinctBox(el);
-					return char.setChoicePickFor(ChoiceTarget.fromElement(el), el.checked);
-				},
-				cgText:        el => char.setChoiceTextFor(ChoiceTarget.fromElement(el), el.value),
 				arcanumBlank:  el => {
 					const card = el.closest(".stonetop-arcanum-card");
 					if (card) return char.setArcanumBlank(card.dataset.slug, el.dataset.blankKey, el.value);
@@ -339,6 +344,15 @@ export function createStonetopCharacterSheetClass(Base) {
 			if (!wrap || !value) return;
 			const { slug, field, memberIndex } = wrap.dataset;
 			return this._stonetopCharacter.toggleFollowerTag(slug, field, memberIndex ?? null, value);
+		}
+
+		// The moves-tab filter is CSS-only, so flipping it decorates the live tab rather than
+		// re-rendering it (the tab is the sheet's largest part, and a rebuild would fight the
+		// scroll position). _prepareContext re-stamps both classes on the next render.
+		_setHideUnselectedMoves(hide, tab) {
+			this._hideUnselectedMoves = hide;
+			tab?.classList.toggle("hide-unselected", hide);
+			tab?.querySelector(".stonetop-moves-filter")?.classList.toggle("is-active", hide);
 		}
 
 		// A shared outfit item lives in the character inventory tab OR inside a follower card's

@@ -10,6 +10,7 @@ import { ResourceController } from "../actors/character/ResourceController.js";
 import { migrateChoiceRow } from "./migrateChoices.js";
 import { ChoiceGroupDefs } from "../model/data/ChoiceGroupDefs.js";
 import { Selection } from "../model/data/Selection.js";
+import { richTextToHtml } from "./richTextToHtml.js";
 
 const SCOPE = "stonetop";
 
@@ -65,6 +66,7 @@ export async function migrateCharacter(actor, repos, insertRepo = null) {
 	await migrateEmbeddedMoveSlugs(actor);
 	await migrateCharacterMoves(actor, repos.moves, insertRepo);
 	await migrateReferenceMoveCategories(actor, repos.moves);
+	await migrateAddedReferenceMoves(actor, repos.moves);
 	await migrateMovePackData(actor, repos.moves);
 	await migratePlaybookSpecialPossessions(actor);
 	await migratePlaybookChoices(actor, repos.playbooks);
@@ -106,6 +108,7 @@ export async function migrateCharacter(actor, repos, insertRepo = null) {
 	await migrateChoiceValues(actor);
 	await migratePlaybookChoiceValues(actor);
 	_logArcanumFlipped(actor, "after migratePlaybookChoiceValues");
+	await migrateCharacterNotes(actor);
 }
 
 // ── A. Flag → system scalar copies ───────────────────────────────────────────
@@ -164,6 +167,22 @@ export async function migrateReferenceMoveCategories(actor, moveRepo) {
 	for (const categoryKey of CharacterMoves.REFERENCE_CATEGORIES) {
 		const present = [...actor.items].some(i => i.type === "move" && i.system?.categoryKey === categoryKey);
 		if (!present) await moves.seedReferenceCategory(categoryKey);
+	}
+}
+
+// ── B0.6. Reference moves added to a category the character already has ───────
+
+// Seek Insight was missed when the basic moves were first authored, so every character made before it
+// joined the pack has the other nine and not it. migrateReferenceMoveCategories above can't reach it:
+// basic moves ARE present, so the whole category is skipped. Listing the slug explicitly is what keeps
+// this narrow — a blanket top-up of the basic category would also resurrect any basic move a GM
+// deleted on purpose.
+const ADDED_REFERENCE_SLUGS = { basic: ["seek-insight"] };
+
+export async function migrateAddedReferenceMoves(actor, moveRepo) {
+	const moves = new CharacterMoves(moveRepo, actor, null, null);
+	for (const [categoryKey, slugs] of Object.entries(ADDED_REFERENCE_SLUGS)) {
+		await moves.seedReferenceSlugs(categoryKey, slugs);
 	}
 }
 
@@ -352,10 +371,11 @@ export async function migrateArcana(actor, arcanaRepo, followerRepo) {
 }
 
 // ── F2. Arcana mystery moves → real move items ────────────────────────────────
-// Major arcana now own their mystery moves as real `move` items in an `arcana-<slug>` category
-// (mystery-moves-as-real-moves). Existing embedded major arcana carry the legacy inline back.moves and
-// no category; refresh their `back` from the repo so they gain back.moveSlugs, then register the
-// category. addCategory is idempotent (skips if the category already exists), so this is re-run safe.
+// Arcana own the moves they grant as real `move` items in an `arcana-<slug>` category. The moves are
+// referenced by move-grant entries in the arcanum's choice groups (front + back); seed the category
+// ACQUIRED (the "unlocked" checkbox is now the granting entry's ornamental choice track). Note:
+// migrateArcanumPackData refreshes each arcanum's front/back from the pack first, so the grants are the
+// current array shape by the time this runs. addCategory is idempotent, so this is re-run safe.
 export async function migrateArcanaMoves(actor, arcanaRepo, moveRepo) {
 	const arcana = [...actor.items].filter(i => i.type === "arcanum");
 	if (!arcana.length) return;
@@ -364,18 +384,8 @@ export async function migrateArcanaMoves(actor, arcanaRepo, moveRepo) {
 	for (const item of arcana) {
 		const slug = item.system?.slug;
 		if (!slug) continue;
-
-		let back = item.system?.back ?? {};
-		if (!(back.moveSlugs?.length)) {
-			const raw = await arcanaRepo.findBySlug(slug);
-			if (raw?.back?.moveSlugs?.length) {
-				back = raw.back;
-				await actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { back } }]);
-			}
-		}
-
-		const moveSlugs = back.moveSlugs ?? [];
-		if (moveSlugs.length) await moves.addCategory(`arcana-${slug}`, item.name ?? slug, moveSlugs, []);
+		const moveSlugs = ChoiceGroupDefs.grants(item.system ?? {}, "move").map(g => g.slug);
+		if (moveSlugs.length) await moves.addCategory(`arcana-${slug}`, item.name ?? slug, moveSlugs, moveSlugs);
 	}
 }
 
@@ -409,9 +419,12 @@ export async function migrateArcanumChoiceGroupSlugs(actor) {
 	const updates = [];
 	for (const item of actor.items) {
 		if (item.type !== "arcanum") continue;
-		const slug      = item.system?.slug;
-		const back      = item.system?.back;
-		const groupSlug = back?.choices?.slug;
+		const slug = item.system?.slug;
+		const back = item.system?.back;
+		// Only the LEGACY single-group `back.choices` (a follower group that shipped with slug "followers")
+		// needs correcting to the arcanum slug. The current shape is an array of groups with their own
+		// stable slugs — leave it alone.
+		const groupSlug = (back && !Array.isArray(back.choices)) ? back.choices?.slug : null;
 		if (!slug || groupSlug == null || groupSlug === slug) continue;
 		updates.push({ _id: item._id, system: { back: { ...back, choices: { ...back.choices, slug } } } });
 	}
@@ -768,15 +781,14 @@ export async function migrateArcanaOwnedFollowers(actor, followerRepo, resourceC
 	if (!arcana.length) return;
 	const followers = new CharacterFollowers(actor, followerRepo, resourceController);
 	for (const arc of arcana) {
-		for (const link of ChoiceGroupDefs.followerLinks(arc.system ?? {})) {
-			for (const slug of link.slugs) {
-				const item = [...actor.items].find(i => i.type === "follower" && i.system?.slug === slug);
-				// Embed a missing follower off the tab; fix a card-bound one that an old path left on the
-				// tab. A tab follower's marked placement is left alone (addFollower is idempotent).
-				if (!item?.system?.owned) await followers.addFollower(slug, { showOnTab: false });
-				else if (link.hideFromFollowersTab && item.system?.showOnTab !== false) {
-					await followers.addFollower(slug, { showOnTab: false });
-				}
+		for (const grant of ChoiceGroupDefs.grants(arc.system ?? {}, "follower")) {
+			const slug = grant.slug;
+			const item = [...actor.items].find(i => i.type === "follower" && i.system?.slug === slug);
+			// Embed a missing follower off the tab; fix a card-bound one (no "tab" location) that an old
+			// path left on the tab. A tab follower's marked placement is left alone (addFollower is idempotent).
+			if (!item?.system?.owned) await followers.addFollower(slug, { showOnTab: false });
+			else if (!grant.onTab && item.system?.showOnTab !== false) {
+				await followers.addFollower(slug, { showOnTab: false });
 			}
 		}
 	}
@@ -827,4 +839,19 @@ export async function migrateMovePackData(actor, moveRepo) {
 
 	info(`Refreshing ${updates.length} embedded move(s) from pack data.`);
 	await actor.updateEmbeddedDocuments("Item", updates);
+}
+
+// ── R. Notes tab bio/notes → ProseMirror HTML ─────────────────────────────────
+
+// The notes tab's plain textareas became ProseMirror editors, which read and write HTML. Convert
+// the text those textareas stored so its paragraphs and line breaks survive the switch; values a
+// ProseMirror editor has already saved are left alone.
+export async function migrateCharacterNotes(actor) {
+	const updates = {};
+	for (const field of ["description", "notes"]) {
+		const stored = actor.system?.[field] ?? "";
+		const html   = richTextToHtml(stored);
+		if (html !== stored) updates[`system.${field}`] = html;
+	}
+	if (Object.keys(updates).length) await actor.update(updates);
 }

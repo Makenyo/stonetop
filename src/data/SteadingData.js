@@ -51,6 +51,7 @@ export class SteadingData extends foundry.abstract.TypeDataModel {
 			residentPeople:    new f.ArrayField(new f.ObjectField()),  // the actual people (pool → residents)
 			neighborPeople:    new f.ArrayField(new f.ObjectField()),
 			improvementValues: new f.ObjectField(),                    // track/pick state, keyed by group slug
+			choiceValues:      new f.ObjectField(),                    // choice-group picks, keyed by group slug
 		};
 	}
 }

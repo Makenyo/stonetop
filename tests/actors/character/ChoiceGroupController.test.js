@@ -4,6 +4,7 @@ import { FollowerSideEffectHandler } from "../../../src/actors/character/SideEff
 import { FakeCharacterActorBuilder } from "../../fakes/FakeCharacterActorBuilder.js";
 import { FakeFollowers } from "../../fakes/FakeFollowers.js";
 import { FakeOutfitItems } from "../../fakes/FakeOutfitItems.js";
+import { ChoiceGroupController, applyPick } from "../../../src/actors/character/ChoiceGroupController.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -118,7 +119,7 @@ describe("ChoiceGroupController — follower side effects", () => {
 	it("setCount(1) on an entry row with a single follower adds the follower", async () => {
 		const followers = new FakeFollowers();
 		const { ctrl } = makeCtrl(
-			[{ slug: "ns", list: [{ type: "entry", slug: "enfys", followers: { slugs: ["enfys"] }, track: { max: 1 } }] }],
+			[{ slug: "ns", list: [{ type: "entry", slug: "enfys", grants: [{ type: "follower", slug: "enfys", locations: ["tab"] }], track: { max: 1 } }] }],
 			{ followers },
 		);
 		await ctrl.setCount("ns", "enfys", 1);
@@ -128,7 +129,7 @@ describe("ChoiceGroupController — follower side effects", () => {
 	it("setCount(0) on an entry row toggles its follower off the tab, keeps it owned", async () => {
 		const followers = new FakeFollowers();
 		const { ctrl } = makeCtrl(
-			[{ slug: "ns", list: [{ type: "entry", slug: "enfys", followers: { slugs: ["enfys"] }, track: { max: 1 } }] }],
+			[{ slug: "ns", list: [{ type: "entry", slug: "enfys", grants: [{ type: "follower", slug: "enfys", locations: ["tab"] }], track: { max: 1 } }] }],
 			{ followers },
 		);
 		await ctrl.setCount("ns", "enfys", 1);
@@ -140,7 +141,7 @@ describe("ChoiceGroupController — follower side effects", () => {
 	it("setCount(1) on entry row with followers[] adds all followers", async () => {
 		const followers = new FakeFollowers();
 		const { ctrl } = makeCtrl(
-			[{ slug: "ns", list: [{ type: "entry", slug: "duo", followers: { slugs: ["enfys", "rook"] }, track: { max: 1 } }] }],
+			[{ slug: "ns", list: [{ type: "entry", slug: "duo", grants: [{ type: "follower", slug: "enfys", locations: ["tab"] }, { type: "follower", slug: "rook", locations: ["tab"] }], track: { max: 1 } }] }],
 			{ followers },
 		);
 		await ctrl.setCount("ns", "duo", 1);
@@ -152,7 +153,7 @@ describe("ChoiceGroupController — follower side effects", () => {
 		const followers = new FakeFollowers();
 		const { ctrl } = makeCtrl(
 			[{ slug: "ns", list: [{ type: "pick", pickCount: 1, options: [
-				{ slug: "a", text: "A", followers: { slugs: ["enfys"] } },
+				{ slug: "a", text: "A", grants: [{ type: "follower", slug: "enfys", locations: ["tab"] }] },
 				{ slug: "b", text: "B" },
 			]}]}],
 			{ followers },
@@ -165,8 +166,8 @@ describe("ChoiceGroupController — follower side effects", () => {
 		const followers = new FakeFollowers();
 		const { ctrl } = makeCtrl(
 			[{ slug: "ns", list: [{ type: "pick", pickCount: 1, options: [
-				{ slug: "a", text: "A", followers: { slugs: ["enfys"] } },
-				{ slug: "b", text: "B", followers: { slugs: ["rook"] } },
+				{ slug: "a", text: "A", grants: [{ type: "follower", slug: "enfys", locations: ["tab"] }] },
+				{ slug: "b", text: "B", grants: [{ type: "follower", slug: "rook", locations: ["tab"] }] },
 			]}]}],
 			{ followers },
 		);

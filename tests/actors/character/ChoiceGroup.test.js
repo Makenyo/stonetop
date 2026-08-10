@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ChoiceValues, EntryRow, EntryRowFollowers } from "../../../src/model/snapshot/character/ChoiceGroup.js";
+import { ChoiceValues, EntryRow, EntryRowFollowers, EntryRowMoves } from "../../../src/model/snapshot/character/ChoiceGroup.js";
 import { buildChoiceGroup } from "../../../src/model/snapshot/character/buildChoiceGroup.js";
 
 // ── EntryRow — content/track/input ───────────────────────────────────────────
@@ -54,7 +54,7 @@ describe("ChoiceGroup — entry row without followers", () => {
 describe("ChoiceGroup — entry row with a follower reference", () => {
 	it("emits an EntryRowFollowers carrying the link's slugs", () => {
 		const group = buildChoiceGroup(
-			{ slug: "ns", list: [{ type: "entry", slug: "enfys", content: {}, followers: { slugs: ["enfys"], inlineDisplay: false }, track: { max: 1 } }] },
+			{ slug: "ns", list: [{ type: "entry", slug: "enfys", content: {}, grants: [{ type: "follower", slug: "enfys", locations: ["tab"] }], track: { max: 1 } }] },
 			new ChoiceValues(),
 		);
 		expect(group.list[0].followers).toBeInstanceOf(EntryRowFollowers);
@@ -71,7 +71,7 @@ describe("ChoiceGroup — entry row with a follower reference", () => {
 
 	it("inlineDisplay is false when the link omits it", () => {
 		const group = buildChoiceGroup(
-			{ slug: "ns", list: [{ type: "entry", slug: "enfys", content: {}, followers: { slugs: ["enfys"] } }] },
+			{ slug: "ns", list: [{ type: "entry", slug: "enfys", content: {}, grants: [{ type: "follower", slug: "enfys", locations: ["tab"] }] }] },
 			new ChoiceValues(),
 		);
 		expect(group.list[0].followers.inlineDisplay).toBe(false);
@@ -79,10 +79,32 @@ describe("ChoiceGroup — entry row with a follower reference", () => {
 
 	it("inlineDisplay is carried from the link", () => {
 		const group = buildChoiceGroup(
-			{ slug: "ns", list: [{ type: "entry", slug: "enfys", content: {}, followers: { slugs: ["enfys"], inlineDisplay: true } }] },
+			{ slug: "ns", list: [{ type: "entry", slug: "enfys", content: {}, grants: [{ type: "follower", slug: "enfys", locations: ["inline", "tab"] }] }] },
 			new ChoiceValues(),
 		);
 		expect(group.list[0].followers.inlineDisplay).toBe(true);
+	});
+
+	it("emits an EntryRowMoves from an inline move grant (resolved against moves.bySlug at render)", () => {
+		const group = buildChoiceGroup(
+			{ slug: "ns", list: [{ type: "entry", slug: "darksome-vessel", content: {}, track: { max: 1 },
+				grants: [{ type: "follower", slug: "hectumel", locations: ["inline"] }, { type: "move", slug: "darksome-vessel", locations: ["inline"] }] }] },
+			new ChoiceValues(),
+		);
+		// A row can carry both a follower and a move grant.
+		expect(group.list[0].moves).toBeInstanceOf(EntryRowMoves);
+		expect(group.list[0].moves.slugs).toEqual(["darksome-vessel"]);
+		expect(group.list[0].followers.slugs).toEqual(["hectumel"]);
+	});
+
+	it("moves is null for a non-inline (tab-only) move grant, or no move grant", () => {
+		const noInline = buildChoiceGroup(
+			{ slug: "ns", list: [{ type: "entry", slug: "x", content: {}, grants: [{ type: "move", slug: "m", locations: ["tab"] }] }] },
+			new ChoiceValues(),
+		);
+		expect(noInline.list[0].moves).toBeNull();
+		const none = buildChoiceGroup({ slug: "ns", list: [{ type: "entry", slug: "y", content: {} }] }, new ChoiceValues());
+		expect(none.list[0].moves).toBeNull();
 	});
 
 	it("indent is false by default", () => {
@@ -151,7 +173,7 @@ describe("ChoiceGroup — entry rows (current shape; legacy is handled by migrat
 
 	it("emits a follower reference (slugs + inlineDisplay) from the grouped link", () => {
 		const group = buildChoiceGroup(
-			{ slug: "ns", list: [{ type: "entry", slug: "enfys", followers: { slugs: ["enfys"], inlineDisplay: true }, track: { max: 1 } }] },
+			{ slug: "ns", list: [{ type: "entry", slug: "enfys", grants: [{ type: "follower", slug: "enfys", locations: ["inline", "tab"] }], track: { max: 1 } }] },
 			new ChoiceValues(),
 		);
 		expect(group.list[0].followers.slugs).toEqual(["enfys"]);

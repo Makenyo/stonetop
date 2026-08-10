@@ -7,7 +7,6 @@
 	"system": {
 		"slug": "rune-laden-scales",
 		"front": {
-			"title": "Rune-laden Scales",
 			"item": {
 				"name": "Rune-laden Scales",
 				"weight": 2,
@@ -16,143 +15,231 @@
 				"inventoryColumn": "regular"
 			},
 			"tags": null,
-			"description": "An ancient vest of bluish steel, each scale etched with a silvery rune similar to those found among the ruins near Barrier Pass. A working of the Makers, no doubt, or at least of their most gifted students. The armor is surprisingly light and supple. The scales are always cold to the touch, and often edged in frost.",
-			"unlock": {
-				"slug": "rune-laden-scales",
-				"list": [
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_wear the Rune-laden Scales_**, you are perfectly comfortable in cold weather and suffer no harm from exposure or magic that might otherwise freeze your flesh. You have no such immunity to secondary effects of ice-magic, such as slipping, being impaled by an icicle, becoming encased in a block of ice, or the like."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_wear the Rune-laden Scales and stand fast against a magical attack_**, roll +CON: **on a 10+**, the magic washes over you, unpleasant perhaps but with no ill effect; **on a 7-9**, you’re only partially affected—suffer half damage (if any) and a reduced effect; **on a 6-**, mark XP, and the magic affects you fully."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_wear the Rune-laden Scales and defeat a wielder of chaotic magic_**, mark 1:"
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "marks",
-						"content": {
-							"title": null,
-							"text": "Marks"
+			"choices": [
+				{
+					"slug": "rune-laden-scales",
+					"list": [
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "An ancient vest of bluish steel, each scale etched with a silvery rune similar to those found among the ruins near Barrier Pass. A working of the Makers, no doubt, or at least of their most gifted students. The armor is surprisingly light and supple. The scales are always cold to the touch, and often edged in frost."
+							}
 						},
-						"track": {
-							"max": 5
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_wear the Rune-laden Scales_**, you are perfectly comfortable in cold weather and suffer no harm from exposure or magic that might otherwise freeze your flesh. You have no such immunity to secondary effects of ice-magic, such as slipping, being impaled by an icicle, becoming encased in a block of ice, or the like."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_wear the Rune-laden Scales and stand fast against a magical attack_**, roll +CON: **on a 10+**, the magic washes over you, unpleasant perhaps but with no ill effect; **on a 7-9**, you’re only partially affected—suffer half damage (if any) and a reduced effect; **on a 6-**, mark XP, and the magic affects you fully."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_wear the Rune-laden Scales and defeat a wielder of chaotic magic_**, mark 1:"
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "marks",
+							"content": {
+								"title": null,
+								"text": "Marks"
+							},
+							"track": {
+								"max": 5
+							}
 						}
-					}
-				]
-			}
+					]
+				}
+			]
 		},
 		"back": {
 			"title": "Mysteries of the Rune-laden Scales",
 			"item": null,
-			"description": null,
 			"resource": null,
 			"itemSameAsFront": true,
-			"choices": null,
-			"moveSlugs": [
-				"indomitable",
-				"magnet",
-				"power-sink",
-				"proof-against-harm"
-			],
-			"consequences": {
-				"slug": "consequences",
-				"list": [
-					{
-						"type": "entry",
-						"slug": "scales-c1",
-						"content": {
-							"title": null,
-							"text": "You no longer mark 1 (see reverse) when you simply *defeat* a being that wields chaotic magic; you must destroy it instead."
+			"choices": [
+				{
+					"slug": "moves",
+					"title": "Moves",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "indomitable",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "indomitable",
+									"locations": [
+										"inline"
+									]
+								}
+							]
 						},
-						"track": {
-							"max": 1
+						{
+							"type": "entry",
+							"slug": "magnet",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "magnet",
+									"locations": [
+										"inline"
+									]
+								}
+							]
+						},
+						{
+							"type": "entry",
+							"slug": "power-sink",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "power-sink",
+									"locations": [
+										"inline"
+									]
+								}
+							]
+						},
+						{
+							"type": "entry",
+							"slug": "proof-against-harm",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "proof-against-harm",
+									"locations": [
+										"inline"
+									]
+								}
+							]
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "scales-c2",
-						"content": {
-							"title": null,
-							"text": "Mere minions and mindless horrors will no longer suffice. You only mark 1 for destroying a potent agent of chaos, such as a mighty demon or sorcerer."
+					]
+				},
+				{
+					"slug": "consequences",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "scales-c1",
+							"content": {
+								"title": null,
+								"text": "You no longer mark 1 (see reverse) when you simply *defeat* a being that wields chaotic magic; you must destroy it instead."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
+						{
+							"type": "entry",
+							"slug": "scales-c2",
+							"content": {
+								"title": null,
+								"text": "Mere minions and mindless horrors will no longer suffice. You only mark 1 for destroying a potent agent of chaos, such as a mighty demon or sorcerer."
+							},
+							"track": {
+								"max": 1
+							},
+							"indent": true
 						},
-						"indent": true
-					},
-					{
-						"type": "entry",
-						"slug": "scales-c3",
-						"content": {
-							"title": null,
-							"text": "When you **_use or knowingly submit to chaotic magic_**, the Rune-laden Scales cease to benefit you or anyone you consider to be a friend or ally."
+						{
+							"type": "entry",
+							"slug": "scales-c3",
+							"content": {
+								"title": null,
+								"text": "When you **_use or knowingly submit to chaotic magic_**, the Rune-laden Scales cease to benefit you or anyone you consider to be a friend or ally."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
+						{
+							"type": "entry",
+							"slug": "scales-c4",
+							"content": {
+								"title": null,
+								"text": "When you **_kill a living creature out of anger, fear, or passion_**, even an agent of chaos, take disadvantage on all rolls until you ceremonially atone and purify yourself."
+							},
+							"track": {
+								"max": 1
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "scales-c5",
+							"content": {
+								"title": null,
+								"text": "When you **_take any violent action out of anger, fear, or passion_**, even against an agent of chaos, take disadvantage on all rolls until you ceremonially atone and purify yourself."
+							},
+							"track": {
+								"max": 1
+							},
+							"indent": true
+						},
+						{
+							"type": "entry",
+							"slug": "scales-c6",
+							"content": {
+								"title": null,
+								"text": "You come to the attention of one of the mightiest of the Things Below, and they make your doom—or your corruption—a priority."
+							},
+							"track": {
+								"max": 1
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "scales-c7",
+							"content": {
+								"title": null,
+								"text": "You ascend into a vision state, in which you meet the spirit of the last hero to wear the Scales. Should you refuse the quest they offer, the Rune-laden Scales cease to function."
+							},
+							"track": {
+								"max": 1
+							}
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "scales-c4",
-						"content": {
-							"title": null,
-							"text": "When you **_kill a living creature out of anger, fear, or passion_**, even an agent of chaos, take disadvantage on all rolls until you ceremonially atone and purify yourself."
-						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "scales-c5",
-						"content": {
-							"title": null,
-							"text": "When you **_take any violent action out of anger, fear, or passion_**, even against an agent of chaos, take disadvantage on all rolls until you ceremonially atone and purify yourself."
-						},
-						"track": {
-							"max": 1
-						},
-						"indent": true
-					},
-					{
-						"type": "entry",
-						"slug": "scales-c6",
-						"content": {
-							"title": null,
-							"text": "You come to the attention of one of the mightiest of the Things Below, and they make your doom—or your corruption—a priority."
-						},
-						"track": {
-							"max": 1
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "scales-c7",
-						"content": {
-							"title": null,
-							"text": "You ascend into a vision state, in which you meet the spirit of the last hero to wear the Scales. Should you refuse the quest they offer, the Rune-laden Scales cease to function."
-						},
-						"track": {
-							"max": 1
-						}
-					}
-				]
-			},
-			"unlockAt": 5
+					],
+					"title": "Consequences"
+				}
+			]
 		},
 		"major": true
 	},

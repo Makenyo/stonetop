@@ -40,6 +40,9 @@ export class MoveSnapshot {
 		this.requiresLabel = b._requiresLabel;
 		this.resource      = b._resource;
 		this.choices       = b._choices ?? null;
+		// Null unless someone deliberately set the move's image — see moveIcon(). Rendered by
+		// move-item, so every surface that shows a move shows it the same way.
+		this.icon          = b._icon ?? null;
 	}
 }
 
@@ -58,14 +61,15 @@ export class MoveSnapshotBuilder {
 	withRequiresLabel(v) { this._requiresLabel = v; return this; }
 	withResource(v)      { this._resource      = v; return this; }
 	withChoices(v)       { this._choices       = v; return this; }
+	withIcon(v)          { this._icon          = v; return this; }
 	build()              { return new MoveSnapshot(this); }
 
-	// A major-arcanum back "mystery move" ({id, name, text, subtitle?}) shaped as a MoveSnapshot so it
-	// renders through the SAME move-item partial as the moves tab. The fallback for minor/custom arcana
-	// that carry inline back.moves (no owned move item): always active ({1,1}, checkbox suppressed),
-	// non-rollable. MAJOR arcana bypass this — their mystery moves are real owned move items resolved via
-	// CharacterMoves, which carry ownedId + rollStat.
-	static forArcanumMystery(move) {
+	// An inline arcanum back move ({id, name, text, subtitle?}) shaped as a MoveSnapshot so it renders
+	// through the SAME move-item partial as the moves tab. The fallback for minor/custom arcana that carry
+	// inline back.moves (no owned move item): always active ({1,1}, checkbox suppressed), non-rollable.
+	// MAJOR arcana bypass this — their moves are real owned move items resolved via CharacterMoves, which
+	// carry ownedId + rollStat.
+	static forArcanum(move) {
 		return new MoveSnapshotBuilder()
 			.withId(move.id ?? null)
 			.withOwnedId(null)

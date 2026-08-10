@@ -66,13 +66,28 @@ export class ContentSection {
 	}
 }
 
+
+
+export class SeasonsSnapshot {
+	// `moves` is the ordinary MoveCategorySnapshot — the seasonal glyphs ride on each move's own
+	// icon, so this tab renders through the same move-group as the Moves tab.
+	constructor({ moves = null, gains = null, plate = null }) {
+		this.moves = moves;
+		this.gains = gains;
+		// The harvest plate from the book's Seasons Change spread — a copyrighted illustration, so
+		// null until the art installer has actually produced it. Referencing it regardless would 404
+		// on every render for everyone who hasn't installed (or who only owns Book II).
+		this.plate = plate;
+	}
+}
+
 export class SteadingSnapshot {
 	constructor({
 								fortunes, surplus, attributes, debilities,
 								placesOfInterest, notes, residents, neighbors,
 								contentDescription, content, assets, improvements,
 								residentNames, residentTraits,
-								moves, rollMode,
+								moves, seasons, rollMode,
 							}) {
 		this.fortunes = fortunes;
 		this.surplus = surplus;
@@ -91,7 +106,8 @@ export class SteadingSnapshot {
 		this.npcTraitColumns = splitIntoColumns(residentTraits ?? [], 5);
 		this.residentTraitsText = (residentTraits ?? []).join("\n");
 		this.improvementColumns = splitIntoImprovementColumns(improvements ?? []);
-		this.moves    = moves    ?? null;
+		this.moves    = moves    ?? [];
+		this.seasons  = seasons  ?? null;
 		this.rollMode = rollMode ?? "normal";
 	}
 }

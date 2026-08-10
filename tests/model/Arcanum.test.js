@@ -15,23 +15,26 @@ const ITEM_DATA = {
 };
 
 const FRONT_DATA = {
-	title: "A bow with no string",
 	item: { name: "A bow with no string", weight: 1, note: null, inventoryColumn: "regular" },
-	description: "<p>An ancient bow.</p>",
-	unlock: { description: "Unlock by…", requirements: [] },
+	choices: [{ slug: "bow-with-no-string", list: [
+		{ type: "entry", content: { text: "An ancient bow." } },
+		{ type: "entry", slug: "marks", track: { max: 4 } },
+	] }],
 };
 
 const BACK_DATA = {
 	title: "Thunderbolt Bow",
 	item: ITEM_DATA,
-	description: "<p>Crackles with lightning.</p>",
 	resource: null,
-	moves: [{ name: "When you speak the secret word", text: "<p>Lightning appears.</p>" }],
-	options: [],
+	choices: [
+		{ slug: "moves", title: "Moves", list: [{ type: "entry", slug: "thunderbolt", track: { max: 1 }, grants: [{ type: "move", slug: "thunderbolt", locations: ["inline"] }] }] },
+		{ slug: "consequences", title: "Consequences", list: [{ type: "entry", slug: "c1", content: { text: "A cost." }, track: { max: 1 } }] },
+	],
 };
 
 const ARCANUM_DATA = {
 	slug: "bow-with-no-string",
+	name: "A bow with no string",
 	front: FRONT_DATA,
 	back: BACK_DATA,
 };
@@ -55,154 +58,133 @@ describe("ArcanumItem", () => {
 	});
 
 	it("resource is null when absent", () => {
-		const item = new ArcanumItem({ ...ITEM_DATA, resource: undefined });
-		expect(item.resource).toBeNull();
+		expect(new ArcanumItem({ ...ITEM_DATA, resource: undefined }).resource).toBeNull();
 	});
 
-	it("defaults weight to null", () => {
-		expect(new ArcanumItem({ name: "x" }).weight).toBeNull();
-	});
-
-	it("defaults note to null", () => {
-		expect(new ArcanumItem({ name: "x" }).note).toBeNull();
-	});
-
-	it("defaults inventoryColumn to null", () => {
-		expect(new ArcanumItem({ name: "x" }).inventoryColumn).toBeNull();
+	it("defaults weight/note/inventoryColumn to null", () => {
+		const item = new ArcanumItem({ name: "x" });
+		expect(item.weight).toBeNull();
+		expect(item.note).toBeNull();
+		expect(item.inventoryColumn).toBeNull();
 	});
 });
 
-
+// The front carries header chrome + a `choices` array of groups, and NO title of its own — the arcanum's
+// document name is its heading.
 describe("ArcanumFront", () => {
-	it("stores title and description", () => {
+	it("has no title field at all", () => {
+		expect("title" in new ArcanumFront(FRONT_DATA)).toBe(false);
+		// Even when stale pre-migration data still carries one, it is not picked up.
+		expect(new ArcanumFront({ ...FRONT_DATA, title: "A bow with no string" }).title).toBeUndefined();
+	});
+
+	it("wraps item, carries disguise tags (default null)", () => {
 		const front = new ArcanumFront(FRONT_DATA);
-		expect(front.title).toBe("A bow with no string");
-		expect(front.description).toBe("<p>An ancient bow.</p>");
-	});
-
-	it("wraps item in ArcanumItem when present", () => {
-		expect(new ArcanumFront(FRONT_DATA).item).toBeInstanceOf(ArcanumItem);
-	});
-
-	it("item is null when absent", () => {
-		expect(new ArcanumFront({ ...FRONT_DATA, item: null }).item).toBeNull();
-	});
-
-	it("passes unlock through unchanged", () => {
-		const front = new ArcanumFront(FRONT_DATA);
-		expect(front.unlock).toBe(FRONT_DATA.unlock);
-	});
-
-	it("carries disguise tags (a diamond-less front), defaulting to null", () => {
+		expect(front.item).toBeInstanceOf(ArcanumItem);
+		expect(front.tags).toBeNull();
 		expect(new ArcanumFront({ ...FRONT_DATA, item: null, tags: "magical, terrifying" }).tags).toBe("magical, terrifying");
-		expect(new ArcanumFront(FRONT_DATA).tags).toBeNull();
 	});
 
+	it("item is null when absent; resource wraps when present", () => {
+		expect(new ArcanumFront({ ...FRONT_DATA, item: null }).item).toBeNull();
+		expect(new ArcanumFront(FRONT_DATA).resource).toBeNull();
+		const withRes = new ArcanumFront({ ...FRONT_DATA, resource: { max: 3, maxStat: null, title: "Tonic", labels: [] } });
+		expect(withRes.resource).toBeInstanceOf(Resource);
+		expect(withRes.resource.title).toBe("Tonic");
+	});
+
+	it("keeps choices as an ordered array of groups; defaults to []", () => {
+		expect(new ArcanumFront(FRONT_DATA).choices.map(g => g.slug)).toEqual(["bow-with-no-string"]);
+		expect(new ArcanumFront({ ...FRONT_DATA, choices: undefined }).choices).toEqual([]);
+	});
 });
 
+// The back is the front's chrome plus its OWN title — the mystery's name — and the itemSameAsFront flag.
 describe("ArcanumBack", () => {
-	it("stores title and description", () => {
+	it("stores its own authored title (the mystery's name), default null", () => {
+		expect(new ArcanumBack(BACK_DATA).title).toBe("Thunderbolt Bow");
+		expect(new ArcanumBack({ ...BACK_DATA, title: undefined }).title).toBeNull();
+	});
+
+	it("wraps item and resource; carries tags", () => {
 		const back = new ArcanumBack(BACK_DATA);
-		expect(back.title).toBe("Thunderbolt Bow");
-		expect(back.description).toBe("<p>Crackles with lightning.</p>");
+		expect(back.item).toBeInstanceOf(ArcanumItem);
+		expect(back.item.resource).toBeInstanceOf(Resource);
+		expect(back.resource).toBeNull();
+		expect(back.tags).toBeNull();
+		const withRes = new ArcanumBack({ ...BACK_DATA, tags: "eerie", resource: { max: 3, maxStat: null, title: "Tonic", labels: [] } });
+		expect(withRes.tags).toBe("eerie");
+		expect(withRes.resource).toBeInstanceOf(Resource);
+		expect(withRes.resource.title).toBe("Tonic");
 	});
 
-	it("wraps item in ArcanumItem when present", () => {
-		expect(new ArcanumBack(BACK_DATA).item).toBeInstanceOf(ArcanumItem);
-	});
-
-	it("item is null when absent", () => {
-		expect(new ArcanumBack({ ...BACK_DATA, item: null }).item).toBeNull();
-	});
-
-	it("wraps resource in Resource when present", () => {
-		const back = new ArcanumBack({ ...BACK_DATA, resource: { max: 3, maxStat: null, title: "Tonic", labels: [] } });
-		expect(back.resource).toBeInstanceOf(Resource);
-		expect(back.resource.title).toBe("Tonic");
-	});
-
-	it("resource is null when absent", () => {
-		expect(new ArcanumBack(BACK_DATA).resource).toBeNull();
-	});
-
-	it("wraps moves in ArcanumMysteryMove", () => {
+	it("keeps choices as an ordered array of groups", () => {
 		const back = new ArcanumBack(BACK_DATA);
-		expect(back.moves).toHaveLength(1);
-		expect(back.moves[0].name).toBe("When you speak the secret word");
-		expect(back.moves[0].text).toBe("<p>Lightning appears.</p>");
+		expect(back.choices.map(g => g.slug)).toEqual(["moves", "consequences"]);
+		expect(back.choices[0].list[0].grants[0]).toEqual({ type: "move", slug: "thunderbolt", locations: ["inline"] });
 	});
 
-	it("options defaults to []", () => {
-		expect(new ArcanumBack({ ...BACK_DATA, options: undefined }).options).toEqual([]);
+	it("choices defaults to [] when absent", () => {
+		expect(new ArcanumBack({ ...BACK_DATA, choices: undefined }).choices).toEqual([]);
 	});
 
-	it("moves defaults to [] when absent", () => {
-		expect(new ArcanumBack({ ...BACK_DATA, moves: undefined }).moves).toEqual([]);
+	it("wraps a legacy single-group choices object into a one-element array", () => {
+		const back = new ArcanumBack({ ...BACK_DATA, choices: { slug: "g", list: [] } });
+		expect(back.choices).toHaveLength(1);
+		expect(back.choices[0].slug).toBe("g");
 	});
 
-	it("keeps moveSlugs (major arcana reference real moves by slug)", () => {
-		expect(new ArcanumBack({ ...BACK_DATA, moveSlugs: ["battery", "resonance"] }).moveSlugs)
-			.toEqual(["battery", "resonance"]);
+	it("takes its item from the passed front item data when itemSameAsFront is set", () => {
+		const back = new ArcanumBack({ title: "Mysteries", itemSameAsFront: true }, { name: "Staff", weight: 1 });
+		expect(back.item).toBeInstanceOf(ArcanumItem);
+		expect(back.item.name).toBe("Staff");
 	});
 
-	it("moveSlugs defaults to [] when absent", () => {
-		expect(new ArcanumBack(BACK_DATA).moveSlugs).toEqual([]);
+	it("item is null via itemSameAsFront when there is no front item", () => {
+		expect(new ArcanumBack({ title: "Mysteries", itemSameAsFront: true }, null).item).toBeNull();
 	});
 
-	it("consequences defaults to null when absent", () => {
-		expect(new ArcanumBack(BACK_DATA).consequences).toBeNull();
-	});
-
-	it("unlockAt defaults to null when absent", () => {
-		expect(new ArcanumBack(BACK_DATA).unlockAt).toBeNull();
-	});
-});
-
-describe("Arcanum — itemSameAsFront", () => {
-	it("resolves back.item from front.item when itemSameAsFront is true", () => {
-		const data = {
-			slug: "staff",
-			front: { title: "Staff", item: { name: "Staff", weight: 1, note: null, inventoryColumn: null } },
-			back: { title: "Mysteries", itemSameAsFront: true },
-		};
-		const arcanum = new Arcanum(data);
-		expect(arcanum.back.item).toBeInstanceOf(ArcanumItem);
-		expect(arcanum.back.item.name).toBe("Staff");
-	});
-
-	it("back.item is null via itemSameAsFront when front.item is null", () => {
-		const data = {
-			slug: "markings",
-			front: { title: "Storm Markings", item: null },
-			back: { title: "Mysteries", itemSameAsFront: true },
-		};
-		expect(new Arcanum(data).back.item).toBeNull();
+	it("ignores the passed front item when itemSameAsFront is not set", () => {
+		const back = new ArcanumBack({ title: "Mysteries", item: null }, { name: "Staff", weight: 1 });
+		expect(back.item).toBeNull();
 	});
 });
 
 describe("Arcanum", () => {
-	it("stores slug", () => {
-		expect(new Arcanum(ARCANUM_DATA).slug).toBe("bow-with-no-string");
-	});
-
-	it("front is ArcanumFront", () => {
-		expect(new Arcanum(ARCANUM_DATA).front).toBeInstanceOf(ArcanumFront);
-	});
-
-	it("back is ArcanumBack", () => {
-		expect(new Arcanum(ARCANUM_DATA).back).toBeInstanceOf(ArcanumBack);
+	it("stores slug/name; front is an ArcanumFront and back an ArcanumBack", () => {
+		const arcanum = new Arcanum(ARCANUM_DATA);
+		expect(arcanum.slug).toBe("bow-with-no-string");
+		expect(arcanum.name).toBe("A bow with no string");
+		expect(arcanum.front).toBeInstanceOf(ArcanumFront);
+		expect(arcanum.back).toBeInstanceOf(ArcanumBack);
 	});
 
 	it("back.item.resource is Resource", () => {
-		const arcanum = new Arcanum(ARCANUM_DATA);
-		expect(arcanum.back.item.resource).toBeInstanceOf(Resource);
+		expect(new Arcanum(ARCANUM_DATA).back.item.resource).toBeInstanceOf(Resource);
 	});
 
-	it("name defaults to null when absent", () => {
-		expect(new Arcanum(ARCANUM_DATA).name).toBeNull();
+	it("hands the front's raw item data to the back for itemSameAsFront", () => {
+		const arcanum = new Arcanum({
+			slug: "staff",
+			name: "Staff of the Lidless Orb",
+			front: { item: { name: "Staff", weight: 1, note: null, inventoryColumn: null } },
+			back: { title: "Mysteries of the Staff", itemSameAsFront: true },
+		});
+		expect(arcanum.back.item.name).toBe("Staff");
 	});
 
-	it("img defaults to null when absent", () => {
-		expect(new Arcanum(ARCANUM_DATA).img).toBeNull();
+	it("name/img default to null when absent", () => {
+		const arcanum = new Arcanum({ ...ARCANUM_DATA, name: undefined });
+		expect(arcanum.name).toBeNull();
+		expect(arcanum.img).toBeNull();
+	});
+
+	// `front`/`back` are nullable ObjectFields — an unauthored side is stored as null, not undefined.
+	it.each([["absent", undefined], ["null", null]])("tolerates a %s front/back", (_label, side) => {
+		const arcanum = new Arcanum({ slug: "x", name: "X", front: side, back: side });
+		expect(arcanum.front.choices).toEqual([]);
+		expect(arcanum.front.item).toBeNull();
+		expect(arcanum.back.title).toBeNull();
+		expect(arcanum.back.choices).toEqual([]);
 	});
 });

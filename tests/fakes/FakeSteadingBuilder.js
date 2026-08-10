@@ -1,16 +1,4 @@
-function applyUpdate(obj, data) {
-	for (const [key, value] of Object.entries(data)) {
-		const parts = key.split(".");
-		let target = obj;
-		for (let i = 0; i < parts.length - 1; i++) {
-			if (typeof target[parts[i]] !== "object" || target[parts[i]] === null) {
-				target[parts[i]] = {};
-			}
-			target = target[parts[i]];
-		}
-		target[parts[parts.length - 1]] = value;
-	}
-}
+import { applyDocumentUpdate } from "./foundry/applyDocumentUpdate.js";
 
 // A fully-applied Stonetop steading in the NEW shape: ratings are actual game numbers, `size` is a
 // tier string, the Prosperity/Defenses source lists live under assets.resources/fortifications, the
@@ -18,10 +6,18 @@ function applyUpdate(obj, data) {
 // owned slug list. Mirrors what applySteadfast(stonetop) produces.
 export class FakeSteadingBuilder {
 	_steadfast = "stonetop";
+	_typedActorFactory = null;
 
 	// "" models a brand-new steading (no steadfast applied yet — the create-hook case).
 	withSteadfast(slug) {
 		this._steadfast = slug;
+		return this;
+	}
+
+	// Wire the typed-actor wrapper the sheet reads (`actor.typedActor`) without the caller mutating
+	// the actor after build() — the factory receives the finished actor. See [[no-direct-mutation-after-builder]].
+	withTypedActor(factory) {
+		this._typedActorFactory = factory;
 		return this;
 	}
 
@@ -113,12 +109,13 @@ export class FakeSteadingBuilder {
 					"weapons-of-war", "well-trained-militia",
 				],
 				improvementValues: {},
+				choiceValues: {},
 				resources: { counts: {}, texts: {} },
 			},
 			flags: {},
 			getFlag:                () => undefined,
 			setFlag:                () => Promise.resolve(),
-			update: (data) => { applyUpdate(actor, data); return Promise.resolve(); },
+			update: (data) => { applyDocumentUpdate(actor, data); return Promise.resolve(); },
 		};
 
 		// A working embedded-item collection so seeded homefront moves (and their toggling) behave like
@@ -137,7 +134,12 @@ export class FakeSteadingBuilder {
 			for (const update of updates) {
 				const item = items.get(update._id);
 				if (!item) continue;
-				if (update.name !== undefined) item.name = update.name;
+				// Every top-level field a real update can carry (name, img, …), not just the two the
+				// first caller happened to need.
+				for (const [key, value] of Object.entries(update)) {
+					if (key === "_id" || key === "system") continue;
+					item[key] = value;
+				}
 				if (update.system) for (const [key, value] of Object.entries(update.system)) item.system[key] = value;
 			}
 			return updates;
@@ -154,6 +156,8 @@ export class FakeSteadingBuilder {
 		actor.chatDescriptions = [];
 		actor.sendItemToChat = async item => { actor.chatItems.push(item); };
 		actor.sendDescriptionToChat = async (label, description) => { actor.chatDescriptions.push({ label, description }); };
+
+		if (this._typedActorFactory) actor.typedActor = this._typedActorFactory(actor);
 		return actor;
 	}
 }

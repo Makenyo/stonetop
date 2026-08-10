@@ -51,8 +51,10 @@ export class OwnedArcanum {
 		return this._item.system?.choiceValues?.blanks ?? {};
 	}
 
+	/** Every move slug this arcanum's cards grant (front + back choice-group move-grant entries) — created
+	 *  as real, owned move items when the arcanum is added, so they roll. */
 	get moveSlugs() {
-		return this._item.system?.back?.moveSlugs ?? [];
+		return ChoiceGroupDefs.grants(this._item.system ?? {}, "move").map(g => g.slug);
 	}
 
 	/** The rich definition (slug/major/name/img/front/back) the snapshot builders consume. */
@@ -71,11 +73,11 @@ export class OwnedArcanum {
 	/** Every follower slug this arcanum's cards reference. All are owned when the arcanum is added; a mark
 	 *  only toggles whether one shows on the roster tab. */
 	followerSlugs() {
-		return ChoiceGroupDefs.followerLinks(this._item.system ?? {}).flatMap(l => l.slugs);
+		return ChoiceGroupDefs.grants(this._item.system ?? {}, "follower").map(g => g.slug);
 	}
 
-	/** An inline mystery move ({id,name,text}) by id, or null. */
-	mysteryMove(id) {
+	/** An inline arcanum move ({id,name,text}) by id, or null. */
+	moveById(id) {
 		return (this._item.system?.back?.moves ?? []).find(m => m.id === id) ?? null;
 	}
 

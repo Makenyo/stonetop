@@ -137,6 +137,7 @@
 		<a class="item {{tabs.neighbors.cssClass}}" data-action="tab" data-group="primary" data-tab="neighbors">Neighbors</a>
 		<a class="item {{tabs.improvements.cssClass}}" data-action="tab" data-group="primary" data-tab="improvements">Improvements</a>
 		<a class="item {{tabs.moves.cssClass}}" data-action="tab" data-group="primary" data-tab="moves">Moves</a>
+		<a class="item {{tabs.seasons.cssClass}}" data-action="tab" data-group="primary" data-tab="seasons">Seasons</a>
 		<a class="item {{tabs.notes.cssClass}}" data-action="tab" data-group="primary" data-tab="notes">Notes</a>
 	</nav>
 
@@ -164,6 +165,7 @@
 				</section>
 
 			</div>
+
 
 		</div>{{!-- /tab overview --}}
 
@@ -324,17 +326,7 @@
 
 				<section class="steading-improvement-column" data-column="left">
 					{{#each stonetop.improvementColumns.left}}
-						<div class="steading-improvement-group steading-panel-frame">
-							<span class="panel-corner panel-corner-tl"></span>
-							<span class="panel-corner panel-corner-tr"></span>
-							<span class="panel-corner panel-corner-bl"></span>
-							<span class="panel-corner panel-corner-br"></span>
-							<span class="panel-edge panel-edge-top"></span>
-							<span class="panel-edge panel-edge-right"></span>
-							<span class="panel-edge panel-edge-bottom"></span>
-							<span class="panel-edge panel-edge-left"></span>
-							{{> "stonetop.improvement-group"}}
-						</div>
+						{{> "stonetop.steading-improvement-panel"}}
 					{{/each}}
 				</section>
 
@@ -342,17 +334,7 @@
 
 				<section class="steading-improvement-column" data-column="middle">
 					{{#each stonetop.improvementColumns.middle}}
-						<div class="steading-improvement-group steading-panel-frame">
-							<span class="panel-corner panel-corner-tl"></span>
-							<span class="panel-corner panel-corner-tr"></span>
-							<span class="panel-corner panel-corner-bl"></span>
-							<span class="panel-corner panel-corner-br"></span>
-							<span class="panel-edge panel-edge-top"></span>
-							<span class="panel-edge panel-edge-right"></span>
-							<span class="panel-edge panel-edge-bottom"></span>
-							<span class="panel-edge panel-edge-left"></span>
-							{{> "stonetop.improvement-group"}}
-						</div>
+						{{> "stonetop.steading-improvement-panel"}}
 					{{/each}}
 				</section>
 
@@ -360,17 +342,7 @@
 
 				<section class="steading-improvement-column" data-column="right">
 					{{#each stonetop.improvementColumns.right}}
-						<div class="steading-improvement-group steading-panel-frame">
-							<span class="panel-corner panel-corner-tl"></span>
-							<span class="panel-corner panel-corner-tr"></span>
-							<span class="panel-corner panel-corner-bl"></span>
-							<span class="panel-corner panel-corner-br"></span>
-							<span class="panel-edge panel-edge-top"></span>
-							<span class="panel-edge panel-edge-right"></span>
-							<span class="panel-edge panel-edge-bottom"></span>
-							<span class="panel-edge panel-edge-left"></span>
-							{{> "stonetop.improvement-group"}}
-						</div>
+						{{> "stonetop.steading-improvement-panel"}}
 					{{/each}}
 				</section>
 
@@ -381,21 +353,28 @@
 		{{!-- Moves tab --}}
 		<div class="tab {{tabs.moves.cssClass}}" data-group="primary" data-tab="moves">
 			<section class="sheet-tab">
-				{{#if stonetop.moves}}
-					{{!-- alwaysShowResource: homefront moves are the steading's fixed set, so their
-					      resource pips show whether or not the move reads as "acquired". --}}
+				{{#each stonetop.moves}}
+					{{!-- alwaysShowResource: a steading's moves are its fixed set, so their resource
+					      pips show whether or not the move reads as "acquired". --}}
 					{{> "stonetop.move-group"
-					    title=stonetop.moves.label
-					    note=stonetop.moves.note
-					    moves=stonetop.moves.moves
-					    categoryKey=stonetop.moves.key
+					    title=label
+					    note=note
+					    moves=moves
+					    categoryKey=key
 					    allowAdditional=false
 					    alwaysShowResource=true}}
 				{{else}}
-					<p class="stonetop-moves-empty">No homefront moves assigned to this steading.</p>
-				{{/if}}
+					<p class="stonetop-moves-empty">No moves assigned to this steading.</p>
+				{{/each}}
 			</section>
 		</div>{{!-- /tab moves --}}
+
+		{{!-- Seasons Change tab --}}
+		<div class="tab {{tabs.seasons.cssClass}}" data-group="primary" data-tab="seasons">
+			<section class="sheet-tab">
+				{{> "stonetop.steading-seasons" seasons=stonetop.seasons}}
+			</section>
+		</div>{{!-- /tab seasons --}}
 
 		{{!-- Notes tab --}}
 		<div class="tab {{tabs.notes.cssClass}}" data-group="primary" data-tab="notes">

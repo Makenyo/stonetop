@@ -1,7 +1,7 @@
 import { rich } from "../RichText.js";
-import { FollowerLink } from "../../data/FollowerLink.js";
+import { GrantList } from "../../data/Grant.js";
 import {
-	ChoiceGroup, ChoiceOption, ChoiceRow, ChoiceValues, EntryRow, EntryRowFollowers,
+	ChoiceGroup, ChoiceOption, ChoiceRow, ChoiceValues, EntryRow, EntryRowFollowers, EntryRowMoves,
 } from "./ChoiceGroup.js";
 
 /**
@@ -18,7 +18,7 @@ import {
 export function buildChoiceGroup(entry, values = new ChoiceValues()) {
 	const es = entry.slug;
 	const list = (entry.list ?? []).map((item, idx) => buildRow(item, values, es, idx));
-	return new ChoiceGroup(es, list);
+	return new ChoiceGroup(es, list, entry.title ?? null);
 }
 
 // Picks carry an explicit type in pack data but are identified only by an `options` array in character
@@ -53,9 +53,16 @@ function buildEntryRow(item, values, es) {
 		text:         rich(c.text),
 	};
 
-	// A pure reference — the template resolves each slug against `followers.bySlug` at render.
-	const link      = FollowerLink.fromRaw(item.followers);
-	const followers = link ? new EntryRowFollowers(link.slugs, link.inlineDisplay) : null;
+	// Pure references — the template resolves each slug against `followers.bySlug` / `moves.bySlug` at
+	// render. Follower grants keep the EntryRowFollowers render shape (slugs + one inline flag); inline
+	// move grants become an EntryRowMoves (slugs). A row may carry both (a follower and a move grant).
+	const grants = GrantList.fromRaw(item.grants);
+	const followerGrants = grants.ofType("follower");
+	const followers = followerGrants.length
+		? new EntryRowFollowers(followerGrants.map(g => g.slug), followerGrants.some(g => g.inline))
+		: null;
+	const moveGrants = grants.ofType("move").filter(g => g.inline);
+	const moves = moveGrants.length ? new EntryRowMoves(moveGrants.map(g => g.slug)) : null;
 
 	return new EntryRow(
 		item.slug ?? null,
@@ -65,6 +72,7 @@ function buildEntryRow(item, values, es) {
 		followers,
 		item.outfitItems ?? [],
 		item.indent ?? false,
+		moves,
 	);
 }
 

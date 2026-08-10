@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { SteadingImprovements } from "../../../src/actors/steading/SteadingImprovements.js";
 import { FoundrySteadingImprovementRepository } from "../../../src/actors/steading/repositories/FoundrySteadingImprovementRepository.js";
+import { FakeActorBuilder } from "../../fakes/FakeActorBuilder.js";
+import { StonetopSteading } from "../../../src/actors/steading/StonetopSteading.js";
+import { steadingRepos } from "../../fakes/FakeSteadingRepos.js";
+import { ChoiceTarget } from "../../../src/actors/character/ChoiceTarget.js";
 
 // End-to-end: the REAL improvement repository (compendium + world) resolving a steading's OWNED slugs
 // through the REAL SteadingImprovements snapshot builder (real buildChoiceGroup). Only the
@@ -25,6 +29,14 @@ function stubGame(packEntries, worldEntries) {
 		items: { contents: worldEntries },
 	});
 }
+
+// Track writes go through the steading, the way the sheet makes them: its registry resolves the
+// `improvement` context to this improvement's own controller.
+const watchtowerTrack = () =>
+	new ChoiceTarget({ context: "improvement", group: "watchtower", option: "built" });
+
+const steadingOver = actor =>
+	new StonetopSteading(actor, steadingRepos({ improvements: new FoundrySteadingImprovementRepository() }));
 
 // A steading owns a slug list (system.improvements) and keeps pick state in system.improvementValues.
 function makeActor(improvements = [], improvementValues = {}) {
@@ -67,11 +79,40 @@ describe("Steading improvements — custom world improvement (integration)", () 
 		expect(snap[0].list[0].track.checks).toEqual([true, false]);
 	});
 
-	it("writes a track change back through setTrack for a custom improvement", async () => {
+	// The drop path end to end against the REAL catalog: a wonder improvement that exists only in the
+	// pack is granted by slug and immediately resolves to its content — the proof that a dropped
+	// improvement needs no embedded item to show up on the sheet.
+	it("renders an improvement granted by slug, resolved through the real catalog", async () => {
+		stubGame([packEntry("watchtower", 1, WATCHTOWER)], []);
+		const actor = new FakeActorBuilder().withSystem({ improvements: [], improvementValues: {} }).build();
+		const improvements = new SteadingImprovements(actor, new FoundrySteadingImprovementRepository());
+
+		await improvements.grant("watchtower");
+		const snap = await improvements.buildSnapshot();
+
+		expect(actor.system.improvements).toEqual(["watchtower"]);
+		expect(snap.map(g => g.slug)).toEqual(["watchtower"]);
+		expect(snap[0].list[0].content.title.raw).toBe("Watchtower");
+	});
+
+	it("track state set after a grant survives a revoke and re-grant", async () => {
+		stubGame([packEntry("watchtower", 1, WATCHTOWER)], []);
+		const actor = new FakeActorBuilder().withSystem({ improvements: [], improvementValues: {} }).build();
+		const improvements = new SteadingImprovements(actor, new FoundrySteadingImprovementRepository());
+
+		await improvements.grant("watchtower");
+		await steadingOver(actor).setChoiceTrackFor(watchtowerTrack(), "0", true);
+		await improvements.revoke("watchtower");
+		await improvements.grant("watchtower");
+
+		const snap = await improvements.buildSnapshot();
+		expect(snap[0].list[0].track.checks).toEqual([true, false]);
+	});
+
+	it("writes a track change back for a custom improvement", async () => {
 		stubGame([], [worldEntry("watchtower", 1, WATCHTOWER)]);
 		const actor = makeActor(["watchtower"]);
-		const improvements = new SteadingImprovements(actor, new FoundrySteadingImprovementRepository());
-		await improvements.setTrack("watchtower", "built", 2);
+		await steadingOver(actor).setChoiceTrackFor(watchtowerTrack(), "1", true);
 
 		expect(actor.update).toHaveBeenCalledWith({
 			"system.improvementValues": { watchtower: { built: 2 } },

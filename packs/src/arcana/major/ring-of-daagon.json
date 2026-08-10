@@ -7,154 +7,212 @@
 	"system": {
 		"slug": "ring-of-daagon",
 		"front": {
-			"title": "Ring of Daagon",
 			"item": null,
 			"tags": null,
-			"description": "A finely carved ring of copper, coated in verdigris and always a little damp. Its shape is that of a strange, reptilian creature devouring its own tail.",
-			"unlock": {
-				"slug": "ring-of-daagon",
-				"list": [
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_don the Ring_**, you feel the presence of every body of water within a few miles, natural or not, even if it is underground."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_wear the Ring and caress its reptilian head_**, the air around you becomes damper and cooler. If you continue to caress it for a minute or so, a mist gathers near the ground and grows higher and thicker as long as you continue. A few minutes of caressing the Ring will blanket your immediate surroundings in thick, obscuring fog. Half an hour will blanket the countryside. The fog persists for as long as you caress the Ring, and then dissipates naturally based on the prevailing weather."
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_have used the Ring to summon an obscuring fog and a named creature dies within that fog_**, the Ring will ask you (silently, in your mind, not so much with words as with a deep longing) *May I* *take this one?* Should you assent, the creature’s body will be gone—vanished into the mists—as soon as no mortal is directly paying it heed. The first time this happens during each fog you summon, mark 1:"
-						}
-					},
-					{
-						"type": "entry",
-						"content": {
-							"title": null,
-							"text": "When you **_make the last mark_**, you unlock the ring’s mysteries and may Call Up the Deep Ones (see reverse) while wearing the ring. The ring itself becomes a follower."
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "marks",
-						"content": {
-							"title": null,
-							"text": "Marks"
+			"choices": [
+				{
+					"slug": "ring-of-daagon",
+					"list": [
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "A finely carved ring of copper, coated in verdigris and always a little damp. Its shape is that of a strange, reptilian creature devouring its own tail."
+							}
 						},
-						"track": {
-							"max": 3
-						}
-					},
-					{
-						"type": "entry",
-						"slug": "the-ring",
-						"content": {
-							"title": null,
-							"text": ""
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_don the Ring_**, you feel the presence of every body of water within a few miles, natural or not, even if it is underground."
+							}
 						},
-						"followers": {
-							"slugs": [
-								"the-ring"
-							],
-							"inlineDisplay": true,
-							"hideFromFollowersTab": true
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_wear the Ring and caress its reptilian head_**, the air around you becomes damper and cooler. If you continue to caress it for a minute or so, a mist gathers near the ground and grows higher and thicker as long as you continue. A few minutes of caressing the Ring will blanket your immediate surroundings in thick, obscuring fog. Half an hour will blanket the countryside. The fog persists for as long as you caress the Ring, and then dissipates naturally based on the prevailing weather."
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_have used the Ring to summon an obscuring fog and a named creature dies within that fog_**, the Ring will ask you (silently, in your mind, not so much with words as with a deep longing) *May I* *take this one?* Should you assent, the creature’s body will be gone—vanished into the mists—as soon as no mortal is directly paying it heed. The first time this happens during each fog you summon, mark 1:"
+							}
+						},
+						{
+							"type": "entry",
+							"content": {
+								"title": null,
+								"text": "When you **_make the last mark_**, you unlock the ring’s mysteries and may Call Up the Deep Ones (see reverse) while wearing the ring. The ring itself becomes a follower."
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "marks",
+							"content": {
+								"title": null,
+								"text": "Marks"
+							},
+							"track": {
+								"max": 3
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "the-ring",
+							"content": {
+								"title": null,
+								"text": ""
+							},
+							"grants": [
+								{
+									"type": "follower",
+									"slug": "the-ring",
+									"locations": [
+										"inline"
+									]
+								}
+							]
 						}
-					}
-				]
-			}
+					]
+				}
+			]
 		},
 		"back": {
 			"title": "Mysteries of the Ring of Daagon",
 			"item": null,
-			"description": null,
 			"resource": null,
 			"itemSameAsFront": true,
-			"choices": null,
-			"moveSlugs": [
-				"call-up-the-deep-ones"
-			],
-			"consequences": {
-				"slug": "consequences",
-				"list": [
-					{
-						"type": "entry",
-						"slug": "daagon-c1",
-						"content": {
-							"title": null,
-							"text": "Your skin becomes clammy and squamous."
-						},
-						"track": {
-							"max": 1
+			"choices": [
+				{
+					"slug": "moves",
+					"title": "Moves",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "call-up-the-deep-ones",
+							"content": {
+								"title": null,
+								"text": null
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "move",
+									"slug": "call-up-the-deep-ones",
+									"locations": [
+										"inline"
+									]
+								}
+							]
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "daagon-c2",
-						"content": {
-							"title": null,
-							"text": "You can breathe water through your skin, but must keep it moist or suffer increasing debilities."
-						},
-						"track": {
-							"max": 1
-						},
-						"indent": true
-					},
-					{
-						"type": "entry",
-						"slug": "daagon-c3",
-						"content": {
-							"title": null,
-							"text": "You gain nourishment only from meat. Plants, grains and the like no longer count as supplies or provisions when you need to eat."
-						},
-						"track": {
-							"max": 1
+					]
+				},
+				{
+					"slug": "ring-of-daagon",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "servant-of-daagon",
+							"content": {
+								"title": null,
+								"text": ""
+							},
+							"track": {
+								"max": 1
+							},
+							"grants": [
+								{
+									"type": "follower",
+									"slug": "servant-of-daagon",
+									"locations": [
+										"inline",
+										"tab"
+									]
+								}
+							]
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "daagon-c4",
-						"content": {
-							"title": null,
-							"text": "Only raw flesh nourishes you, but you are immune to food-borne illness."
+					]
+				},
+				{
+					"slug": "consequences",
+					"list": [
+						{
+							"type": "entry",
+							"slug": "daagon-c1",
+							"content": {
+								"title": null,
+								"text": "Your skin becomes clammy and squamous."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 1
+						{
+							"type": "entry",
+							"slug": "daagon-c2",
+							"content": {
+								"title": null,
+								"text": "You can breathe water through your skin, but must keep it moist or suffer increasing debilities."
+							},
+							"track": {
+								"max": 1
+							},
+							"indent": true
 						},
-						"indent": true
-					},
-					{
-						"type": "entry",
-						"slug": "daagon-c5",
-						"content": {
-							"title": null,
-							"text": "1d6 sinkholes appear within a few miles of you. At the bottom of each, a megalith protrudes from standing water, attended by servants of Daagon."
+						{
+							"type": "entry",
+							"slug": "daagon-c3",
+							"content": {
+								"title": null,
+								"text": "You gain nourishment only from meat. Plants, grains and the like no longer count as supplies or provisions when you need to eat."
+							},
+							"track": {
+								"max": 1
+							}
 						},
-						"track": {
-							"max": 3
+						{
+							"type": "entry",
+							"slug": "daagon-c4",
+							"content": {
+								"title": null,
+								"text": "Only raw flesh nourishes you, but you are immune to food-borne illness."
+							},
+							"track": {
+								"max": 1
+							},
+							"indent": true
+						},
+						{
+							"type": "entry",
+							"slug": "daagon-c5",
+							"content": {
+								"title": null,
+								"text": "1d6 sinkholes appear within a few miles of you. At the bottom of each, a megalith protrudes from standing water, attended by servants of Daagon."
+							},
+							"track": {
+								"max": 3
+							}
+						},
+						{
+							"type": "entry",
+							"slug": "daagon-c6",
+							"content": {
+								"title": null,
+								"text": "The ring’s Cost becomes \"Living, helpless, intelligent sacrifices.\""
+							},
+							"track": {
+								"max": 1
+							}
 						}
-					},
-					{
-						"type": "entry",
-						"slug": "daagon-c6",
-						"content": {
-							"title": null,
-							"text": "The ring’s Cost becomes \"Living, helpless, intelligent sacrifices.\""
-						},
-						"track": {
-							"max": 1
-						}
-					}
-				]
-			},
-			"unlockAt": 3
+					],
+					"title": "Consequences"
+				}
+			]
 		},
 		"major": true
 	},

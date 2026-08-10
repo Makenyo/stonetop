@@ -151,6 +151,19 @@ describe("StonetopCharacterSheet._prepareContext (integration)", () => {
 	});
 });
 
+// -- Moves filter -------------------------------------------------------------------
+
+describe("StonetopCharacterSheet moves filter", () => {
+	beforeEach(() => new FakeGameBuilder().build());
+
+	it("carries the selected-only filter into the context so it survives a re-render", async () => {
+		const { sheet } = makeSheet();
+		expect((await sheet._prepareContext({})).hideUnselectedMoves).toBe(false);
+		sheet._setHideUnselectedMoves(true, null);
+		expect((await sheet._prepareContext({})).hideUnselectedMoves).toBe(true);
+	});
+});
+
 // -- Change router ------------------------------------------------------------------
 
 describe("StonetopCharacterSheet change routing", () => {
@@ -213,6 +226,22 @@ describe("StonetopCharacterSheet change routing", () => {
 		expect(char.setFollowerHp).toHaveBeenCalledWith("enfys", "12", "10");
 	});
 
+	// The notes tab's editors are <prose-mirror> elements: no `name`, so they never ride the form
+	// submit — the router reads the serialized HTML off `.value` like any other control.
+	it("routes the notes tab's rich editors to setBio / setNotes", async () => {
+		const { sheet, char } = makeSheet();
+		await mount(sheet, `
+			<prose-mirror data-change-action="bio"></prose-mirror>
+			<prose-mirror data-change-action="charNotes"></prose-mirror>`);
+		const [bio, notes] = sheet.element.querySelectorAll("prose-mirror");
+		bio.value = "<p>A wanderer.</p>";
+		notes.value = "<p>Ask Isadora.</p>";
+		change(bio);
+		change(notes);
+		expect(char.setBio).toHaveBeenCalledWith("<p>A wanderer.</p>");
+		expect(char.setNotes).toHaveBeenCalledWith("<p>Ask Isadora.</p>");
+	});
+
 	it("ignores every change when the sheet is not editable", async () => {
 		const { sheet, char } = makeSheet();
 		sheet._editable = false;
@@ -259,6 +288,31 @@ describe("StonetopCharacterSheet actions", () => {
 		const wrap = el(`<div class="sheet-wrapper"><button></button></div>`);
 		await fireAction(sheet, "toggleTop", wrap.querySelector("button"));
 		expect(wrap.classList.contains("top-collapsed")).toBe(true);
+	});
+
+	it("toggleUnselectedMoves flips the filter classes on the tab, without a re-render", async () => {
+		const { sheet } = makeSheet();
+		const tab = el(`<div class="tab moves"><button class="stonetop-moves-filter"></button></div>`);
+		const btn = tab.querySelector("button");
+
+		await fireAction(sheet, "toggleUnselectedMoves", btn);
+		expect(sheet._hideUnselectedMoves).toBe(true);
+		expect(tab.classList.contains("hide-unselected")).toBe(true);
+		expect(btn.classList.contains("is-active")).toBe(true);
+
+		await fireAction(sheet, "toggleUnselectedMoves", btn);
+		expect(sheet._hideUnselectedMoves).toBe(false);
+		expect(tab.classList.contains("hide-unselected")).toBe(false);
+		expect(btn.classList.contains("is-active")).toBe(false);
+		expect(sheet.render).not.toHaveBeenCalled();
+	});
+
+	it("toggleUnselectedMoves is NOT edit-gated — the filter only changes what is shown", async () => {
+		const { sheet } = makeSheet();
+		sheet._editable = false;
+		const tab = el(`<div class="tab moves"><button class="stonetop-moves-filter"></button></div>`);
+		await fireAction(sheet, "toggleUnselectedMoves", tab.querySelector("button"));
+		expect(tab.classList.contains("hide-unselected")).toBe(true);
 	});
 
 	it("toggleFollowerInventory tracks the open set and re-renders", async () => {

@@ -12,44 +12,40 @@ export class ArcanumItem {
 	}
 }
 
+// Legacy single-group data (or a bare `unlock` group) is wrapped so old saves render before migration.
+function toChoiceGroups(choices) {
+	return Array.isArray(choices) ? choices : (choices ? [choices] : []);
+}
+
+// The card as it reads before its mysteries are unlocked. A front has NO name of its own — the arcanum's
+// document name is its heading. It carries header chrome (a ◇ outfit item, or disguise tags when there is
+// no item, plus an optional resource track) above a body that is entirely `choices` — an ordered array of
+// choice groups (a text-only entry stands in for the old `description`; □ tracks, follower/move grants,
+// and section headers all live there too).
 export class ArcanumFront {
+	// `front` is a nullable ObjectField, so an unauthored side arrives as null rather than undefined.
 	constructor(data) {
-		this.title       = data.title;
-		this.item        = data.item ? new ArcanumItem(data.item) : null;
-		this.tags        = data.tags ?? null; // disguise tags for a front with no ◇ outfit item
-		this.description = data.description;
-		this.unlock      = data.unlock ?? null;
+		const d = data ?? {};
+		this.item     = d.item ? new ArcanumItem(d.item) : null;
+		this.tags     = d.tags ?? null; // disguise tags for a front with no ◇ outfit item
+		this.resource = d.resource ? new Resource(d.resource) : null;
+		this.choices  = toChoiceGroups(d.choices);
 	}
 }
 
-// Mystery moves are major-arcana-only.
-
-export class ArcanumMysteryMove {
-	constructor(data) {
-		this.id           = data.id;
-		this.name         = data.name;
-		this.subtitle     = data.subtitle     ?? null;
-		this.tracker      = data.tracker      ?? null;
-		this.text         = data.text;
-		this.followerSlug = data.followerSlug ?? null;
-	}
-}
-
+// The unlocked mystery. Same chrome and body as the front, plus its OWN `title` — the mystery's name
+// ("Mysteries of the Azure Hand", "Thunderbolt Bow"), deliberately distinct from the arcanum's name.
+// `itemSameAsFront` is a back-only authoring flag: pass the front's raw item data and the back resolves
+// it, so a built back only ever carries an `item`.
 export class ArcanumBack {
-	constructor(data) {
-		this.title        = data.title        ?? null;
-		this.choices      = data.choices      ?? null;
-		this.item         = data.item ? new ArcanumItem(data.item) : null;
-		this.description  = data.description  ?? null;
-		this.resource     = data.resource ? new Resource(data.resource) : null;
-		this.options      = data.options      ?? [];
-		// Major arcana reference their mystery moves by slug (back.moveSlugs) — resolved to real `move`
-		// items on the character. `moves` is the legacy inline shape, still used by minor arcana and
-		// custom-authored arcana (and as a render fallback when moveSlugs is empty).
-		this.moveSlugs    = data.moveSlugs    ?? [];
-		this.moves        = (data.moves ?? []).map(m => new ArcanumMysteryMove(m));
-		this.consequences = data.consequences ?? null;
-		this.unlockAt     = data.unlockAt     ?? null;
+	constructor(data, frontItemData = null) {
+		const d = data ?? {};
+		const itemData = d.itemSameAsFront ? frontItemData : d.item;
+		this.title    = d.title ?? null;
+		this.item     = itemData ? new ArcanumItem(itemData) : null;
+		this.tags     = d.tags ?? null;
+		this.resource = d.resource ? new Resource(d.resource) : null;
+		this.choices  = toChoiceGroups(d.choices);
 	}
 }
 
@@ -60,9 +56,6 @@ export class Arcanum {
 		this.name  = data.name  ?? null;
 		this.img   = (data.img && !data.img.startsWith('icons/')) ? data.img : null;
 		this.front = new ArcanumFront(data.front);
-		const back = data.back ?? {};
-		this.back  = new ArcanumBack(
-			back.itemSameAsFront ? { ...back, item: data.front?.item ?? null } : back,
-		);
+		this.back  = new ArcanumBack(data.back, data.front?.item ?? null);
 	}
 }

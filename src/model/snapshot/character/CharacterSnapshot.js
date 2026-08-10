@@ -2,7 +2,7 @@ import { FollowersSnapshot } from "./FollowerSnapshot.js";
 export { Resource } from "../../data/Resource.js";
 export { ResourceSnapshot, ResourceBuilder } from "../ResourceSnapshot.js";
 export { StatSnapshot } from "./StatSnapshot.js";
-export { ValueMax, VitalsSnapshot, VitalsSnapshotBuilder } from "./VitalsSnapshot.js";
+export { ValueMax, VitalsSnapshot, VitalsSnapshotBuilder, VitalsSourcesSnapshot } from "./VitalsSnapshot.js";
 export { DebilitySnapshot, DebilitySnapshotBuilder } from "./DebilitySnapshot.js";
 export {
 	OriginOptionSnapshot, OriginSection,
@@ -30,8 +30,7 @@ export { InsertSnapshot, InsertSnapshotBuilder } from "./InsertSnapshot.js";
 export {
 	ArcanaSnapshot, ArcanaSectionSnapshot,
 	ArcanumSnapshot, ArcanumSnapshotBuilder,
-	ArcanumFrontSnapshot, ArcanumFrontSnapshotBuilder,
-	ArcanumBackSnapshot, ArcanumBackSnapshotBuilder,
+	ArcanumSideSnapshot, ArcanumSideSnapshotBuilder,
 	arcanumOutfitItemSnapshot,
 } from "./ArcanaSnapshot.js";
 export { ArcanumRenderContext } from "./ArcanumRenderContext.js";
