@@ -1,3 +1,5 @@
+import { GrantSource, ItemGrant, ItemGrantSet } from "../../src/model/data/ItemGrant.js";
+
 export class FakeMoves {
 	_counts      = {};
 	_incremented = [];
@@ -20,6 +22,16 @@ export class FakeMoves {
 	async decrementMove(catKey, moveSlug) { this._decremented.push([catKey, moveSlug]); }
 	async initPlaybookCategory(data)      { this._initialized = data; }
 
+	// The grant set CharacterPlaybook asks for; records the extra starting slugs it was told about
+	// (the chosen background's moves).
+	async playbookGrants(data, alsoStarting = []) {
+		this._initialized  = data;
+		this._alsoStarting = [...alsoStarting];
+		return ItemGrantSet.empty(GrantSource.playbook(data.slug));
+	}
+
+	alsoStarting() { return this._alsoStarting ?? []; }
+
 	wasIncremented(catKey, moveSlug) {
 		return this._incremented.some(([k, s]) => k === catKey && s === moveSlug);
 	}
@@ -35,6 +47,16 @@ export class FakeMoves {
 	get addedCategories()   { return this._addedCategories; }
 
 	async addCategory(type, name, moveSlugs = []) { this._addedCategories.push({ type, name, moveSlugs }); }
+
+	// The grant set a source (insert/arcanum) asks for. Recorded like addCategory so a test can assert
+	// what was granted without knowing whether the caller applied it itself or handed it to the router.
+	async categoryGrants(type, name, moveSlugs = [], startingSlugs = []) {
+		this._addedCategories.push({ type, name, moveSlugs });
+		return new ItemGrantSet(
+			GrantSource.forCategoryKey(type),
+			moveSlugs.map(slug => new ItemGrant({ name: slug, type: "move", system: { slug } })),
+		);
+	}
 	async removeCategory(type)          { this._removedCategories.push(type); }
 
 	setSnapshotsForCategory(category, snapshots) { this._snapshotsByCategory[category] = snapshots; }

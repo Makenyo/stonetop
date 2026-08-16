@@ -11,15 +11,18 @@ import {
 	findMoveItemBySlug,
 } from "../embeddedMoves.js";
 import { ReferenceMoveSeeder } from "../ReferenceMoveSeeder.js";
+import { GrantedItems } from "../GrantedItems.js";
+import { GrantSource, ItemGrant, ItemGrantSet } from "../../model/data/ItemGrant.js";
 import { toSlug } from "../../utils/slug.js";
 
 export class CharacterMoves {
-	constructor(moveRepo, actor, resourceController, factory = null) {
+	constructor(moveRepo, actor, resourceController, factory = null, grantedItems = new GrantedItems(actor)) {
 		this._moveRepo           = moveRepo;
 		this._actor              = actor;
 		this._resourceController = resourceController;
 		this._factory            = factory;
-		this._seeder             = new ReferenceMoveSeeder(actor, moveRepo);
+		this._grantedItems       = grantedItems;
+		this._seeder             = new ReferenceMoveSeeder(actor, moveRepo, this._grantedItems);
 	}
 
 	setVitals(vitals) { this._vitals = vitals; }
@@ -49,28 +52,18 @@ export class CharacterMoves {
 	// (playbookData.startingMoves) — those seed acquired at character creation. Resolution + sort
 	// (by level + dependency) live here; the move items themselves carry no playbook back-reference.
 	async initPlaybookCategory(playbookData) {
-		const existingPlaybook = [...this._actor.items]
-			.filter(i => i.type === "move" && i.system?.categoryKey?.startsWith("playbook-"));
-		if (existingPlaybook.length) {
-			await this._actor.deleteEmbeddedDocuments("Item", existingPlaybook.map(i => i._id));
-		}
+		await this._grantedItems.sync(await this.playbookGrants(playbookData));
+	}
+
+	/** Every move this playbook wants the character to own, keyed by slug. `alsoStarting` are the slugs
+	 *  something else about the character (its background) makes starting moves too. */
+	async playbookGrants(playbookData, alsoStarting = []) {
 		const resolved = await this._moveRepo.getMovesBySlugs(playbookData.moves ?? []);
-		const playbookMoves = this.sortPlaybookMoves(resolved);
-		const starting = new Set(playbookData.startingMoves ?? []);
-		const catKey = `playbook-${playbookData.slug}`;
-		const pairs = await Promise.all(
-			playbookMoves.map(async (m, i) => ({ move: m, doc: await this._moveRepo.getReferencedMoveDocument(m.id), index: i }))
-		);
-		await this._actor.createEmbeddedDocuments("Item",
-			pairs
-				.filter(({ doc }) => doc !== null)
-				.map(({ move, doc, index }) => withCategoryFields(doc.toObject(), catKey, starting.has(move.slug), {
-					sortOrder:     index,
-					compendiumId:  doc._id ?? null,
-					categoryLabel: playbookData.name,
-					categoryNote:  playbookData.startingMovesNote ?? null,
-				}))
-		);
+		return this._grantsFor(`playbook-${playbookData.slug}`, this.sortPlaybookMoves(resolved), {
+			starting:      new Set([...(playbookData.startingMoves ?? []), ...alsoStarting]),
+			categoryLabel: playbookData.name,
+			categoryNote:  playbookData.startingMovesNote ?? null,
+		});
 	}
 
 	// Register a move category (insert or arcanum) from a list of move slugs. Inserts pass their
@@ -78,29 +71,40 @@ export class CharacterMoves {
 	// seeds acquired iff its slug is in `startingSlugs` — built-in inserts pass all their moves
 	// (active on grant), arcana pass none (player ticks each mystery to unlock).
 	async addCategory(key, label, moveSlugs = [], startingSlugs = []) {
-		const exists = [...this._actor.items].some(i => i.type === "move" && i.system?.categoryKey === key);
-		if (exists) return;
-		const starting = new Set(startingSlugs);
+		if (!moveSlugs.length) return;
+		await this._grantedItems.sync(await this.categoryGrants(key, label, moveSlugs, startingSlugs));
+	}
+
+	/** The moves an insert or arcanum wants the character to own. Because this is a diff and not an
+	 *  all-or-nothing "does the category exist" check, a move the packs add later reaches a character
+	 *  that already has the rest. */
+	async categoryGrants(key, label, moveSlugs = [], startingSlugs = []) {
 		const entries = await this._moveRepo.getMovesBySlugs(moveSlugs);
-		const pairs = await Promise.all(
-			entries.map(async move => ({ move, doc: await this._moveRepo.getReferencedMoveDocument(move.id) }))
-		);
-		await this._actor.createEmbeddedDocuments("Item",
-			pairs.filter(({ doc }) => doc).map(({ move, doc }, i) =>
-				withCategoryFields(doc.toObject(), key, starting.has(move.slug), {
-					sortOrder:     i,
-					compendiumId:  doc._id ?? null,
-					categoryLabel: label,
-				})
-			)
+		return this._grantsFor(key, entries, { starting: new Set(startingSlugs), categoryLabel: label });
+	}
+
+	// Resolve a category's moves to their compendium documents and stamp each one for embedding. The one
+	// pipeline behind every move grant — a move that no longer resolves is dropped, not granted empty.
+	async _grantsFor(categoryKey, moves, { starting, categoryLabel, categoryNote = null }) {
+		const docs = await Promise.all(moves.map(m => this._moveRepo.getReferencedMoveDocument(m.id)));
+		return new ItemGrantSet(GrantSource.forCategoryKey(categoryKey),
+			moves
+				.map((move, i) => ({ move, doc: docs[i] }))
+				.filter(({ doc }) => doc)
+				.map(({ move, doc }, i) => new ItemGrant(
+					withCategoryFields(doc.toObject(), categoryKey, starting.has(move.slug), {
+						sortOrder:    i,
+						compendiumId: doc._id ?? null,
+						categoryLabel,
+						categoryNote,
+					}))),
 		);
 	}
 
+	// Un-grants by the same source the category was granted under, so the write and the unwrite read the
+	// same fact. `categoryKey` stays a display concern (which list a move renders in), not provenance.
 	async removeCategory(key) {
-		const ids = [...this._actor.items]
-			.filter(i => i.type === "move" && i.system?.categoryKey === key)
-			.map(i => i._id);
-		if (ids.length) await this._actor.deleteEmbeddedDocuments("Item", ids);
+		await this._grantedItems.revoke(GrantSource.forCategoryKey(key));
 	}
 
 	async incrementMove(categoryKey, moveSlug) {
@@ -111,11 +115,13 @@ export class CharacterMoves {
 		await decrementMove(this._actor, categoryKey, moveSlug);
 	}
 
+	// A move the player dropped in. Matched on the STORED slug, like every other move lookup — matching
+	// on the name alone let a renamed move in as a second copy of one already there.
 	async addMoveToOther(moveData) {
-		const moveSlug = toSlug(moveData.name);
+		const moveSlug = moveData.system?.slug ?? toSlug(moveData.name);
 		const existing = [...this._actor.items].filter(i => i.type === "move" && i.system?.categoryKey === "other");
-		if (existing.some(i => toSlug(i.name) === moveSlug)) return false;
-		await this._actor.createEmbeddedDocuments("Item", [{
+		if (existing.some(i => (i.system?.slug ?? toSlug(i.name)) === moveSlug)) return false;
+		await this._grantedItems.addAuthored([{
 			...moveData,
 			name: moveData.name,
 			type: "move",
@@ -131,7 +137,8 @@ export class CharacterMoves {
 
 	async deleteMove(moveSlug) {
 		const item = [...this._actor.items].find(
-			i => i.type === "move" && i.system?.categoryKey === "other" && toSlug(i.name) === moveSlug
+			i => i.type === "move" && i.system?.categoryKey === "other"
+				&& (i.system?.slug ?? toSlug(i.name)) === moveSlug
 		);
 		if (!item) return;
 		await this._actor.deleteEmbeddedDocuments("Item", [item._id]);
