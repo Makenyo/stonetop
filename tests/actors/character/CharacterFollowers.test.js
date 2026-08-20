@@ -232,6 +232,23 @@ describe("CharacterFollowers — state mutations", () => {
 		expect(snap.armor.raw).toBe("2 (resilience), 0 vs. bronze");
 	});
 
+	// The single-line fields normalize here rather than at the sheet, so every caller (sheet,
+	// drop pipeline, grant) stores the same thing — an untrimmed value would never match a
+	// picker option and would silently become a custom entry.
+	it("trims the single-line follower fields", async () => {
+		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
+		await cf.addFollower("enfys");
+		await cf.setArmor("enfys", "  1 (hide)  ");
+		await cf.setDamage("enfys", "  d6  ");
+		await cf.setInstinct("enfys", "  to protect  ");
+		await cf.setCost("enfys", "  a warm bed  ");
+		const [snap] = await cf.buildSnapshot();
+		expect(snap.armor.raw).toBe("1 (hide)");
+		expect(snap.damage.raw).toBe("d6");
+		expect(snap.instinct).toBe("to protect");
+		expect(snap.cost).toBe("a warm bed");
+	});
+
 	it("exposes instinct as selection text and moves as RichText (raw markdown)", async () => {
 		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
 		await cf.addFollower("enfys");
@@ -1236,11 +1253,118 @@ describe("CharacterFollowers — inventory", () => {
 		expect(snap.inventory.loadHeavy).toBe(true);
 	});
 
+	it("flags a follower carrying more than their capacity, without stopping them", async () => {
+		const cf = makeCfInv();
+		await cf.addFollower("crew");
+		await cf.setLoadCapacity("crew", 4);
+
+		await cf.setInvItemChecked("crew", "pack", true);     // 3 of 4
+		let [snap] = await cf.buildSnapshot();
+		expect(snap.inventory.capacity).toBe(4);
+		expect(snap.inventory.overCapacity).toBe(false);
+
+		await cf.setInvItemChecked("crew", "shield", true);   // 5 of 4
+		[snap] = await cf.buildSnapshot();
+		expect(snap.inventory.totalWeight).toBe(5);
+		expect(snap.inventory.overCapacity).toBe(true);
+		expect(ownedSlugs(snap.inventory)).toEqual(["shield", "pack"]); // still held — guidance only
+	});
+
+	it("defaults a follower's capacity to the 9 ◇ the Outfit move tops out at", async () => {
+		const cf = makeCfInv();
+		await cf.addFollower("crew");
+		const [snap] = await cf.buildSnapshot();
+		expect(snap.inventory.capacity).toBe(9);
+		expect(snap.inventory.overCapacity).toBe(false);
+	});
+
 	it("inventory is null when no outfit catalog is wired (no inventory repo)", async () => {
 		const cf = makeCf(new FakeFollowerRepository([FOLLOWER_TMPL])); // 4-arg ctor, no inv repo
 		await cf.addFollower("crew");
 		const [snap] = await cf.buildSnapshot();
 		expect(snap.inventory).toBeNull();
 		expect(snap.hasInventory).toBe(false);
+	});
+});
+
+// Characterization net for the deferred FollowerItem extraction. The nine single-field setters are
+// nine copies of "find the item, updateEmbeddedDocuments one key"; replacing them with an entity
+// carrying `with`-methods must not change either property asserted here — a setter reaches only its
+// own field, and reaching it leaves every sibling alone.
+describe("CharacterFollowers — single-field setters are independent", () => {
+	async function ownedEnfys() {
+		const cf = makeCf(new FakeFollowerRepository([ENFYS]));
+		await cf.addFollower("enfys");
+		return cf;
+	}
+
+	const snap = async cf => (await cf.buildSnapshot())[0];
+
+	it("writes each single-line field without disturbing the others", async () => {
+		const cf = await ownedEnfys();
+
+		await cf.setArmor("enfys", "1 (hide)");
+		await cf.setDamage("enfys", "d6");
+		await cf.setInstinct("enfys", "to protect");
+		await cf.setCost("enfys", "a warm bed");
+		await cf.setName("enfys", "Enfys the Bold");
+
+		const s = await snap(cf);
+		expect(s.armor.raw).toBe("1 (hide)");
+		expect(s.damage.raw).toBe("d6");
+		expect(s.instinct).toBe("to protect");
+		expect(s.cost).toBe("a warm bed");
+		expect(s.name).toBe("Enfys the Bold");
+	});
+
+	it("writes each free-text field without disturbing the others", async () => {
+		const cf = await ownedEnfys();
+
+		await cf.setMoves("enfys", "- Bite d6");
+		await cf.setNotes("enfys", "owes a debt");
+		await cf.setSpecialQuality("enfys", "keen-eyed");
+		await cf.setDescription("enfys", "a slight figure");
+
+		const s = await snap(cf);
+		expect(s.moves.raw).toBe("- Bite d6");
+		expect(s.notes.raw).toBe("owes a debt");
+		expect(s.specialQuality.raw).toBe("keen-eyed");
+		expect(s.description.raw).toBe("a slight figure");
+	});
+
+	// The setters write `system: { field }` and Foundry MERGES, so an edit must never drop the
+	// fields it left out — the property that makes nine separate writers safe today.
+	it("leaves the fields it was not given untouched", async () => {
+		const cf = await ownedEnfys();
+		const before = await snap(cf);
+
+		await cf.setArmor("enfys", "2 (shield)");
+
+		const after = await snap(cf);
+		expect(after.damage.raw).toBe(before.damage.raw);
+		expect(after.instinct).toBe(before.instinct);
+		expect(after.moves.raw).toBe(before.moves.raw);
+		expect(after.name).toBe(before.name);
+		expect(after.hp).toBe(before.hp);
+		expect(after.hpMax).toBe(before.hpMax);
+	});
+
+	it("keeps HP current and max independent of one another", async () => {
+		const cf = await ownedEnfys();
+
+		await cf.setHpMax("enfys", 9);
+		await cf.setHp("enfys", 4);
+
+		const s = await snap(cf);
+		expect(s.hpMax).toBe(9);
+		expect(s.hp).toBe(4);
+	});
+
+	it("does nothing for a slug no owned follower answers to", async () => {
+		const cf = await ownedEnfys();
+
+		await expect(cf.setArmor("nobody", "3")).resolves.not.toThrow();
+
+		expect((await snap(cf)).armor.raw).toBe("");
 	});
 });

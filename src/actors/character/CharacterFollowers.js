@@ -5,9 +5,11 @@ import { Selection } from "../../model/data/Selection.js";
 import { normalizeGroupTags, hasGroupTag, GROUP_TAG } from "../../model/data/groupTag.js";
 import { newMember } from "../../utils/followerMemberEdit.js";
 import { blankCompanion } from "../../utils/followerCompanionEdit.js";
-import { buildOutfitColumn, loadBand } from "../../model/snapshot/character/outfitSections.js";
+import { buildOutfitColumn, loadBand, MAX_OUTFIT_MARKS } from "../../model/snapshot/character/outfitSections.js";
 import { GrantedItems } from "../GrantedItems.js";
 import { GrantSource, ItemGrant, ItemGrantSet } from "../../model/data/ItemGrant.js";
+import { FollowerItem } from "./FollowerItem.js";
+import { itemsOfType, itemOfTypeBySlug } from "../actorItems.js";
 
 export class CharacterFollowers {
 	constructor(actor, followerRepo, resourceController, factory = null, inventoryRepo = null,
@@ -73,8 +75,8 @@ export class CharacterFollowers {
 	}
 
 	get ownedSlugs() {
-		return [...this._actor.items]
-			.filter(i => i.type === "follower" && (i.system?.owned ?? false))
+		return itemsOfType(this._actor, "follower")
+			.filter(i => i.system?.owned ?? false)
 			.map(i => i.system?.slug)
 			.filter(Boolean);
 	}
@@ -178,21 +180,15 @@ export class CharacterFollowers {
 	}
 
 	async setHp(slug, hp) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { hp: { value: hp } } }]);
+		await this._write(slug, f => f.withHp(hp));
 	}
 
 	async setHpMax(slug, hpMax) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { hp: { max: hpMax } } }]);
+		await this._write(slug, f => f.withHpMax(hpMax));
 	}
 
 	async setName(slug, name) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, name }]);
+		await this._write(slug, f => f.withName(name));
 	}
 
 	async setTags(slug, tags) {
@@ -209,6 +205,13 @@ export class CharacterFollowers {
 		if (!item || !field || !value) return;
 		const stored = Selection.fromStored(item.system?.[field]).toggle(value).toRaw();
 		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { [field]: stored } }]);
+	}
+
+	// Find → reshape → one write, for every plain single-field setter above.
+	async _write(slug, change) {
+		const follower = FollowerItem.bySlug(this._actor, slug);
+		if (!follower) return;
+		await this._actor.updateEmbeddedDocuments("Item", [change(follower).toUpdate()]);
 	}
 
 	async setLoyalty(slug, loyalty) {
@@ -260,53 +263,45 @@ export class CharacterFollowers {
 	}
 
 	async setArmor(slug, armor) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { armor } }]);
+		await this._write(slug, f => f.withArmor(armor));
+	}
+
+	async setLoadCapacity(slug, capacity) {
+		await this._write(slug, f => f.withLoadCapacity(capacity));
 	}
 
 	async setDamage(slug, damage) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { damage } }]);
+		await this._write(slug, f => f.withDamage(damage));
 	}
 
 	async setInstinct(slug, instinct) {
 		const item = _findFollowerItem(this._actor, slug);
 		if (!item) return;
-		const stored = Selection.fromStored(instinct, { multi: false, options: item.system?.instinct?.options ?? [] }).toRaw();
+		const stored = Selection.fromStored(_text(instinct), { multi: false, options: item.system?.instinct?.options ?? [] }).toRaw();
 		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { instinct: stored } }]);
 	}
 
 	async setMoves(slug, moves) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { moves } }]);
+		await this._write(slug, f => f.withMoves(moves));
 	}
 
 	async setCost(slug, cost) {
 		const item = _findFollowerItem(this._actor, slug);
 		if (!item) return;
-		const stored = Selection.fromStored(cost, { multi: false, options: item.system?.cost?.options ?? [] }).toRaw();
+		const stored = Selection.fromStored(_text(cost), { multi: false, options: item.system?.cost?.options ?? [] }).toRaw();
 		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { cost: stored } }]);
 	}
 
 	async setNotes(slug, notes) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { notes } }]);
+		await this._write(slug, f => f.withNotes(notes));
 	}
 
 	async setSpecialQuality(slug, specialQuality) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { specialQuality } }]);
+		await this._write(slug, f => f.withSpecialQuality(specialQuality));
 	}
 
 	async setDescription(slug, description) {
-		const item = _findFollowerItem(this._actor, slug);
-		if (!item) return;
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { description } }]);
+		await this._write(slug, f => f.withDescription(description));
 	}
 
 	// Animal companion: `system.companion` is atomic (one opaque object), so every writer
@@ -319,7 +314,8 @@ export class CharacterFollowers {
 		const item = _findFollowerItem(this._actor, slug);
 		if (!item) return;
 		const companion = _companion(item);
-		const t = (companion.catalog ?? []).find(x => x.slug === typeSlug || x.name === typeSlug);
+		const wanted = _text(typeSlug);
+		const t = (companion.catalog ?? []).find(x => x.slug === wanted || x.name === wanted);
 		if (!t) return;
 		companion.type    = { selected: [t.name], options: (companion.catalog ?? []).map(x => x.name), multi: false, allowCustom: true };
 		companion.options = { selected: [...(t.defaults ?? [])], options: [...(t.options ?? [])], multi: true, allowCustom: true };
@@ -404,6 +400,7 @@ export class CharacterFollowers {
 		const owned       = [...regular, ...customItems].filter(i => checked[i.slug]);
 		const totalWeight = owned.reduce((s, i) => s + (i.weight ?? 0), 0);
 		const band        = loadBand(totalWeight);
+		const capacity    = this._loadCapacity(slug);
 		const hasAny      = owned.length > 0;
 
 		return {
@@ -414,15 +411,29 @@ export class CharacterFollowers {
 			sections:      editing ? buildOutfitColumn(repoItems, customItems, checked, "regular", resourceFn) : [],
 			totalWeight,
 			band,
+			capacity,
+			overCapacity: totalWeight > capacity,
 			loadLight:     band === "light",
 			loadNormal:    band === "normal",
 			loadHeavy:     band === "heavy",
 		};
 	}
+
+	// What this follower can carry. Advisory: the sheet says when they are over it, never stops it.
+	_loadCapacity(slug) {
+		return _findFollowerItem(this._actor, slug)?.system?.loadCapacity ?? MAX_OUTFIT_MARKS;
+	}
 }
 
 function _findFollowerItem(actor, slug) {
-	return [...actor.items].find(i => i.type === "follower" && i.system?.slug === slug) ?? null;
+	return itemOfTypeBySlug(actor, "follower", slug);
+}
+
+// Single-line follower fields are stored trimmed, so a stored value round-trips equal to what a
+// picker offers — an untrimmed " Loyal" would never match the "Loyal" option and would silently
+// become a custom entry.
+function _text(value) {
+	return typeof value === "string" ? value.trim() : value;
 }
 
 // Plain-object clone of a follower's members (Foundry replaces arrays wholesale on update).

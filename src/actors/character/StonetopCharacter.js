@@ -17,6 +17,7 @@ import {ActorOutfitItems} from "./ActorOutfitItems.js";
 import {ChoiceGroupControllerFactory} from "./ChoiceGroupControllerFactory.js";
 import {ContainerOutfitSync} from "./ContainerOutfitSync.js";
 import {FollowerSideEffectHandler} from "./SideEffectHandler.js";
+import {InstinctSideEffectHandler} from "./InstinctSideEffectHandler.js";
 import {ChoiceStores} from "./ChoiceStores.js";
 import {applyPick} from "./ChoiceGroupController.js";
 import {GrantedItems} from "../GrantedItems.js";
@@ -49,6 +50,7 @@ export class StonetopCharacter {
 		this._background  = new CharacterBackgrounds(actor, factory, this._resourceController);
 		this._moves       = new CharacterMoves(repos.moves, actor, new ResourceController(actor, "moveResources"), factory, grantedItems);
 		this._playbook    = new CharacterPlaybook(actor, this._background, factory, this._origin);
+		factory.subscribe(new InstinctSideEffectHandler(this._playbook));
 		this._possessions = new CharacterPossessions(actor, this._moves, repos.possessions, factory, outfitSync, grantedItems);
 		this._inventory   = new CharacterInventory(actor, repos.inventory, outfitItems, this._resourceController, repos.steading);
 		this._vitals      = new CharacterVitals(actor);
@@ -192,16 +194,16 @@ export class StonetopCharacter {
 		await this._inventory.setResource(slug, count);
 	}
 
-	async setInventoryLoadLevel(level) {
-		await this._inventory.setLoadLevel(level);
-	}
-
 	async setInventoryRegularPool(count) {
 		await this._inventory.setRegularPool(count);
 	}
 
 	async setInventorySmallPool(count) {
 		await this._inventory.setSmallPool(count);
+	}
+
+	async resetOutfit() {
+		await this._inventory.clearSelections();
 	}
 
 	async setInventoryOtherItems(value) {
@@ -259,7 +261,13 @@ export class StonetopCharacter {
 		await this._playbook.selectBackground(slug);
 	}
 
-	async selectCustomInstinct(text) {
+	/**
+	 * The character's instinct, written in by hand. An insert has a box of its own: what is typed
+	 * there is saved on the insert AND becomes the character's instinct — the mirroring is the
+	 * insert's choice-write side effect, so a picked option travels the same road as a typed one.
+	 */
+	async selectCustomInstinct(text, insertItemId = null) {
+		if (insertItemId) return this._inserts.selectCustomInstinct(insertItemId, text);
 		await this._playbook.selectCustomInstinct(text);
 	}
 
@@ -311,6 +319,12 @@ export class StonetopCharacter {
 		if (!slug) return;
 		const data = await this._playbookRepo.findItemDataBySlug(slug);
 		if (data) await this.applyDroppedItems([data]);
+	}
+
+	// Every playbook the sheet's picker can offer. Served from the character's own repository so the
+	// pack index and parsed-playbook cache are shared with applyPlaybookBySlug.
+	async listPlaybooks() {
+		return this._playbookRepo?.getAllPlaybooks() ?? [];
 	}
 
 	async incrementMove(categoryKey, moveName) {
@@ -392,8 +406,9 @@ export class StonetopCharacter {
 		await this._arcana.setBlankValue(arcanumSlug, key, text);
 	}
 
-	getArcanumBlanks(arcanumSlug) {
-		return this._arcana.getBlanks(arcanumSlug);
+	/** Map of arcanum slug → its write-in blanks, built in one pass. */
+	getAllArcanumBlanks() {
+		return this._arcana.allBlanks();
 	}
 
 	async setBackgroundResource(slug, count) {
@@ -494,29 +509,28 @@ export class StonetopCharacter {
 	}
 
 	// --- Shared-inventory routing ------------------------------------------------------------
-	// A shared outfit item lives in the character's inventory tab OR inside a follower card;
-	// the sheet reads the follower slug off the wrapper (null = the character's own inventory)
-	// and these route it.
+	// A shared outfit item lives in the character's inventory tab OR inside a follower card; the
+	// InventoryOwner the sheet read off the row says which, and these route on it.
 
-	async setInventoryItemCheckedFor(followerSlug, itemSlug, checked) {
-		if (followerSlug) return this.setFollowerInvItemChecked(followerSlug, itemSlug, checked);
+	async setInventoryItemCheckedFor(owner, itemSlug, checked) {
+		if (owner.isFollower) return this.setFollowerInvItemChecked(owner.followerSlug, itemSlug, checked);
 		return this.setInventoryItemChecked(itemSlug, checked);
 	}
 
-	async toggleInventoryResourcePipFor(followerSlug, itemSlug, index, isChecked) {
+	async toggleInventoryResourcePipFor(owner, itemSlug, index, isChecked) {
 		const count = this.#pipCount(index, isChecked);
-		if (followerSlug) return this.setFollowerInvResource(followerSlug, itemSlug, count);
+		if (owner.isFollower) return this.setFollowerInvResource(owner.followerSlug, itemSlug, count);
 		return this.setInventoryResource(itemSlug, count);
 	}
 
-	async addCustomInventoryItemFor(followerSlug, name, weight, isRegular) {
-		if (followerSlug) return this.addFollowerInvCustomItem(followerSlug, name, weight);
-		if (isRegular)    return this.addCustomInventoryItem(name, weight);
-		return this.addCustomSmallItem(name);
+	async addCustomInventoryItemFor(owner, item) {
+		if (owner.isFollower) return this.addFollowerInvCustomItem(owner.followerSlug, item.name, item.weight);
+		if (item.isRegular)   return this.addCustomInventoryItem(item.name, item.weight);
+		return this.addCustomSmallItem(item.name);
 	}
 
-	async removeCustomInventoryItemFor(followerSlug, itemId) {
-		if (followerSlug) return this.removeFollowerInvCustomItem(followerSlug, itemId);
+	async removeCustomInventoryItemFor(owner, itemId) {
+		if (owner.isFollower) return this.removeFollowerInvCustomItem(owner.followerSlug, itemId);
 		return this.removeCustomInventoryItem(itemId);
 	}
 
@@ -607,6 +621,10 @@ export class StonetopCharacter {
 
 	async setFollowerArmor(slug, armor) {
 		await this._followers.setArmor(slug, armor);
+	}
+
+	async setFollowerLoadCapacity(slug, capacity) {
+		await this._followers.setLoadCapacity(slug, capacity);
 	}
 
 	async setFollowerInstinct(slug, instinct) {

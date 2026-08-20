@@ -101,6 +101,10 @@ img.stonetop-broken-img {
 	--fs-display:    1.6rem;   /* large display type                                */
 	--fs-name:       2rem;     /* actor / steading name heading (largest)           */
 
+	/* Every tab's view-state toggle (moves filter, playbook lock, insert locks) is one control at
+	   one size; the tabs that lay a toggle over their first line reserve exactly this. */
+	--view-toggle-height: 20px;
+
 	--stonetop-bg: hsl(30deg 20% 94%);
 	--color-border-highlight-alt: slategrey;
 	--color-shadow-highlight: slategrey;
@@ -865,24 +869,33 @@ body,
 	column-gap: 16px;
 }
 
-.stonetop-playbook-columns .details-section,
-.stonetop-playbook-columns .stonetop-choice-section {
+/* Two-column tabs (the playbook's and every insert's) lay out by what a thing IS, never by which
+   tab it is on — the tab-scoped exceptions this replaces are how the two drifted apart, one broken
+   screenshot at a time.
+
+   A fixed section (instinct, background, appearance, origin) is a heading, a rule and a line or
+   two: split, it strands its divider in the far column, so it stays whole. */
+.stonetop-playbook-columns .details-section {
 	break-inside: avoid;
 	margin-bottom: 12px;
 }
 
-/* Insert tabs: let the section flow across both columns; keep individual tracks together */
-.tab.insert .stonetop-playbook-columns .details-section {
+/* A block of authored choice groups is the opposite: it can be the whole tab (the Lightbearer's
+   invocations), and kept whole it runs down one column leaving the other empty. It flows, and so do
+   the groups inside it. */
+.stonetop-playbook-columns .stonetop-choice-section,
+.stonetop-playbook-columns .stonetop-choice-section .stonetop-choice-entry {
 	break-inside: auto;
 }
 
-.tab.insert .stonetop-playbook-columns .stonetop-choice-track {
+/* What flowing must never break: a row, and a heading away from the rows beneath it. */
+.stonetop-playbook-columns .stonetop-choice-track,
+.stonetop-playbook-columns .stonetop-item {
 	break-inside: avoid;
 }
 
-/* Keep a single entry whole — never split its title from its subtitle/track across columns */
-.tab.insert .stonetop-playbook-columns .stonetop-choice-entry {
-	break-inside: avoid;
+.stonetop-playbook-columns .stonetop-choice-entry-title {
+	break-after: avoid;
 }
 
 .stonetop-playbook-empty {
@@ -898,6 +911,51 @@ body,
 	font-style: italic;
 	color: var(--color-text-light-7, #888);
 	text-align: center;
+}
+
+/* -- Playbook tab lock (condensed view) ----------------------- */
+
+/* Out of flow, like the moves filter: in flow it owned a row of its own above the playbook's title
+   image. The intro block it overlays reserves the button's width and height, which is what keeps a
+   playbook WITHOUT a title image from running its description under the button. */
+.tab.playbook .sheet-tab {
+	position: relative;
+}
+
+.stonetop-playbook-toolbar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+}
+
+.stonetop-playbook-toolbar + .stonetop-playbook-intro {
+	min-height: var(--view-toggle-height);
+	padding-right: 130px;
+}
+
+/* Locked, a section the character put nothing in has nothing to show: the markers below are what a
+   rendered choice looks like in any of its shapes (line, card, chosen background, chosen origin) or
+   a group's own prose. Matching none of them means the heading would stand over empty space. */
+.tab.is-locked .details-section:not(:has(.stonetop-choice-track, .stonetop-item,
+    .stonetop-origin-option, .stonetop-choice-entry-title, .stonetop-choice-description)) {
+	display: none;
+}
+
+/* "(Choose 1)" and friends are instructions for filling the tab in — nothing to act on once it is
+   locked. Scoped to the section headings: the same class carries a line's own aside ("(ongoing)"),
+   which the locked view very much wants to keep. */
+.tab.is-locked .stonetop-move-group-title .stonetop-section-note {
+	display: none;
+}
+
+/* Stands where the checkbox stood, so a condensed line keeps the row's indent and alignment. */
+.stonetop-choice-tick {
+	display: inline-block;
+	width: 14px;
+	text-align: center;
+	font-size: var(--fs-fine);
+	line-height: 1.3;
 }
 
 /* -- Introductions section ------------------------------------ */
@@ -1385,10 +1443,15 @@ body,
 	.stonetop-sheet-layout.moves-open .stonetop-moves-sidebar {
 		transform: translateX(0);
 	}
-	/* Clear the sidebar toggle (top:2 right:2, 26px wide) so it doesn't cover the insert delete icon.
-	   Descendant selector raises specificity above the later base `.stonetop-insert-remove` rule so
-	   this wins regardless of source order. */
-	.stonetop-sheet-layout .stonetop-insert-remove {
+	/* Clear the sidebar toggle (top:2 right:2, 26px wide): everything else that lives in a tab's
+	   top-right corner has to step aside for it — the insert controls, and the tab toolbars that
+	   are pinned there. */
+	.stonetop-sheet-layout .stonetop-insert-actions {
+		padding-right: 32px;
+	}
+
+	.stonetop-sheet-layout .stonetop-moves-toolbar,
+	.stonetop-sheet-layout .stonetop-playbook-toolbar {
 		right: 32px;
 	}
 }
@@ -1418,7 +1481,6 @@ body,
    heading reserves exactly that — otherwise the button hangs over the divider beneath it. */
 .tab.moves .sheet-tab {
 	position: relative;
-	--moves-filter-height: 20px;
 }
 
 .stonetop-moves-toolbar {
@@ -1431,16 +1493,18 @@ body,
 /* Height clears the divider below the heading; padding keeps a long group note from running under
    the button. */
 .stonetop-moves-toolbar + .stonetop-move-group .stonetop-move-group-title {
-	min-height: var(--moves-filter-height);
+	min-height: var(--view-toggle-height);
 	padding-right: 130px;
 }
 
-button.stonetop-moves-filter {
+/* Every tab's view-state toggle (moves "selected only", playbook lock) — one appearance, emitted
+   by tab-toolbar-toggle.hbs. `width: auto` is what stops core's .window-app rule stretching it. */
+button.stonetop-view-toggle {
 	display: flex;
 	align-items: center;
 	gap: 6px;
 	width: auto;
-	height: var(--moves-filter-height);
+	height: var(--view-toggle-height);
 	padding: 0 10px;
 	font-size: var(--fs-fine);
 	line-height: 1;
@@ -1448,11 +1512,11 @@ button.stonetop-moves-filter {
 	cursor: pointer;
 }
 
-button.stonetop-moves-filter:hover {
+button.stonetop-view-toggle:hover {
 	opacity: 1;
 }
 
-button.stonetop-moves-filter.is-active {
+button.stonetop-view-toggle.is-active {
 	opacity: 1;
 	background: rgba(0, 0, 0, 0.12);
 }
@@ -1657,11 +1721,19 @@ button.stonetop-moves-filter.is-active {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	gap: 6px;
 }
 
+/* All four sides: the inherited top margin (~2em) offset the sub-heading from the checkbox beside
+   it, which is what left every invocation's box floating above its name. */
 .stonetop-choice-header-wrapper h4 {
-	margin-bottom: 0px;
+	margin: 0;
 	font-size: var(--fs-subheading);
+}
+
+/* The separation between subtitled entries that the stray heading margin used to provide. */
+.stonetop-choice-track.stonetop-column + .stonetop-choice-track.stonetop-column {
+	margin-top: 10px;
 }
 
 .stonetop-choice-track-checks {
@@ -1732,6 +1804,12 @@ button.stonetop-moves-filter.is-active {
 	gap: 4px;
 	margin-left: auto;
 	flex-shrink: 0;
+}
+
+/* Every resource track lays its pips and labels out in one flex row (see resource-track.hbs), so a
+   label is a row item beside its pip. Nothing may break it onto a line of its own. */
+.stonetop-resource-label {
+	white-space: nowrap;
 }
 
 /* Resource pips are <button>s, and core v13 themes buttons with min-height/min-width: var(--button-size)
@@ -2133,6 +2211,48 @@ button.stonetop-moves-filter.is-active {
 .stonetop-outfit-heading {
 	font-size: var(--fs-heading);
 	margin: 0 0 4px;
+}
+
+/* The load level is read off the marked ◇, so the radios report it rather than set it. */
+.stonetop-outfit-load-radio {
+	pointer-events: none;
+}
+
+/* Rides the load line the marks land in, so the rule text and its three options stay unbroken. */
+.stonetop-outfit-marked {
+	margin: 0 0 0 6px;
+	font-size: var(--fs-note);
+	color: var(--color-text-dark-secondary, #666);
+	font-style: italic;
+	white-space: nowrap;
+}
+
+/* Over the ◇ the move allows — a warning, never a block (guide-don't-enforce). */
+.stonetop-outfit-marked.is-over {
+	color: var(--color-level-warning, #b45309);
+	font-style: normal;
+	font-weight: bold;
+	white-space: normal;
+}
+
+/* Out of the reading flow entirely: the panel's top-right corner. */
+.stonetop .stonetop-outfit-reset {
+	position: absolute;
+	top: 4px;
+	right: 6px;
+	font-size: var(--fs-note);
+}
+
+/* A move named inline in a rule blurb (the Outfit heading), clickable to open that move. */
+.stonetop-move-link {
+	cursor: pointer;
+	color: inherit;
+	text-decoration: underline dotted;
+	text-underline-offset: 2px;
+}
+
+.stonetop-move-link:hover {
+	text-decoration: underline solid;
 }
 
 .stonetop-prosperity-title {
@@ -3273,7 +3393,7 @@ button.stonetop-xp-toggle {
 	border-radius: 0 !important;
 }
 
-/* Insert tab header: name on the left, delete icon pinned to the top-right (no button box). */
+/* Insert tab header: name on the left, its controls in one row on the right (no button boxes). */
 .stonetop-insert-header {
 	position: relative;
 	display: flex;
@@ -3290,13 +3410,19 @@ button.stonetop-xp-toggle {
 .stonetop-insert-heading {
 	flex: 1;
 	min-width: 0;
-	padding-right: 20px;
 }
-.stonetop-insert-remove {
-	position: absolute;
-	top: 0;
-	right: 0;
+
+/* The lock and the delete icon are peers on the head's right; in flow, so neither can land on top
+   of the other (which is what an absolutely-pinned delete icon did to the lock). */
+.stonetop-insert-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex: none;
 	z-index: 2;
+}
+
+.stonetop-insert-remove {
 	width: auto !important;
 	padding: 0;
 	line-height: 1;
@@ -3430,6 +3556,28 @@ button.stonetop-xp-toggle {
 .stonetop-follower-load-band.is-active {
 	opacity: 1;
 	font-weight: bold;
+}
+.stonetop-follower-capacity {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 2px;
+	font-size: var(--fs-fine);
+	color: var(--color-text-dark-secondary, #666);
+}
+.stonetop-follower-capacity.is-over {
+	color: var(--color-level-warning, #b45309);
+	font-weight: bold;
+}
+.stonetop-follower-capacity-input {
+	width: 2.5em;
+	min-width: 0;
+	padding: 0 2px;
+	text-align: center;
+	font-size: inherit;
+	color: inherit;
+	background: transparent;
+	border: none;
+	border-bottom: 1px dotted var(--color-border-light, #ccc);
 }
 .stonetop-follower-inventory-list,
 .stonetop-follower-inventory-catalog {

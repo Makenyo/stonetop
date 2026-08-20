@@ -10,7 +10,7 @@ import {OutfitItemBuilder} from "../../model/data/character/OutfitItem.js";
 import {ArmorBreakdown} from "../../model/data/character/ArmorBreakdown.js";
 import { ResourceController } from "./ResourceController.js";
 import { GrantStamp } from "../../model/data/ItemGrant.js";
-import { buildOutfitColumn } from "../../model/snapshot/character/outfitSections.js";
+import { buildOutfitColumn, loadBand, MAX_OUTFIT_MARKS } from "../../model/snapshot/character/outfitSections.js";
 
 // The Prosperity gear table as the inventory insert prints it: fixed rungs, the steading's rating
 // only decides which one the character is standing on. A rating past either end marks the nearest
@@ -21,6 +21,8 @@ const _PROSPERITY_ROWS = [
 	{ value:  1, noteKey: "stonetop.inventory.prosperityTable.piercing1" },
 	{ value:  2, noteKey: "stonetop.inventory.prosperityTable.piercing2" },
 ];
+const _LOAD_LEVELS = ["light", "normal", "heavy"];
+
 const _PROSPERITY_MIN = _PROSPERITY_ROWS[0].value;
 const _PROSPERITY_MAX = _PROSPERITY_ROWS.at(-1).value;
 
@@ -34,7 +36,6 @@ export class CharacterInventory {
 	}
 
 	get checked()     { return this._actor.system?.inventory?.checked     ?? {}; }
-	get loadLevel()   { return this._actor.system?.inventory?.loadLevel   ?? null; }
 	get regularPool() { return this._actor.system?.inventory?.regularPool ?? 0; }
 	get smallPool()   { return this._actor.system?.inventory?.smallPool   ?? 0; }
 	get otherItems()  { return this._actor.system?.inventory?.otherItems  ?? ""; }
@@ -47,16 +48,26 @@ export class CharacterInventory {
 		await this._resourceController.set("inventory", slug, count);
 	}
 
-	async setLoadLevel(level) {
-		await this._actor.update({ "system.inventory.loadLevel": level });
-	}
-
 	async setRegularPool(count) {
 		await this._actor.update({ "system.inventory.regularPool": count });
 	}
 
 	async setSmallPool(count) {
 		await this._actor.update({ "system.inventory.smallPool": count });
+	}
+
+	// Back to an unmarked sheet: every ◇/□ cleared, both undefined pools emptied. Custom items, the
+	// "other items" note and item resources are not selections, so they stay.
+	//
+	// Each checked slug is written as its own deletion key: Foundry MERGES an object update, so
+	// storing an empty map would leave every mark exactly where it was.
+	async clearSelections() {
+		const cleared = Object.fromEntries(Object.keys(this.checked).map(slug => [`-=${slug}`, null]));
+		await this._actor.update({
+			"system.inventory.checked":     cleared,
+			"system.inventory.regularPool": 0,
+			"system.inventory.smallPool":   0,
+		});
 	}
 
 	async setOtherItems(value) {
@@ -123,7 +134,7 @@ export class CharacterInventory {
 		const repoItems = await this._repo.getAll();
 
 		return new OutfitSnapshotBuilder()
-			.withLoad(this.buildLoadSnapshot(this.loadLevel))
+			.withLoad(this.buildLoadSnapshot(this.markedWeight(repoItems, embeddedItems)))
 			.withRegularSections(buildOutfitColumn(repoItems, embeddedItems, checked, "regular", resourceFn))
 			.withRegularPool(ResourceController.build({ max: 9, title: null, labels: [] }, this.regularPool))
 			.withSmallSections(buildOutfitColumn(repoItems, embeddedItems, checked, "small", resourceFn))
@@ -146,18 +157,25 @@ export class CharacterInventory {
 		);
 	}
 
-	buildLoadSnapshot(loadLevel) {
+	// The ◇ a character has marked: every checked regular item's weight, plus the diamonds marked in
+	// the "undefined" pool. Small items are □ and carry no load, so the small column is not counted.
+	markedWeight(repoItems, embeddedItems) {
+		const checked = this.checked;
+		return [...repoItems, ...embeddedItems]
+			.filter(i => i.inventoryColumn === "regular" && checked[i.slug])
+			.reduce((total, i) => total + (i.weight ?? 0), 0) + this.regularPool;
+	}
+
+	// Load is read off the sheet, not chosen: the marked ◇ decide the band (same rule the follower
+	// inventory uses). Guidance only — nothing here caps what a character may carry.
+	buildLoadSnapshot(markedWeight) {
+		const band = loadBand(markedWeight);
 		return new LoadSnapshotBuilder()
-			.withInstruction(_loc("stonetop.inventory.outfit.heading"))
-			.withSelected(loadLevel ?? null)
-			.withLoadLevelLight(loadLevel === "light")
-			.withLoadLevelNormal(loadLevel === "normal")
-			.withLoadLevelHeavy(loadLevel === "heavy")
-			.withOptions([
-				new LoadOptionSnapshot("light", "Light", _loc("stonetop.inventory.outfit.light")),
-				new LoadOptionSnapshot("normal", "Normal", _loc("stonetop.inventory.outfit.normal")),
-				new LoadOptionSnapshot("heavy", "Heavy", _loc("stonetop.inventory.outfit.heavy")),
-			])
+			.withMarkedWeight(markedWeight)
+			.withCapacity(MAX_OUTFIT_MARKS)
+			.withOverCapacity(markedWeight > MAX_OUTFIT_MARKS)
+			.withOptions(_LOAD_LEVELS.map(slug =>
+				new LoadOptionSnapshot(slug, _loc(`stonetop.inventory.outfit.${slug}`), slug === band)))
 			.build();
 	}
 }

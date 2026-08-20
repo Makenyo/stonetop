@@ -5,6 +5,8 @@ import { StonetopCharacter } from "../../../src/actors/character/StonetopCharact
 import { FakeCharacterActorBuilder } from "../../fakes/FakeCharacterActorBuilder.js";
 import { FakeRepositoryFactory } from "../../fakes/FakeRepositoryFactory.js";
 import { FakeGameBuilder } from "../../fakes/FakeGameBuilder.js";
+import { InventoryOwner } from "../../../src/actors/character/InventoryOwner.js";
+import { NewInventoryItem } from "../../../src/actors/character/AddInventoryItemDialog.js";
 
 // -- Fake V2 base ---------------------------------------------------------------
 // Mini-core: ApplicationV2 seeds tabGroups from the tabs config and routes _prepareTabs through
@@ -17,10 +19,9 @@ function makeBase(actor) {
 		_editable = true;
 		superDrop = vi.fn(async () => "super-drop");
 		render = vi.fn();
-		// Mirrors StonetopActorSheetV2: capture, run the writes, release.
-		keepAnchored = vi.fn((element, anchorSelector, containerSelector, work) => work());
 
 		get actor() { return actor; }
+		get typedActor() { return actor.typedActor; }
 		get isEditable() { return this._editable; }
 
 		_getTabsConfig(group) { return this.constructor.TABS[group] ?? null; }
@@ -37,7 +38,14 @@ function makeBase(actor) {
 			}, {});
 		}
 
-		async _prepareContext() { return { tabs: this._prepareTabs("primary") }; }
+		// Mirrors StonetopActorSheetV2's shared preamble, which the character sheet builds on.
+		async _prepareContext() {
+			const context = { tabs: this._prepareTabs("primary") };
+			context.actor    = this.actor;
+			context.editable = this.isEditable;
+			context.stonetop = await this.actor.typedActor.buildSnapshot();
+			return context;
+		}
 		async _onFirstRender() {}
 		_onRender() {}
 		async _onDropItem(event, item) { return this.superDrop(event, item); }
@@ -53,7 +61,7 @@ function spyChar() {
 		"setRollMode", "applyPlaybookBySlug", "selectBackground", "selectCustomInstinct",
 		"setChoiceTrackFor", "setChoicePickFor", "setChoiceTextFor", "setArcanumBlank",
 		"setMoveChecked", "setMoveResourceText", "setInventoryItemCheckedFor",
-		"setInventoryLoadLevel", "toggleInventoryRegularPool", "toggleInventorySmallPool",
+		"toggleInventoryRegularPool", "toggleInventorySmallPool", "resetOutfit",
 		"setInventoryOtherItems", "setPossessionSelected",
 		"setBio", "setNotes", "setFollowerName", "setFollowerHp",
 		"setFollowerHpMax", "toggleFollowerTag", "toggleArcanumFlip", "toggleMoveResourcePip",
@@ -68,7 +76,8 @@ function spyChar() {
 	char.origin = { select: vi.fn(), selectName: vi.fn() };
 	char.setOpenFollowerInventories = vi.fn();
 	char.buildSnapshot = vi.fn(async () => ({}));
-	char.getArcanumBlanks = vi.fn(() => ({}));
+	char.listPlaybooks = vi.fn(async () => []);
+	char.getAllArcanumBlanks = vi.fn(() => new Map());
 	return char;
 }
 
@@ -112,10 +121,10 @@ beforeEach(() => { document.body.innerHTML = ""; });
 describe("StonetopCharacterSheet tabs", () => {
 	beforeEach(() => new FakeGameBuilder().build());
 
-	it("prepares the six fixed tabs with the playbook active and localized labels", async () => {
+	it("prepares the seven fixed tabs with the playbook active and localized labels", async () => {
 		const { sheet } = makeSheet();
 		const ctx = await sheet._prepareContext({});
-		expect(Object.keys(ctx.tabs)).toEqual(["playbook", "moves", "inventory", "arcana", "followers", "notes"]);
+		expect(Object.keys(ctx.tabs)).toEqual(["playbook", "moves", "possessions", "inventory", "arcana", "followers", "notes"]);
 		expect(ctx.tabs.playbook.active).toBe(true);
 		expect(ctx.tabs.playbook.label).toBe("stonetop.sheet.tabs.playbook");
 	});
@@ -126,7 +135,7 @@ describe("StonetopCharacterSheet tabs", () => {
 		});
 		const ctx = await sheet._prepareContext({});
 		expect(ctx.tabs["insert-the-crew"]).toMatchObject({ id: "insert-the-crew", label: "The Crew" });
-		// insert tabs come after the fixed six
+		// insert tabs come after the fixed seven
 		expect(Object.keys(ctx.tabs).at(-1)).toBe("insert-the-crew");
 	});
 });
@@ -153,16 +162,62 @@ describe("StonetopCharacterSheet._prepareContext (integration)", () => {
 	});
 });
 
-// -- Moves filter -------------------------------------------------------------------
+// -- Tab view toggles ---------------------------------------------------------------
 
-describe("StonetopCharacterSheet moves filter", () => {
+// The moves filter, the playbook lock and each insert's lock are one control with one action; what
+// separates them is what the button carries. TabViewFlags has the unit tests for the flag itself —
+// these are about the sheet wiring it up.
+
+describe("StonetopCharacterSheet view toggles", () => {
 	beforeEach(() => new FakeGameBuilder().build());
 
-	it("carries the selected-only filter into the context so it survives a re-render", async () => {
+	it("starts every declared flag off and carries them into the context", async () => {
 		const { sheet } = makeSheet();
-		expect((await sheet._prepareContext({})).hideUnselectedMoves).toBe(false);
-		sheet._setHideUnselectedMoves(true, null);
-		expect((await sheet._prepareContext({})).hideUnselectedMoves).toBe(true);
+		expect((await sheet._prepareContext({})).viewFlags)
+			.toEqual({ hideUnselectedMoves: false, playbookLocked: false });
+	});
+
+	// The playbook lock changes what the template emits, so the sheet has to rebuild the tab.
+	it("re-renders for a toggle that changes the markup", async () => {
+		const { sheet } = makeSheet();
+		const btn = el(`<button data-view-flag="playbookLocked"></button>`);
+
+		await fireAction(sheet, "toggleTabView", btn);
+		expect(sheet.render).toHaveBeenCalled();
+		expect((await sheet._prepareContext({})).viewFlags.playbookLocked).toBe(true);
+
+		await fireAction(sheet, "toggleTabView", btn);
+		expect((await sheet._prepareContext({})).viewFlags.playbookLocked).toBe(false);
+	});
+
+	// The moves filter only hides rows, so it decorates the live tab — rebuilding the sheet's
+	// largest tab mid-review would fight the scroll position.
+	it("decorates the tab instead, for a toggle that names a class", async () => {
+		const { sheet } = makeSheet();
+		const tab = el(`<div class="tab moves"><button data-view-flag="hideUnselectedMoves" data-view-class="hide-unselected"></button></div>`);
+
+		await fireAction(sheet, "toggleTabView", tab.querySelector("button"));
+
+		expect(tab.classList.contains("hide-unselected")).toBe(true);
+		expect(sheet.render).not.toHaveBeenCalled();
+		expect((await sheet._prepareContext({})).viewFlags.hideUnselectedMoves).toBe(true);
+	});
+
+	// Insert tabs name a flag per slug — locking one insert must leave the others alone.
+	it("takes a flag the sheet never declared, so each insert locks on its own", async () => {
+		const { sheet } = makeSheet();
+		await fireAction(sheet, "toggleTabView", el(`<button data-view-flag="insertLocked-invocations"></button>`));
+
+		const { viewFlags } = await sheet._prepareContext({});
+		expect(viewFlags["insertLocked-invocations"]).toBe(true);
+		expect(viewFlags["insertLocked-ghost"]).toBeUndefined();
+	});
+
+	it("is NOT edit-gated — a view toggle only changes what is shown", async () => {
+		const { sheet } = makeSheet();
+		sheet._editable = false;
+		await fireAction(sheet, "toggleTabView", el(`<button data-view-flag="playbookLocked"></button>`));
+		expect((await sheet._prepareContext({})).viewFlags.playbookLocked).toBe(true);
 	});
 });
 
@@ -269,10 +324,11 @@ describe("StonetopCharacterSheet actions", () => {
 		const { sheet, char } = makeSheet();
 		const card = el(`<div class="stonetop-arcanum-card" data-slug="eye">
 			<button data-slug="eye" data-flipped="false"></button></div>`);
+		const hold = vi.spyOn(sheet._scrollAnchoring, "hold");
 
 		await fireAction(sheet, "flipArcanum", card.querySelector("button"));
 
-		const [element, anchorSelector, containerSelector] = sheet.keepAnchored.mock.calls[0];
+		const [element, anchorSelector, containerSelector] = hold.mock.calls[0];
 		expect(element).toBe(card);
 		expect(anchorSelector).toBe(`.stonetop-arcanum-card[data-slug="eye"]`);
 		expect(containerSelector).toBe(".sheet-body");
@@ -293,7 +349,8 @@ describe("StonetopCharacterSheet actions", () => {
 				<button data-slug="rations" data-index="0"></button>
 			</div>`);
 		await fireAction(sheet, "inventoryResourcePip", wrap.querySelector("button"));
-		expect(char.toggleInventoryResourcePipFor).toHaveBeenCalledWith("enfys", "rations", "0", false);
+		expect(char.toggleInventoryResourcePipFor).toHaveBeenCalledWith(
+			InventoryOwner.follower("enfys"), "rations", "0", false);
 	});
 
 	it("selectOriginName sends the trimmed name", async () => {
@@ -307,31 +364,6 @@ describe("StonetopCharacterSheet actions", () => {
 		const wrap = el(`<div class="sheet-wrapper"><button></button></div>`);
 		await fireAction(sheet, "toggleTop", wrap.querySelector("button"));
 		expect(wrap.classList.contains("top-collapsed")).toBe(true);
-	});
-
-	it("toggleUnselectedMoves flips the filter classes on the tab, without a re-render", async () => {
-		const { sheet } = makeSheet();
-		const tab = el(`<div class="tab moves"><button class="stonetop-moves-filter"></button></div>`);
-		const btn = tab.querySelector("button");
-
-		await fireAction(sheet, "toggleUnselectedMoves", btn);
-		expect(sheet._hideUnselectedMoves).toBe(true);
-		expect(tab.classList.contains("hide-unselected")).toBe(true);
-		expect(btn.classList.contains("is-active")).toBe(true);
-
-		await fireAction(sheet, "toggleUnselectedMoves", btn);
-		expect(sheet._hideUnselectedMoves).toBe(false);
-		expect(tab.classList.contains("hide-unselected")).toBe(false);
-		expect(btn.classList.contains("is-active")).toBe(false);
-		expect(sheet.render).not.toHaveBeenCalled();
-	});
-
-	it("toggleUnselectedMoves is NOT edit-gated — the filter only changes what is shown", async () => {
-		const { sheet } = makeSheet();
-		sheet._editable = false;
-		const tab = el(`<div class="tab moves"><button class="stonetop-moves-filter"></button></div>`);
-		await fireAction(sheet, "toggleUnselectedMoves", tab.querySelector("button"));
-		expect(tab.classList.contains("hide-unselected")).toBe(true);
 	});
 
 	it("toggleFollowerInventory tracks the open set and re-renders", async () => {
@@ -355,6 +387,22 @@ describe("StonetopCharacterSheet actions", () => {
 		sheet._editable = false;
 		await fireAction(sheet, "moveToChat", el(`<a data-move-slug="defend"></a>`));
 		expect(char.sendMoveToChat).toHaveBeenCalledWith("defend");
+	});
+
+	it("openMoveBySlug renders the sheet of the move the slug resolves to", async () => {
+		const { sheet } = makeSheet();
+		const doc = { sheet: { render: vi.fn() } };
+		sheet._moveRepository.getMoveDocumentBySlug = vi.fn(async () => doc);
+		sheet._editable = false;   // opening a move writes nothing, so a locked sheet still opens it
+		await fireAction(sheet, "openMoveBySlug", el(`<a data-move-slug="outfit"></a>`));
+		expect(sheet._moveRepository.getMoveDocumentBySlug).toHaveBeenCalledWith("outfit");
+		expect(doc.sheet.render).toHaveBeenCalledWith(true);
+	});
+
+	it("openMoveBySlug does nothing when the slug resolves to no move", async () => {
+		const { sheet } = makeSheet();
+		sheet._moveRepository.getMoveDocumentBySlug = vi.fn(async () => null);
+		await expect(fireAction(sheet, "openMoveBySlug", el(`<a data-move-slug="nope"></a>`))).resolves.not.toThrow();
 	});
 
 	it("mutating actions are blocked on a non-editable sheet", async () => {
@@ -387,13 +435,37 @@ describe("StonetopCharacterSheet delete actions", () => {
 
 	const rightClick = () => ({ type: "contextmenu", button: 2, preventDefault: vi.fn() });
 
+	it("resetOutfit clears the outfit when confirmed", async () => {
+		stubConfirm(true);
+		const { sheet, char } = makeSheet();
+		await fireAction(sheet, "resetOutfit", el(`<button></button>`));
+		expect(char.resetOutfit).toHaveBeenCalled();
+	});
+
+	it("resetOutfit does nothing when cancelled", async () => {
+		stubConfirm(false);
+		const { sheet, char } = makeSheet();
+		await fireAction(sheet, "resetOutfit", el(`<button></button>`));
+		expect(char.resetOutfit).not.toHaveBeenCalled();
+	});
+
+	it("resetOutfit always asks — there is no right-click bypass", async () => {
+		const confirm = stubConfirm(false);
+		const { sheet, char } = makeSheet();
+		await fireAction(sheet, "resetOutfit", el(`<button></button>`), rightClick());
+		expect(confirm).toHaveBeenCalled();
+		expect(char.resetOutfit).not.toHaveBeenCalled();
+	});
+
 	// action name, target markup, spied domain method, expected args
 	const cases = [
 		["deleteArcanum", `<button data-slug="eye" data-name="The Eye"></button>`, "removeArcanum", ["eye"]],
 		["deletePossession", `<a data-slug="map" data-name="Map"></a>`, "deletePossession", ["map"]],
 		["deleteFollower", `<button data-slug="astor" data-name="Astor"></button>`, "removeFollower", ["astor"]],
 		["deleteOtherMove", `<a data-move-slug="cleave" data-name="Cleave"></a>`, "deleteMove", ["cleave"]],
-		["deleteInventoryItem", `<a data-owned-id="x1" data-name="Rope"></a>`, "removeCustomInventoryItemFor", [null, "x1"]],
+		["deleteInventoryItem", `<a data-owned-id="x1" data-name="Rope"></a>`, "removeCustomInventoryItemFor",
+			[InventoryOwner.character(), "x1"]],
+		["deleteInsert", `<button data-insert-item-id="i1" data-name="Revenant"></button>`, "removeInsert", ["i1"]],
 	];
 
 	for (const [action, markup, method, args] of cases) {
@@ -485,7 +557,8 @@ describe("StonetopCharacterSheet add-inventory dialog", () => {
 		stubPrompt({ name: "Rope", weight: 2 });
 		const { sheet, char } = makeSheet();
 		await fireAction(sheet, "addInventoryItem", el(`<button data-column="regular"></button>`));
-		expect(char.addCustomInventoryItemFor).toHaveBeenCalledWith(null, "Rope", 2, true);
+		expect(char.addCustomInventoryItemFor).toHaveBeenCalledWith(
+			InventoryOwner.character(), NewInventoryItem.regular("Rope", 2));
 	});
 
 	it("routes to the follower inventory when opened from its wrapper", async () => {
@@ -496,7 +569,8 @@ describe("StonetopCharacterSheet add-inventory dialog", () => {
 				<button data-column="regular"></button>
 			</div>`);
 		await fireAction(sheet, "addInventoryItem", wrap.querySelector("button"));
-		expect(char.addCustomInventoryItemFor).toHaveBeenCalledWith("enfys", "Rope", 1, true);
+		expect(char.addCustomInventoryItemFor).toHaveBeenCalledWith(
+			InventoryOwner.follower("enfys"), NewInventoryItem.regular("Rope", 1));
 	});
 
 	it("does nothing when the dialog is dismissed or the name is blank", async () => {
@@ -507,37 +581,14 @@ describe("StonetopCharacterSheet add-inventory dialog", () => {
 	});
 });
 
-// -- Form-submit filtering -----------------------------------------------------------------
-
-describe("StonetopCharacterSheet._processFormData", () => {
-	it("keeps only name/img/system, dropping the router-managed radio-group fields", () => {
-		const { sheet } = makeSheet();
-		const expanded = {
-			name: "Brakken",
-			system: { stats: { str: { value: 2 } } },
-			"stonetop-roll-mode": "adv",
-			"stonetop-background": "vessel",
-			"stonetop-load-level": "light",
-			"stonetop-origin": "the-hills",
-		};
-		expect(sheet._processFormData(null, null, expanded)).toEqual({
-			name: "Brakken",
-			system: { stats: { str: { value: 2 } } },
-		});
-	});
-
-	it("omits keys that are absent rather than emitting undefined", () => {
-		const { sheet } = makeSheet();
-		expect(sheet._processFormData(null, null, { "stonetop-roll-mode": "dis" })).toEqual({});
-	});
-});
+// Form-submit filtering now lives on the shared actor base — see StonetopActorSheetV2.test.js.
 
 // -- Arcanum blank fill pass ---------------------------------------------------------------
 
 describe("StonetopCharacterSheet arcanum blanks", () => {
 	it("seeds blank inputs from storage on every render", async () => {
 		const { sheet, char } = makeSheet();
-		char.getArcanumBlanks = vi.fn(() => ({ "storm-die": "d8" }));
+		char.getAllArcanumBlanks = vi.fn(() => new Map([["azure-hand", { "storm-die": "d8" }]]));
 		sheet.element.innerHTML = `
 			<div class="stonetop-arcanum-card" data-slug="azure-hand">
 				<input class="stonetop-arcanum-blank" data-blank-key="storm-die">

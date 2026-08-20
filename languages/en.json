@@ -32,7 +32,8 @@
 			"tabs": {
 				"playbook": "Playbook",
 				"moves": "Moves",
-				"inventory": "Inventory",
+				"possessions": "Possessions",
+				"inventory": "Outfit",
 				"arcana": "Arcana",
 				"followers": "Followers",
 				"notes": "Notes"
@@ -41,6 +42,12 @@
 			"notes": {
 				"bio": "Bio",
 				"notes": "Notes"
+			},
+			"lock": {
+				"lock": "Lock",
+				"lockHint": "Collapse your choices into a read-only summary.",
+				"unlock": "Edit",
+				"unlockHint": "Go back to editing your choices."
 			},
 			"playbook": {
 				"emptyHint": "Select or drag a playbook here to start.",
@@ -122,7 +129,8 @@
 			"loadTitle": "Load (total weight carried) — a guide, not a limit",
 			"loadLight": "Light",
 			"loadNormal": "Normal",
-			"loadHeavy": "Heavy"
+			"loadHeavy": "Heavy",
+			"loadCapacityHint": "◇ carried, against what this follower can reasonably manage — a guide, not a limit."
 		},
 		"insert": {
 			"remove": "Remove",
@@ -331,7 +339,16 @@
 			"smallUndefinedPoolLabel": "Undefined",
 			"smallUndefinedPoolNote": "When you <strong><em>Have What You Need</em></strong>, move ◆ from here to items below, or expend supplies to mark an additional ◇.",
 			"outfit": {
-				"heading": "When you <em><strong>Outfit</strong></em>, mark a number of ◇ below on specific items or as a group.",
+				"headingBefore": "When you ",
+				"moveName": "Outfit",
+				"headingAfter": ", mark a number of ◇ below on specific items or as a group.",
+				"marked": "{count} ◇ marked",
+				"markedHint": "Your load follows the ◇ you have marked — it is not chosen.",
+				"markedOver": "— more than the {max} ◇ Outfit allows",
+				"reset": "Reset",
+				"resetHint": "Unmark every ◇ and □ — your items and notes stay.",
+				"resetTitle": "Reset outfit",
+				"resetConfirm": "Clear your whole outfit? Every marked ◇ and □ goes back to unmarked.",
 				"light": "For a <strong>light load</strong> (<em>quick & quiet</em>), mark up to 3 ◆",
 				"normal": "For a <strong>normal load</strong>, mark 4–6 ◆",
 				"heavy": "For a <strong>heavy load</strong> (<em>noisy, slow, hot, quick to tire</em>), mark 7–9 ◆"
@@ -497,10 +514,11 @@
 				"addMove": "Add Move",
 				"removeMove": "Remove Move",
 				"sendToChat": "Send to Chat",
+				"open": "Open the move",
 				"requires": "Requires",
 				"notMet": "Not Met",
-				"selectedOnly": "Selected only",
-				"selectedOnlyHint": "Show only the moves this character has taken. Turn it off to take new ones."
+				"lockHint": "Show only the moves this character has taken.",
+				"unlockHint": "Show every move again, to take new ones."
 			},
 			"selection": {
 				"select": "Select",
