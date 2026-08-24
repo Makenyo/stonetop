@@ -14,13 +14,19 @@
 			<div class="stonetop-debilities">
 				{{#each stonetop.debilities}}
 				<div class="stonetop-debility">
+					{{!-- Two groups, not four siblings: the divider art and the tick it frames belong
+					      to one band, and the name sits below it in normal flow. Everything used to
+					      be absolutely positioned against hand-measured pixel offsets, so the name
+					      climbed into the art as soon as Foundry's font setting grew it. --}}
 					<label class="stonetop-debility-control"
 					       data-tooltip="{{description}}" data-tooltip-direction="UP">
-						<span class="stonetop-debility-divider"></span>
-						<input type="checkbox" class="stonetop-debility-check"
-						       data-change-action="debility"
-						       data-slug="{{key}}"
-						       {{#if active}}checked{{/if}}>
+						<span class="stonetop-debility-band">
+							<span class="stonetop-debility-divider"></span>
+							<input type="checkbox" class="stonetop-debility-check"
+							       data-change-action="debility"
+							       data-slug="{{key}}"
+							       {{#if active}}checked{{/if}}>
+						</span>
 						<span class="stonetop-debility-label">{{key}}</span>
 					</label>
 				</div>
@@ -33,8 +39,8 @@
 		</div>
 
 		<div class="stonetop-actor-portrait">
-			<img class="stonetop-actor-portrait-img" src="{{actor.img}}" data-edit="img" data-action="editImage"
-			     alt="{{actor.name}}" title="{{actor.name}}">
+			<button type="button" class="stonetop-image-btn" data-edit="img" data-action="editImage" aria-label="{{actor.name}}"><img class="stonetop-actor-portrait-img" src="{{actor.img}}"
+			     alt="{{actor.name}}" title="{{actor.name}}"></button>
 		</div>
 	</section>
 
@@ -43,15 +49,15 @@
 		      already carries the per-insert tabs via the sheet's _getTabsConfig override. --}}
 		<nav class="sheet-tabs tabs" data-group="primary">
 			{{#each tabs}}
-			<a class="item {{this.cssClass}}" data-action="tab" data-group="primary" data-tab="{{this.id}}">{{localize this.label}}</a>
+			<button type="button" class="item {{this.cssClass}}" data-action="tab" data-group="primary" data-tab="{{this.id}}">{{localize this.label}}</button>
 			{{/each}}
-			<button type="button" class="stonetop-top-toggle" data-action="toggleTop" data-view-state title="{{localize 'stonetop.sheet.collapseTop'}}">
+			<button type="button" class="stonetop-top-toggle" data-action="toggleTop" data-view-state title="{{localize 'stonetop.sheet.collapseTop'}}" aria-label="{{localize 'stonetop.sheet.collapseTop'}}">
 				<i class="fas fa-chevron-up"></i>
 			</button>
 		</nav>
 
 		<div class="stonetop-sheet-layout">
-			<button type="button" class="stonetop-moves-toggle" data-action="toggleMovesOverlay" data-view-state title="{{localize 'stonetop.sheet.tabs.moves'}}">
+			<button type="button" class="stonetop-moves-toggle" data-action="toggleMovesOverlay" data-view-state title="{{localize 'stonetop.sheet.tabs.moves'}}" aria-label="{{localize 'stonetop.sheet.tabs.moves'}}">
 				<i class="fas fa-bolt"></i>
 			</button>
 			<section class="sheet-body">
@@ -113,12 +119,21 @@
 							<i class="fas fa-dice-d6"></i>
 						</span>
 						{{/if}}
-						<span class="stonetop-move-name stonetop-basic-move-open" data-action="openBasicMove"
-					      data-compendium-id="{{id}}">{{name}}</span>
-						<a class="stonetop-move-chat" data-action="moveToChat" data-move-slug="{{slug}}"
-						   title="{{localize 'stonetop.character.moves.sendToChat'}}">
+						<button type="button" class="stonetop-move-name stonetop-basic-move-open" data-action="openBasicMove"
+					      data-compendium-id="{{id}}">{{name}}</button>
+						<button type="button" class="stonetop-move-chat" data-action="moveToChat" data-move-slug="{{slug}}"
+						   title="{{localize 'stonetop.character.moves.sendToChat'}}" aria-label="{{localize 'stonetop.character.moves.sendToChat'}}">
 							<i class="fas fa-comment"></i>
-						</a>
+						</button>
+						{{!-- A reference move that holds something (Defend's Readiness) tracks it here: the
+						      sidebar is the only surface these moves render on, and the track is the shared
+						      one the moves tab draws, so a pip behaves the same wherever it appears. --}}
+						{{#if resource}}
+						<span class="stonetop-item-resources">
+							{{> "stonetop.resource-track" resource=resource btnClass="stonetop-item-resource-check"
+							    action="moveResourcePip" moveSlug=slug slug=slug}}
+						</span>
+						{{/if}}
 					</li>
 				{{/each}}
 				</ol>

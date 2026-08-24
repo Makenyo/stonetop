@@ -1,6 +1,6 @@
 // First-class "pick from a list (+ optional custom entry)" value, used by tags (multi-select)
 // and instinct / cost (single-select). Queryable (e.g. tags.has("group")) and consistent
-// across playbook, follower, NPC, and companion. See follower-data-architecture.md.
+// across playbook, follower, NPC, and companion.
 // Immutable: toggle() returns a new Selection.
 export class Selection {
 	constructor({ selected = [], options = [], multi = false, allowCustom = true } = {}) {
@@ -32,6 +32,10 @@ export class Selection {
 				: (raw.trim() ? [raw.trim()] : []);
 			return new Selection({ selected, options, multi, allowCustom });
 		}
+		// A bare array is a list of selected values (group-follower member tags store this shape) —
+		// it must not fall through to the object branch, which would read it as a Selection and
+		// find no `selected` key at all.
+		if (Array.isArray(raw)) return new Selection({ selected: raw, options, multi, allowCustom });
 		if (raw && typeof raw === "object") return new Selection(raw);
 		return new Selection({ options, multi, allowCustom });
 	}

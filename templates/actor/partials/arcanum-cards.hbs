@@ -17,7 +17,7 @@
 		<div class="stonetop-arcanum-header-left">
 			<span class="stonetop-arcanum-title">{{rich title}}</span>
 			{{#if item}}{{> "stonetop.outfit-item-row" item}}{{/if}}
-			{{#if tags}}<span class="stonetop-arcanum-tags">{{tags}}</span>{{/if}}
+			{{#if tags.length}}<span class="stonetop-arcanum-tags">{{> "stonetop.tag-list" tags=tags}}</span>{{/if}}
 		</div>
 		{{#if resource}}
 		<div class="stonetop-arcanum-header-resource">
@@ -44,7 +44,7 @@
 			{{#if flipped}}{{localize "stonetop.arcana.showFront"}}{{else}}{{localize "stonetop.arcana.showBack"}}{{/if}}
 		</button>
 		<button type="button" class="stonetop-arcanum-delete" data-action="deleteArcanum" data-slug="{{slug}}" data-name="{{name}}"
-		        title="{{localize 'stonetop.arcana.removeArcanum'}} — {{localize 'stonetop.confirm.deleteHint'}}">
+		        title="{{localize 'stonetop.arcana.removeArcanum'}} — {{localize 'stonetop.confirm.deleteHint'}}" aria-label="{{localize 'stonetop.arcana.removeArcanum'}} — {{localize 'stonetop.confirm.deleteHint'}}">
 			<img src="systems/stonetop/assets/ui/controls/delete-icon.png" alt="{{localize 'stonetop.arcana.removeArcanum'}}">
 		</button>
 	</div>

@@ -2,6 +2,7 @@ import { buildFollowerSnapshot } from "../../model/snapshot/character/buildFollo
 import { FollowersSnapshot } from "../../model/snapshot/character/FollowerSnapshot.js";
 import { ResourceController } from "./ResourceController.js";
 import { Selection } from "../../model/data/Selection.js";
+import { Tags } from "../../model/data/Tags.js";
 import { normalizeGroupTags, hasGroupTag, GROUP_TAG } from "../../model/data/groupTag.js";
 import { newMember } from "../../utils/followerMemberEdit.js";
 import { blankCompanion } from "../../utils/followerCompanionEdit.js";
@@ -133,7 +134,7 @@ export class CharacterFollowers {
 			name: blank?.name ?? "New Follower", type: "follower",
 			...(blank?.img ? { img: blank.img } : {}),
 			system: {
-				slug, arcanaSlug: null, tagList: Selection.fromStored(blank?.tags).toRaw(), owned: true, choiceValues: {},
+				slug, arcanaSlug: null, tagList: Tags.creature(blank?.tags).toRaw(), tagOptions: blank?.tagOptions ?? [], owned: true, choiceValues: {},
 				hp:      { value: blank?.hp?.max ?? 6, max: blank?.hp?.max ?? 6 },
 				armor:   blank?.armor ?? "",
 				damage:  "",
@@ -150,7 +151,7 @@ export class CharacterFollowers {
 		const [blank] = await this._followerRepo.findBySlugs(["blank"]);
 		// Canonicalize the copied group tag ("Group (3)" -> "group") so isGroup detects it, and seed
 		// the crew from the "(N)" count — each member at the group's shared max HP (as addMember does).
-		const tags    = Selection.fromStored(sys.tagList);
+		const tags    = Tags.creature(sys.tagList, sys.tagOptions ?? []);
 		const { tags: selected, count } = normalizeGroupTags(tags.values);
 		const hpMax   = (sys.hp?.max || sys.hp?.value) ?? 0;
 		const members = count ? Array.from({ length: count }, () => newMember(hpMax)) : [];
@@ -159,7 +160,8 @@ export class CharacterFollowers {
 			...(npcActor.img ? { img: npcActor.img } : {}),
 			system: {
 				// creature core copied from the NPC (shared schema → direct copy)
-				tagList:   Selection.multi(selected, { options: tags.options }).toRaw(),
+				tagList:   selected,
+				tagOptions: sys.tagOptions ?? [],
 				members,
 				hp:             { value: sys.hp?.value ?? 0, max: hpMax },
 				armor:          sys.armor ?? "",
@@ -194,8 +196,8 @@ export class CharacterFollowers {
 	async setTags(slug, tags) {
 		const item = _findFollowerItem(this._actor, slug);
 		if (!item) return;
-		const stored = Selection.fromStored(tags, { options: item.system?.tagList?.options ?? [] }).toRaw();
-		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { tagList: stored } }]);
+		await this._actor.updateEmbeddedDocuments("Item",
+			[{ _id: item._id, system: { tagList: Tags.creature(tags).toRaw() } }]);
 	}
 
 	// Toggle a value in any Selection field (tags, instinct, cost). Single-select fields
@@ -223,11 +225,11 @@ export class CharacterFollowers {
 		const item = _findFollowerItem(this._actor, slug);
 		if (!item) return;
 		const max = item.system?.hp?.max ?? 0;
-		const blank = { name: "", hp: { value: max, max }, tags: Selection.multi([]).toRaw(), traits: Selection.multi([]).toRaw() };
+		const blank = { name: "", hp: { value: max, max }, tags: [], traits: [] };
 		const members = [..._members(item), blank];
 		// Adding a member makes this a group follower — ensure a group tag is set (FollowerSnapshot.isGroup).
 		// A follower already tagged "horde" IS a group, so it keeps its own word rather than gaining both.
-		const tags    = Selection.fromStored(item.system?.tagList, { multi: true });
+		const tags    = Tags.creature(item.system?.tagList);
 		const tagList = (hasGroupTag(tags) ? tags : tags.select(GROUP_TAG)).toRaw();
 		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: { members, tagList } }]);
 	}
@@ -264,10 +266,6 @@ export class CharacterFollowers {
 
 	async setArmor(slug, armor) {
 		await this._write(slug, f => f.withArmor(armor));
-	}
-
-	async setLoadCapacity(slug, capacity) {
-		await this._write(slug, f => f.withLoadCapacity(capacity));
 	}
 
 	async setDamage(slug, damage) {
@@ -381,7 +379,8 @@ export class CharacterFollowers {
 
 	// Build the follower's inventory snapshot — parity with the character (twoCol grids, resources,
 	// custom items), via the shared buildOutfitColumn. Regular column only. Load is computed from total
-	// checked weight and is informational (highlighted band, never a cap — guide-don't-enforce).
+	// checked weight and is informational (highlighted band, never a cap — guide-don't-enforce); a
+	// follower is measured against the same MAX_OUTFIT_MARKS ◇ a character is.
 	// Returns null when there is nothing to show (no catalog loaded and no custom items).
 	//
 	// The full `sections` (catalog) is built ONLY when this follower's inventory is open — building it
@@ -400,7 +399,6 @@ export class CharacterFollowers {
 		const owned       = [...regular, ...customItems].filter(i => checked[i.slug]);
 		const totalWeight = owned.reduce((s, i) => s + (i.weight ?? 0), 0);
 		const band        = loadBand(totalWeight);
-		const capacity    = this._loadCapacity(slug);
 		const hasAny      = owned.length > 0;
 
 		return {
@@ -411,17 +409,12 @@ export class CharacterFollowers {
 			sections:      editing ? buildOutfitColumn(repoItems, customItems, checked, "regular", resourceFn) : [],
 			totalWeight,
 			band,
-			capacity,
-			overCapacity: totalWeight > capacity,
+			capacity:     MAX_OUTFIT_MARKS,
+			overCapacity: totalWeight > MAX_OUTFIT_MARKS,
 			loadLight:     band === "light",
 			loadNormal:    band === "normal",
 			loadHeavy:     band === "heavy",
 		};
-	}
-
-	// What this follower can carry. Advisory: the sheet says when they are over it, never stops it.
-	_loadCapacity(slug) {
-		return _findFollowerItem(this._actor, slug)?.system?.loadCapacity ?? MAX_OUTFIT_MARKS;
 	}
 }
 
@@ -473,7 +466,8 @@ function _followerToSystemFields(follower) {
 		slug:           follower.slug,
 		arcanaSlug:     follower.arcanaSlug ?? null,
 		kind:           follower.kind ?? "creature",
-		tagList:   Selection.fromStored(follower.tags).toRaw(),
+		tagList:   Tags.creature(follower.tags).toRaw(),
+		tagOptions: follower.tagOptions ?? [],
 		// New followers start at full HP (pack data stores value 0 as a template default).
 		hp:             { value: follower.hp?.max ?? 0, max: follower.hp?.max ?? 0 },
 		armor:          follower.armor ?? "",

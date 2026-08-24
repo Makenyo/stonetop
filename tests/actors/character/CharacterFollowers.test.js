@@ -331,14 +331,14 @@ describe("CharacterFollowers — group members", () => {
 		const cf = makeCf(new FakeFollowerRepository([]));
 		cf._actor.items.push(makeFollowerItem({ slug: "lone", tags: "" }, { owned: true }));
 		await cf.addMember("lone");
-		expect(cf._actor.items.get("lone-item").system.tagList.selected).toEqual(["group"]);
+		expect(cf._actor.items.get("lone-item").system.tagList).toEqual(["group"]);
 	});
 
 	it("addMember leaves a horde tagged horde — it is already a group, so it gains no second tag", async () => {
 		const cf = makeCf(new FakeFollowerRepository([]));
 		cf._actor.items.push(makeFollowerItem({ slug: "lone", tags: "horde" }, { owned: true }));
 		await cf.addMember("lone");
-		expect(cf._actor.items.get("lone-item").system.tagList.selected).toEqual(["horde"]);
+		expect(cf._actor.items.get("lone-item").system.tagList).toEqual(["horde"]);
 	});
 
 	it("a horde follower is a group: members render off the horde tag alone", async () => {
@@ -1028,11 +1028,11 @@ describe("CharacterFollowers — an edit keeps the global tagList (migrate-on-di
 		const cf = makeCf(new FakeFollowerRepository([]));
 		cf._actor.items.push(makeFollowerItem(
 			{ slug: "crew", members: [{ name: "Aedith", hp: { value: 6, max: 6 } }] }, { owned: true }));
-		cf._actor.items.get("crew-item").system.tagList =
-			{ selected: ["group"], options: ["group", "archers"], multi: true, allowCustom: true };
+		cf._actor.items.get("crew-item").system.tagList   = ["group"];
+		cf._actor.items.get("crew-item").system.tagOptions = ["group", "archers"];
 		return cf;
 	}
-	const groupTag = cf => cf._actor.items.get("crew-item").system.tagList.selected;
+	const groupTag = cf => cf._actor.items.get("crew-item").system.tagList;
 
 	it("survives an armor edit", async () => {
 		const cf = makeCrew();
@@ -1253,29 +1253,28 @@ describe("CharacterFollowers — inventory", () => {
 		expect(snap.inventory.loadHeavy).toBe(true);
 	});
 
-	it("flags a follower carrying more than their capacity, without stopping them", async () => {
-		const cf = makeCfInv();
-		await cf.addFollower("crew");
-		await cf.setLoadCapacity("crew", 4);
-
-		await cf.setInvItemChecked("crew", "pack", true);     // 3 of 4
-		let [snap] = await cf.buildSnapshot();
-		expect(snap.inventory.capacity).toBe(4);
-		expect(snap.inventory.overCapacity).toBe(false);
-
-		await cf.setInvItemChecked("crew", "shield", true);   // 5 of 4
-		[snap] = await cf.buildSnapshot();
-		expect(snap.inventory.totalWeight).toBe(5);
-		expect(snap.inventory.overCapacity).toBe(true);
-		expect(ownedSlugs(snap.inventory)).toEqual(["shield", "pack"]); // still held — guidance only
-	});
-
-	it("defaults a follower's capacity to the 9 ◇ the Outfit move tops out at", async () => {
+	it("measures a follower against the same 9 ◇ the Outfit move tops out at", async () => {
 		const cf = makeCfInv();
 		await cf.addFollower("crew");
 		const [snap] = await cf.buildSnapshot();
 		expect(snap.inventory.capacity).toBe(9);
 		expect(snap.inventory.overCapacity).toBe(false);
+	});
+
+	it("flags a follower carrying past those 9 ◇, without stopping them", async () => {
+		const cf = makeCfInv();
+		await cf.addFollower("crew");
+		for (const s of ["hatchet", "shield", "hides", "pack"]) await cf.setInvItemChecked("crew", s, true);
+		let [snap] = await cf.buildSnapshot();
+		expect(snap.inventory.totalWeight).toBe(8);          // 8 of 9
+		expect(snap.inventory.overCapacity).toBe(false);
+
+		await cf.addInvCustomItem("crew", "Anvil", 2);       // 10 of 9
+		[snap] = await cf.buildSnapshot();
+		expect(snap.inventory.totalWeight).toBe(10);
+		expect(snap.inventory.overCapacity).toBe(true);
+		// Guidance only: every one of them is still held.
+		expect(ownedSlugs(snap.inventory)).toHaveLength(5);
 	});
 
 	it("inventory is null when no outfit catalog is wired (no inventory repo)", async () => {
