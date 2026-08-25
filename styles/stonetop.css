@@ -82,6 +82,7 @@ img.stonetop-broken-img {
 .stonetop.sheet .stonetop-introductions-title,
 .stonetop.sheet.steading .steading-steadfast-input,
 .stonetop-roll-dialog .window-title,
+.stonetop-advice-dialog .window-title,
 .stonetop-roll-dialog .stonetop-roll-mode-header,
 .stonetop-roll-dialog .dialog-button {
 	font-family: "StonetopUI", serif;
@@ -279,7 +280,10 @@ body,
 
 /* ── Generic bullet icons (applies to all rich-text ul lists) ───────────────── */
 
-.stonetop.sheet ul:not(.stonetop-outfit-loads) {
+/* `.stonetop-advice` is the advice dialog's body — not a sheet, but the same book prose, so it
+   takes the same swirls rather than a second bullet treatment of its own. */
+.stonetop.sheet ul:not(.stonetop-outfit-loads),
+.stonetop-advice ul {
 	/* The swirl and the gap it sits in, sized in em so the marker tracks the text it marks. One
 	   declaration for both, so the list's indent and the marker's offset cannot drift apart. */
 	--bullet: 0.8em;
@@ -289,11 +293,13 @@ body,
 	padding-left: calc(var(--bullet) + var(--bullet-gap));
 }
 
-.stonetop.sheet ul:not(.stonetop-outfit-loads) li {
+.stonetop.sheet ul:not(.stonetop-outfit-loads) li,
+.stonetop-advice ul li {
 	position: relative;
 }
 
-.stonetop.sheet ul:not(.stonetop-outfit-loads) li::before {
+.stonetop.sheet ul:not(.stonetop-outfit-loads) li::before,
+.stonetop-advice ul li::before {
 	content: '';
 	position: absolute;
 	left: calc(-1 * (var(--bullet) + var(--bullet-gap)));
@@ -332,6 +338,11 @@ body,
 	justify-content: center;
 	background: none;
 	border: none;
+	/* Core's `button:hover` (layer elements.forms) repaints background and text together. This
+	   button suppresses the background, so taking core's hover TEXT colour alone would paint the
+	   glyph in the page's own paper colour — the icon vanishes under the cursor. An <img> icon never
+	   showed this because it ignores `color`; a font glyph inherits it. */
+	color: inherit;
 	cursor: pointer;
 	padding: 2px;
 	opacity: 0.5;
@@ -1102,9 +1113,11 @@ body,
 
 /* Locked, a section the character put nothing in has nothing to show: the markers below are what a
    rendered choice looks like in any of its shapes (line, card, chosen background, chosen origin) or
-   a group's own prose. Matching none of them means the heading would stand over empty space. */
-.tab.is-locked .details-section:not(:has(.stonetop-choice-track, .stonetop-item,
-    .stonetop-origin-option, .stonetop-choice-entry-title, .stonetop-choice-description)) {
+   a group's own prose. Matching none of them means the heading would stand over empty space. The
+   lore block carries its own divider, so it goes when the section inside it does. */
+.tab.is-locked :is(.details-section, .stonetop-playbook-lore):not(:has(.stonetop-choice-track,
+    .stonetop-item, .stonetop-origin-option, .stonetop-choice-entry-title,
+    .stonetop-choice-description)) {
 	display: none;
 }
 
@@ -1647,6 +1660,25 @@ button.stonetop-view-toggle.is-active {
 	background: var(--st-paper-sunken-strong);
 }
 
+/* ── "If you want to…" advice ────────────────────────────────────────────────── */
+
+/* One control, two placements: at the far end of a heading row's flex line, or spelled out in a
+   tab's toolbar (where it borrows the view toggles' look, so the two read as the same kind of
+   control). */
+.stonetop .stonetop-advice-btn--inline {
+	margin-left: auto;
+	font-size: var(--fs-note);
+}
+
+/* A tab's advice sits above its content, aligned with the view toggles on the tabs that have them. */
+.stonetop-advice-toolbar {
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin: 0 0 6px;
+}
+
 .tab.moves.hide-unselected .stonetop-item.move-unselected {
 	display: none;
 }
@@ -1745,6 +1777,25 @@ button.stonetop-view-toggle.is-active {
 	font-size: var(--fs-body);
 	line-height: 1.3;
 }
+
+/* The move name is a <button> so it can carry data-action (core binds click only there), but it has
+   to read as the bold label it replaced — core's .window-app button rules would otherwise stretch it
+   to full width and give it a fill and a border. */
+.stonetop.sheet button.stonetop-item-name--open {
+	width: auto;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: none;
+	box-shadow: none;
+	color: inherit;
+	font-weight: bold;
+	text-align: left;
+	line-height: inherit;
+	cursor: pointer;
+}
+.stonetop.sheet button.stonetop-item-name--open:hover { text-decoration: underline; }
 
 .stonetop-item-source {
 	font-size: var(--fs-fine);
@@ -2530,15 +2581,71 @@ button.stonetop-view-toggle.is-active {
 	background: currentColor;
 }
 
-/* ── Chat card: dice + results (globally scoped — used in chat, not just sheets) ── */
+/* ── Chat card: dice + results (globally scoped — used in chat, not just sheets) ──────────────
+   The card states three separate facts — the move's name, how the roll landed, what that means —
+   and gives each its own line, so none of them has to be read out of a wrapping headline.
 
+   One `--tier-color` per outcome carries the tier colour down to the total, the badge and the result
+   rule; the tier is named once instead of once per element. */
+
+.stonetop-roll-title {
+	display: flex;
+	align-items: center;
+	gap: 0.3em;
+	line-height: 1.25;
+}
+
+.stonetop-roll-line {
+	--tier-color: var(--st-ink-soft);
+	display: flex;
+	align-items: center;
+	gap: 0.6em;
+	margin-bottom: 0.5em;
+}
+
+.stonetop-roll-line--success { --tier-color: var(--st-positive); }
+.stonetop-roll-line--partial { --tier-color: var(--st-warning); }
+.stonetop-roll-line--failure { --tier-color: var(--st-danger-strong); }
+
+/* The total is the one number the card exists to report, so it gets the plate and the size. */
+.stonetop-roll-total {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	min-width: 1.9em;
+	padding: 0.05em 0.15em;
+	border: 2px solid var(--tier-color);
+	border-radius: 4px;
+	color: var(--tier-color);
+	font-size: var(--fs-display);
+	font-weight: bold;
+	line-height: 1.25;
+}
+
+.stonetop-roll-readout {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1em;
+	min-width: 0;
+}
+
+.stonetop-roll-outcome {
+	color: var(--tier-color);
+	font-size: var(--fs-subheading);
+	font-weight: bold;
+	font-variant: small-caps;
+	letter-spacing: 0.03em;
+	line-height: 1.2;
+}
+
+/* The dice are the receipt for the total, not the headline — a step down the scale. */
 .stonetop-roll-dice {
 	display: flex;
 	align-items: center;
-	gap: 0.35em;
+	gap: 0.3em;
 	flex-wrap: wrap;
-	margin-bottom: 0.5em;
-	font-size: var(--fs-heading);
+	font-size: var(--fs-fine);
 }
 
 .stonetop-die {
@@ -2561,22 +2668,31 @@ button.stonetop-view-toggle.is-active {
 
 .stonetop-dice-separator { opacity: 0.4; }
 
-.stonetop-roll-mod   { font-weight: bold; }
-.stonetop-roll-total { font-weight: bold; }
+.stonetop-roll-mod { font-weight: bold; }
 
 .stonetop-move-result {
 	margin-top: 0.5em;
 	padding: 0.4em 0.6em;
-	border-left: 3px solid currentColor;
+	border-left: 3px solid var(--tier-color, currentColor);
+	color: var(--tier-color, inherit);
 	font-style: italic;
 }
 
-.stonetop-move-result--success { color: var(--st-positive); border-color: var(--st-positive); }
-.stonetop-move-result--partial { color: var(--st-warning); border-color: var(--st-warning); }
-.stonetop-move-result--failure { color: var(--st-danger-strong); border-color: var(--st-danger-strong); }
+/* A rolled card sets --tier-color on the roll line, which is a SIBLING — so the rolled tier's result
+   restates it, and the description-only card's list of every tier sets its own per row. */
+.stonetop-move-result--success { --tier-color: var(--st-positive); }
+.stonetop-move-result--partial { --tier-color: var(--st-warning); }
+.stonetop-move-result--failure { --tier-color: var(--st-danger-strong); }
 
 /* Description-only cards list every tier; the label ("10+" / "7-9" / "6-") leads each one. */
 .stonetop-move-result-label { font-weight: bold; font-style: normal; }
+
+/* On a roll card the move's full text is reference under the answer, not the answer. */
+.stonetop-move-description--secondary {
+	margin-top: 0.5em;
+	color: var(--st-ink-soft);
+	font-size: var(--fs-note);
+}
 
 .stonetop-roll-xp {
 	margin-top: 0.4em;
@@ -2649,6 +2765,30 @@ button.stonetop-xp-toggle {
 	padding: 8px;
 	background: var(--st-paper);
 	font-family: var(--font-primary);
+}
+
+/* ── "If you want to…" advice dialog ─────────────────────────────────────────── */
+
+.stonetop-advice-dialog .window-content {
+	padding: 10px 12px;
+	background: var(--st-paper);
+	font-family: var(--font-primary);
+}
+
+.stonetop-advice p {
+	margin: 0 0 8px;
+}
+
+.stonetop-advice > :last-child {
+	margin-bottom: 0;
+}
+
+.stonetop-advice-options {
+	margin: 0 0 8px;
+}
+
+.stonetop-advice-options li + li {
+	margin-top: 4px;
 }
 
 .stonetop-roll-pick-content {
@@ -2862,18 +3002,94 @@ button.stonetop-xp-toggle {
 	border-color: transparent;
 }
 
-/* The card's chain border is 9-sliced, which a plain mask cannot express — mask-border is the
-   slicing equivalent, so the chain paints in --st-decor and follows the theme like the rest of the
-   sheet art. The element keeps its transparent border purely to reserve the 28px the art sits in. */
-.stonetop-arcanum-card::before {
+/* The card's chain frame. It is drawn as a nine-slice — notched corners that must not scale,
+   straight chain runs along the sides — and painted in --st-decor so it follows the theme like the
+   rest of the sheet art. The card keeps its transparent 28px border purely to reserve the space the
+   frame sits in.
+   `mask-border` says all of that in one declaration, but Firefox implements neither it nor
+   `-webkit-mask-box-image`: there the whole declaration is dropped, nothing masks the element, and
+   it paints as a solid --st-decor slab over every child of the card. Plain mask layers work in every
+   engine.
+   The runs REPEAT a fixed-size tile rather than stretching one long slice, because a stretched run
+   scales with the card: mask-border's `stretch` squeezed the tall side art into a short card at
+   0.26x while the horizontal ran near 0.81x, visibly crushing the uprights. `round` trims the tile
+   to fit a whole number of links, so no half-link is clipped off at a corner — on a chain that reads
+   as a break.
+   Slices come from the source frame via `npm run slice-arcana-border`. */
+.stonetop-arcanum-card::before,
+.stonetop-arcanum-frame::before,
+.stonetop-arcanum-frame::after {
 	content: "";
 	position: absolute;
-	inset: -28px;
 	pointer-events: none;
 	z-index: 0;
 	background-color: var(--st-decor);
-	mask-border: url('../assets/ui/decor/arcana-card-border.png') 40 / 28px stretch;
-	-webkit-mask-box-image: url('../assets/ui/decor/arcana-card-border.png') 40 / 28px stretch;
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
+}
+
+/* A repeating layer tiles across its whole box, so each run needs a box that already stops at the
+   corners — three boxes in all, and an element only has two pseudo-elements. Hence this span, which
+   carries no mask of its own: a mask clips the element's ENTIRE subtree, so a masked span would trim
+   its own runs away to whatever it was masked to. It is only a positioning box for the two runs; the
+   corners sit on the card's own ::before, which masks nothing else. */
+.stonetop-arcanum-frame {
+	position: absolute;
+	inset: -28px;
+	pointer-events: none;
+}
+
+/* Corners: pinned unscaled at the four outer squares. */
+.stonetop-arcanum-card::before {
+	inset: -28px;
+	mask-image:
+		url('../assets/ui/decor/arcana-border-tl.png'),
+		url('../assets/ui/decor/arcana-border-tr.png'),
+		url('../assets/ui/decor/arcana-border-bl.png'),
+		url('../assets/ui/decor/arcana-border-br.png');
+	mask-position: left top, right top, left bottom, right bottom;
+	mask-size: 28px 28px;
+	-webkit-mask-image:
+		url('../assets/ui/decor/arcana-border-tl.png'),
+		url('../assets/ui/decor/arcana-border-tr.png'),
+		url('../assets/ui/decor/arcana-border-bl.png'),
+		url('../assets/ui/decor/arcana-border-br.png');
+	-webkit-mask-position: left top, right top, left bottom, right bottom;
+	-webkit-mask-size: 28px 28px;
+}
+
+/* Top and bottom runs, in a box inset to the card's own width so they stop at the corners. */
+.stonetop-arcanum-frame::before {
+	inset: 0 28px;
+	mask-image:
+		url('../assets/ui/decor/arcana-border-top.png'),
+		url('../assets/ui/decor/arcana-border-bottom.png');
+	mask-position: left top, left bottom;
+	mask-size: 14px 28px;
+	mask-repeat: round no-repeat;
+	-webkit-mask-image:
+		url('../assets/ui/decor/arcana-border-top.png'),
+		url('../assets/ui/decor/arcana-border-bottom.png');
+	-webkit-mask-position: left top, left bottom;
+	-webkit-mask-size: 14px 28px;
+	-webkit-mask-repeat: round no-repeat;
+}
+
+/* Left and right runs, in a box inset to the card's own height, same reason. */
+.stonetop-arcanum-frame::after {
+	inset: 28px 0;
+	mask-image:
+		url('../assets/ui/decor/arcana-border-left.png'),
+		url('../assets/ui/decor/arcana-border-right.png');
+	mask-position: left top, right top;
+	mask-size: 28px 14px;
+	mask-repeat: no-repeat round;
+	-webkit-mask-image:
+		url('../assets/ui/decor/arcana-border-left.png'),
+		url('../assets/ui/decor/arcana-border-right.png');
+	-webkit-mask-position: left top, right top;
+	-webkit-mask-size: 28px 14px;
+	-webkit-mask-repeat: no-repeat round;
 }
 
 .stonetop-arcanum-header {
@@ -4306,6 +4522,13 @@ button.stonetop-xp-toggle {
 	background: var(--st-paper-inset);
 }
 
+/* This panel has no heading, so the first currency's name row carries the advice ?. Generated
+   content is always the last box, so without this the hairline would trail PAST the button and run
+   straight through the glyph; ordering the button past the hairline ends the line at it instead. */
+.stonetop.sheet.steading .steading-coinage-name .stonetop-advice-btn {
+	order: 1;
+}
+
 .stonetop.sheet.steading .steading-coinage-fields {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -4496,6 +4719,22 @@ button.stonetop-xp-toggle {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-size: var(--fs-note);
+}
+
+/* The GM's "create actors for the roster" control, beside each list's add button. `width: auto` is
+   what stops core's .window-app rule stretching it across the panel. */
+.stonetop.sheet.steading button.stonetop-create-actors {
+	width: auto;
+	margin-top: 4px;
+	padding: 2px 8px;
+	font-size: var(--fs-micro);
+	line-height: 1.4;
+	opacity: 0.8;
+	cursor: pointer;
+}
+
+.stonetop.sheet.steading button.stonetop-create-actors:hover {
+	opacity: 1;
 }
 
 /* Muted one-line hint under each linkable list. */
@@ -4774,8 +5013,10 @@ button.stonetop-xp-toggle {
 
 
 
-/* A move's icon, wherever a move renders — moves tab, side-bar, arcanum cards, seasons, chat. */
-.stonetop .stonetop-move-icon {
+/* A move's icon, wherever a move renders — moves tab, side-bar, arcanum cards, seasons, chat.
+   A chat message is outside any .stonetop root, so it names that context rather than inheriting. */
+.stonetop .stonetop-move-icon,
+.chat-message .stonetop-move-icon {
 	width: 20px;
 	height: 20px;
 	flex: 0 0 20px;
@@ -6323,6 +6564,55 @@ button.stonetop-xp-toggle {
 .stonetop-inline-table td { border: 1px solid var(--st-rule-veil); padding: 0.2em 0.5em; text-align: left; vertical-align: top; }
 .stonetop-inline-table td.roll { width: 2.5em; text-align: center; font-weight: bold; white-space: nowrap; }
 .stonetop-inline-table tbody tr:nth-child(even) { background: var(--st-paper-sunken); }
+
+/* ── Common & Special Items (reference journal pack) ───────────────────────────
+   The page scripts/import/build-items.js renders from Book I's value tables. Same parchment
+   treatment as .stonetop-wonder above, but the content is a reference grid rather than an article:
+   the Value ladder is a set of cards, and each category is a ruled table whose name cell carries a
+   draggable @UUID chip. Scoped to .stonetop-item-reference so it can't reach other journals. */
+.stonetop-item-reference { color: var(--st-ink); }
+.stonetop-item-reference .item-ref-pageref { color: var(--st-ink-faint); font-style: italic; font-size: 0.85em; margin: 0 0 0.6em; }
+.stonetop-item-reference .item-ref-lead { margin: 0 0 0.8em; }
+.stonetop-item-reference .item-ref-note,
+.stonetop-item-reference .item-ref-footnote { font-size: 0.9em; color: var(--st-ink-soft); margin: 0.4em 0; }
+.stonetop-item-reference h2 { border-bottom: 1px solid var(--st-ink); margin: 1.2em 0 0.5em; }
+.stonetop-item-reference h3 { margin: 0.9em 0 0.3em; font-family: "StonetopUI", serif; }
+
+/* The Value ladder: one card per rung, laid out as many-across as the sheet is wide. */
+.stonetop-item-reference .item-ref-tiers {
+	display: grid; grid-template-columns: repeat(auto-fit, minmax(13em, 1fr));
+	gap: 0.6em; margin: 0.5em 0 0.8em;
+}
+.stonetop-item-reference .item-ref-tier {
+	border: 1px solid var(--st-rule); background: var(--st-paper-sunken);
+	padding: 0.3em 0.8em 0.5em; border-radius: 3px;
+}
+.stonetop-item-reference .item-ref-tier h3 { margin: 0.3em 0 0.2em; }
+.stonetop-item-reference .item-ref-tier ul { margin: 0; padding-left: 1.1em; }
+.stonetop-item-reference .item-ref-tier li { font-size: 0.92em; }
+
+.stonetop-item-reference .item-ref-coins ul { padding-left: 1.1em; }
+
+/* Category tables, matching the journal table treatment (Foundry's default is unreadable here). */
+.stonetop-item-reference .item-ref-table {
+	border-collapse: collapse; width: 100%; background: transparent;
+	color: var(--st-ink); margin: 0.2em 0 0.9em;
+}
+.stonetop-item-reference .item-ref-table th,
+.stonetop-item-reference .item-ref-table td {
+	border: 1px solid var(--st-rule-veil); padding: 0.2em 0.5em; text-align: left; vertical-align: top;
+}
+.stonetop-item-reference .item-ref-table thead th { background: var(--st-paper-sunken-strong); font-family: "StonetopUI", serif; }
+.stonetop-item-reference .item-ref-table tbody tr:nth-child(even) { background: var(--st-paper-sunken); }
+/* Load and Value are single glyphs/digits — keep them off the name column's width. */
+.stonetop-item-reference .item-ref-table th.item-ref-load,
+.stonetop-item-reference .item-ref-table td.item-ref-load,
+.stonetop-item-reference .item-ref-table th.item-ref-value,
+.stonetop-item-reference .item-ref-table td.item-ref-value { width: 3.5em; text-align: center; white-space: nowrap; }
+
+.stonetop-item-reference .item-ref-detail { color: var(--st-ink-soft); font-size: 0.92em; }
+/* A livestock row's stat block sits under its name rather than inline — it is a whole creature. */
+.stonetop-item-reference .item-ref-stats { display: block; font-size: 0.88em; color: var(--st-ink-soft); margin-top: 0.15em; }
 
 /* ── bugs.md batch 1 (CSS) ─────────────────────────────────────────────────────────────────────
    #7 — no border/drop-shadow on journal images (Foundry adds one). */
