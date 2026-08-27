@@ -13,7 +13,7 @@ import { FollowerItem } from "./FollowerItem.js";
 import { itemsOfType, itemOfTypeBySlug } from "../actorItems.js";
 
 export class CharacterFollowers {
-	constructor(actor, followerRepo, resourceController, factory = null, inventoryRepo = null,
+	constructor(actor, followerRepo, resourceController, factory, inventoryRepo = null,
 	            grantedItems = new GrantedItems(actor)) {
 		this._actor              = actor;
 		this._followerRepo       = followerRepo;
@@ -348,7 +348,7 @@ export class CharacterFollowers {
 		const ownedItems = [...this._actor.items].filter(i => i.type === "follower" && i.system?.owned === true);
 		if (!ownedItems.length) return [];
 		// Fetch the shared outfit-item catalog once (async) and pass it into each follower's snapshot.
-		const repoItems = this._inventoryRepo ? await this._inventoryRepo.getAll() : [];
+		const repoItems = this._inventoryRepo ? await this._inventoryRepo.getInsertItems() : [];
 		return ownedItems.map(item => this._buildFollowerSnapshotFromItem(item, repoItems));
 	}
 

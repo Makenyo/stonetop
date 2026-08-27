@@ -15,6 +15,9 @@ import {
 	MoveSnapshot,
 	ValueMax,
 } from "../../../src/model/snapshot/character/CharacterSnapshot.js";
+import { MoveRequirements } from "../../../src/model/data/MoveRequirements.js";
+import { CharacterMoveGrants } from "../../../src/actors/character/CharacterMoveGrants.js";
+import { GrantedItems } from "../../../src/actors/GrantedItems.js";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -31,15 +34,18 @@ const CHOICES_DATA = new TestChoiceGroupBuilder()
 
 function makeActor() { return new FakeCharacterActorBuilder().build(); }
 
+function makeGrants(actor = makeActor(), repo = new FakeMoveRepository()) {
+	return new CharacterMoveGrants(repo, actor, new GrantedItems(actor));
+}
+
 function makeMoves({
 	repo   = new FakeMoveRepository(),
 	actor  = makeActor(),
 	vitals = {level: 1},
 } = {}) {
 	const res = new ResourceController(actor);
-	const m   = new CharacterMoves(repo, actor, res, new ChoiceGroupControllerFactory(actor));
-	m.setVitals(vitals);
-	return m;
+	return new CharacterMoves(repo, actor, res, new ChoiceGroupControllerFactory(actor), undefined,
+		new MoveRequirements(vitals, { slug: "the-heavy" }, repo, null));
 }
 
 function makePlaybookData(overrides = {}) {
@@ -256,8 +262,10 @@ describe("CharacterMoves.buildSnapshot — requiresLabel", () => {
 		expect((await snapMove(new FakeCompendiumMoveBuilder().withName("Alpha").withRequirement({moves: ["Wild Speech"], level: 6, playbook: null}))).requiresLabel).toBe("Wild Speech, Level 6");
 	});
 
-	it("requiresLabel is null when requirement has only playbook field", async () => {
-		expect((await snapMove(new FakeCompendiumMoveBuilder().withName("Alpha").withRequirement({moves: [], level: null, playbook: "The Ranger"}))).requiresLabel).toBeNull();
+	// A playbook gate is a requirement like any other, and the label has to say so — it is the whole
+	// point of the gate when a move is reached for from another playbook (Versatile).
+	it("requiresLabel names the gating playbook", async () => {
+		expect((await snapMove(new FakeCompendiumMoveBuilder().withName("Alpha").withRequirement({moves: [], level: null, playbook: "the-ranger"}))).requiresLabel).toBe("the-ranger");
 	});
 });
 
@@ -324,6 +332,24 @@ describe("CharacterMoves.buildSnapshot — selectable computation", () => {
 });
 
 // ── getMoveSnapshotsForCategory ───────────────────────────────────────────────
+
+describe("CharacterMoves collaborators", () => {
+	// Silently accepting null is what let the harness build one wrong and still pass, rendering every
+	// move with no requirement line. A caller that only wants to GRANT moves wants CharacterMoveGrants.
+	it("refuses to be built without one, naming which", () => {
+		const actor = makeActor();
+		const full  = [new FakeMoveRepository(), actor, new ResourceController(actor),
+			new ChoiceGroupControllerFactory(actor), new GrantedItems(actor),
+			new MoveRequirements({ level: 1 }, { slug: "the-heavy" }, new FakeMoveRepository(), null)];
+
+		expect(() => new CharacterMoves(...full)).not.toThrow();
+		for (const [i, name] of [[0, "moveRepo"], [2, "resourceController"], [3, "factory"], [5, "requirements"]]) {
+			const missing = [...full];
+			missing[i] = null;
+			expect(() => new CharacterMoves(...missing), name).toThrow(new RegExp(name, "u"));
+		}
+	});
+});
 
 describe("CharacterMoves.getMoveSnapshotsForCategory", () => {
 	it("returns empty array when category not found", async () => {
@@ -1106,8 +1132,8 @@ describe("CharacterMoves.initPlaybookCategory — world playbook moves", () => {
 
 // ── sortPlaybookMoves (level grouping + dependency chaining) ───────────────────
 
-describe("CharacterMoves.sortPlaybookMoves", () => {
-	const sort = ms => makeMoves().sortPlaybookMoves(ms);
+describe("CharacterMoveGrants.sortPlaybookMoves", () => {
+	const sort = ms => makeGrants().sortPlaybookMoves(ms);
 
 	it("returns empty array for empty input", () => {
 		expect(sort([])).toEqual([]);

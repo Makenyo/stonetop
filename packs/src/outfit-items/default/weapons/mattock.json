@@ -1,0 +1,21 @@
+{
+	"_id": "enq522wjZRL9OaYs",
+	"_key": "!items!enq522wjZRL9OaYs",
+	"name": "Mattock, iron",
+	"type": "outfitItem",
+	"system": {
+		"slug": "mattock",
+		"inventoryColumn": "regular",
+		"weight": 1,
+		"note": "",
+		"resource": null,
+		"twoCol": false,
+		"armor": null,
+		"source": null,
+		"tagList": [
+			"hand"
+		]
+	},
+	"flags": {},
+	"folder": "StOnEtOpWpn0001X"
+}

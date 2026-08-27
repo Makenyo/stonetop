@@ -4,6 +4,7 @@ import path from "path";
 import { pathToFileURL } from "url";
 import { PACKS } from "./packs.js";
 import { PACK_VERSION_FLAG } from "../../src/migration/PackVersionCheck.js";
+import { buildBabeleFiles } from "../i18n/buildBabele.js";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 function randomId() {
@@ -120,6 +121,12 @@ async function main() {
 			if (err.code !== "LEVEL_ITERATOR_NOT_OPEN") throw err;
 		}
 	}
+
+	// Compendium translations are compiled from the same sources that were just packed, so they can
+	// never be built against an older English than the packs carry.
+	console.log("\nCompendium translations:");
+	const built = await buildBabeleFiles();
+	if (!built.length) console.log("  none");
 }
 
 // Only when run as a script: importing this module (the stamp is tested) must not compile every pack

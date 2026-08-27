@@ -43,15 +43,30 @@ import { OutfitItemData }  from "./src/data/OutfitItemData.js";
 import { PossessionData }  from "./src/data/PossessionData.js";
 import { TagGlossary }     from "./src/model/data/TagGlossary.js";
 import { Advice }          from "./src/model/data/Advice.js";
+import { TagLabels }       from "./src/model/data/TagLabels.js";
+import { CONVERTER_NAME, stonetopStringsConverter } from "./src/i18n/babeleConverter.js";
 import "./src/dev/quenchTests.js"; // registers in-Foundry integration tests (no-op unless Quench is installed)
 
 // -- I18N INIT -------------------------------------------------
 // Fires once translations are loaded, before init. The tag definitions a tooltip shows, and the
-// "If you want to…" advice behind the sheets' ? buttons, are ordinary localized strings — so both
-// are read straight off them: no fetch, and no async race with the first sheet render.
+// "If you want to…" topic titles behind the sheets' ? buttons are ordinary localized strings, so
+// both are read straight off them: no fetch, and no async race with the first sheet render.
 Hooks.once("i18nInit", () => {
 	TagGlossary.current = TagGlossary.fromTranslations(game.i18n?.translations?.stonetop?.tagGlossary);
 	Advice.current      = Advice.fromTranslations(game.i18n?.translations?.stonetop?.advice);
+	// What a tag chip reads. The stored token stays English so `hasGroupTag` and the glossary keep
+	// working; only the rendered text is localized.
+	TagLabels.current   = TagLabels.fromTranslations(game.i18n?.translations?.stonetop?.tagLabels);
+});
+
+// -- BABELE ----------------------------------------------------
+// Compendium prose is translated by Babele, from babele/<lang>/stonetop.<pack>.json. Two things are
+// declared here: where our own translation files live, and the converter that handles everything
+// under `system` — Babele's built-in array handling matches by index, and our choice-group rows are
+// reordered whenever the books are re-parsed, so those are addressed by slug instead.
+Hooks.once("babele.init", (babele) => {
+	babele.setSystemTranslationsDir("babele");
+	babele.registerConverters({ [CONVERTER_NAME]: stonetopStringsConverter });
 });
 
 // -- INIT ------------------------------------------------------

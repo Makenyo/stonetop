@@ -1,26 +1,8 @@
+import {CharacterSubsystems} from "./CharacterSubsystems.js";
 import {CharacterSnapshotBuilder} from "../../model/snapshot/character/CharacterSnapshot.js";
-import {CharacterMoves} from "./CharacterMoves.js";
-import {CharacterBackgrounds} from "./CharacterBackgrounds.js";
-import {CharacterOrigin} from "./CharacterOrigin.js";
-import {CharacterPossessions} from "./CharacterPossessions.js";
-import {CharacterInventory} from "./CharacterInventory.js";
-import {CharacterArcana} from "./CharacterArcana.js";
-import {CharacterInserts} from "./CharacterInserts.js";
-import {CharacterFollowers} from "./CharacterFollowers.js";
-import {ResourceController} from "./ResourceController.js";
-import {CharacterStats} from "./CharacterStats.js";
-import {CharacterVitals} from "./CharacterVitals.js";
-import {CharacterDebilities} from "./CharacterDebilities.js";
-import {CharacterPlaybook} from "./CharacterPlaybook.js";
 import {FoundryRepositoryFactory} from "./repositories/FoundryRepositoryFactory.js";
-import {ActorOutfitItems} from "./ActorOutfitItems.js";
-import {ChoiceGroupControllerFactory} from "./ChoiceGroupControllerFactory.js";
-import {ContainerOutfitSync} from "./ContainerOutfitSync.js";
-import {FollowerSideEffectHandler} from "./SideEffectHandler.js";
-import {InstinctSideEffectHandler} from "./InstinctSideEffectHandler.js";
 import {ChoiceStores} from "./ChoiceStores.js";
 import {applyPick} from "./ChoiceGroupController.js";
-import {GrantedItems} from "../GrantedItems.js";
 import {ItemGrantRouter} from "./ItemGrantRouter.js";
 import {GrantSource} from "../../model/data/ItemGrant.js";
 
@@ -29,37 +11,22 @@ export class StonetopCharacter {
 		this._actor = actor;
 		this._playbookRepo = repos.playbooks ?? null;
 		this._steadingRepo = repos.steading ?? null;
-		this._stats = new CharacterStats(actor);
-		this._origin = new CharacterOrigin(actor);
-		// The one writer of items something else owns. Every subsystem grants through this instance, so
-		// "which items exist because of X?" has a single answer.
-		const grantedItems = this._grantedItems = new GrantedItems(actor);
-		const outfitItems = new ActorOutfitItems(actor, grantedItems);
-		this._resourceController = new ResourceController(actor);
-		// The one writer of granted outfit items. Each container type registers how it computes its
-		// grant; the factory re-syncs a container after every choice write.
-		const outfitSync = new ContainerOutfitSync(outfitItems)
-			.register("possession", CharacterPossessions.outfitGrantFor)
-			.register("arcanum",    CharacterArcana.outfitGrantFor);
-		const factory = new ChoiceGroupControllerFactory(actor);
-		this._followers = new CharacterFollowers(actor, repos.followers, this._resourceController, factory, repos.inventory, grantedItems);
-		// Everything that reacts to a choice value changing, in one list. Each decides what it cares about.
-		factory.subscribe(new FollowerSideEffectHandler(this._followers))
-		       .subscribe(outfitSync);
-
-		this._background  = new CharacterBackgrounds(actor, factory, this._resourceController);
-		this._moves       = new CharacterMoves(repos.moves, actor, new ResourceController(actor, "moveResources"), factory, grantedItems);
-		this._playbook    = new CharacterPlaybook(actor, this._background, factory, this._origin);
-		factory.subscribe(new InstinctSideEffectHandler(this._playbook));
-		this._possessions = new CharacterPossessions(actor, this._moves, repos.possessions, factory, outfitSync, grantedItems);
-		this._inventory   = new CharacterInventory(actor, repos.inventory, outfitItems, this._resourceController, repos.steading);
-		this._vitals      = new CharacterVitals(actor);
-		this._debilities  = new CharacterDebilities(actor);
-		this._arcana      = new CharacterArcana(actor, repos.arcana, this._stats, this._followers, factory, this._moves, outfitSync, grantedItems);
-		this._inserts     = new CharacterInserts(actor, factory, this._moves, repos.inserts, grantedItems);
-		this._playbook.setVitals(this._vitals);
-		this._playbook.setMoves(this._moves);
-		this._moves.setVitals(this._vitals);
+		const parts = CharacterSubsystems.build(actor, repos);
+		this._stats              = parts.stats;
+		this._origin             = parts.origin;
+		this._vitals             = parts.vitals;
+		this._debilities         = parts.debilities;
+		this._grantedItems       = parts.grantedItems;
+		this._resourceController = parts.resourceController;
+		this._followers          = parts.followers;
+		this._background         = parts.background;
+		this._moves              = parts.moves;
+		this._playbook           = parts.playbook;
+		this._possessions        = parts.possessions;
+		this._inventory          = parts.inventory;
+		this._arcana             = parts.arcana;
+		this._inserts            = parts.inserts;
+		const grantedItems = this._grantedItems;
 
 		// Where an item that lands on the character turns into grants, and — off the same registration,
 		// so the two can't drift — what leaves when it goes. Each host still owns what its own type
@@ -68,12 +35,13 @@ export class StonetopCharacter {
 			.register("playbook", {
 				source:  item => GrantSource.playbook(item.system?.slug),
 				onApply: async item => this._playbook.selectPlaybook(item.asPlaybook()),
-				// Four independent compendium reads: resolved together, the drop costs the slowest rather
+				// Five independent compendium reads: resolved together, the drop costs the slowest rather
 				// than the sum.
 				grants:  async item => {
 					const playbook = item.asPlaybook();
 					return Promise.all([
 						this._playbook.moveGrants(playbook),
+						this._playbook.backgroundMoveGrants(playbook),
 						this._followers.playbookGrants(playbook.slug, playbook.followers),
 						this._inserts.playbookGrants(playbook.slug, playbook.inserts),
 						this._possessions.playbookGrants(playbook.specialPossessions, playbook.slug),
@@ -374,11 +342,13 @@ export class StonetopCharacter {
 
 	// A character rolls its own six stats. Anything else belongs to something the character is tied
 	// to, so the lookup falls down the chain: an insert's own track (the Thrall's Favor, rolled by
-	// Dark Succor), then the steading it calls home (Requisition's +Fortunes). Null when nothing
-	// answers — ActorRolling reads that as "can't roll this" and posts the move's text instead.
+	// Dark Succor), the chosen background's (a Destined Would-Be Hero's Omens), then the steading it
+	// calls home (Requisition's +Fortunes). Null when nothing answers — ActorRolling reads that as
+	// "can't roll this" and posts the move's text instead.
 	resolveBonus(stat) {
 		return this._stats.resolveBonus(stat)
 			?? this._inserts.resolveBonus(stat)
+			?? this._background.resolveBonus(stat)
 			?? this._homeSteading?.resolveBonus(stat)
 			?? null;
 	}

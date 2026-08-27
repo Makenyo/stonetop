@@ -3,23 +3,20 @@ import {IntroductionsSnapshot} from "../../model/snapshot/character/PlaybookSnap
 import {ChoiceValues} from "../../model/snapshot/character/ChoiceGroup.js";
 import {buildChoiceGroup} from "../../model/snapshot/character/buildChoiceGroup.js";
 import {InstinctController} from "./InstinctController.js";
+import {ChoiceGroupDefs} from "../../model/data/ChoiceGroupDefs.js";
+import {GrantSource, ItemGrantSet} from "../../model/data/ItemGrant.js";
 import {rich} from "../../model/snapshot/RichText.js";
 
 export class CharacterPlaybook {
-	constructor(actor, background, factory, origin) {
+	constructor(actor, background, factory, origin, vitals, moves, selection) {
 		this._actor = actor;
 		this._background = background;
 		this._origin = origin;
+		this._vitals = vitals;
+		this._moves = moves;
+		this._selection = selection;
 		this._ctrl = factory.forSingleton("playbook", "choiceValues");
 		this._instinct = new InstinctController(this._ctrl);
-	}
-
-	setVitals(vitals) {
-		this._vitals = vitals;
-	}
-
-	setMoves(moves) {
-		this._moves = moves;
 	}
 
 	async getData() {
@@ -29,7 +26,7 @@ export class CharacterPlaybook {
 	}
 
 	getSlug() {
-		return this._actor.system?.playbookSlug || null;
+		return this._selection.slug;
 	}
 
 	async getBackgroundMoveNames(bgSelectedSlug) {
@@ -40,7 +37,8 @@ export class CharacterPlaybook {
 
 	async selectBackground(slug) {
 		const catKey = `playbook-${this.getSlug()}`;
-		const oldMoveNames = await this.getBackgroundMoveNames(this._background.selectedSlug);
+		const oldSlug = this._background.selectedSlug;
+		const oldMoveNames = await this.getBackgroundMoveNames(oldSlug);
 		await this._background.selectBackground(slug);
 		const newMoveNames = await this.getBackgroundMoveNames(slug);
 		for (const name of oldMoveNames) {
@@ -49,12 +47,18 @@ export class CharacterPlaybook {
 		for (const name of newMoveNames) {
 			if (!oldMoveNames.has(name)) await this._moves.incrementMove(catKey, name);
 		}
+		// A background's own moves are items only it grants, so the switch hands the old one's back
+		// before handing out the new one's.
+		if (oldSlug) await this._moves.removeCategory(_backgroundCategoryKey(oldSlug));
+		const background = this._background.selectedBackground(await this.getData());
+		const granted    = _grantedMoveSlugs(background);
+		await this._moves.addCategory(_backgroundCategoryKey(slug), background?.label, granted, granted);
 	}
 
 	// What choosing a playbook does to the character itself. The items it grants are not here — those
 	// are the playbook's grant sets, applied by the router.
 	async selectPlaybook(stonetopPlaybook) {
-		await this._actor.update({"system.playbookSlug": stonetopPlaybook.slug});
+		await this._selection.select(stonetopPlaybook.slug);
 		await this._vitals.updateVitalsFromPlaybook(stonetopPlaybook);
 	}
 
@@ -66,7 +70,18 @@ export class CharacterPlaybook {
 	}
 
 	_backgroundMoves(stonetopPlaybook) {
-		return stonetopPlaybook.backgrounds?.find(b => b.slug === this._background.selectedSlug)?.moves ?? [];
+		return this._background.selectedBackground(stonetopPlaybook)?.moves ?? [];
+	}
+
+	/** The moves the chosen background hands you of its own: whatever its choice group links (the same
+	 *  structural collector an arcanum's card asks). They live in a category of the background's, which
+	 *  is what keeps them on the background and off the moves tab. */
+	async backgroundMoveGrants(stonetopPlaybook) {
+		const background = this._background.selectedBackground(stonetopPlaybook);
+		const slugs      = _grantedMoveSlugs(background);
+		const catKey     = _backgroundCategoryKey(this._background.selectedSlug);
+		if (!slugs.length) return ItemGrantSet.empty(GrantSource.forCategoryKey(catKey));
+		return this._moves.categoryGrants(catKey, background.label, slugs, slugs);
 	}
 
 	/** The controller for the playbook's choice values (lore, appearance, introductions, …). */
@@ -129,4 +144,14 @@ export class CharacterPlaybook {
 			.withIntroductions(introductions)
 			.build();
 	}
+}
+
+// Prefixed so `GrantSource.forCategoryKey` reads the background back out of it, and the moves tab
+// knows the category renders somewhere else.
+function _backgroundCategoryKey(backgroundSlug) {
+	return `background-${backgroundSlug}`;
+}
+
+function _grantedMoveSlugs(background) {
+	return ChoiceGroupDefs.grants(background ?? {}, "move").map(g => g.slug);
 }

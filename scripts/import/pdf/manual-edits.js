@@ -84,18 +84,6 @@ export const MANUAL_EDITS = {
 			note: "bugs.md 14b: service/favor — split 'Weeks of guided study' from the guide sub-header",
 		},
 	],
-	// The book sets an inline load diamond as a dingbat glyph — ZapfDingbats in Book I, ITCDINGMedium
-	// in Book II — and neither is matched by fonts.js isDingbat(), so it is dropped from the rendered
-	// text. Each of these livestock rows prints "butcher for ◇ provisions" (verified against the
-	// glyph AND the vector diamond beside it on the page).
-	"hillfolk": [
-		{
-			find: /can butcher for provisions/g,
-			replace: "can butcher for ◇ provisions",
-			note: "livestock rows — restore the dropped ◇ load diamond before 'provisions'",
-		},
-	],
-
 	// A hyphen that ends a line is usually the book breaking a word ("aethe-" + "rium"), and the
 	// renderer heals it by dropping the hyphen. These two are real compounds that happen to break at
 	// their own hyphen, so healing them fuses a word that should keep it.
@@ -140,6 +128,40 @@ const missedNotes = (edits, applied) => edits.filter((e) => !applied.includes(e)
  * Apply the manual edits for one article's rendered HTML. Returns `{ html, applied, misses }` where
  * `misses` lists edits whose `find` matched nothing (callers should surface these).
  */
+/**
+ * The same thing for Book I's reference articles (scripts/import/build-book-one.js), keyed by
+ * article slug. Separate from MANUAL_EDITS because the two books' slugs are their own namespaces —
+ * an edit meant for one must not silently match an article in the other.
+ */
+export const BOOK_ONE_EDITS = {
+	"gear-and-possessions": [
+		{
+			// The row "Mark the ◇, ◇◇, or □ next to an item to" is set as four cells with the marks
+			// between them, and its ", " cell sits ~5pt below its neighbours — far enough that
+			// groupRows treats it as a row of its own and orders it after the rest, which lands the
+			// comma at the end and runs the marks together. Repairing the row grouping is a change to
+			// how EVERY Book II column is read, so this one sentence is corrected instead.
+			find: /Mark the ◇◇◇, or next to an item to , indicate you are carrying it\./,
+			replace: "Mark the ◇, ◇◇, or □ next to an item to indicate you are carrying it.",
+			note: "Inventory: 'Mark the ◇, ◇◇, or □' — cells reordered by row grouping",
+		},
+		{
+			// A mark from the sample-insert illustration, which reaches above the bounds its extracted
+			// image reports, spliced into the middle of a word.
+			find: /fill out you○r Inventory insert/,
+			replace: "fill out your Inventory insert",
+			note: "Inventory: stray figure mark inside 'your'",
+		},
+	],
+};
+
+/** Apply one Book I article's edits. Same contract as applyManualEdits. */
+export function applyBookOneEdits(html, slug) {
+	const edits = BOOK_ONE_EDITS[slug] || [];
+	const { text, applied } = replaceAll(html, edits);
+	return { html: text, applied: applied.length, misses: missedNotes(edits, applied) };
+}
+
 export function applyManualEdits(html, slug) {
 	const edits = MANUAL_EDITS[slug] || [];
 	const { text, applied } = replaceAll(html, edits);
