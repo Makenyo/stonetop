@@ -984,11 +984,11 @@
   "the-judge": {
     "name": {
       "source": "The Judge",
-      "text": ""
+      "text": "Der Richter"
     },
     "description": {
       "source": "Look here at this little town, this candleflame in the darkness. Its very existence is an act of courage and faith. And Aratis has charged you to keep it: to settle its disputes; to chronicle its tales; to defend it from darkness and ruin. Take up your hammer, Judge. Your town needs you.",
-      "text": ""
+      "text": "Schau dir diesen kleinen Ort an, diese Kerzenflamme in der Dunkelheit. Schon seine bloße Existenz ist ein Akt der Tapferkeit und des Glaubens. Und Aratis hat dir aufgetragen, ihn zu bewahren: seine Streitigkeiten zu schlichten, seine Geschichten festzuhalten und ihn vor Dunkelheit und Verderben zu schützen. Nimm deinen Hammer zur Hand, Richter. Dieser Ort braucht dich."
     },
     "statsNote": {
       "source": "Assign these scores to your stats: +2, +1, +1, +0, +0, -1",
@@ -996,11 +996,11 @@
     },
     "startingMovesNote": {
       "source": "You start with Censure, Chronicler of Stonetop, plus 2 more of your choice.",
-      "text": ""
+      "text": "Du beginnst mit Zurechtweisung, Chronist von Stonetop, sowie zwei weiteren deiner Wahl."
     },
     "specialPossessions/pickNote": {
       "source": "Pick 1, in addition to your symbol of authority and scribe's tools",
-      "text": ""
+      "text": "Wähle eines, zusätzlich zu deinem Autoritätssymbol und deinen Schreibutensilien"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -1024,275 +1024,275 @@
     },
     "backgrounds/legacy/label": {
       "source": "Legacy",
-      "text": ""
+      "text": "Vermächtnis"
     },
     "backgrounds/legacy/description": {
       "source": "You are the latest in a long line of Judges—born here, apprenticed to the prior Judge, and charged with the passing of the mantle. The Chronicle is a rich repository of lore, but there's no index, so good luck finding anything.\n\nWhen you **_Know Things about the people or history of Stonetop_**, you have advantage.\n\nWhen you **_spend days, weeks, or months poring over the Chronicle_**, ask the GM and the GM will tell you what you learn in that time.",
-      "text": ""
+      "text": "Du bist der jüngste in einer langen Reihe von Richtern – hier geboren, vom vorherigen Richter ausgebildet und dazu bestimmt, das Amt weiterzuführen. Die Chronik ist ein reichhaltiger Fundus an Überlieferungen, aber es gibt kein Stichwortverzeichnis – viel Glück also bei der Suche.\n\nWenn du **_über die Menschen oder die Geschichte von Stonetop Wissen kundtust_**, hast du einen Vorteil.\n\nWenn du **_Tage, Wochen oder Monate damit verbringst, die Chronik zu studieren_**, stell dem SL eine Frage, und er wird dir sagen, was du in dieser Zeit gelernt hast."
     },
     "backgrounds/missionary/label": {
       "source": "Missionary",
-      "text": ""
+      "text": "Missionar"
     },
     "backgrounds/missionary/description": {
       "source": "You are part of a larger order of Judges, sent here to protect the flickering flame of civilization. The Chronicle is relatively new; your position in town is far from certain.\n\nWhen you **_call upon the Judge of another steading for aid or information_**, they are oathbound to give it. You are likewise oathbound to support them.\n\nYou have an aviary in addition to your usual choice of special possessions. When you **_send a message via trained bird_**, the GM will tell you if and when you receive a response, and what it says.",
-      "text": ""
+      "text": "Du gehörst einem größeren Orden von Richtern an, die hierher entsandt wurden, um die flackernde Flamme der Zivilisation zu schützen. Die Chronik ist noch relativ neu; deine Stellung im Dorf ist alles andere als sicher. Füge diese Richter dem Abschnitt „Nachbarn“ im Stonetop-Spielbuch hinzu (wähle zwei weitere):\n\nWenn du **_den Richter einer anderen Siedlung um Hilfe oder Informationen bittest_**, ist dieser durch einen Eid verpflichtet, sie dir zu gewähren. Ebenso bist du durch einen Eid verpflichtet, ihn zu unterstützen.\n\nZusätzlich zu deiner üblichen Auswahl an besonderen Besitztümern verfügst du über ein Vogelhaus (markiere es jetzt). Wenn du, wie es bei den Richtern deines Ordens üblich ist, **_eine Nachricht mit einem abgerichteten Vogel verschickst_**, teilt dir der SL mit, ob und wann du eine Antwort erhältst und was darin steht."
     },
     "backgrounds/prophet/label": {
       "source": "Prophet",
-      "text": ""
+      "text": "Prophet"
     },
     "backgrounds/prophet/description": {
       "source": "The line of Judges was broken long ago, the Chronicle lost or fallen into ruin. Aratis has called you personally to her service through dreams, omens, and visions. Some in town resent the authority you've assumed.\n\nWhen you **_spend a few days communing with Aratis about a threat facing Stonetop or civilization as a whole_**, roll +WIS: **on a 7+**, Aratis reveals the course of action she would have you take; **on a 10+**, you also hold 2 Sanction. While **_acting on her orders_**, spend 1 Sanction to add +1 to a roll you just made.",
-      "text": ""
+      "text": "Die Linie der Richter ist vor langer Zeit abgerissen, die Chronik verloren gegangen oder dem Verfall anheimgefallen. Aratis hat dich persönlich durch Träume, Omen und Visionen in ihren Dienst berufen. Einige im Ort nehmen dir die Autorität übel, die du dir anmaßt.\n\nWenn du **_einige Tage damit verbringst, mit Aratis über eine Bedrohung für Stonetop oder die Zivilisation als Ganzes Zwiesprache zu halten_**, würfle +WE. Bei einer 7+ offenbart dir Aratis die Vorgehensweise, die sie von dir erwartet. Bei einer 10+ erhältst du außerdem 2 Gunst. Während du nach ihren Anweisungen handelst, kannst du 1 Gunst ausgeben, um +1 auf einen gerade abgelegten Wurf zu erhalten."
     },
     "choices/chronicle-plus/0/title": {
       "source": "The Chronicle",
-      "text": ""
+      "text": "Die Chronik"
     },
     "choices/chronicle-plus/0/text": {
       "source": "The Judge of Aratis is charged with maintaining the Chronicle, a history of the community, its people, their knowledge, and their traditions. It is more than a mere book; it is a physical place. On the plus side, it… *(choose 3)*",
-      "text": ""
+      "text": "Der Richter von Aratis hat die Aufgabe, die Chronik zu führen, eine Geschichte der Gemeinschaft, ihrer Menschen, ihres Wissens und ihrer Traditionen. Welche Art von Wissen die Chronik enthält, hängt von deinem Hintergrund ab, doch sie ist mehr als nur ein Buch; sie ist ein physischer Ort. Lege fest, wie sie aufgebaut ist.\n\nZu ihren Vorzügen gehört, dass sie … (wähle drei)"
     },
     "choices/chronicle-minus/0/title": {
       "source": "But Alas, It…",
-      "text": ""
+      "text": "Doch leider… "
     },
     "choices/chronicle-minus/0/text": {
       "source": "*(choose 2)*",
-      "text": ""
+      "text": "(wähle zwei)"
     },
     "choices/lawkeeper-shrine/0/title": {
       "source": "The Lawkeeper",
-      "text": ""
+      "text": "Die Hüterin des Gesetzes"
     },
     "choices/lawkeeper-shrine/0/text": {
       "source": "Her Judges say that Aratis has been with humanity since they first stacked one stone upon another and called it home. In Stonetop's Pavilion of the Gods, Aratis's shrine is… *(pick 1)*",
-      "text": ""
+      "text": "Ihre Richter sagen, dass Aratis schon seit jeher an der Seite der Menschheit steht, seit diese zum ersten Mal einen Stein auf den anderen stapelte und dies ihr Zuhause nannte.\n\nIm Pavillon der Götter von Stonetop ist Aratis’ Schrein… (wähle eines)"
     },
     "choices/lawkeeper-demands/0/title": {
       "source": "Of Her True Disciples, Aratis Demands…",
-      "text": ""
+      "text": "Von ihren wahren Jüngern verlangt Aratis…"
     },
     "choices/lawkeeper-demands/0/text": {
       "source": "*(choose 3)*",
-      "text": ""
+      "text": "(wähle drei)"
     },
     "choices/chronicle-plus/sturdy-vault/text": {
       "source": "… is a sturdy vault from the time of the Makers.",
-      "text": ""
+      "text": "… ein stabiles Gewölbe aus der Zeit der Schöpfer ist."
     },
     "choices/chronicle-plus/room-to-grow/text": {
       "source": "… has plenty of room to grow.",
-      "text": ""
+      "text": "… reichlich Platz für Erweiterungen bietet."
     },
     "choices/chronicle-plus/hidden-underground/text": {
       "source": "… is hidden underground.",
-      "text": ""
+      "text": "… unterirdisch verborgen liegt."
     },
     "choices/chronicle-plus/one-entrance/text": {
       "source": "… has but one entrance, magically sealed.",
-      "text": ""
+      "text": "… nur einen Eingang hat, der magisch versiegelt ist."
     },
     "choices/chronicle-plus/minor-magics/text": {
       "source": "… bears minor magics to preserve its contents.",
-      "text": ""
+      "text": "… mit kleineren Zaubern versehen ist, die ihren Inhalt bewahren."
     },
     "choices/chronicle-plus/warded/text": {
       "source": "… is warded against spirits and magic.",
-      "text": ""
+      "text": "… gegen Geister und Magie geschützt ist."
     },
     "choices/chronicle-plus/living-quarters/text": {
       "source": "… includes your living quarters & office.",
-      "text": ""
+      "text": "… deine Wohn- und Amtsräume umfasst."
     },
     "choices/chronicle-minus/outskirts/text": {
       "source": "… sits on the outskirts, near the Old Wall.",
-      "text": ""
+      "text": "… liegt sie am Stadtrand, nahe der Alten Mauer."
     },
     "choices/chronicle-minus/cramped/text": {
       "source": "… is cramped, chaotic, and overflowing.",
-      "text": ""
+      "text": "… ist sie beengt, chaotisch und überfüllt."
     },
     "choices/chronicle-minus/crude-cellar/text": {
       "source": "… is little more than a crude cellar.",
-      "text": ""
+      "text": "… ist sie kaum mehr als ein primitives Kellergewölbe."
     },
     "choices/chronicle-minus/haunted/text": {
       "source": "… seems to be haunted.",
-      "text": ""
+      "text": "… scheint es in ihr zu spuken."
     },
     "choices/chronicle-minus/dangerous-artifacts/text": {
       "source": "… contains a few dangerous artifacts.",
-      "text": ""
+      "text": "… enthält sie einige gefährliche Artefakte."
     },
     "choices/lawkeeper-shrine/shrine-hub/text": {
       "source": "… a hub of the community, a place of frequent rites, petitions, and celebrations.",
-      "text": ""
+      "text": "… ein Mittelpunkt der Gemeinschaft, ein Ort, an dem häufig Rituale, Bittgebete und Feierlichkeiten stattfinden."
     },
     "choices/lawkeeper-shrine/shrine-high-holiday/text": {
       "source": "… used only on high holidays, for each home keeps its own shrine above the hearth.",
-      "text": ""
+      "text": "… nur an hohen Feiertagen in Gebrauch, denn jedes Haus hat über der Feuerstelle seinen eigenen Schrein."
     },
     "choices/lawkeeper-shrine/shrine-neglected/text": {
       "source": "… neglected by most, tended only by you and a handful of believers.",
-      "text": ""
+      "text": "… von den meisten vernachlässigt, und wird nur von dir und einer Handvoll Gläubiger gepflegt."
     },
     "choices/lawkeeper-shrine/shrine-grim/text": {
       "source": "… a grim place of judgement and punishment, shunned by all but her chosen.",
-      "text": ""
+      "text": "… ein düsterer Ort des Gerichts und der Bestrafung, den alle außer ihren Auserwählten meiden."
     },
     "choices/lawkeeper-shrine/shrine-new/text": {
       "source": "… newly established, cramped and spare.",
-      "text": ""
+      "text": "… erst kürzlich errichtet, beengt und karg."
     },
     "choices/lawkeeper-demands/truth/text": {
       "source": "… truth, honesty, and forthrightness.",
-      "text": ""
+      "text": "… Wahrheit, Ehrlichkeit und Offenheit."
     },
     "choices/lawkeeper-demands/hospitality/text": {
       "source": "… hospitality, freely given to all who ask for it.",
-      "text": ""
+      "text": "… Gastfreundschaft, die jedem gewährt wird, der darum bittet."
     },
     "choices/lawkeeper-demands/punishment/text": {
       "source": "… the punishment of thieves & oathbreakers.",
-      "text": ""
+      "text": "… die Bestrafung von Dieben und Eidbrechern."
     },
     "choices/lawkeeper-demands/diet-dress/text": {
       "source": "… adherence to strict rules of diet and dress.",
-      "text": ""
+      "text": "… die Einhaltung strenger Regeln für Ernährung und Kleidung."
     },
     "choices/lawkeeper-demands/authority/text": {
       "source": "… respect for authority, property, and rank.",
-      "text": ""
+      "text": "… Respekt vor Autorität, Eigentum und Rang."
     },
     "instinct/0/options/ambition/text": {
       "source": "Ambition",
-      "text": ""
+      "text": "Ehrgeiz"
     },
     "instinct/0/options/ambition/description": {
       "source": "To increase your status or influence.",
-      "text": ""
+      "text": "Deinen Status oder deinen Einfluss zu mehren."
     },
     "instinct/0/options/dispassion/text": {
       "source": "Dispassion",
-      "text": ""
+      "text": "Unparteilichkeit"
     },
     "instinct/0/options/dispassion/description": {
       "source": "To disregard emotion or sentiment.",
-      "text": ""
+      "text": "Gefühle oder Sentimentalität außer Acht zu lassen."
     },
     "instinct/0/options/harmony/text": {
       "source": "Harmony",
-      "text": ""
+      "text": "Harmonie"
     },
     "instinct/0/options/harmony/description": {
       "source": "To seek a path that makes everyone happy.",
-      "text": ""
+      "text": "Einen Weg zu suchen, der alle zufriedenstellt."
     },
     "instinct/0/options/orthodoxy/text": {
       "source": "Orthodoxy",
-      "text": ""
+      "text": "Rechtgläubigkeit"
     },
     "instinct/0/options/orthodoxy/description": {
       "source": "To strictly adhere to rules and traditions.",
-      "text": ""
+      "text": "Sich strikt an Regeln und Traditionen zu halten."
     },
     "instinct/0/options/zeal/text": {
       "source": "Zeal",
-      "text": ""
+      "text": "Eifer"
     },
     "instinct/0/options/zeal/description": {
       "source": "To judge quickly and without doubt.",
-      "text": ""
+      "text": "Schnell und ohne Zweifel zu urteilen."
     },
     "appearance/0/options/eager-youth/text": {
       "source": "eager youth",
-      "text": ""
+      "text": "jugendlicher Eifer"
     },
     "appearance/0/options/in-my-prime/text": {
       "source": "in my prime",
-      "text": ""
+      "text": "in den besten Jahren"
     },
     "appearance/0/options/showing-my-years/text": {
       "source": "showing my years",
-      "text": ""
+      "text": "vom Alter gezeichnet"
     },
     "appearance/1/options/calm-voice/text": {
       "source": "calm voice",
-      "text": ""
+      "text": "ruhige Stimme"
     },
     "appearance/1/options/booming-voice/text": {
       "source": "booming voice",
-      "text": ""
+      "text": "dröhnende Stimme"
     },
     "appearance/1/options/a-voice-that-carries/text": {
       "source": "a voice that carries",
-      "text": ""
+      "text": "durchdringende Stimme"
     },
     "appearance/2/options/hard-body/text": {
       "source": "hard body",
-      "text": ""
+      "text": "abgehärteter Körper"
     },
     "appearance/2/options/powerful-frame/text": {
       "source": "powerful frame",
-      "text": ""
+      "text": "kräftige Statur"
     },
     "appearance/2/options/slim/text": {
       "source": "slim",
-      "text": ""
+      "text": "schlank"
     },
     "appearance/2/options/well-fed/text": {
       "source": "well-fed",
-      "text": ""
+      "text": "wohlgenährt"
     },
     "appearance/3/options/polished-gear/text": {
       "source": "polished gear",
-      "text": ""
+      "text": "gepflegte Ausrüstung"
     },
     "appearance/3/options/robes-of-office/text": {
       "source": "robes of office",
-      "text": ""
+      "text": "Amtsgewänder"
     },
     "appearance/3/options/modest-clothes/text": {
       "source": "modest clothes",
-      "text": ""
+      "text": "schlichte Kleidung"
     },
     "introductions/step3": {
       "source": "On your third turn, **describe the Chronicle**. Then, **tell us about Aratis and her shrine**, and what she demands of her true disciples.",
-      "text": ""
+      "text": "Wenn du zum dritten Mal an der Reihe bist, **beschreibe die Chronik**. **Erzähle uns anschließend von Aratis und ihrem Schrein** und davon, was sie von ihren wahren Anhängern verlangt."
     },
     "introductions/step4/closest-kin/text": {
       "source": "Who is your closest kin?",
-      "text": ""
+      "text": "Wer ist dein engster Verwandter?"
     },
     "introductions/step4/lover-spouse/text": {
       "source": "Who is your lover/spouse/betrothed?",
-      "text": ""
+      "text": "Wer ist dein Geliebter/Ehepartner/Verlobter?"
     },
     "introductions/step4/apprentice/text": {
       "source": "Who is your apprentice?",
-      "text": ""
+      "text": "Wer ist dein Lehrling?"
     },
     "introductions/step4/wisest-elder/text": {
       "source": "Who is the wisest of the town elders?",
-      "text": ""
+      "text": "Wer ist der weiseste unter den Dorfältesten?"
     },
     "introductions/step6/disciple-aratis/text": {
       "source": "Which one of you is a true disciple of Aratis?",
-      "text": ""
+      "text": "Wer von euch ist ein wahrer Jünger von Aratis?"
     },
     "introductions/step6/closest-confidant/text": {
       "source": "Which one of you is my closest confidant?",
-      "text": ""
+      "text": "Wer von euch ist mein engster Vertrauter?"
     },
     "introductions/step6/unnatural-chaos/text": {
       "source": "Which one of you has stood beside me in battle against unnatural chaos?",
-      "text": ""
+      "text": "Wer von euch hat im Kampf gegen das übernatürliche Chaos an meiner Seite gestanden?"
     },
     "introductions/step6/passed-judgement/text": {
       "source": "Against which of you have I passed judgement?",
-      "text": ""
+      "text": "Über wen von euch habe ich ein Urteil gefällt?"
     }
   },
   "the-lightbearer": {

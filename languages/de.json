@@ -6,16 +6,16 @@
       "steading": "Siedlung"
     },
     "Item": {
-      "move": "Move",
-      "arcanum": "Arcanum",
-      "playbook": "Playbook",
-      "insert": "Insert",
-      "improvement": "Improvement",
-      "steadfast": "Steadfast",
-      "follower": "Follower",
-      "npc": "NPC",
-      "outfitItem": "Outfit Item",
-      "possession": "Possession"
+      "move": "Spielzug",
+      "arcanum": "Arkanum",
+      "playbook": "Klassenbuch",
+      "insert": "Beilage",
+      "improvement": "Verbesserung",
+      "steadfast": "Siedlung",
+      "follower": "Gefolgsmann",
+      "npc": "NSC",
+      "outfitItem": "Ausrüstungsgegenstand",
+      "possession": "Besitz"
     }
   },
   "stonetop": {
@@ -42,16 +42,16 @@
         "followers": "Gefolgsleute",
         "notes": "Notizen"
       },
-      "collapseTop": "Collapse / expand header",
+      "collapseTop": "Kopfzeile ausblenden/einblenden",
       "notes": {
-        "bio": "Bio",
-        "notes": "Notes"
+        "bio": "Biographie",
+        "notes": "Notizen"
       },
       "lock": {
-        "lock": "Lock",
-        "lockHint": "Collapse your choices into a read-only summary.",
-        "unlock": "Edit",
-        "unlockHint": "Go back to editing your choices."
+        "lock": "Sperren",
+        "lockHint": "Fassen deine Auswahl in einer schreibgeschützten Übersicht zusammen.",
+        "unlock": "Bearbeiten",
+        "unlockHint": "Zurück zur Bearbeitung deiner Auswahl."
       },
       "playbook": {
         "emptyHint": "Wähle ein Klassenbuch aus oder ziehe es hierher, um zu beginnen.",
@@ -107,11 +107,11 @@
       }
     },
     "followers": {
-      "empty": "Drag followers here from the Followers compendium.",
-      "remove": "Remove",
-      "kind": "Kind",
-      "kindCreature": "Creature",
-      "kindObject": "Object (no combat stats)",
+      "empty": "Ziehe einen Gefolgsmann aus dem Kompendium hierher.",
+      "remove": "Entfernen",
+      "kind": "Art",
+      "kindCreature": "Kreatur",
+      "kindObject": "Gegenstand (keine Kampfwerte)",
       "hp": "TP",
       "armor": "Rüstung",
       "damage": "Schaden",
@@ -124,44 +124,44 @@
       "specialQuality": "Besonderheiten",
       "description": "Beschreibung",
       "notePlaceholder": "Eigenschaft…",
-      "add": "Add Follower",
-      "members": "Members",
+      "add": "Gefolgsmann hinzufügen",
+      "members": "Mitglied",
       "memberName": "Name…",
-      "addMember": "Add member",
-      "removeMember": "Remove member",
-      "customTag": "Type your own…",
-      "tags": "Tags",
-      "traits": "Traits",
-      "addTag": "tag",
-      "addTrait": "trait",
-      "companionType": "Type",
-      "companionOptions": "Options",
-      "addOption": "option",
-      "suggestedNames": "Suggested names",
+      "addMember": "Mitglied hinzufügen",
+      "removeMember": "Mitglied entfernen",
+      "customTag": "Gib deinen eigene ein…",
+      "tags": "Eigenschaften",
+      "traits": "Merkmale",
+      "addTag": "Eigenschaft",
+      "addTrait": "Merkmal",
+      "companionType": "Typ",
+      "companionOptions": "Optionen",
+      "addOption": "Option",
+      "suggestedNames": "Namensvorschläge",
       "groupTagTooltip": "A follower with the group tag represents multiple individuals who share stats and often act as one. Members of a group have the same tags, max HP, armor, damage, instinct, moves, and cost. They hold a common pool of Loyalty, but each have their own current HP. They typically Outfit with the same gear.",
       "inventory": "Inventar",
-      "inventoryToggle": "Add/remove gear",
-      "inventoryDone": "Done",
+      "inventoryToggle": "Ausrüstung hinzufügen/entfernen",
+      "inventoryDone": "Abgeschlossen",
       "noGear": "Keine Ausrüstung",
-      "loadTitle": "Load (total weight carried)",
+      "loadTitle": "Last (Gesamtgewicht der getragenen Ausrüstung)",
       "loadLight": "Leicht",
       "loadNormal": "Normal",
       "loadHeavy": "Schwer",
-      "loadCarriedHint": "Total ◇ this follower is carrying.",
+      "loadCarriedHint": "Gesamtanzahl an ◇ die dieser Gefolgsmann trägt.",
       "loadOver": "Carrying more than the {max} ◇ Outfit allows."
     },
     "insert": {
-      "remove": "Remove",
-      "description": "Description",
-      "moves": "Moves",
-      "addMove": "Add move",
-      "startingMove": "Starts acquired (active when the insert is granted)",
-      "namePlaceholder": "Insert name",
-      "instinct": "Instinct",
-      "addInstinct": "Add instinct",
-      "removeInstinct": "Remove instinct",
-      "choices": "Choices",
-      "addChoices": "Add choices group"
+      "remove": "Entfernen",
+      "description": "Beschreibung",
+      "moves": "Spielzüge",
+      "addMove": "Spielzug hinzufügen",
+      "startingMove": "Erworbene Spielzüge (aktiv, sobald die Beilage gewährt wurde)",
+      "namePlaceholder": "Name hinzufügen",
+      "instinct": "Instinkt",
+      "addInstinct": "Instinkt hinzufügen",
+      "removeInstinct": "Instinkt entfernen",
+      "choices": "Auswahl",
+      "addChoices": "Auswahlgruppe hinzufügen"
     },
     "playbook": {
       "tabs": {
@@ -184,21 +184,21 @@
       "damage": "Damage die",
       "statsNote": "Stats note",
       "startingMovesNote": "Starting moves note",
-      "backgrounds": "Backgrounds",
-      "addBackground": "Add background",
-      "backgroundLabel": "Background name",
+      "backgrounds": "Hintergründe",
+      "addBackground": "Hintergrund hinzufügen",
+      "backgroundLabel": "Hintergrundbezeichnung",
       "backgroundDescription": "Background description (markdown)",
       "grantedMoves": "Granted moves",
       "backgroundChoices": "Background choices",
       "removeChoices": "Remove choices",
       "addChoices": "Add choices group",
-      "origin": "Origin",
-      "addOrigin": "Add region",
+      "origin": "Herkunft",
+      "addOrigin": "Region hinzufügen",
       "originRegion": "Region",
       "originNames": "Names (one per line)",
-      "instinct": "Instinct",
-      "addInstinct": "Add instinct",
-      "appearance": "Appearance",
+      "instinct": "Instinkt",
+      "addInstinct": "Instinkt hinzufügen",
+      "appearance": "Aussehen",
       "addGroup": "Add group",
       "removeGroup": "Remove group",
       "choices": "Choices",
@@ -531,7 +531,7 @@
         "specialPossessions": "Besondere Besitztümer"
       },
       "moveTypes": {
-        "background": "Background"
+        "background": "Hintergrund"
       },
       "moves": {
         "pickTitle": "Choose Starting Moves",
@@ -673,11 +673,11 @@
         "warm": "will keep you warm in cold weather, but it’s uncomfortable and exhausting (and possibly dangerous) in hot weather."
       },
       "range": {
-        "hand": "tight quarters; up close and personal.",
-        "close": "melee range, 1-2 steps away.",
-        "reach": "3-4 steps away.",
-        "near": "up to 30 or so steps away.",
-        "far": "quite the distance; up to 100 steps, maybe more."
+        "hand": "Auf engstem Raum, hautnah und persönlich.",
+        "close": "Nahkampfbereich, 1-2 Schritte entfernt.",
+        "reach": "3-4 Schritte entfernt.",
+        "near": "Bis zu 30 oder mehr Schritte entfernt.",
+        "far": "Ziemlich weit weg, bis zu 100 Schritte, vielleicht mehr."
       },
       "artifact": {
         "beautiful": "draws attention, makes some people want it",

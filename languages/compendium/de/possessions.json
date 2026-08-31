@@ -856,15 +856,15 @@
   "heap-of-expectations": {
     "name": {
       "source": "A heap of expectations",
-      "text": ""
+      "text": "Ein Haufen Erwartungen"
     },
     "label": {
       "source": "A heap of expectations",
-      "text": ""
+      "text": "Ein Haufen Erwartungen"
     },
     "description": {
       "source": "of little use",
-      "text": ""
+      "text": "von geringem Nutzen"
     }
   },
   "herb-garden": {
@@ -892,15 +892,15 @@
   "hidden-stash": {
     "name": {
       "source": "Hidden stash",
-      "text": ""
+      "text": "Geheimes Versteck"
     },
     "label": {
       "source": "Hidden stash",
-      "text": ""
+      "text": "Geheimes Versteck"
     },
     "description": {
       "source": "each use produces valuables worth a purse of silvers (Value 2).",
-      "text": ""
+      "text": "jede Anwendung liefert Wertgegenstände im Wert eines Beutels Silber (Wert 2)."
     }
   },
   "hideouts": {
@@ -934,15 +934,15 @@
   "hounds": {
     "name": {
       "source": "Hounds",
-      "text": ""
+      "text": "Jagdhunde"
     },
     "label": {
       "source": "Hounds",
-      "text": ""
+      "text": "Jagdhunde"
     },
     "description": {
       "source": "2-3 followers (*alert, keen-nosed, fierce, overprotective*); HP 6; Damage d6 (*hand, grabby*); Instinct: to bark & threaten; Cost: affection.",
-      "text": ""
+      "text": "2–3 Gefolgsleute (Fährtenleser, feine Nasen, Schnell); TP 6; Schaden 1W6 (*Hand, Fesselnd*); Instinkt: Verfolgung aufnehmen; Kosten: Ausbildung."
     }
   },
   "husbandry-tools": {
