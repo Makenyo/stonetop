@@ -202,23 +202,23 @@
   "amulets-talismans": {
     "name": {
       "source": "Amulets & Talismans",
-      "text": ""
+      "text": "Amulette & Talismane"
     },
     "description": {
       "source": "When you **_craft a protective charm for someone_**, spend 1 Stock and name a source of harm (fire, stabbing, etc.). When **_they would suffer such harm while bearing your charm_**, roll +INT: **on a 10+**, they ignore the harm entirely; **_on a 7-9_**, they suffer only half the damage or effect; **on a 6-**, they suffer the harm normally. One can benefit from only 1 charm at a time, and it loses its potency after 1 use.",
-      "text": ""
+      "text": "Wenn du **_für jemanden einen Schutzzauber anfertigst_**, gib 1 Vorrat aus und nenne eine Schadensquelle (Feuer, Stichverletzung usw.). Wenn die Person, **_die deinen Zauber trägt, solchen Schaden erleiden würde_**, würfle +IN. **Bei einer 10+** ignoriert sie den Schaden vollständig. **Bei 7–9** erleidet sie nur den halben Schaden oder Effekt. **Bei einer 6−** erleidet sie den Schaden wie üblich. Eine Person kann immer nur von 1 Zauber gleichzeitig profitieren, und nach einer Anwendung verliert der Zauber seine Wirkung."
     },
     "moveResults/success/value": {
       "source": "They ignore the harm entirely.",
-      "text": ""
+      "text": "Sie ignoriert den Schaden vollständig."
     },
     "moveResults/partial/value": {
       "source": "They suffer only half the damage or effect.",
-      "text": ""
+      "text": "Sie erleidet nur den halben Schaden oder Effekt."
     },
     "moveResults/failure/value": {
       "source": "They suffer the harm normally.",
-      "text": ""
+      "text": "Sie erleidet den Schaden wie üblich."
     }
   },
   "and-behold-a-pale-horse": {
@@ -308,11 +308,11 @@
   "barkskin": {
     "name": {
       "source": "Barkskin",
-      "text": ""
+      "text": "Rindenhaut"
     },
     "description": {
       "source": "When you **_are touching the earth_**, you have 2 armor. When you **_mark another with 1 Stock_**, they gain this benefit so long as the mark remains.",
-      "text": ""
+      "text": "Wenn du **_den Boden berührst_**, hast du 2 Rüstung. Wenn du **_jemand anderen markierst und 1 Vorrat verbrauchst_**, erhält er diesen Vorteil, solange die Markierung bestehen bleibt."
     }
   },
   "battery": {
@@ -430,11 +430,11 @@
   "big-magic": {
     "name": {
       "source": "Big Magic",
-      "text": ""
+      "text": "Große Magie"
     },
     "description": {
       "source": "Each time you take this move, choose an additional remarkable trait for your sacred pouch and increase your max Stock by 2.",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle eine weitere außergewöhnliche Eigenschaft für deinen heiligen Beutel und erhöhe deinen maximalen Vorrat um 2."
     }
   },
   "binding-arbitration": {
@@ -474,23 +474,23 @@
   "borrow-power": {
     "name": {
       "source": "Borrow Power",
-      "text": ""
+      "text": "Geliehene Kraft"
     },
     "description": {
       "source": "When **_a spirit or beast loans you power_**, ask the GM for one of its tags or moves. Store it in your pouch in place of 1 Stock. When you **_use the borrowed tag or move_**, roll +WIS.",
-      "text": ""
+      "text": "Wenn **_ein Geist oder eine Bestie dir eine Kraft verleiht_**, frage den SL nach einer seiner Eigenschaften oder einem seiner Spielzüge. Bewahre diese Kraft in deinem Beutel anstelle von 1 Vorrat auf. Wenn du **_die geliehene Eigenschaft oder den Spielzug einsetzt_**, würfle +WE. **Bei einer 10+** gelingt es dir, und du kannst die Kraft erneut einsetzen. **Bei 7–9** gelingt es dir, aber du verlierst die Kraft."
     },
     "moveResults/success/value": {
       "source": "You do it and can use the power again.",
-      "text": ""
+      "text": "Es gelingt dir, und du kannst die Kraft erneut einsetzen."
     },
     "moveResults/partial/value": {
       "source": "You do it, but lose the power.",
-      "text": ""
+      "text": "Es gelingt dir, aber du verlierst die Kraft."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL führt einen Spielzug aus."
     }
   },
   "break-bread": {
@@ -632,11 +632,11 @@
   "call-the-spirits": {
     "name": {
       "source": "Call the Spirits",
-      "text": ""
+      "text": "Geister rufen"
     },
     "description": {
       "source": "When you **_spend 1 Stock and perform a short rite_**, the spirit(s) of a place or object manifest and hear you out. What they do next is up to them.",
-      "text": ""
+      "text": "Wenn du **_1 Vorrat ausgibst und ein kurzes Ritual durchführst_**, manifestieren sich die Geister eines Ortes oder eines Gegenstands und hören dir zu. Was sie danach tun, liegt ganz bei ihnen."
     }
   },
   "call-up-the-deep-ones": {
@@ -936,23 +936,23 @@
   "danus-grasp": {
     "name": {
       "source": "Danu's Grasp",
-      "text": ""
+      "text": "Danus Griff"
     },
     "description": {
       "source": "When you **_call on the world itself to bind a spirit or a perversion of nature_**, spend 1 Stock and roll +WIS: **_on a 7+_**, roots, vines, and earth pull at them, and they pick 1; **on a 10+**, as a 7-9, but both apply.\n\n- They're restrained, unable to act freely until your focus slips or they tear their way free\n- They take 2d4 damage (ignores armor)\nIf this brings them to 0 HP, they are pulled into the earth and bound in rune-etched stone.",
-      "text": ""
+      "text": "Wenn du **_die Welt selbst anrufst, um einen Geist oder eine Perversion der Natur zu binden_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 7+** greifen Wurzeln, Ranken und Erde nach ihnen, und sie wählen eines. **Bei einer 10+**, wie bei 7–9, aber beide Effekte treten ein.\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung).\nWenn ihre TP dadurch auf 0 sinken, werden sie in die Erde gezogen und in einen mit Runen verzierten Stein verwandelt."
     },
     "moveResults/success/value": {
       "source": "As 7-9, but both apply.",
-      "text": ""
+      "text": "Wie bei 7–9, aber beides trifft zu."
     },
     "moveResults/partial/value": {
       "source": "Roots, vines, and earth pull at them, and they pick 1: restrained until your focus slips or they tear free; OR they take 2d4 damage (ignores armor).",
-      "text": ""
+      "text": "Wurzeln, Ranken und Erde greifen nach ihnen und sie wählen eines:\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL führt einen Spielzug aus."
     }
   },
   "dark-succor": {
@@ -1530,21 +1530,21 @@
   "healers-arts": {
     "name": {
       "source": "Healer's Arts",
-      "text": ""
+      "text": "Heilkunst"
     },
     "description": {
       "source": "When **_someone Recovers under your care_**, they recover extra HP equal to your WIS. If you also spend 1 Stock, they heal an extra 5 HP and their wounds/injuries are stabilized.",
-      "text": ""
+      "text": "Wenn **_sich jemand unter deiner Obhut Erholt_**, erhält die Person zusätzlich TP in Höhe deiner Weisheit. Wenn du **_außerdem 1 Vorrat ausgibst_**, heilt sie zusätzlich 5 TP, und ihre Wunden/Verletzungen werden stabilisiert."
     }
   },
   "heed-my-words": {
     "name": {
       "source": "Heed My Words",
-      "text": ""
+      "text": "Hör auf meine Worte"
     },
     "description": {
       "source": "When you **_Persuade by talking sense or warning against foolishness_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_durch vernünftige Argumente oder Warnungen vor törichtem Verhalten Überredest_**, hast du einen Vorteil."
     }
   },
   "heliors-unblinking-eye": {
@@ -1764,11 +1764,11 @@
   "into-the-lions-den": {
     "name": {
       "source": "Into the Lion's Den",
-      "text": ""
+      "text": "In die Höhle des Löwen"
     },
     "description": {
       "source": "When you **_approach a beast calmly and show no fear_**, it will not harm you (though it may threaten you and test your nerve). When you **_lay your hand gently upon a beast_**, it calms to your touch.",
-      "text": ""
+      "text": "Wenn du **_dich einem Tier ruhig näherst und keine Angst zeigst_**, wird es dir nichts tun – auch wenn es dich bedroht und deinen Mut auf die Probe stellen mag. Wenn du **_deine Hand sanft auf ein Tier legst_**, beruhigt es sich unter deiner Berührung."
     }
   },
   "invoke-the-sun-god": {
@@ -1962,11 +1962,11 @@
   "lightning-rod": {
     "name": {
       "source": "Lightning Rod",
-      "text": ""
+      "text": "Blitzableiter"
     },
     "description": {
       "source": "When you **_Defend while touching the earth_**, you can spend 1 Readiness to intercept a nearby magical attack and redirect it harmlessly into the ground.",
-      "text": ""
+      "text": "Wenn du **_Verteidigst, während du den Boden berührst_**, kannst du 1 Bereitschaft ausgeben, um einen magischen Angriff in der Nähe abzufangen und ihn harmlos in den Boden umzulenken."
     }
   },
   "like-a-dog-with-a-bone": {
@@ -2222,11 +2222,11 @@
   "natures-wrath": {
     "name": {
       "source": "Nature's Wrath",
-      "text": ""
+      "text": "Zorn der Natur"
     },
     "description": {
       "source": "Danu's Grasp gains the area tag and can affect any creature. A mortal reduced to 0 HP is subdued or killed (your choice) rather than bound in stone.",
-      "text": ""
+      "text": "Danus Griff erhält die Eigenschaft Bereich und kann beliebig viele Wesen treffen. Ein Sterblicher, dessen TP auf 0 fallen, wird überwältigt oder getötet (deine Wahl), anstatt in Stein verwandelt zu werden."
     }
   },
   "nemesis": {
@@ -2450,11 +2450,11 @@
   "potent-workings": {
     "name": {
       "source": "Potent Workings",
-      "text": ""
+      "text": "Machtvolles wirken"
     },
     "description": {
       "source": "When you **_craft a protective charm_**, you may spend 1 additional Stock to choose 1:\n\n- Name an additional type of harm\n- **On a 10+**, the charm retains its potency",
-      "text": ""
+      "text": "Wenn du **_einen Schutzzauber anfertigst_**, kannst du 1 zusätzlichen Vorrat ausgeben, um eines zu wählen:\n\n- Benenne eine zusätzliche Schadensquelle.\n- Bei einer 10+ behält der Schutzzauber seine Wirkung."
     }
   },
   "potential-for-greatness": {
@@ -2814,11 +2814,11 @@
   "rites-of-the-land": {
     "name": {
       "source": "Rites of the Land",
-      "text": ""
+      "text": "Riten des Landes"
     },
     "description": {
       "source": "Once per season, when you oversee the sacred rites, hold 1 Favor. If you also sacrifice 1 Surplus, hold 4 Favor instead. Spend Favor in lieu of Stock, 1-for-1.\n\nWhen you **_publicly sacrifice something or someone much-loved_**, either clear a steading debility or gain advantage when the steading next rolls +Fortunes.",
-      "text": ""
+      "text": "Einmal pro Jahreszeit, wenn du **_die heiligen Rituale leitest_**, erhältst du 1 Gunst. Opferst du zusätzlich 1 Überschuss, erhältst du stattdessen 4 Gunst. Gib Gunst im Verhältnis 1:1 anstelle von Vorrat aus.\n\nWenn du **_etwas oder jemanden, den du von Herzen liebst, öffentlich opferst_**, beseitige entweder eine Beeinträchtigung der Siedlung oder erhalte einen Vorteil, wenn die Siedlung das nächste Mal +Schicksal würfelt."
     }
   },
   "roots-of-the-elder-tree": {
@@ -3052,11 +3052,11 @@
   "shared-souls": {
     "name": {
       "source": "Shared Souls",
-      "text": ""
+      "text": "Verbundene Seelen"
     },
     "description": {
       "source": "When you **_mark a beast with 1 Stock_**, you can direct its actions and perceive through its senses no matter the distance between you. Treat it as a follower with 3 Loyalty; when you spend its last Loyalty, the effect ends.",
-      "text": ""
+      "text": "Wenn du **_ein Tier mit 1 Vorrat markierst_**, kannst du seine Handlungen lenken und durch seine Sinne wahrnehmen, unabhängig davon, wie weit ihr voneinander entfernt seid. Behandle es wie einen Gefolgsmann mit 3 Loyalität. Wenn du seine letzte Loyalität aufgebraucht hast, endet der Effekt."
     }
   },
   "shield-wall": {
@@ -3222,11 +3222,11 @@
   "spirit-tongue": {
     "name": {
       "source": "Spirit Tongue",
-      "text": ""
+      "text": "Geisterzunge"
     },
     "description": {
       "source": "You can speak with beasts and spirits. You can always ask the GM, \"What spirits are active here?\" and get an honest answer.",
-      "text": ""
+      "text": "Du kannst mit natürlichen Tieren und Geistern sprechen und die SL jederzeit fragen: \"Welche Geister sind hier aktiv?\". Du erhältst eine ehrliche Antwort."
     }
   },
   "spirits-of-the-herd": {
@@ -3374,23 +3374,23 @@
   "suck-the-poison-out": {
     "name": {
       "source": "Suck the Poison Out",
-      "text": ""
+      "text": "Das Gift heraussaugen"
     },
     "description": {
       "source": "When you **_draw a malady from a patient's body, mind, or soul_**, spend 1 Stock and roll +WIS.",
-      "text": ""
+      "text": "Wenn du **_ein Leiden aus dem Körper, dem Geist oder der Seele eines Patienten ziehst_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 10+** entfernst du das Leiden und kannst es gefahrlos entsorgen oder in deinem heiligen Beutel aufbewahren (und dafür den Platz von 1 Vorrat beanspruchen), um es zu untersuchen oder um es auf jemand anderen zu übertragen. **Bei 7-9** entfernst du es, aber wähle eines:\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
     },
     "moveResults/success/value": {
       "source": "You remove the malady and can safely discard it or store it in your sacred pouch (taking the space of 1 Stock) to study or inflict on another.",
-      "text": ""
+      "text": "Du entfernst das Leiden und kannst es gefahrlos entsorgen oder in deinem heiligen Beutel aufbewahren (und dafür den Platz von 1 Vorrat beanspruchen), um es zu untersuchen oder um es auf jemand anderen zu übertragen. "
     },
     "moveResults/partial/value": {
       "source": "You remove it, but choose 1: your patient suffers lingering harm or trauma; OR you suffer some of the malady's effects; OR it will be harmful and dangerous to discard.",
-      "text": ""
+      "text": "Du entfernst es, aber wähle eines:\n\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL führt einen Spielzug aus."
     }
   },
   "suffering-unleashed": {
@@ -3558,11 +3558,11 @@
   "trackless-step": {
     "name": {
       "source": "Trackless Step",
-      "text": ""
+      "text": "Spurloser Schritt"
     },
     "description": {
       "source": "When you **_move through nature with care and patience_**, you make no sound, leave no trace and can ignore any hindering or treacherous terrain (briars, mire, scree, etc.). When you **_spend 1 Stock and mark others_**, they each gain this benefit so long as the mark remains. 1 Stock can mark a number of individuals up to your level +INT.",
-      "text": ""
+      "text": "Wenn du **_dich mit Sorgfalt und Geduld durch die Natur bewegst_**, verursachst du keinen Laut, hinterlässt keine Spuren und kannst jedes hinderliche oder tückische Gelände ignorieren (Dornenranken, Sumpf, Geröll usw.). Wenn du **_1 Vorrat ausgibst und andere markierst_**, erhalten sie diesen Vorteil ebenfalls, solange die Markierung bestehen bleibt. Mit 1 Vorrat kannst du eine Anzahl von Personen markieren, die höchstens deiner Stufe +IN entspricht."
     }
   },
   "trade-barter": {
@@ -3784,23 +3784,23 @@
   "veil": {
     "name": {
       "source": "Veil",
-      "text": ""
+      "text": "Schleier"
     },
     "description": {
       "source": "When you **_wrap yourself or another in a subtle veil_**, spend 1 Stock and choose 1:\n\n- A type of being you name (including \"people\") will tend to ignore your presence\n- People will perceive you as someone else, though you must wear something of an individual's in order to impersonate them\nWhen **_your deception comes under scrutiny_**, roll +INT.",
-      "text": ""
+      "text": "Wenn du **_dich selbst oder jemand anderen mit einem subtilen Schleier umhüllst_**, gib 1 Vorrat aus und wähle eines:\n\n- Eine von dir benannte Art von Wesen (einschließlich \"Menschen\") wird dazu neigen, deine Anwesenheit zu ignorieren.\n- Menschen nehmen dich als jemand anderen wahr, allerdings musst du etwas von der betreffenden Person tragen, um sie nachzuahmen.\nWenn **_deine Täuschung auf die Probe gestellt wird_**, würfle +IN. **Bei einer 10+** hält der Schleier, und niemand schöpft Verdacht. **Bei 7–9** hält der Schleier, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
     },
     "moveResults/success/value": {
       "source": "The veil holds, and no one is the wiser.",
-      "text": ""
+      "text": "Der Schleier hält, und niemand schöpft Verdacht."
     },
     "moveResults/partial/value": {
       "source": "The veil holds, but there is further scrutiny or a complication (GM's choice).",
-      "text": ""
+      "text": "Der Schleier hält, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL führt einen Spielzug aus."
     }
   },
   "versatile": {
@@ -3846,11 +3846,11 @@
   "voice-of-the-earth-mother": {
     "name": {
       "source": "Voice of the Earth Mother",
-      "text": ""
+      "text": "Stimme der Erdmutter"
     },
     "description": {
       "source": "When you **_speak on behalf of Danu_**, natural beasts and spirits of the wild respect your authority. All but the most headstrong will do as you command, even against their instincts.",
-      "text": ""
+      "text": "Wenn du **_im Namen Danus sprichst_**, respektieren natürliche Tiere und Naturgeister deine Autorität. Alle außer den eigensinnigsten Wesen werden deinen Befehlen gehorchen, selbst wenn sie damit gegen ihre Instinkte handeln."
     }
   },
   "walk-it-off": {
@@ -3876,23 +3876,23 @@
   "wards-bindings": {
     "name": {
       "source": "Wards & Bindings",
-      "text": ""
+      "text": "Mauern und Fesseln"
     },
     "description": {
       "source": "When you **_mark a boundary with sacred signs_**, spend 1 Stock and describe who or what they affect (using no more words than your level). Also, choose whether the affected beings are repelled or trapped by the signs.\n\nWhen **_your wards or bindings are first tested_**, roll +INT.",
-      "text": ""
+      "text": "Wenn du **_einen Bereich mit heiligen Zeichen versiehst_**, gib 1 Vorrat aus und beschreibe, wen oder was sie betreffen (verwende nicht mehr Worte als deine Stufe entspricht). Entscheide außerdem, ob die betroffenen Wesen von den Zeichen abgehalten oder durch sie gefangen werden.\n\nWenn **_deine Schutzzeichen oder Bannungen erstmals auf die Probe gestellt werden_**, würfle +IN. **Bei einer 10+** halten sie stand, solange die Zeichen unbeschädigt bleiben (und das betroffene Wesen nichts tun kann, um sie direkt zu beeinflussen). **Bei 7–9** halten sie vorerst stand, können aber durch körperliche Gewalt oder Willenskraft überwunden werden."
     },
     "moveResults/success/value": {
       "source": "They will hold as long as the signs remain unmarred, and the affected creature can do nothing to affect them directly.",
-      "text": ""
+      "text": "Sie halten stand, solange die Zeichen unbeschädigt bleiben (und das betroffene Wesen nichts tun kann, um sie direkt zu beeinflussen)."
     },
     "moveResults/partial/value": {
       "source": "They hold for now but may be overcome through might or will.",
-      "text": ""
+      "text": "Sie halten vorerst stand, können aber durch körperliche Gewalt oder Willenskraft überwunden werden."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL führt einen Spielzug aus."
     }
   },
   "we-are-as-one": {
@@ -3982,11 +3982,11 @@
   "wild-soul": {
     "name": {
       "source": "Wild Soul",
-      "text": ""
+      "text": "Wilde Seele"
     },
     "description": {
       "source": "Each time you take this move, gain a Ranger move of your choice for which you qualify. You can't pick Improved Stat or Superior Stat.",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle einen Spielzug aus dem Spielbuch des Waldläufers deiner Wahl, für den du die Voraussetzungen erfüllst. Du kannst weder Verbessertes Attribut noch Überragendes Attribut wählen."
     }
   },
   "wild-speech": {
