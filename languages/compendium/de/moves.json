@@ -118,19 +118,19 @@
   "all-in-the-wrist": {
     "name": {
       "source": "All in the Wrist",
-      "text": ""
+      "text": "Aus dem Handgelenk"
     },
     "description": {
       "source": "Any knife or dagger gets the thrown tag in your hands. Also, you keep a few iron throwing blades (near) on you; they don't take up space in your inventory. Reset your ammo whenever you Outfit.",
-      "text": ""
+      "text": "Messer und Dolche erhalten in deinen Händen die Eigenschaft Geworfen und Nah. Außerdem hast du immer ein paar Wurfmesser bei dir, die in deinem Inventar keinen Platz einnehmen. Fülle deine Munition jedes Mal wieder auf, wenn du dich Ausrüstest."
     },
     "resource/labels/a-few-left": {
       "source": "a few left",
-      "text": ""
+      "text": "noch ein paar übrig"
     },
     "resource/labels/out": {
       "source": "out",
-      "text": ""
+      "text": "alle aufgebraucht"
     }
   },
   "all-is-illuminated": {
@@ -152,7 +152,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "alpha": {
@@ -166,25 +166,25 @@
     },
     "moveResults/success/value": {
       "source": "They pick 1 from the list and you have advantage on your next roll against them.",
-      "text": ""
+      "text": "Das Wesen muss eine der folgenden Optionen wählen. Außerdem hast du einen Vorteil bei deinem nächsten Wurf gegen dieses Wesen."
     },
     "moveResults/partial/value": {
       "source": "They pick 1 from the list.",
-      "text": ""
+      "text": "Das Wesen muss eine der folgenden Optionen wählen."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "ambush": {
     "name": {
       "source": "Ambush",
-      "text": ""
+      "text": "Hinterhältiger Angriff"
     },
     "description": {
       "source": "When you **_get the drop on a nearby foe_**, you can deal your damage or opt to roll +DEX: **on a 10+**, deal your damage and pick 2; **_on a 7-9_**, deal damage and pick 1:\n\n- Deal +1d4 damage\n- Stop them from making noise/raising an alarm\n- Slip away before they can react\n- Create an opportunity; you or an ally gains advantage on the next move to act on it",
-      "text": ""
+      "text": "Wenn du **_einen Gegner in deiner Nähe überraschst_**, kannst du deinen Schaden verursachen oder stattdessen +GE würfeln. **Bei einer 10+** verursachst du deinen Schaden und wählst zwei. **Bei 7–9** verursachst du deinen Schaden und wählst eines.\n\n- Verursache +1W4 Schaden.\n- Hindere ihn daran, Lärm zu verursachen oder Alarm zu schlagen.\n- Entkomme, bevor er reagieren kann.\n- Schaffe eine Gelegenheit; du oder ein Verbündeter erhält einen Vorteil beim nächsten Spielzug, mit dem ihr diese nutzt."
     },
     "moveResults/success/value": {
       "source": "Deal your damage and pick 2 from the list.",
@@ -196,7 +196,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "amulets-talismans": {
@@ -328,11 +328,11 @@
   "battle-dancer": {
     "name": {
       "source": "Battle Dancer",
-      "text": ""
+      "text": "Kampftänzer"
     },
     "description": {
       "source": "When you **_roll +DEX to Clash_**, on a 12+ you deal your damage, avoid your enemy's attack, and impress/embarrass/overawe your foes.",
-      "text": ""
+      "text": "Wenn du **_beim hauen & stechen mit +GE würfelst und eine 12+ erzielst_**, fügst du deinen Schaden zu, weichst dem gegnerischen Angriff aus und beeindruckst, blamierst oder schüchterst deine Feinde ein."
     }
   },
   "battle-joy": {
@@ -394,7 +394,7 @@
     },
     "description": {
       "source": "While in your Battle Joy, add the area tag to your melee attacks, lashing out at anyone nearby (friend and foe alike). Roll damage separately for each target.",
-      "text": "Während **_deines Kampfrauschs_** erhalten deine Nahkampfangriffe die Eigenschaft Bereich und du schlägst auf alle in deiner Nähe befindlichen Personen ein (egal ob Freund oder Feind). Würfle den Schaden für jedes Ziel einzeln."
+      "text": "Während **_deines Kampfrauschs_** erhalten deine Nahkampfangriffe die Eigenschaft **Bereich** und du schlägst auf alle in deiner Nähe befindlichen Personen ein (egal ob Freund oder Feind). Würfle den Schaden für jedes Ziel einzeln."
     }
   },
   "better-part-of-valor": {
@@ -490,7 +490,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "break-bread": {
@@ -526,11 +526,11 @@
   "burgle": {
     "name": {
       "source": "Burgle",
-      "text": ""
+      "text": "Einbruch"
     },
     "description": {
       "source": "When you **_sneak off on your own into a dangerous place_**, roll +INT: **_on a 7+_**, you make it back, and the GM says where you got to and what you learned. Then, **on a 10+**, also pick 2; **_on a 7-9_**, also pick 1:\n\n- You got away clean, rousing no suspicion\n- You swiped something valuable (GM's choice)\n- You set something up to exploit on your return\n- Ask a Seek Insight question about what you saw\nOn a 6-, you either make it back but with trouble in tow, or you're missing in action (your call).",
-      "text": ""
+      "text": "Wenn du **_dich allein an einen gefährlichen Ort schleichst_**, würfle +IN. **Bei einer 7+** schaffst du es zurück, und die SL sagt dir, wo du warst  und was du herausgefunden hast. **Bei einer 10+** wählst du zusätzlich zwei der folgenden Optionen. **Bei 7–9** wählst du zusätzlich eine.\n\n- Du bist unbemerkt davongekommen und hast keinen Verdacht erregt.\n- Du hast etwas Wertvolles gestohlen (nach Wahl der SL).\n- Du hast etwas vorbereitet, das du bei deiner Rückkehr ausnutzen kannst.\n- Stelle eine Frage aus der Liste von Einsicht Suchen über das, was du gesehen hast.\n\nBei einer 6- schaffst du es entweder zurück, aber bringst Ärger mit dir, oder du wirst vermisst (deine Wahl)."
     },
     "moveResults/success/value": {
       "source": "You make it back. Pick 2 from the list.",
@@ -626,7 +626,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "call-the-spirits": {
@@ -710,11 +710,11 @@
   "catlike": {
     "name": {
       "source": "Catlike",
-      "text": ""
+      "text": "Katzenhaft"
     },
     "description": {
       "source": "When you **_carry a light load and act with care_**, you move silently. When you **_hide in shadows or darkness_**, you remain unseen until you draw attention to yourself, move positions, or attack.",
-      "text": ""
+      "text": "Wenn du **_eine leichte Last trägst und dich vorsichtig bewegst_**, gibst du keinerlei Geräusche von dir. Wenn du **_dich im Schatten oder in der Dunkelheit versteckst_**, bleibst du unsichtbar, bis du Aufmerksamkeit auf dich lenkst, die Position wechselst oder angreifst."
     }
   },
   "censure": {
@@ -740,11 +740,11 @@
   "cheap-shot": {
     "name": {
       "source": "Cheap Shot",
-      "text": ""
+      "text": "Fieser Trick"
     },
     "description": {
       "source": "When you **_Ambush with a hand weapon_**, you have advantage on your damage roll.",
-      "text": ""
+      "text": "Wenn du **_bei einem hinterhältigen Angriff eine Waffe mit der Eigenschaft Hand benutzt_**, hast du bei deinem Schadenswurf einen Vorteil."
     }
   },
   "chosen-of-the-storm-bringer": {
@@ -878,7 +878,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "cut-from-granite": {
@@ -894,21 +894,21 @@
   "dabbler": {
     "name": {
       "source": "Dabbler",
-      "text": ""
+      "text": "Alleskönner"
     },
     "description": {
       "source": "Each time you take this move, choose a move from the Heavy, Marshal, Ranger, or Seeker playbooks for which you otherwise qualify. (You can't take Improved Stat or Superior Stat.)",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle einen Spielzug aus den Klassenbüchern Brecher, Marschall, Waldläufer oder Suchender, für den du die Voraussetzungen erfüllst. Du kannst weder Verbessertes Attribut noch Überragendes Attribut wählen."
     }
   },
   "danger-sense": {
     "name": {
       "source": "Danger Sense",
-      "text": ""
+      "text": "Gefahrensinn"
     },
     "description": {
       "source": "You can always ask the GM, \"Is there an ambush or trap here?\" If they say \"yes,\" roll +INT: **on a 10+**, ask the GM both of the questions below; **_on a 7-9_**, ask 1; either way, gain advantage on your next roll to act on the answer(s).\n\n- What will trigger the ambush or trap?\n- What will happen once it's triggered?\nOn a 6-, don't mark XP; you know there's a trap or ambush, but nothing bad happens just yet.",
-      "text": ""
+      "text": "Du kannst den SL jederzeit fragen: „Gibt es hier einen Hinterhalt oder eine Falle?“ Wenn er „Ja“ sagt, würfle +IN. Bei einer 10+ stellst du dem SL beide der folgenden Fragen. Bei 7-9 stellst du eine. In jedem Fall erhältst du bei deinem nächsten Wurf einen Vorteil, wenn du entsprechend seiner Antwort(en) reagierst.\n\n- Wodurch wird der Hinterhalt oder die Falle ausgelöst?\n- Was wird passieren, wenn sie ausgelöst wird?\n\nBei einer 6- markierst du keine EP. Du weißt, dass es eine Falle oder einen Hinterhalt gibt, aber vorerst geschieht nichts Schlimmes."
     },
     "moveResults/success/value": {
       "source": "Ask both questions.",
@@ -926,11 +926,11 @@
   "dangerous": {
     "name": {
       "source": "Dangerous",
-      "text": ""
+      "text": "Gefährlich"
     },
     "description": {
       "source": "When you **_deal your damage_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_deinen Schaden verursachst_**, hast du einen Vorteil."
     }
   },
   "danus-grasp": {
@@ -952,7 +952,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "dark-succor": {
@@ -1100,7 +1100,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "destined": {
@@ -1190,11 +1190,11 @@
   "everything-bleeds": {
     "name": {
       "source": "Everything Bleeds",
-      "text": ""
+      "text": "Alles blutet"
     },
     "description": {
       "source": "When you **_exploit an unnatural foe's specific weakness or vulnerability_**, deal +1d6 damage.",
-      "text": ""
+      "text": "Wenn du **_die spezifische Schwäche oder Verwundbarkeit eines unnatürlichen Gegners ausnutzt_**, verursachst du +1W6 Schaden."
     }
   },
   "everything-burns": {
@@ -1208,15 +1208,15 @@
     },
     "moveResults/success/value": {
       "source": "The GM reveals the best way to destroy/sabotage it, and you or an ally gain advantage to act on the info.",
-      "text": ""
+      "text": "Der SL verrät dir, wie du es am besten sabotieren/zerstören kannst, und du und deine Verbündeten erhalten außerdem einen Vorteil, wenn ihr aufgrund dieser Information handelt."
     },
     "moveResults/partial/value": {
       "source": "The GM reveals the best way to destroy/sabotage it.",
-      "text": ""
+      "text": "Der SL verrät dir, wie du es am besten sabotieren/zerstören kannst."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "expert-tracker": {
@@ -1230,15 +1230,15 @@
     },
     "moveResults/success/value": {
       "source": "Follow the trail to a significant change and ask a reasonable question about your quarry.",
-      "text": ""
+      "text": "Du kannst der Fährte so lange folgen, bis sich das Gelände oder die Art der Aktivität merklich geändert hat, und du kannst dem SL auch Fragen über deine Beute stellen und bekommst eine nützliche Antwort."
     },
     "moveResults/partial/value": {
       "source": "Follow the trail to a significant change in terrain or activity.",
-      "text": ""
+      "text": "Du kannst der Fährte so lange folgen, bis sich das Gelände oder die Art der Aktivität merklich geändert hat."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "eye-of-the-storm": {
@@ -1262,11 +1262,11 @@
   "eye-on-the-door": {
     "name": {
       "source": "Eye on the Door",
-      "text": ""
+      "text": "Mit Blick auf die Tür"
     },
     "description": {
       "source": "When you **_and your allies need to get out of here_**, name your escape route and roll +INT: **on a 10+**, you're gone; **_on a 7-9_**, you can stay or go, but if you go, it costs you—the GM will tell you what (or who) you leave behind or take with you.",
-      "text": ""
+      "text": "Wenn du **_und deine Verbündeten von hier verschwinden müsst_**, nenne deinen Fluchtweg und würfle +IN. **Bei einer 10+** seid ihr weg. **Bei 7–9** könnt ihr bleiben oder gehen, aber wenn ihr geht, hat das seinen Preis – der SL sagt euch, was (oder wen) ihr zurücklasst oder mitnehmt."
     },
     "moveResults/success/value": {
       "source": "You're gone.",
@@ -1278,7 +1278,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "fanning-the-flames": {
@@ -1392,11 +1392,11 @@
   "free-running": {
     "name": {
       "source": "Free Running",
-      "text": ""
+      "text": "Freier Lauf"
     },
     "description": {
       "source": "When you **_carry a light load and move with speed and grace_**, gain advantage on any move to surmount or bypass a physical obstacle.",
-      "text": ""
+      "text": "Wenn du **_nur leichtes Gepäck trägst und dich schnell und geschmeidig bewegst_**, erhältst du bei jedem Spielzug einen Vorteil, bei dem du versuchst, ein physisches Hindernis zu überwinden oder zu umgehen."
     }
   },
   "front-line-leader": {
@@ -1492,7 +1492,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "hard-to-kill": {
@@ -1514,7 +1514,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "have-what-you-need": {
@@ -1566,7 +1566,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "heroes-to-the-last": {
@@ -1632,11 +1632,11 @@
   "improved-stat": {
     "name": {
       "source": "Improved Stat",
-      "text": ""
+      "text": "Verbessertes Attribut"
     },
     "description": {
       "source": "Each time you take this move, increase one of your stats by 1 (to a max of +2).",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, erhöhe eines deiner Attribute um +1 (max. +2)."
     }
   },
   "improvise": {
@@ -1650,15 +1650,15 @@
     },
     "moveResults/success/value": {
       "source": "It works and you mark one step towards unlocking the arcanum's mysteries.",
-      "text": ""
+      "text": "Es gelingt dir, und du markierst außerdem einen Schritt auf dem Weg, die Geheimnisse des Arkanums zu entschlüsseln."
     },
     "moveResults/partial/value": {
       "source": "It works this once.",
-      "text": ""
+      "text": "Es gelingt dir dieses eine Mal."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "in-over-your-head": {
@@ -1778,7 +1778,7 @@
     },
     "description": {
       "source": "When you **_imbue a holy light with Helior's power_**, choose an Invocation you know and roll +WIS: **on a 10+**, it works as described but you must choose 1 consequence from the list below; **_on a 7-9_**, it works as described, but you and the GM each choose 1.\n\n- The Invocation has its reduced effect\n- The effort taxes you; mark a debility\n- The light is snuffed out when the Invocation is complete, its fuel consumed\n- You must bask in sunlight for an hour or so before using that Invocation again\nSee the Invocations insert for details.",
-      "text": "Wenn du **_ein heiliges Licht mit Heliors Macht erfüllst_**, wähle eine Anrufung, die du kennst, und würfle +WE. **Bei einer 10+** wirkt sie wie beschrieben, aber du musst 1 Konsequenz aus der folgenden Liste wählen. **Bei 7–9** wirkt sie wie beschrieben, aber du und der SL wählen jeweils eines.\n\n- Die Anrufung hat ihren reduzierten Effekt.\n- Die Anstrengung belastet dich; markiere eine Beeinträchtigung.\n- Das Licht erlischt, sobald die Anrufung abgeschlossen ist; sein Brennstoff ist aufgebraucht.\n- Du musst dich etwa eine Stunde lang im Sonnenlicht baden, bevor du diese Anrufung erneut einsetzen kannst.\nWeitere Informationen findest du in der Beilage Anrufungen."
+      "text": "Wenn du **_ein heiliges Licht mit Heliors Macht erfüllst_**, wähle eine Anrufung, die du kennst, und würfle +WE. **Bei einer 10+** wirkt sie wie beschrieben, aber du musst eine Konsequenz aus der folgenden Liste wählen. **Bei 7–9** wirkt sie wie beschrieben, aber du und der SL wählen jeweils eines.\n\n- Die Anrufung hat eine abgeschwächte Wirkung.\n- Die Anstrengung belastet dich; markiere eine Beeinträchtigung.\n- Das Licht erlischt, sobald die Anrufung abgeschlossen ist; sein Brennstoff ist aufgebraucht.\n- Du musst dich etwa eine Stunde lang im Sonnenlicht baden, bevor du diese Anrufung erneut einsetzen kannst.\nWeitere Informationen findest du in der Anrufungen-Beilage."
     },
     "moveResults/success/value": {
       "source": "It works as described — you choose 1 consequence.",
@@ -1790,27 +1790,27 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "iron-will": {
     "name": {
       "source": "Iron Will",
-      "text": ""
+      "text": "Eiserner Wille"
     },
     "description": {
       "source": "When you **_are subject to mind control or magic that affects your feelings_**, you can take 1d4 damage (ignoring armor) to disregard its influence.",
-      "text": ""
+      "text": "Wenn du **_einer Gedankenkontrolle oder Magie ausgesetzt bist_**, die deine Gefühle beeinflusst, kannst du 1W4 Schaden (ignoriert Rüstung) erleiden, um ihren Einfluss zu ignorieren."
     }
   },
   "irresistible": {
     "name": {
       "source": "Irresistible",
-      "text": ""
+      "text": "Unwiderstehlich"
     },
     "description": {
       "source": "When you **_interact with someone_**, you can ask their player if they find you attractive and get an honest answer (usually \"yes\").\n\nWhen you **_Persuade by using your considerable charms as leverage_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_mit jemandem interagierst_**, kannst du dessen Spieler fragen, ob er dich attraktiv findet, und du erhältst darauf eine ehrliche Antwort (normalerweise „ja“).\n\nWenn du **_beim Verhandeln deinen beträchtlichen Charme als Druckmittel einsetzt_**, hast du einen Vorteil."
     }
   },
   "keep-company": {
@@ -1878,11 +1878,11 @@
   "laugh-at-danger": {
     "name": {
       "source": "Laugh at Danger",
-      "text": ""
+      "text": "Der Gefahr ins Gesicht lachen"
     },
     "description": {
       "source": "When you **_are about to roll +CON and you make a joke about the adversity you face_**, you can roll +CHA instead.",
-      "text": ""
+      "text": "Wenn du **_im Angesicht von Widrigkeiten einen Witz machst_**, kannst du +CH statt +KO würfeln."
     }
   },
   "let-fly": {
@@ -1930,11 +1930,11 @@
   "light-fingers": {
     "name": {
       "source": "Light Fingers",
-      "text": ""
+      "text": "Flinke Finger"
     },
     "description": {
       "source": "When you **_perform sleight of hand on an unwary mark_**, you succeed and no one's the wiser. If you're being watched, roll +DEX: **on a 10+**, you succeed and no one's the wiser; **_on a 7-9_**, you succeed OR no one's the wiser (your choice).",
-      "text": ""
+      "text": "Wenn du **_ein ahnungsloses oder unaufmerksames Opfer bestiehlst_**, gelingt es dir, ohne dass jemand etwas bemerkt. Wenn du beobachtet wirst, würfle +GE. **Bei einer 10+** gelingt es dir, ohne dass jemand etwas bemerkt. **Bei 7–9** gelingt es dir ODER niemand bemerkt etwas (deine Wahl)."
     },
     "moveResults/success/value": {
       "source": "You succeed and no one's the wiser.",
@@ -1946,7 +1946,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "light-more-light": {
@@ -2206,7 +2206,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "naturalist": {
@@ -2322,21 +2322,21 @@
   "pants-on-fire": {
     "name": {
       "source": "Pants on Fire",
-      "text": ""
+      "text": "Schwindler"
     },
     "description": {
       "source": "When you **_Defy Danger, Persuade, or Interfere by being deceitful_**, you have advantage.\n\nWhen **_another move (like Seek Insight) allows a player to ask you a question_**, you can opt not to answer.",
-      "text": ""
+      "text": "Wenn du **_einer Gefahr trotzt, jemanden überredest oder behinderst und dabei hinterhältig vorgehst_**, hast du einen Vorteil.\n\nWenn ein anderer Spielzug (wie Einsicht suchen) es einem Spieler erlaubt, dir eine Frage zu stellen, kannst du dich entscheiden, nicht zu antworten."
     }
   },
   "parry-riposte": {
     "name": {
       "source": "Parry & Riposte",
-      "text": ""
+      "text": "Parade & Riposte"
     },
     "description": {
       "source": "When you **_Defend with a weapon that you can wield quickly_**, you can spend 1 Readiness to both halve an attack's effects/damage and strike back at the attacker (deal your damage with disadvantage), instead of spending 1 Readiness for each.",
-      "text": ""
+      "text": "Wenn du **_dich mit einer Waffe verteidigst, die du schnell führen kannst_**, kannst du 1 Bereitschaft ausgeben, um sowohl den Schaden/Effekt eines Angriffs zu halbieren als auch einen Gegenangriff auf den Angreifer auszuführen (würfle deinen Schaden mit Nachteil), anstatt für beides jeweils 1 Bereitschaft auszugeben."
     }
   },
   "pathfinder": {
@@ -2372,11 +2372,11 @@
   "perceptive": {
     "name": {
       "source": "Perceptive",
-      "text": ""
+      "text": "Aufmerksam"
     },
     "description": {
       "source": "When you **_Seek Insight_**, you may ask 1 additional question. Even **on a 6-**, you can ask 1 question (though you might not like how you learn the answer).",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, darfst du eine zusätzliche Frage stellen. Selbst bei einer 6- darfst du noch eine Frage stellen (auch wenn dir die Antwort vielleicht nicht gefallen wird)."
     }
   },
   "persuade-vs-npcs": {
@@ -2576,7 +2576,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     },
     "resource/title": {
       "source": "Surprise",
@@ -2642,7 +2642,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "purify": {
@@ -2688,11 +2688,11 @@
   "rapier-wit": {
     "name": {
       "source": "Rapier Wit",
-      "text": ""
+      "text": "Schlagfertig"
     },
     "description": {
       "source": "When you **_pierce an NPC's pride with a well-placed quip_**, they must do 1 (their choice):\n\n- Attack, doing +1d4 damage if they hit but giving you advantage on your next roll against them\n- Stoop to your level and respond in kind\n- Spend a few moments fuming, sputtering, or controlling their temper",
-      "text": ""
+      "text": "Wenn du **_mit einer treffenden Bemerkung den Stolz eines NSCs verletzt_**, muss er eine der folgenden Aktionen ausführen (seine Wahl):\n\n- Angreifen. Verursacht bei einem Treffer +1W4 Schaden, aber du erhältst einen Vorteil bei deinem nächsten Wurf gegen ihn.\n- Sich auf dein Niveau herablassen und dir auf gleiche Weise antworten.\n- Einige Augenblicke damit verbringen, vor Wut zu kochen, herumzustottern oder sich zu beherrschen."
     }
   },
   "read-the-land": {
@@ -2718,11 +2718,11 @@
   "relentless": {
     "name": {
       "source": "Relentless",
-      "text": ""
+      "text": "Unnachgiebig"
     },
     "description": {
       "source": "When you **_Clash and your foe survives_**, you gain advantage the next time you Clash with them.",
-      "text": ""
+      "text": "Wenn du **_haust & stichst und dein Gegner überlebt_**, erhältst du bei deinem nächsten Angriff gegen ihn einen Vorteil."
     }
   },
   "requisition": {
@@ -2808,7 +2808,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "rites-of-the-land": {
@@ -2966,11 +2966,11 @@
   "second-intent": {
     "name": {
       "source": "Second Intent",
-      "text": ""
+      "text": "Zweite Intention"
     },
     "description": {
       "source": "When you **_Defend and spend 1 Readiness to Parry & Riposte_**, also pick 1 option from the Ambush list.",
-      "text": ""
+      "text": "Wenn du **_Verteidigst und 1 Bereitschaft für Parade & Riposte ausgibst_**, kannst du zusätzlich noch 1 Option aus der Liste von Hinterhältiger Angriff auswählen."
     }
   },
   "seek-insight": {
@@ -3046,7 +3046,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "shared-souls": {
@@ -3072,11 +3072,11 @@
   "silver-tongued": {
     "name": {
       "source": "Silver Tongued",
-      "text": ""
+      "text": "Silberne Zunge"
     },
     "description": {
       "source": "When you **_use words to avoid suspicion or trouble_**, roll +CHA: **on a 10+**, hold 3 Nerve; **_on a 7-9_**, hold 1 Nerve. You may spend Nerve, 1-for-1, to:\n\n- Move about or maneuver unchallenged\n- Withstand direct scrutiny or questioning\n- Direct suspicion or attention elsewhere",
-      "text": ""
+      "text": "Wenn du **_Worte nutzt, um Verdacht oder Ärger zu vermeiden_**, würfle+CH. **Bei einer 10+** nimm 3 Nerven. **Bei 7-9** nimm 1 Nerven. Gib jeweils 1 Nerven aus, um:\n\n- Dich unbehelligt fortzubewegen oder zu positionieren.\n- Einer genauen Prüfung oder Befragung standzuhalten.\n-  Verdacht oder Aufmerksamkeit auf etwas anderes zu lenken."
     },
     "moveResults/success/value": {
       "source": "Hold 3 Nerve.",
@@ -3088,7 +3088,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     },
     "resource/title": {
       "source": "Nerve",
@@ -3140,21 +3140,21 @@
   "skill-at-arms": {
     "name": {
       "source": "Skill at Arms",
-      "text": ""
+      "text": "Kampfkunst"
     },
     "description": {
       "source": "When you **_wield a weapon with speed and grace_**, roll +DEX to Clash (instead of +STR).",
-      "text": ""
+      "text": "Wenn du **_eine Waffe mit Schnelligkeit und Anmut führst_**, darfst du beim hauen & stechen +GE statt +ST würfeln."
     }
   },
   "slippery": {
     "name": {
       "source": "Slippery",
-      "text": ""
+      "text": "Aalglatt"
     },
     "description": {
       "source": "When you **_roll to escape being caught or controlled_**, treat a 6- as a 7-9. On a 12+, say how you turn the tables or use the circumstances to your advantage.",
-      "text": ""
+      "text": "Wenn du **_würfelst, um einer Gefangennahme oder Kontrolle zu entgehen_**, behandle eine 6- wie eine 7-9. Bei einer 12+ beschreibe, wie du die Situation zu deinen Gunsten wendest oder die Umstände zu deinem Vorteil nutzt."
     }
   },
   "sniff-out-corruption": {
@@ -3390,7 +3390,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "suffering-unleashed": {
@@ -3418,11 +3418,11 @@
   "superior-stat": {
     "name": {
       "source": "Superior Stat",
-      "text": ""
+      "text": "Überragendes Attribut"
     },
     "description": {
       "source": "Increase one of your stats by +1 (to a max of +3).",
-      "text": ""
+      "text": "Erhöhe eines deiner Attribute um +1 (max. +3)."
     }
   },
   "survivalist": {
@@ -3512,7 +3512,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "the-roots-grow-deep": {
@@ -3528,7 +3528,7 @@
   "the-tower-eternal": {
     "name": {
       "source": "The Tower Eternal",
-      "text": "The Tower Eternal"
+      "text": "Der Ewige Turm"
     },
     "description": {
       "source": "When you **_Defy Danger against magic_**, treat a result of 6- as a 7-9.",
@@ -3630,11 +3630,11 @@
   "under-your-skin": {
     "name": {
       "source": "Under Your Skin",
-      "text": ""
+      "text": "Unter die Haut gehen"
     },
     "description": {
       "source": "When you **_engage an NPC in conversation_**, you can ask the GM 1 of these and get an honest answer:\n\n- What are they expecting me to do?\n- What, in general, are they trying to hide?\n- What do they want to happen?",
-      "text": ""
+      "text": "Wenn du **_dich mit einem NSC unterhältst_**, kannst du dem SL eine der folgenden Fragen stellen und erhältst eine ehrliche Antwort:\n\n- Was erwartet er von mir?\n-  Was versucht er ganz allgemein zu verbergen?\n-  Was will er erreichen?"
     }
   },
   "underestimated": {
@@ -3672,11 +3672,11 @@
   "unfettered": {
     "name": {
       "source": "Unfettered",
-      "text": ""
+      "text": "Uneingeschränkt"
     },
     "description": {
       "source": "When you **_are subject to physical or mental restraint_**, you may mark a debility to immediately break free of that restraint.",
-      "text": ""
+      "text": "Wenn du körperlichen oder geistigen Einschränkungen unterworfen bist_**, kannst du eine Beeinträchtigung markieren, um dich sofort davon zu befreien."
     }
   },
   "unholy-vessel": {
@@ -3800,7 +3800,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "versatile": {
@@ -3892,7 +3892,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "we-are-as-one": {
@@ -3976,7 +3976,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "wild-soul": {
@@ -4018,7 +4018,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": "Der SL führt einen Spielzug aus."
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "worldly": {
@@ -4046,7 +4046,7 @@
     },
     "common": {
       "source": "common",
-      "text": ""
+      "text": "Allgemein"
     },
     "the-blessed": {
       "source": "The Blessed",
@@ -4090,7 +4090,7 @@
     },
     "basic": {
       "source": "basic",
-      "text": ""
+      "text": "Grundspielzüge"
     },
     "expedition": {
       "source": "expedition",
@@ -4098,7 +4098,7 @@
     },
     "follower": {
       "source": "follower",
-      "text": "Gefolgsmann"
+      "text": "Gefolgsleute"
     },
     "homefront": {
       "source": "homefront",
@@ -4106,19 +4106,19 @@
     },
     "playbook": {
       "source": "playbook",
-      "text": "Klassenbuch"
+      "text": "Klassenbücher"
     },
     "post-death": {
       "source": "post death",
-      "text": ""
+      "text": "Nach dem Tod"
     },
     "seasons": {
       "source": "seasons",
-      "text": "Jahreszeit"
+      "text": "Jahreszeiten"
     },
     "special": {
       "source": "special",
-      "text": ""
+      "text": "Sonderspielzüge"
     }
   }
 }

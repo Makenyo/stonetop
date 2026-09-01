@@ -364,11 +364,11 @@
   "the-fox": {
     "name": {
       "source": "The Fox",
-      "text": ""
+      "text": "Der Fuchs"
     },
     "description": {
       "source": "The elders tell a story about Fox, who knows lots of tricks, and Hedgehog, who knows one: how to curl up into a ball when there's danger. Fox can't eat Hedgehog when he's all curled up, so in the story Fox goes hungry. But you're not that Fox, and this is no story. You want that Hedgehog? Go get a knife.",
-      "text": ""
+      "text": "Die Ältesten erzählen von einer Geschichte über den Fuchs, der viele Tricks kennt, und den Igel, der nur einen kennt: wie man sich bei Gefahr zu einer Kugel zusammenrollt. Der Fuchs kann den Igel nicht fressen, solange dieser zusammengerollt ist, also geht der Fuchs in der Geschichte leer aus. Aber du bist nicht dieser Fuchs, und dies ist keine Geschichte. Du willst diesen Igel? Dann hol dir ein Messer."
     },
     "statsNote": {
       "source": "Assign these scores to your stats: +2, +1, +1, +0, +0, -1",
@@ -376,11 +376,11 @@
     },
     "startingMovesNote": {
       "source": "You start with Ambush OR Skill at Arms; Danger Sense OR Perceptive; and 1 of your choice.",
-      "text": ""
+      "text": "Du beginnst mit Hinterhältiger Angriff oder Kampfkunst, Gefahrensinn oder Aufmerksam sowie einem weiteren deiner Wahl."
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2",
-      "text": ""
+      "text": "Wähle 2"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -404,27 +404,27 @@
     },
     "backgrounds/the-natural/label": {
       "source": "The Natural",
-      "text": ""
+      "text": "Das Naturtalent"
     },
     "backgrounds/the-natural/description": {
       "source": "You grew up around here, and always picked things up quickly. Reading and numbers, sure, but more. Hide and seek. Throwing stones. Climbing. Fighting. Whatever you tried, you were good at it. As good as anyone else, if not better.\n\nSure, you've got a reputation for bending the rules. Playing dirty. But why play if you don't play to win, right? And who do they come to when there's a problem needs solving? You, that's who.\n\nWhen you **_Seek Insight_**, you may roll +INT instead of +WIS and add \"What opportunity does no one else see?\" to the list of possible questions.",
-      "text": ""
+      "text": "Du bist hier in der Gegend aufgewachsen und hast dir schon immer schnell neue Dinge angeeignet. Lesen und Rechnen, klar und noch vieles mehr. Verstecken spielen. Steine werfen. Klettern. Kämpfen. Was auch immer du ausprobiert hast, du warst gut darin. So gut wie jeder andere, wenn nicht sogar besser.\n\nGewiss, du hast den Ruf, die Regeln zu beugen. Schmutzige Tricks anzuwenden. Aber wozu spielen, wenn man nicht auch gewinnen will? Und zu wem kommen sie, wenn es ein Problem zu lösen gibt? Zu dir natürlich.\n\nWenn du **_Gewissheit erlangst_**, kannst du stattdessen mit +INT statt +WE würfeln und „Welche Gelegenheit sieht sonst niemand?“ zur Liste der möglichen Fragen hinzufügen."
     },
     "backgrounds/a-life-of-crime/label": {
       "source": "A Life of Crime",
-      "text": ""
+      "text": "Ein Leben als Gesetzloser"
     },
     "backgrounds/a-life-of-crime/description": {
       "source": "You're new to Stonetop, having left behind a... *colorful* past. How did you get into that life? Why and how did you get out? Who and what do you leave behind?\n\nRegardless, these people have taken you in. Time to lead an honest life, right?\n\nYou start with either **Burgle** or **Light Fingers** (your choice) as an extra move, and either burglar tools or a hidden stash (your choice) as an additional special possession. Go mark them now.",
-      "text": ""
+      "text": "Du bist neu in Stonetop und hast eine... bewegte Vergangenheit hinter dir. Wie bist du in dieses Leben hineingeraten? Warum und wie bist du ausgestiegen? Wen und was hast du zurückgelassen?\n\nWie auch immer, diese Menschen haben dich aufgenommen. Zeit, ein ehrliches Leben zu führen, oder?\n\nDu beginnst entweder mit Einbruch oder Flinke Finger als zusätzlichen Spielzug (deine Wahl) und entweder Einbruchswerkzeug oder einem geheimen Versteck (deine Wahl) als zusätzlichen besonderen Besitz. Markiere sie jetzt."
     },
     "backgrounds/the-prodigal-returned/label": {
       "source": "The Prodigal Returned",
-      "text": ""
+      "text": "Der verloren gelaubte Sohn"
     },
     "backgrounds/the-prodigal-returned/description": {
       "source": "You left long ago, travelling far and living by your wits. Why did you leave? What deeds do you boast of, and which do you regret?\n\nYou always longed to return to Stonetop, and return you have. You're a bit of a celebrity now, and you've got friends (or close enough) strewn about the known world.\n\nWhen you **_declare that you know someone outside of Stonetop_**, someone who can help, name them and roll +CHA: **on a 10+**, yeah, they can help (tell us why they're willing); **on a 7-9**, they can help but pick 1 from the list below; **on a 6-**, the GM chooses 1 and then some.",
-      "text": ""
+      "text": "Du bist vor langer Zeit fortgegangen, bist weit gereist und hast dich mit Hilfe deines Verstandes durchgeschlagen. Warum bist du gegangen? Mit welchen Taten prahlst du, und welche bereust du?\n\nDu hast dich immer danach gesehnt, nach Stonetop zurückzukehren, und nun bist du wieder da. Inzwischen bist du so etwas wie eine Berühmtheit und hast überall in der bekannten Welt Freunde (oder zumindest Leute, die dir nahestehen).\n\nWenn du **_erklärst, dass du außerhalb von Stonetop jemanden kennst_**, der dir helfen kann, nenne diese Person und würfle +CH. **Bei einer 10+** kann sie dir tatsächlich helfen (sag uns, warum sie dazu bereit ist). **Bei 7–9** kann sie dir helfen, aber wähle eins aus der folgenden Liste. **Bei einer 6-** wählt der SL eines und zusätzlich noch etwas anderes.\n\n- Sie hegt noch immer einen Groll gegen dich.\n- Sie wird zuerst etwas von dir verlangen.\n- Sie hat solchen Dingen schon vor langer Zeit abgeschworen.\n- Du kannst ihr nicht wirklich, nun ja, vertrauen."
     },
     "choices/tall-tales-beginning/0/title": {
       "source": "There Was That Time You…",
@@ -552,131 +552,131 @@
     },
     "instinct/0/options/conscience/text": {
       "source": "Conscience",
-      "text": ""
+      "text": "Gewissen"
     },
     "instinct/0/options/conscience/description": {
       "source": "To feel guilty, to try to do right.",
-      "text": ""
+      "text": "Sich schuldig fühlen, versuchen, das Richtige zu tun."
     },
     "instinct/0/options/freedom/text": {
       "source": "Freedom",
-      "text": ""
+      "text": "Freiheit"
     },
     "instinct/0/options/freedom/description": {
       "source": "To chafe against rules, expectations, obligations.",
-      "text": ""
+      "text": "Sich gegen Regeln, Erwartungen und Verpflichtungen aufzulehnen."
     },
     "instinct/0/options/comfort/text": {
       "source": "Comfort",
-      "text": ""
+      "text": "Bequemlichkeit"
     },
     "instinct/0/options/comfort/description": {
       "source": "To enjoy yourself and avoid hardship.",
-      "text": ""
+      "text": "Das Leben genießen und Entbehrungen vermeiden."
     },
     "instinct/0/options/prestige/text": {
       "source": "Prestige",
-      "text": ""
+      "text": "Ansehen"
     },
     "instinct/0/options/prestige/description": {
       "source": "To impress others, to build a name for yourself.",
-      "text": ""
+      "text": "Andere beeindrucken, sich einen Namen machen."
     },
     "instinct/0/options/trickery/text": {
       "source": "Trickery",
-      "text": ""
+      "text": "Täuschung"
     },
     "instinct/0/options/trickery/description": {
       "source": "To deceive, misdirect, outthink.",
-      "text": ""
+      "text": "Täuschen, in die Irre führen, andere überlisten."
     },
     "appearance/0/options/young-pup/text": {
       "source": "young pup",
-      "text": ""
+      "text": "Jungspund"
     },
     "appearance/0/options/responsible-adult/text": {
       "source": "\"responsible\" adult",
-      "text": ""
+      "text": "mündiger Erwachsener"
     },
     "appearance/0/options/cagey-old-timer/text": {
       "source": "cagey old-timer",
-      "text": ""
+      "text": "gerissener alter Hase"
     },
     "appearance/1/options/a-pleasant-voice/text": {
       "source": "a pleasant voice",
-      "text": ""
+      "text": "angenehme Stimme"
     },
     "appearance/1/options/sharp-and-nasally/text": {
       "source": "sharp & nasally",
-      "text": ""
+      "text": "scharf & nasal"
     },
     "appearance/1/options/well-spoken/text": {
       "source": "well-spoken",
-      "text": ""
+      "text": "wortgewandt"
     },
     "appearance/2/options/lithe/text": {
       "source": "lithe",
-      "text": ""
+      "text": "geschmeidig "
     },
     "appearance/2/options/heavyset/text": {
       "source": "heavyset",
-      "text": ""
+      "text": "korpulent "
     },
     "appearance/2/options/gangly/text": {
       "source": "gangly",
-      "text": ""
+      "text": "hager"
     },
     "appearance/2/options/like-a-whippin-stick/text": {
       "source": "like a whippin' stick",
-      "text": ""
+      "text": "wie eine Bohnenstange"
     },
     "appearance/3/options/a-light-step/text": {
       "source": "a light step",
-      "text": ""
+      "text": "Leichtfüßig"
     },
     "appearance/3/options/a-brisk-stride/text": {
       "source": "a brisk stride",
-      "text": ""
+      "text": "ein flotter Schritt"
     },
     "appearance/3/options/more-like-a-strut/text": {
       "source": "more like a strut",
-      "text": ""
+      "text": "eher ein Stolzieren"
     },
     "introductions/step3": {
       "source": "On your third turn, **tell us your tall tales**. Feel free to embellish and exaggerate to the other players, but always answer the GM truthfully.",
-      "text": ""
+      "text": "Wenn du zum dritten Mal an der Reihe bist, **erzähle von deinen abenteuerlichen Geschichten**. Du darfst sie gegenüber den anderen Spielern ruhig etwas ausschmücken und übertreiben, aber antwortet dem SL immer wahrheitsgemäß."
     },
     "introductions/step4/closest-kin/text": {
       "source": "Who is your closest kin?",
-      "text": ""
+      "text": "Wer ist dein engster Verwandter?"
     },
     "introductions/step4/heart-reins/text": {
       "source": "Who holds the reins to your heart?",
-      "text": ""
+      "text": "Wer hält dein Herz in seiner Hand?"
     },
     "introductions/step4/respect-world/text": {
       "source": "Whose respect means the world to you?",
-      "text": ""
+      "text": "Wessen Respekt ist dir über alles wichtig?"
     },
     "introductions/step4/unpayable-debt/text": {
       "source": "To whom do you owe a debt that cannot be repaid?",
-      "text": ""
+      "text": "Wem schuldest du eine Schuld, die nicht beglichen werden kann?"
     },
     "introductions/step6/hijinx/text": {
       "source": "Which one of you joined me in my latest hijinx?",
-      "text": ""
+      "text": "Wer von euch hat sich an meinem letzten Streich beteiligt?"
     },
     "introductions/step6/brings-problems/text": {
       "source": "Which one of you brings your problems to me?",
-      "text": ""
+      "text": "Wer von euch kommt mit seinen Problemen zu mir?"
     },
     "introductions/step6/saved-bacon/text": {
       "source": "Which one of you saved my bacon, mor'n once?",
-      "text": ""
+      "text": "Wer von euch hat mir mehr als einmal den Hintern gerettet?"
     },
     "introductions/step6/trusts-not/text": {
       "source": "Which one of you trusts me not one bit?",
-      "text": ""
+      "text": "Wer von euch traut mir nicht über den Weg?"
     }
   },
   "the-heavy": {
