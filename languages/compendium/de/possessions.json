@@ -756,11 +756,11 @@
     },
     "description": {
       "source": "skins of fine whisky (○○ uses, grants advantage to Persuade), copper tubes, malt, ◇◇ firkins, stills, barrels, etc.",
-      "text": "Trinkschlauch mit feinem Whisky (○○ Anwendung, gewährt einen Vorteil auf Überreden), Kupferrohre, Malz, ◇◇ kleine Fässchen, Brennblasen, Fässer usw."
+      "text": "Trinkschlauch mit edlen Whisky (○○ Anwendung, gewährt einen Vorteil auf Überreden), Kupferrohre, Malz, ◇◇ kleine Fässchen, Brennblasen, Fässer usw."
     },
     "resource/title": {
       "source": "Skins of fine whisky",
-      "text": "Trinkschläuche mit feinem Whisky"
+      "text": "Trinkschläuche mit edlen Whisky"
     },
     "outfitItems/firkins/name": {
       "source": "Firkins",

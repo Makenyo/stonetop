@@ -2,7 +2,7 @@
   "1-surplus-of-various-trade-goods": {
     "name": {
       "source": "1 Surplus of various trade goods",
-      "text": ""
+      "text": "1 Überschuss an verschiedenen Handelswaren"
     }
   },
   "awl": {
@@ -14,21 +14,21 @@
   "barrel-of-whisky-common": {
     "name": {
       "source": "Barrel of whisky",
-      "text": ""
+      "text": "Fass Whisky"
     },
     "qualifier": {
       "source": "common",
-      "text": ""
+      "text": "gewöhnlich"
     }
   },
   "barrel-of-whisky-fine": {
     "name": {
       "source": "Barrel of whisky",
-      "text": ""
+      "text": "Fass Whisky"
     },
     "qualifier": {
       "source": "fine",
-      "text": ""
+      "text": "edel"
     }
   },
   "battleaxe-iron": {
@@ -182,11 +182,11 @@
   "common-trade-tools": {
     "name": {
       "source": "Common trade tools",
-      "text": ""
+      "text": "Gängige Handwerkswerkzeuge"
     },
     "note": {
       "source": "for pottery, weaving, distilling, etc.; immobile",
-      "text": ""
+      "text": "für Töpferei, Weberei, Destillation usw.; Unbeweglich"
     }
   },
   "composite-bow": {
@@ -234,11 +234,11 @@
   "cuirass-boiled-leather": {
     "name": {
       "source": "Cuirass",
-      "text": ""
+      "text": "Kürass"
     },
     "qualifier": {
       "source": "boiled leather",
-      "text": ""
+      "text": "gekochtes Leder"
     },
     "note": {
       "source": "1 armor",
@@ -254,11 +254,11 @@
   "empty-book-fine-vellum": {
     "name": {
       "source": "Empty book",
-      "text": ""
+      "text": "Leeres Buch"
     },
     "qualifier": {
       "source": "fine vellum",
-      "text": ""
+      "text": "edles Pergament"
     }
   },
   "empty-book-parchment": {
@@ -346,11 +346,11 @@
   "firkin-of-whisky-fine": {
     "name": {
       "source": "Firkin of whisky",
-      "text": ""
+      "text": "Fässchen Whisky"
     },
     "qualifier": {
       "source": "fine",
-      "text": ""
+      "text": "edel"
     }
   },
   "glass-vial": {
@@ -388,7 +388,7 @@
   "hauberk-cuirass-scale-iron-or-bronze": {
     "name": {
       "source": "Hauberk/cuirass/scale",
-      "text": ""
+      "text": "Hauberk/Kürass/Schuppen"
     },
     "qualifier": {
       "source": "iron or bronze",
@@ -480,7 +480,7 @@
   "mace-or-flail-iron": {
     "name": {
       "source": "Mace or flail",
-      "text": "Keule oder Flegel"
+      "text": "Streitkolben oder Flegel"
     },
     "qualifier": {
       "source": "iron",
@@ -692,21 +692,21 @@
   "silver-alloy-dagger": {
     "name": {
       "source": "Silver-alloy dagger",
-      "text": ""
+      "text": "Dolch aus einer Silberlegierung"
     }
   },
   "skin-of-whisky-fine": {
     "name": {
       "source": "Skin of whisky",
-      "text": ""
+      "text": "Trinkschlauch mit Whisky"
     },
     "qualifier": {
       "source": "fine",
-      "text": ""
+      "text": "edel"
     },
     "resource/labels/uses-share-a-use-with-someone-to-get-advantage-on-persuade": {
       "source": "uses; share a use with someone to get advantage on Persuade",
-      "text": ""
+      "text": "○○ Anwendungen; Teile eine Anwendung mit jemandem, um einen Vorteil auf Überreden zu erhalten"
     }
   },
   "slate-and-chalk": {
@@ -786,11 +786,11 @@
   "specialized-trade-tools": {
     "name": {
       "source": "Specialized trade tools",
-      "text": ""
+      "text": "Spezialisierte Handwerkswerkzeuge"
     },
     "note": {
       "source": "for smithing, glassblowing, scribing, etc.; immobile",
-      "text": ""
+      "text": "für Schmiedearbeiten, Glasbläserei, Schreibarbeiten usw.; Unbeweglich"
     }
   },
   "staff": {
@@ -864,21 +864,21 @@
   "uncommon-trade-tools": {
     "name": {
       "source": "Uncommon trade tools",
-      "text": ""
+      "text": "Ungewöhnliche Handwerkswerkzeuge"
     },
     "note": {
       "source": "for carpentry, chandlery, beekeeping, etc.; immobile",
-      "text": ""
+      "text": "für Tischlerei, Kerzenherstellung, Imkerei usw.; Unbeweglich"
     }
   },
   "vest-brigandine-fancy": {
     "name": {
       "source": "Vest",
-      "text": ""
+      "text": "Schuppenpanzer"
     },
     "qualifier": {
       "source": "brigandine, fancy",
-      "text": ""
+      "text": "Brigantine, verziert"
     },
     "note": {
       "source": "2 armor",
@@ -956,23 +956,23 @@
     },
     "exotic-stuff": {
       "source": "Exotic Stuff",
-      "text": ""
+      "text": "Exotische Dinge"
     },
     "light-sources": {
       "source": "Light Sources",
-      "text": ""
+      "text": "Lichtquellen"
     },
     "tools-trades": {
       "source": "Tools & Trades",
-      "text": ""
+      "text": "Werkzeuge & Handwerk"
     },
     "trade-goods": {
       "source": "Trade Goods",
-      "text": ""
+      "text": "Handelswaren"
     },
     "transport": {
       "source": "Transport",
-      "text": ""
+      "text": "Transport"
     },
     "weapons-of-war": {
       "source": "Weapons of War",
@@ -980,11 +980,11 @@
     },
     "writing-implements": {
       "source": "Writing Implements",
-      "text": ""
+      "text": "Schreibutensilien"
     },
     "basics": {
       "source": "Basics",
-      "text": ""
+      "text": "Kleinigkeiten"
     },
     "sundries": {
       "source": "Sundries",
@@ -992,15 +992,15 @@
     },
     "supplies": {
       "source": "Supplies",
-      "text": ""
+      "text": "Vorräte"
     },
     "travel": {
       "source": "Travel",
-      "text": ""
+      "text": "Reisen"
     },
     "warmth": {
       "source": "Warmth",
-      "text": ""
+      "text": "Wärme"
     },
     "weapons": {
       "source": "Weapons",
