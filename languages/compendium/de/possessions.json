@@ -1466,15 +1466,15 @@
   "trade-contacts": {
     "name": {
       "source": "Trade contacts",
-      "text": ""
+      "text": "Handelskontakte"
     },
     "label": {
       "source": "Trade contacts",
-      "text": ""
+      "text": "Handelskontakte"
     },
     "description": {
       "source": "small amounts of salt, glass, silk, spice, medicinal herbs, pigments, ivory, etc.",
-      "text": ""
+      "text": "kleine Mengen an Salz, Glas, Seide, Gewürzen, Heilkräutern, Pigmenten, Elfenbein, usw."
     }
   },
   "trapping-gear": {
