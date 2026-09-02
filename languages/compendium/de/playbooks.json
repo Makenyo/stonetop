@@ -18,7 +18,7 @@
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2, in addition to your sacred pouch",
-      "text": "Wähle zwei, zusätzlich zu deinem heiligen Beutel"
+      "text": "Wähle 2, zusätzlich zu deinem heiligen Beutel"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -42,7 +42,7 @@
     },
     "backgrounds/initiate/description": {
       "source": "Stonetop has long been home to a sacred order, keepers of the old ways and speakers for Danu. You are one such initiate, the most gifted in generations. You gain the **Rites of the Land** move.\n\nThere are other initiates in Stonetop, serving the goddess and the village. They aid you as followers — see the Initiates of Danu insert. Who are they? Pick 2 or 3:",
-      "text": "Stonetop ist seit Langem die Heimat eines heiligen Ordens, der die alten Bräuche bewahrt und als Sprachrohr Danus dient. Du bist einer dieser Eingeweihten, der begabteste seit Generationen. Du erhältst den Spielzug Riten des Landes.\n\nIn Stonetop gibt es weitere Eingeweihte, die der Göttin und dem Dorf dienen. Sie unterstützen dich als Gefolgsleute – siehe die Beilage Eingeweihter Danus. Wer sind sie? Wähle zwei oder drei:"
+      "text": "Stonetop ist seit Langem die Heimat eines heiligen Ordens, der die alten Bräuche bewahrt und als Sprachrohr Danus dient. Du bist einer dieser Eingeweihten, der begabteste seit Generationen. Du erhältst den Spielzug Riten des Landes.\n\nIn Stonetop gibt es weitere Eingeweihte, die der Göttin und dem Dorf dienen. Sie unterstützen dich als Gefolgsleute – siehe die Beilage Eingeweihter Danus. Wer sind sie? Wähle 2 oder 3:"
     },
     "backgrounds/raised-by-wolves/label": {
       "source": "Raised by Wolves",
@@ -94,11 +94,11 @@
     },
     "choices/the-earth-mother/0/text": {
       "source": "Danu has long been revered by all peoples, though not always worshipped or served by priests. In Stonetop's Pavilion of the Gods, Danu's shrine is... *(choose 1)*",
-      "text": "Danu wird seit langem von allen Völkern verehrt, wenn auch nicht immer Priester sie anbeten oder ihr dienen. Im Pavillon der Götter von Stonetop ist Danus Schrein … (Wähle eines)"
+      "text": "Danu wird seit langem von allen Völkern verehrt, wenn auch nicht immer Priester sie anbeten oder ihr dienen. Im Pavillon der Götter von Stonetop ist Danus Schrein … (Wähle 1)"
     },
     "choices/sacred-pouch/1/titleNote": {
       "source": "choose 1 on each line",
-      "text": "Wähle jeweils eines aus jeder Zeile"
+      "text": "Wähle jeweils 1 aus jeder Zeile"
     },
     "choices/sacred-pouch/1/text": {
       "source": "Your sacred pouch is...",
@@ -106,7 +106,7 @@
     },
     "choices/sacred-pouch/5/titleNote": {
       "source": "choose 1",
-      "text": "Wähle eines"
+      "text": "Wähle 1"
     },
     "choices/sacred-pouch/5/text": {
       "source": "What remarkable trait does it possess?",
@@ -130,7 +130,7 @@
     },
     "choices/the-earth-mother/5/text": {
       "source": "What do the folk of Stonetop leave as offerings? *(choose 2–3)*",
-      "text": "Was bringen die Bewohner von Stonetop als Opfergaben dar? (Wähle zwei bis drei)"
+      "text": "Was bringen die Bewohner von Stonetop als Opfergaben dar? (Wähle 2 bis 3)"
     },
     "choices/the-earth-mother/fruits-of-harvest/text": {
       "source": "Fruits of harvest",
@@ -424,7 +424,7 @@
     },
     "backgrounds/the-prodigal-returned/description": {
       "source": "You left long ago, travelling far and living by your wits. Why did you leave? What deeds do you boast of, and which do you regret?\n\nYou always longed to return to Stonetop, and return you have. You're a bit of a celebrity now, and you've got friends (or close enough) strewn about the known world.\n\nWhen you **_declare that you know someone outside of Stonetop_**, someone who can help, name them and roll +CHA: **on a 10+**, yeah, they can help (tell us why they're willing); **on a 7-9**, they can help but pick 1 from the list below; **on a 6-**, the GM chooses 1 and then some.",
-      "text": "Du bist vor langer Zeit fortgegangen, bist weit gereist und hast dich mit Hilfe deines Verstandes durchgeschlagen. Warum bist du gegangen? Mit welchen Taten prahlst du, und welche bereust du?\n\nDu hast dich immer danach gesehnt, nach Stonetop zurückzukehren, und nun bist du wieder da. Inzwischen bist du so etwas wie eine Berühmtheit und hast überall in der bekannten Welt Freunde (oder zumindest Leute, die dir nahestehen).\n\nWenn du **_erklärst, dass du außerhalb von Stonetop jemanden kennst_**, der dir helfen kann, nenne diese Person und würfle +CH. **Bei einer 10+** kann sie dir tatsächlich helfen (sag uns, warum sie dazu bereit ist). **Bei 7–9** kann sie dir helfen, aber wähle eins aus der folgenden Liste. **Bei einer 6-** wählt der SL eines und zusätzlich noch etwas anderes.\n\n- Sie hegt noch immer einen Groll gegen dich.\n- Sie wird zuerst etwas von dir verlangen.\n- Sie hat solchen Dingen schon vor langer Zeit abgeschworen.\n- Du kannst ihr nicht wirklich, nun ja, vertrauen."
+      "text": "Du bist vor langer Zeit fortgegangen, bist weit gereist und hast dich mit Hilfe deines Verstandes durchgeschlagen. Warum bist du gegangen? Mit welchen Taten prahlst du, und welche bereust du?\n\nDu hast dich immer danach gesehnt, nach Stonetop zurückzukehren, und nun bist du wieder da. Inzwischen bist du so etwas wie eine Berühmtheit und hast überall in der bekannten Welt Freunde (oder zumindest Leute, die dir nahestehen).\n\nWenn du **_erklärst, dass du außerhalb von Stonetop jemanden kennst_**, der dir helfen kann, nenne diese Person und würfle +CH. **Bei einer 10+** kann sie dir tatsächlich helfen (sag uns, warum sie dazu bereit ist). **Bei 7–9** kann sie dir helfen, aber wähle eins aus der folgenden Liste. **Bei einer 6-** wählt der SL 1 und zusätzlich noch etwas anderes.\n\n- Sie hegt noch immer einen Groll gegen dich.\n- Sie wird zuerst etwas von dir verlangen.\n- Sie hat solchen Dingen schon vor langer Zeit abgeschworen.\n- Du kannst ihr nicht wirklich, nun ja, vertrauen."
     },
     "choices/tall-tales-beginning/0/title": {
       "source": "There Was That Time You…",
@@ -698,7 +698,7 @@
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2",
-      "text": "Wähle zwei"
+      "text": "Wähle 2"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -730,7 +730,7 @@
     },
     "backgrounds/sheriff/description": {
       "source": "You keep order in Stonetop and protect it from outside threats. It might not be anything official, but everyone knows you've got a cool head and the weight to back up your words.\n\nWhen you **_bark an order or warning_**, roll +CHA: **on a 7+**, they must choose 1:\n\n- do what you say\n- dig in/take cover/flee or\n- attack you\n **_On a 10+_**, you can sense which one they're about to do and act first if you like; gain advantage if you do.",
-      "text": "Du sorgst in Stonetop für Ordnung und schützt den Ort vor Bedrohungen von außerhalb. Es ist vielleicht kein offizielles Amt, aber jeder weiß, dass du einen kühlen Kopf bewahren und deinen Worten Nachdruck verleihen kannst.\n\nWenn du **_einen Befehl oder eine Warnung aussprichst_**, würfle +CH. Bei einer 7+ müssen sie eines wählen:\n\n- Tun, was du sagst\n- Sich verkriechen/in Deckung gehen/fliehen\n- Dich angreifen\n **Bei einer 10+** kannst du spüren, wofür sie sich entscheiden werden, und, wenn du willst, zuerst handeln. Wenn du das tust, hast du einen Vorteil."
+      "text": "Du sorgst in Stonetop für Ordnung und schützt den Ort vor Bedrohungen von außerhalb. Es ist vielleicht kein offizielles Amt, aber jeder weiß, dass du einen kühlen Kopf bewahren und deinen Worten Nachdruck verleihen kannst.\n\nWenn du **_einen Befehl oder eine Warnung aussprichst_**, würfle +CH. Bei einer 7+ müssen sie 1 wählen:\n\n- Tun, was du sagst\n- Sich verkriechen/in Deckung gehen/fliehen\n- Dich angreifen\n **Bei einer 10+** kannst du spüren, wofür sie sich entscheiden werden, und, wenn du willst, zuerst handeln. Wenn du das tust, hast du einen Vorteil."
     },
     "backgrounds/blood-soaked-past/label": {
       "source": "Blood-Soaked Past",
@@ -754,7 +754,7 @@
     },
     "choices/violence-fame/0/text": {
       "source": "*(pick 1 or 2)*",
-      "text": "(wähle eines oder zwei)"
+      "text": "(wähle 1 oder 2)"
     },
     "choices/violence-shadows/0/title": {
       "source": "But Folks Are Less Keen to Discuss…",
@@ -762,7 +762,7 @@
     },
     "choices/violence-shadows/0/text": {
       "source": "*(pick 1 or 2)*",
-      "text": "(wähle eines oder zwei)"
+      "text": "(wähle 1 oder 2)"
     },
     "choices/violence-fears/0/title": {
       "source": "What Keeps You Up at Night?",
@@ -770,7 +770,7 @@
     },
     "choices/violence-fears/0/text": {
       "source": "*(pick 1 or 2)*",
-      "text": "(wähle eines oder zwei)"
+      "text": "(wähle 1 oder 2)"
     },
     "choices/violence-fame/thunder-drake/text": {
       "source": "… drove off a thunder drake that got too close to town.",
@@ -996,11 +996,11 @@
     },
     "startingMovesNote": {
       "source": "You start with Censure, Chronicler of Stonetop, plus 2 more of your choice.",
-      "text": "Du beginnst mit Zurechtweisung, Chronist von Stonetop, sowie zwei weiteren deiner Wahl."
+      "text": "Du beginnst mit Zurechtweisung, Chronist von Stonetop, sowie 2 weiteren deiner Wahl."
     },
     "specialPossessions/pickNote": {
       "source": "Pick 1, in addition to your symbol of authority and scribe's tools",
-      "text": "Wähle eines, zusätzlich zu deinem Autoritätssymbol und deinen Schreibutensilien"
+      "text": "Wähle 1, zusätzlich zu deinem Autoritätssymbol und deinen Schreibutensilien"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -1036,7 +1036,7 @@
     },
     "backgrounds/missionary/description": {
       "source": "You are part of a larger order of Judges, sent here to protect the flickering flame of civilization. The Chronicle is relatively new; your position in town is far from certain.\n\nWhen you **_call upon the Judge of another steading for aid or information_**, they are oathbound to give it. You are likewise oathbound to support them.\n\nYou have an aviary in addition to your usual choice of special possessions. When you **_send a message via trained bird_**, the GM will tell you if and when you receive a response, and what it says.",
-      "text": "Du gehörst einem größeren Orden von Richtern an, die hierher entsandt wurden, um die flackernde Flamme der Zivilisation zu schützen. Die Chronik ist noch relativ neu; deine Stellung im Dorf ist alles andere als sicher. Füge diese Richter dem Abschnitt „Nachbarn“ im Stonetop-Spielbuch hinzu (wähle zwei weitere):\n\nWenn du **_den Richter einer anderen Siedlung um Hilfe oder Informationen bittest_**, ist dieser durch einen Eid verpflichtet, sie dir zu gewähren. Ebenso bist du durch einen Eid verpflichtet, ihn zu unterstützen.\n\nZusätzlich zu deiner üblichen Auswahl an besonderen Besitztümern verfügst du über ein Vogelhaus (markiere es jetzt). Wenn du, wie es bei den Richtern deines Ordens üblich ist, **_eine Nachricht mit einem abgerichteten Vogel verschickst_**, teilt dir der SL mit, ob und wann du eine Antwort erhältst und was darin steht."
+      "text": "Du gehörst einem größeren Orden von Richtern an, die hierher entsandt wurden, um die flackernde Flamme der Zivilisation zu schützen. Die Chronik ist noch relativ neu; deine Stellung im Dorf ist alles andere als sicher. Füge diese Richter dem Abschnitt „Nachbarn“ im Stonetop-Spielbuch hinzu (wähle 2 weitere):\n\nWenn du **_den Richter einer anderen Siedlung um Hilfe oder Informationen bittest_**, ist dieser durch einen Eid verpflichtet, sie dir zu gewähren. Ebenso bist du durch einen Eid verpflichtet, ihn zu unterstützen.\n\nZusätzlich zu deiner üblichen Auswahl an besonderen Besitztümern verfügst du über ein Vogelhaus (markiere es jetzt). Wenn du, wie es bei den Richtern deines Ordens üblich ist, **_eine Nachricht mit einem abgerichteten Vogel verschickst_**, teilt dir der SL mit, ob und wann du eine Antwort erhältst und was darin steht."
     },
     "backgrounds/prophet/label": {
       "source": "Prophet",
@@ -1052,7 +1052,7 @@
     },
     "choices/chronicle-plus/0/text": {
       "source": "The Judge of Aratis is charged with maintaining the Chronicle, a history of the community, its people, their knowledge, and their traditions. It is more than a mere book; it is a physical place. On the plus side, it… *(choose 3)*",
-      "text": "Der Richter von Aratis hat die Aufgabe, die Chronik zu führen, eine Geschichte der Gemeinschaft, ihrer Menschen, ihres Wissens und ihrer Traditionen. Welche Art von Wissen die Chronik enthält, hängt von deinem Hintergrund ab, doch sie ist mehr als nur ein Buch; sie ist ein physischer Ort. Lege fest, wie sie aufgebaut ist.\n\nZu ihren Vorzügen gehört, dass sie … (wähle drei)"
+      "text": "Der Richter von Aratis hat die Aufgabe, die Chronik zu führen, eine Geschichte der Gemeinschaft, ihrer Menschen, ihres Wissens und ihrer Traditionen. Welche Art von Wissen die Chronik enthält, hängt von deinem Hintergrund ab, doch sie ist mehr als nur ein Buch; sie ist ein physischer Ort. Lege fest, wie sie aufgebaut ist.\n\nZu ihren Vorzügen gehört, dass sie … (wähle 3)"
     },
     "choices/chronicle-minus/0/title": {
       "source": "But Alas, It…",
@@ -1060,7 +1060,7 @@
     },
     "choices/chronicle-minus/0/text": {
       "source": "*(choose 2)*",
-      "text": "(wähle zwei)"
+      "text": "(wähle 2)"
     },
     "choices/lawkeeper-shrine/0/title": {
       "source": "The Lawkeeper",
@@ -1068,7 +1068,7 @@
     },
     "choices/lawkeeper-shrine/0/text": {
       "source": "Her Judges say that Aratis has been with humanity since they first stacked one stone upon another and called it home. In Stonetop's Pavilion of the Gods, Aratis's shrine is… *(pick 1)*",
-      "text": "Ihre Richter sagen, dass Aratis schon seit jeher an der Seite der Menschheit steht, seit diese zum ersten Mal einen Stein auf den anderen stapelte und dies ihr Zuhause nannte.\n\nIm Pavillon der Götter von Stonetop ist Aratis’ Schrein… (wähle eines)"
+      "text": "Ihre Richter sagen, dass Aratis schon seit jeher an der Seite der Menschheit steht, seit diese zum ersten Mal einen Stein auf den anderen stapelte und dies ihr Zuhause nannte.\n\nIm Pavillon der Götter von Stonetop ist Aratis’ Schrein… (wähle 1)"
     },
     "choices/lawkeeper-demands/0/title": {
       "source": "Of Her True Disciples, Aratis Demands…",
@@ -1076,7 +1076,7 @@
     },
     "choices/lawkeeper-demands/0/text": {
       "source": "*(choose 3)*",
-      "text": "(wähle drei)"
+      "text": "(wähle 3)"
     },
     "choices/chronicle-plus/sturdy-vault/text": {
       "source": "… is a sturdy vault from the time of the Makers.",
@@ -1314,7 +1314,7 @@
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2",
-      "text": "Wähle zwei"
+      "text": "Wähle 2"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -1358,7 +1358,7 @@
     },
     "backgrounds/soul-on-fire/description": {
       "source": "You once led a worldly life, full of fear and doubt, base pleasures and petty grudges. But something happened. Injury, illness, a brush with death. Or just a moment of such profound misery and self-loathing that you thought you could go no further.\n\nThere, in the dark, Helior's light shined upon you, igniting in your soul, lifting you and filling you with a profound sense of purpose.\n\nWhen you **_Persuade a group by preaching charity, mercy, and hope and roll a 7+_**, aside from the usual effect, choose 1:\n\n- your name and your message spread\n- someone approaches you, now or later, eager to know more.",
-      "text": "Einst hast du ein weltliches Leben geführt, erfüllt von Angst und Zweifel, niederen Vergnügungen und kleinlichem Groll. Doch dann geschah etwas. Eine Verletzung, eine Krankheit, eine Begegnung mit dem Tod. Oder einfach ein Moment von so tiefem Elend und so großer Selbstverachtung, dass du dachtest, es könne nicht mehr schlimmer kommen.\n\nDort, in der Dunkelheit, fiel Heliors Licht auf dich. Es entfachte etwas in deiner Seele, richtete dich wieder auf und erfüllte dich mit einem tiefen Gefühl der Bestimmung.\n\nWenn du **_eine Gruppe überredest, indem du Nächstenliebe, Barmherzigkeit und Hoffnung predigst, und eine 7+ würfelst_**, wähle zusätzlich zu dem üblichen Effekt eines:\n\n- Dein Name und deine Botschaft verbreiten sich. \n- Jemand tritt an dich heran – jetzt oder später –, begierig darauf, mehr zu erfahren."
+      "text": "Einst hast du ein weltliches Leben geführt, erfüllt von Angst und Zweifel, niederen Vergnügungen und kleinlichem Groll. Doch dann geschah etwas. Eine Verletzung, eine Krankheit, eine Begegnung mit dem Tod. Oder einfach ein Moment von so tiefem Elend und so großer Selbstverachtung, dass du dachtest, es könne nicht mehr schlimmer kommen.\n\nDort, in der Dunkelheit, fiel Heliors Licht auf dich. Es entfachte etwas in deiner Seele, richtete dich wieder auf und erfüllte dich mit einem tiefen Gefühl der Bestimmung.\n\nWenn du **_eine Gruppe überredest, indem du Nächstenliebe, Barmherzigkeit und Hoffnung predigst, und eine 7+ würfelst_**, wähle 1 zusätzlich zu dem üblichen Effekt:\n\n- Dein Name und deine Botschaft verbreiten sich. \n- Jemand tritt an dich heran – jetzt oder später –, begierig darauf, mehr zu erfahren."
     },
     "choices/helior-worship-spread/0/title": {
       "source": "The Worship of Helior Is…",
@@ -1374,7 +1374,7 @@
     },
     "choices/helior-worship-practice/0/text": {
       "source": "*(choose 1 or 2)*",
-      "text": "(wähle eines oder zwei)"
+      "text": "(wähle 1 oder 2)"
     },
     "choices/helior-shrine/0/title": {
       "source": "In Stonetop's Pavilion of the Gods, Helior's Shrine Has…",
@@ -1382,7 +1382,7 @@
     },
     "choices/helior-shrine/0/text": {
       "source": "*(choose 1)*",
-      "text": "(wähle eines)"
+      "text": "(wähle 1)"
     },
     "choices/helior-predecessor/0/title": {
       "source": "Your Predecessor, the Previous Lightbearer…",
@@ -1390,7 +1390,7 @@
     },
     "choices/helior-predecessor/0/text": {
       "source": "*(choose 2 or 3)*",
-      "text": "(wähle zwei oder drei)"
+      "text": "(wähle 2 oder 3)"
     },
     "choices/helior-powers-origin/0/title": {
       "source": "You Came Into Your Powers…",
@@ -1398,7 +1398,7 @@
     },
     "choices/helior-powers-origin/0/text": {
       "source": "*(choose 1)*",
-      "text": "(wähle eines)"
+      "text": "(wähle 1)"
     },
     "choices/helior-worship-spread/ancient-widespread/text": {
       "source": "… ancient, widespread, and well-known.",
@@ -1672,7 +1672,7 @@
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2",
-      "text": "Wähle zwei"
+      "text": "Wähle 2"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -1728,7 +1728,7 @@
     },
     "choices/war-stories-action/0/text": {
       "source": "*(pick 1)*",
-      "text": "wähle eines"
+      "text": "wähle 1"
     },
     "choices/war-stories-questions/0/title": {
       "source": "Answer At Least 3 of the Following",
@@ -1934,7 +1934,7 @@
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2, in addition to your composite bow",
-      "text": "Wähle zwei, zusätzlich zu deinem Kompositbogen"
+      "text": "Wähle 2, zusätzlich zu deinem Kompositbogen"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -1994,7 +1994,7 @@
     },
     "choices/wicked-questions/0/title": {
       "source": "Answer At Least 3 of the Following",
-      "text": "Beantworte dann mindestens drei der folgenden Fragen zu dieser Bedrohung:"
+      "text": "Beantworte dann mindestens 3 der folgenden Fragen zu dieser Bedrohung:"
     },
     "choices/wicked-threat/great-wood/text": {
       "source": "A dark, unwholesome presence lurking in the Great Wood.",
@@ -2188,7 +2188,7 @@
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2, in addition to your scribe's tools",
-      "text": "Wähle zwei, zusätzlich zu deinen Schreibutensilien"
+      "text": "Wähle 2, zusätzlich zu deinen Schreibutensilien"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -2236,7 +2236,7 @@
     },
     "backgrounds/witch-hunter/description": {
       "source": "You've dedicated your life to rooting out and destroying horrors and their servants. What set you down this path? What did you sacrifice to walk it? What led you to call Stonetop home?\n\nRegardless, you start with the **Everything Bleeds** move and are Well Versed in (pick 1) the Fae, the Things Below, or the Last Door and what lies beyond. Go mark them now. You've also acquired 1 major arcanum.",
-      "text": "Du hast dein Leben dem Aufspüren und Vernichten von Schrecken und ihren Dienern gewidmet. Was hat dich auf diesen Weg gebracht? Was musstest du opfern, um ihn zu beschreiten? Was hat dich dazu bewogen, Stonetop zu deiner Heimat zu machen?\n\nWie dem auch sei, du beginnst mit dem Spielzug Alles blutet und du bist bewandert in (wähle eines) den Feen, den Dingen aus der Tiefe oder der Schwarzen Pforte des Todes und dessen, was dahinter liegt (markiere sie jetzt). Außerdem hast du ein großes Arkanum erworben:"
+      "text": "Du hast dein Leben dem Aufspüren und Vernichten von Schrecken und ihren Dienern gewidmet. Was hat dich auf diesen Weg gebracht? Was musstest du opfern, um ihn zu beschreiten? Was hat dich dazu bewogen, Stonetop zu deiner Heimat zu machen?\n\nWie dem auch sei, du beginnst mit dem Spielzug Alles blutet und du bist bewandert in (wähle 1) den Feen, den Dingen aus der Tiefe oder der Schwarzen Pforte des Todes und dessen, was dahinter liegt (markiere sie jetzt). Außerdem hast du ein großes Arkanum erworben:"
     },
     "backgrounds/patriot/choices/hectumel-codex/text": {
       "source": "The Hec'tumel Codex",
@@ -2288,7 +2288,7 @@
     },
     "choices/arcana-major/0/text": {
       "source": "Your Background grants you 1 major arcanum.\n\nAnswer at least 2 questions about it:",
-      "text": "Dein Hintergrund verleiht dir ein großes Arkanum. Beantworte mindestens zwei Fragen dazu:"
+      "text": "Dein Hintergrund verleiht dir ein großes Arkanum. Beantworte mindestens 2 Fragen dazu:"
     },
     "choices/arcana-minor/0/title": {
       "source": "Minor Arcana",
@@ -2296,7 +2296,7 @@
     },
     "choices/arcana-minor/0/text": {
       "source": "Ask the GM for the minor arcana cards. Draw 3 at random and review both sides.",
-      "text": "Bitte den SL um die Karten für die kleinen Arkana. Ziehe zufällig drei Karten und sieh dir beide Seiten an."
+      "text": "Bitte den SL um die Karten für die kleinen Arkana. Ziehe zufällig 3 Karten und sieh dir beide Seiten an."
     },
     "choices/arcana-major/where-acquired/text": {
       "source": "Where did you acquire it?",
@@ -2474,11 +2474,11 @@
     },
     "startingMovesNote": {
       "source": "You start with Anger is a Gift, Potential for Greatness, and 2 other moves of your choice.",
-      "text": "Du beginnst mit Wut ist ein Geschenk, Potenzial für Größe sowie zwei weiteren deiner Wahl."
+      "text": "Du beginnst mit Wut ist ein Geschenk, Potenzial für Größe sowie 2 weiteren deiner Wahl."
     },
     "specialPossessions/pickNote": {
       "source": "Pick 2",
-      "text": "Wähle zwei"
+      "text": "Wähle 2"
     },
     "origin/0/region": {
       "source": "Stonetop",
@@ -2526,7 +2526,7 @@
     },
     "backgrounds/driven/choices/0/text": {
       "source": "You once led a simple life, but something happened. Something changed you, burdened you with terrible purpose. What was it? Choose 1:",
-      "text": "Du hast einst ein einfaches Leben geführt, aber dann ist etwas passiert. Etwas hat dich verändert und dir eine schreckliche Aufgabe auferlegt. Was war es? Wähle eines:"
+      "text": "Du hast einst ein einfaches Leben geführt, aber dann ist etwas passiert. Etwas hat dich verändert und dir eine schreckliche Aufgabe auferlegt. Was war es? Wähle 1:"
     },
     "backgrounds/driven/choices/loved-one/text": {
       "source": "A loved one was killed or abducted",
@@ -2662,7 +2662,7 @@
     },
     "choices/fear-and-anger/0/text": {
       "source": "What Do You Fear Most? *(choose 1, maybe 2)*",
-      "text": "Was fürchtest du am meisten? (Wähle eines, eventuell zwei)"
+      "text": "Was fürchtest du am meisten? (Wähle 1, eventuell 2)"
     },
     "choices/fear-and-anger/fire/text": {
       "source": "Fire, burning, the smell of charred flesh",
@@ -2702,7 +2702,7 @@
     },
     "choices/fear-and-anger/10/text": {
       "source": "What Makes You Burn with Righteous Anger? *(choose 2, maybe 3)*",
-      "text": "Was lässt dich vor gerechtem Zorn entbrennen? (wähle zwei, eventuell drei)"
+      "text": "Was lässt dich vor gerechtem Zorn entbrennen? (wähle 2, eventuell 3)"
     },
     "choices/fear-and-anger/bullying/text": {
       "source": "Bullying, slavery, and oppression",

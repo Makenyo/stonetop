@@ -1156,7 +1156,7 @@
     },
     "description": {
       "source": "(pick 1)",
-      "text": "wähle eines"
+      "text": "(wähle 1)"
     },
     "choices/0/options/family-heirloom/text": {
       "source": "◇◇ A shield, bearing ___’s crest",
@@ -1358,11 +1358,11 @@
   "symbol-of-authority": {
     "name": {
       "source": "Symbol of authority (pick 1)",
-      "text": "Symbol der Autorität (wähle eines)"
+      "text": "Symbol der Autorität (wähle 1)"
     },
     "label": {
       "source": "Symbol of authority (pick 1)",
-      "text": "Symbol der Autorität (wähle eines)"
+      "text": "Symbol der Autorität (wähle 1)"
     },
     "choices/0/options/authority-black-iron-maul/text": {
       "source": "◇◇ Black iron maul",
@@ -1520,7 +1520,7 @@
     },
     "description": {
       "source": "choose up to 3 (now or later)",
-      "text": "Wähle bis zu drei (jetzt oder später)"
+      "text": "Wähle bis zu 3 (jetzt oder später)"
     },
     "choices/0/options/sword/text": {
       "source": "◇ Sword, iron (*close*, +1 damage)",

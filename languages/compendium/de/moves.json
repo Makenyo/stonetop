@@ -184,7 +184,7 @@
     },
     "description": {
       "source": "When you **_get the drop on a nearby foe_**, you can deal your damage or opt to roll +DEX: **on a 10+**, deal your damage and pick 2; **_on a 7-9_**, deal damage and pick 1:\n\n- Deal +1d4 damage\n- Stop them from making noise/raising an alarm\n- Slip away before they can react\n- Create an opportunity; you or an ally gains advantage on the next move to act on it",
-      "text": "Wenn du **_einen Gegner in deiner Nähe überraschst_**, kannst du deinen Schaden verursachen oder stattdessen +GE würfeln. **Bei einer 10+** verursachst du deinen Schaden und wählst zwei. **Bei 7–9** verursachst du deinen Schaden und wählst eines.\n\n- Verursache +1W4 Schaden.\n- Hindere ihn daran, Lärm zu verursachen oder Alarm zu schlagen.\n- Entkomme, bevor er reagieren kann.\n- Schaffe eine Gelegenheit; du oder ein Verbündeter erhält einen Vorteil beim nächsten Spielzug, mit dem ihr diese nutzt."
+      "text": "Wenn du **_einen Gegner in deiner Nähe überraschst_**, kannst du deinen Schaden verursachen oder stattdessen +GE würfeln. **Bei einer 10+** verursachst du deinen Schaden und wählst 2. **Bei 7–9** verursachst du deinen Schaden und wählst 1.\n\n- Verursache +1W4 Schaden.\n- Hindere ihn daran, Lärm zu verursachen oder Alarm zu schlagen.\n- Entkomme, bevor er reagieren kann.\n- Schaffe eine Gelegenheit; du oder ein Verbündeter erhält einen Vorteil beim nächsten Spielzug, mit dem ihr diese nutzt."
     },
     "moveResults/success/value": {
       "source": "Deal your damage and pick 2 from the list.",
@@ -384,7 +384,7 @@
     },
     "description": {
       "source": "Each time you take this move, pick 1:\n\n- They are *exceptional* (and roll +2 instead of +1)\n- They get +4 HP and +1 armor\n- They develop some unique ability or trait",
-      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle eines:\n\n- Es ist außergewöhnlich (und würfelt mit +2 statt +1)\n- Es erhält +4 LP und +1 Rüstung\n- Es entwickelt eine einzigartige Fähigkeit oder Eigenschaft."
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle 1:\n\n- Es ist außergewöhnlich (und würfelt mit +2 statt +1)\n- Es erhält +4 LP und +1 Rüstung\n- Es entwickelt eine einzigartige Fähigkeit oder Eigenschaft."
     }
   },
   "berserker": {
@@ -454,7 +454,7 @@
     },
     "description": {
       "source": "When you **_Let Fly with a bow_**, you can deplete your ammunition (mark the next ammo status after your weapon) before you roll. If you do, choose 1:\n\n- Gain advantage on your damage roll\n- Add the area tag to your attack; roll damage separately for each target",
-      "text": "Wenn du **_mit einem Bogen eine Salve abgibst_**, kannst du deine Munition verbrauchen (reduziere deine Munition um 1), bevor du würfelst. Wenn du das tust, wähle eines:\n\n- Du erhältst einen Vorteil bei deinem Schadenswurf.\n- Füge deinem Angriff die Eigenschaft Bereich hinzu. Würfle den Schaden für jedes Ziel separat."
+      "text": "Wenn du **_mit einem Bogen eine Salve abgibst_**, kannst du deine Munition verbrauchen (reduziere deine Munition um 1), bevor du würfelst. Wenn du das tust, wähle 1:\n\n- Du erhältst einen Vorteil bei deinem Schadenswurf.\n- Füge deinem Angriff die Eigenschaft Bereich hinzu. Würfle den Schaden für jedes Ziel separat."
     }
   },
   "bolster": {
@@ -530,7 +530,7 @@
     },
     "description": {
       "source": "When you **_sneak off on your own into a dangerous place_**, roll +INT: **_on a 7+_**, you make it back, and the GM says where you got to and what you learned. Then, **on a 10+**, also pick 2; **_on a 7-9_**, also pick 1:\n\n- You got away clean, rousing no suspicion\n- You swiped something valuable (GM's choice)\n- You set something up to exploit on your return\n- Ask a Seek Insight question about what you saw\nOn a 6-, you either make it back but with trouble in tow, or you're missing in action (your call).",
-      "text": "Wenn du **_dich allein an einen gefährlichen Ort schleichst_**, würfle +IN. **Bei einer 7+** schaffst du es zurück, und die SL sagt dir, wo du warst  und was du herausgefunden hast. **Bei einer 10+** wählst du zusätzlich zwei der folgenden Optionen. **Bei 7–9** wählst du zusätzlich eine.\n\n- Du bist unbemerkt davongekommen und hast keinen Verdacht erregt.\n- Du hast etwas Wertvolles gestohlen (nach Wahl der SL).\n- Du hast etwas vorbereitet, das du bei deiner Rückkehr ausnutzen kannst.\n- Stelle eine Frage aus der Liste von Einsicht Suchen über das, was du gesehen hast.\n\nBei einer 6- schaffst du es entweder zurück, aber bringst Ärger mit dir, oder du wirst vermisst (deine Wahl)."
+      "text": "Wenn du **_dich allein an einen gefährlichen Ort schleichst_**, würfle +IN. **Bei einer 7+** schaffst du es zurück, und die SL sagt dir, wo du warst  und was du herausgefunden hast. **Bei einer 10+** wählst du zusätzlich 2 der folgenden Optionen. **Bei 7–9** wählst du zusätzlich eine.\n\n- Du bist unbemerkt davongekommen und hast keinen Verdacht erregt.\n- Du hast etwas Wertvolles gestohlen (nach Wahl der SL).\n- Du hast etwas vorbereitet, das du bei deiner Rückkehr ausnutzen kannst.\n- Stelle eine Frage aus der Liste von Einsicht Suchen über das, was du gesehen hast.\n\nBei einer 6- schaffst du es entweder zurück, aber bringst Ärger mit dir, oder du wirst vermisst (deine Wahl)."
     },
     "moveResults/success/value": {
       "source": "You make it back. Pick 2 from the list.",
@@ -614,15 +614,15 @@
     },
     "description": {
       "source": "When you **_take your time and calmly line up the perfect shot_**, either deal your damage or roll +DEX: **on a 10+**, deal your damage and pick 2; **_on a 7-9_**, deal your damage and pick 1.\n\n- Ignore armor or deal +1d4 damage (your call)\n- Stun, hobble, or hinder them\n- Make them trip or drop what they're holding\n- Do no harm; don't deal your damage after all",
-      "text": "Wenn du **_dir Zeit nimmst und dich in aller Ruhe auf den perfekten Schuss vorbereitest_**, verursachst du entweder deinen Schaden oder würfle +GE. **Bei einer 10+** verursachst du deinen Schaden und wähle zwei. **Bei 7–9** verursachst du deinen Schaden und wähle eines.\n\n- Ignoriere Rüstung oder verursache +1W4 Schaden (du entscheidest).\n- Betäube, behindere oder schwäche sie.\n- Bringe sie zu Fall oder lasse sie fallen, was sie in den Händen halten.\n- Verursache keinen Schaden; niemand wird verletzt."
+      "text": "Wenn du **_dir Zeit nimmst und dich in aller Ruhe auf den perfekten Schuss vorbereitest_**, verursachst du entweder deinen Schaden oder würfle +GE. **Bei einer 10+** verursachst du deinen Schaden und wähle 2. **Bei 7–9** verursachst du deinen Schaden und wähle 1.\n\n- Ignoriere Rüstung oder verursache +1W4 Schaden (du entscheidest).\n- Betäube, behindere oder schwäche sie.\n- Bringe sie zu Fall oder lasse sie fallen, was sie in den Händen halten.\n- Verursache keinen Schaden; niemand wird verletzt."
     },
     "moveResults/success/value": {
       "source": "Deal your damage and pick 2.",
-      "text": "Du verursachst deinen Schaden und wähle zwei."
+      "text": "Du verursachst deinen Schaden und wähle 2."
     },
     "moveResults/partial/value": {
       "source": "Deal your damage and pick 1.",
-      "text": "Du verursachst deinen Schaden und wähle eines."
+      "text": "Du verursachst deinen Schaden und wähle 1."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
@@ -724,7 +724,7 @@
     },
     "description": {
       "source": "When you **_first denounce an individual in your presence as an agent of chaos or anathema to civilization_**, they pick 1:\n\n- They are ashamed, and act accordingly\n- They are doubtful, and hesitate, pause\n- They are afraid, and seek to escape\n- They are enraged, and lash out predictably (the next roll against them has advantage)",
-      "text": "Wenn du **_eine Person in deiner Gegenwart zum ersten Mal als Handlanger des Chaos oder als Feind der Zivilisation anprangerst_**, wählt sie eines:\n\n- Sie schämt sich und handelt entsprechend.\n- Sie wird unsicher und zögert, hält inne.\n- Sie bekommt Angst und versucht zu fliehen.\n- Sie wird wütend und schlägt vorhersehbar um sich (der nächste Wurf gegen sie hat einen Vorteil)."
+      "text": "Wenn du **_eine Person in deiner Gegenwart zum ersten Mal als Handlanger des Chaos oder als Feind der Zivilisation anprangerst_**, wählt sie 1:\n\n- Sie schämt sich und handelt entsprechend.\n- Sie wird unsicher und zögert, hält inne.\n- Sie bekommt Angst und versucht zu fliehen.\n- Sie wird wütend und schlägt vorhersehbar um sich (der nächste Wurf gegen sie hat einen Vorteil)."
     }
   },
   "chart-a-course": {
@@ -940,7 +940,7 @@
     },
     "description": {
       "source": "When you **_call on the world itself to bind a spirit or a perversion of nature_**, spend 1 Stock and roll +WIS: **_on a 7+_**, roots, vines, and earth pull at them, and they pick 1; **on a 10+**, as a 7-9, but both apply.\n\n- They're restrained, unable to act freely until your focus slips or they tear their way free\n- They take 2d4 damage (ignores armor)\nIf this brings them to 0 HP, they are pulled into the earth and bound in rune-etched stone.",
-      "text": "Wenn du **_die Welt selbst anrufst, um einen Geist oder eine Perversion der Natur zu binden_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 7+** greifen Wurzeln, Ranken und Erde nach ihnen, und sie wählen eines. **Bei einer 10+**, wie bei 7–9, aber beide Effekte treten ein.\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung).\nWenn ihre TP dadurch auf 0 sinken, werden sie in die Erde gezogen und in einen mit Runen verzierten Stein verwandelt."
+      "text": "Wenn du **_die Welt selbst anrufst, um einen Geist oder eine Perversion der Natur zu binden_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 7+** greifen Wurzeln, Ranken und Erde nach ihnen, und sie wählen 1. **Bei einer 10+**, wie bei 7–9, aber beide Effekte treten ein.\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung).\nWenn ihre TP dadurch auf 0 sinken, werden sie in die Erde gezogen und in einen mit Runen verzierten Stein verwandelt."
     },
     "moveResults/success/value": {
       "source": "As 7-9, but both apply.",
@@ -948,7 +948,7 @@
     },
     "moveResults/partial/value": {
       "source": "Roots, vines, and earth pull at them, and they pick 1: restrained until your focus slips or they tear free; OR they take 2d4 damage (ignores armor).",
-      "text": "Wurzeln, Ranken und Erde greifen nach ihnen und sie wählen eines:\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung)."
+      "text": "Wurzeln, Ranken und Erde greifen nach ihnen und sie wählen 1:\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
@@ -1374,7 +1374,7 @@
     },
     "description": {
       "source": "When you **_wade into battle_**, you can choose to roll +CHA: **on a 10+**, both; **_on a 7-9_**, pick 1:\n\n- Lesser foes will quail, hesitate, or flee before you.\n- Doughty foes will focus on you, seeing you as the greatest threat.\nOn a 6-, pick 1 but ask the GM what you've missed.",
-      "text": "Wenn du **_dich ins Kampfgetümmel stürzt_**, kannst du dich entscheiden, +CH zu würfeln. **Bei einer 10+** trifft beides zu. **Bei 7–9** wähle eines.\n\n- Schwächere Feinde schrecken vor dir zurück, zögern oder fliehen.\n- Tapfere Feinde konzentrieren sich auf dich und sehen dich als größte Bedrohung an.\n- **Bei einer 6-** wähle 1, aber frage den SL, was du übersehen hast."
+      "text": "Wenn du **_dich ins Kampfgetümmel stürzt_**, kannst du dich entscheiden, +CH zu würfeln. **Bei einer 10+** trifft beides zu. **Bei 7–9** wähle 1.\n\n- Schwächere Feinde schrecken vor dir zurück, zögern oder fliehen.\n- Tapfere Feinde konzentrieren sich auf dich und sehen dich als größte Bedrohung an.\n- **Bei einer 6-** wähle 1, aber frage den SL, was du übersehen hast."
     },
     "moveResults/success/value": {
       "source": "Both: lesser foes quail AND doughty foes focus on you.",
@@ -1554,7 +1554,7 @@
     },
     "description": {
       "source": "When you **_stare into the sun long enough to lose your vision_**, name a person or place that you know and roll +WIS: **on a 10+**, you briefly glimpse your subject as if from a great height, and choose 2 from the list below; **_on a 7-9_**, you briefly glimpse your subject as if from a great height, and choose 1.\n\n- The glimpse lasts as long as you wish\n- Your point of view shifts to very close range\n- You recover your vision quickly",
-      "text": "Wenn du **_so lange in die Sonne starrst, bis du das Augenlicht verlierst_**, nenne eine Person oder einen Ort, den du kennst, und würfle +WE. **Bei einer 10+** erhaschst du kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle zwei aus der folgenden Liste. **Bei 7–9** erhaschst du kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle eines:\n\n- Der Blick hält so lange an, wie du möchtest.\n- Dein Blickwinkel wechselt in unmittelbare Nähe.\n- Du erlangst dein Augenlicht schnell zurück."
+      "text": "Wenn du **_so lange in die Sonne starrst, bis du das Augenlicht verlierst_**, nenne eine Person oder einen Ort, den du kennst, und würfle +WE. **Bei einer 10+** erhaschst du kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle 2 aus der folgenden Liste. **Bei 7–9** erhaschst du kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle 1:\n\n- Der Blick hält so lange an, wie du möchtest.\n- Dein Blickwinkel wechselt in unmittelbare Nähe.\n- Du erlangst dein Augenlicht schnell zurück."
     },
     "moveResults/success/value": {
       "source": "You briefly glimpse your subject from a great height — choose 2.",
@@ -1576,7 +1576,7 @@
     },
     "description": {
       "source": "Each time you take this move, pick 1:\n\n- They are *exceptional* (and roll +2 instead of +1)\n- They are inured to terror & horror\n- Increase their max HP by 4 each\n- Increase their damage die one size (max d10)",
-      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle eines:\n\n- Sie sind außergewöhnlich (und würfeln +2 statt +1).\n- Sie sind abgehärtet gegen Angst und Schrecken.\n- Erhöhe ihre maximalen TP jeweils um 4.\n- Erhöhe ihren Schadenswürfel um eine Größe (max. W10)."
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle 1:\n\n- Sie sind außergewöhnlich (und würfeln +2 statt +1).\n- Sie sind abgehärtet gegen Angst und Schrecken.\n- Erhöhe ihre maximalen TP jeweils um 4.\n- Erhöhe ihren Schadenswürfel um eine Größe (max. W10)."
     }
   },
   "home-on-the-range": {
@@ -1778,7 +1778,7 @@
     },
     "description": {
       "source": "When you **_imbue a holy light with Helior's power_**, choose an Invocation you know and roll +WIS: **on a 10+**, it works as described but you must choose 1 consequence from the list below; **_on a 7-9_**, it works as described, but you and the GM each choose 1.\n\n- The Invocation has its reduced effect\n- The effort taxes you; mark a debility\n- The light is snuffed out when the Invocation is complete, its fuel consumed\n- You must bask in sunlight for an hour or so before using that Invocation again\nSee the Invocations insert for details.",
-      "text": "Wenn du **_ein heiliges Licht mit Heliors Macht erfüllst_**, wähle eine Anrufung, die du kennst, und würfle +WE. **Bei einer 10+** wirkt sie wie beschrieben, aber du musst eine Konsequenz aus der folgenden Liste wählen. **Bei 7–9** wirkt sie wie beschrieben, aber du und der SL wählen jeweils eines.\n\n- Die Anrufung hat eine abgeschwächte Wirkung.\n- Die Anstrengung belastet dich; markiere eine Beeinträchtigung.\n- Das Licht erlischt, sobald die Anrufung abgeschlossen ist; sein Brennstoff ist aufgebraucht.\n- Du musst dich etwa eine Stunde lang im Sonnenlicht baden, bevor du diese Anrufung erneut einsetzen kannst.\nWeitere Informationen findest du in der Anrufungen-Beilage."
+      "text": "Wenn du **_ein heiliges Licht mit Heliors Macht erfüllst_**, wähle eine Anrufung, die du kennst, und würfle +WE. **Bei einer 10+** wirkt sie wie beschrieben, aber du musst eine Konsequenz aus der folgenden Liste wählen. **Bei 7–9** wirkt sie wie beschrieben, aber du und der SL wählen jeweils 1.\n\n- Die Anrufung hat eine abgeschwächte Wirkung.\n- Die Anstrengung belastet dich; markiere eine Beeinträchtigung.\n- Das Licht erlischt, sobald die Anrufung abgeschlossen ist; sein Brennstoff ist aufgebraucht.\n- Du musst dich etwa eine Stunde lang im Sonnenlicht baden, bevor du diese Anrufung erneut einsetzen kannst.\nWeitere Informationen findest du in der Anrufungen-Beilage."
     },
     "moveResults/success/value": {
       "source": "It works as described — you choose 1 consequence.",
@@ -2128,7 +2128,7 @@
     },
     "description": {
       "source": "When you **_perform a feat of extraordinary strength (bursting chains, smashing through a wall, heaving a boulder, etc.)_**, you do it (OH YEAH!) but pick 1:\n\n- It takes a while\n- You cause unwanted damage or harm\n- It takes a toll (mark a debility)",
-      "text": "Wenn du **_einen außergewöhnlichen Kraftakt vollbringst_** (Ketten sprengen, eine Wand durchschlagen, einen Felsbrocken bewegen usw.), schaffst du es, aber wähle eines:\n\n- Es dauert eine Weile.\n- Du verursachst unerwünschte Schäden oder Verletzungen.\n- Es fordert einen Tribut (markiere eine Beeinträchtigung)."
+      "text": "Wenn du **_einen außergewöhnlichen Kraftakt vollbringst_** (Ketten sprengen, eine Wand durchschlagen, einen Felsbrocken bewegen usw.), schaffst du es, aber wähle 1:\n\n- Es dauert eine Weile.\n- Du verursachst unerwünschte Schäden oder Verletzungen.\n- Es fordert einen Tribut (markiere eine Beeinträchtigung)."
     }
   },
   "mind-over-magic": {
@@ -2454,7 +2454,7 @@
     },
     "description": {
       "source": "When you **_craft a protective charm_**, you may spend 1 additional Stock to choose 1:\n\n- Name an additional type of harm\n- **On a 10+**, the charm retains its potency",
-      "text": "Wenn du **_einen Schutzzauber anfertigst_**, kannst du 1 zusätzlichen Vorrat ausgeben, um eines zu wählen:\n\n- Benenne eine zusätzliche Schadensquelle.\n- Bei einer 10+ behält der Schutzzauber seine Wirkung."
+      "text": "Wenn du **_einen Schutzzauber anfertigst_**, kannst du 1 zusätzlichen Vorrat ausgeben, um 1 zu wählen:\n\n- Benenne eine zusätzliche Schadensquelle.\n- Bei einer 10+ behält der Schutzzauber seine Wirkung."
     }
   },
   "potential-for-greatness": {
@@ -3300,7 +3300,7 @@
     },
     "description": {
       "source": "When you **_raise your voice_**, it carries far and cuts through even the din of battle. When you **_go into battle_**, hold 2 Command. Spend 1 Command to shout an order or warning and pick 1:\n\n- PCs get advantage on their next roll to do as you say\n- You have advantage to Order Followers or Deploy",
-      "text": "Wenn du **_deine Stimme erhebst_**, schallt sie weit und durchdringt selbst den Lärm der Schlacht. Wenn du **_in den Kampf ziehst_**, erhältst du 2 Kommando. Gib 1 Kommando aus, um einen Befehl oder eine Warnung zu rufen, und wähle eines:\n\n- SCs erhalten einen Vorteil auf ihren nächsten Wurf, sofern sie deinem Befehl folgen.\n- Du erhältst einen Vorteil auf Gefolgsleute befehligen oder Einsetzen."
+      "text": "Wenn du **_deine Stimme erhebst_**, schallt sie weit und durchdringt selbst den Lärm der Schlacht. Wenn du **_in den Kampf ziehst_**, erhältst du 2 Kommando. Gib 1 Kommando aus, um einen Befehl oder eine Warnung zu rufen, und wähle 1:\n\n- SCs erhalten einen Vorteil auf ihren nächsten Wurf, sofern sie deinem Befehl folgen.\n- Du erhältst einen Vorteil auf Gefolgsleute befehligen oder Einsetzen."
     },
     "resource/title": {
       "source": "Command",
@@ -3378,7 +3378,7 @@
     },
     "description": {
       "source": "When you **_draw a malady from a patient's body, mind, or soul_**, spend 1 Stock and roll +WIS.",
-      "text": "Wenn du **_ein Leiden aus dem Körper, dem Geist oder der Seele eines Patienten ziehst_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 10+** entfernst du das Leiden und kannst es gefahrlos entsorgen oder in deinem heiligen Beutel aufbewahren (und dafür den Platz von 1 Vorrat beanspruchen), um es zu untersuchen oder um es auf jemand anderen zu übertragen. **Bei 7-9** entfernst du es, aber wähle eines:\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
+      "text": "Wenn du **_ein Leiden aus dem Körper, dem Geist oder der Seele eines Patienten ziehst_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 10+** entfernst du das Leiden und kannst es gefahrlos entsorgen oder in deinem heiligen Beutel aufbewahren (und dafür den Platz von 1 Vorrat beanspruchen), um es zu untersuchen oder um es auf jemand anderen zu übertragen. **Bei 7-9** entfernst du es, aber wähle 1:\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
     },
     "moveResults/success/value": {
       "source": "You remove the malady and can safely discard it or store it in your sacred pouch (taking the space of 1 Stock) to study or inflict on another.",
@@ -3386,7 +3386,7 @@
     },
     "moveResults/partial/value": {
       "source": "You remove it, but choose 1: your patient suffers lingering harm or trauma; OR you suffer some of the malady's effects; OR it will be harmful and dangerous to discard.",
-      "text": "Du entfernst es, aber wähle eines:\n\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
+      "text": "Du entfernst es, aber wähle 1:\n\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
@@ -3500,7 +3500,7 @@
     },
     "description": {
       "source": "When you **_strike a thing of supernatural chaos_**, roll +WIS: **on a 10+**, deal your damage and choose 1 from the list below; **_on a 7-9_**, deal damage and choose 1, but you also expose yourself to harm or unwanted attention.\n\n- Deal +1d6 damage\n- Ignore the thing's armor or other defenses\n- Suppress one of its unnatural powers\n- Force it from its host",
-      "text": "Wenn du **_ein Wesen des übernatürlichen Chaos schlägst_**, würfle +WE. **Bei einer 10+** verursachst du deinen Schaden und wähle eines aus der folgenden Liste. **Bei 7–9** verursachst du Schaden und wähle eines, aber du setzt dich dabei ebenfalls dem Schaden oder unerwünschter Aufmerksamkeit aus.\n\n- Verursache +1W6 Schaden.\n- Ignoriere die Rüstung oder andere Verteidigungsmaßnahmen dieses Wesens.\n- Unterdrücke eine seiner unnatürlichen Kräfte.\n- Zwinge es aus einem Körper der von ihm besessen ist."
+      "text": "Wenn du **_ein Wesen des übernatürlichen Chaos schlägst_**, würfle +WE. **Bei einer 10+** verursachst du deinen Schaden und wähle 1 aus der folgenden Liste. **Bei 7–9** verursachst du Schaden und wähle 1, aber du setzt dich dabei ebenfalls dem Schaden oder unerwünschter Aufmerksamkeit aus.\n\n- Verursache +1W6 Schaden.\n- Ignoriere die Rüstung oder andere Verteidigungsmaßnahmen dieses Wesens.\n- Unterdrücke eine seiner unnatürlichen Kräfte.\n- Zwinge es aus einem Körper der von ihm besessen ist."
     },
     "moveResults/success/value": {
       "source": "Deal your damage and choose 1 from the list.",
@@ -3788,7 +3788,7 @@
     },
     "description": {
       "source": "When you **_wrap yourself or another in a subtle veil_**, spend 1 Stock and choose 1:\n\n- A type of being you name (including \"people\") will tend to ignore your presence\n- People will perceive you as someone else, though you must wear something of an individual's in order to impersonate them\nWhen **_your deception comes under scrutiny_**, roll +INT.",
-      "text": "Wenn du **_dich selbst oder jemand anderen mit einem subtilen Schleier umhüllst_**, gib 1 Vorrat aus und wähle eines:\n\n- Eine von dir benannte Art von Wesen (einschließlich \"Menschen\") wird dazu neigen, deine Anwesenheit zu ignorieren.\n- Menschen nehmen dich als jemand anderen wahr, allerdings musst du etwas von der betreffenden Person tragen, um sie nachzuahmen.\nWenn **_deine Täuschung auf die Probe gestellt wird_**, würfle +IN. **Bei einer 10+** hält der Schleier, und niemand schöpft Verdacht. **Bei 7–9** hält der Schleier, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
+      "text": "Wenn du **_dich selbst oder jemand anderen mit einem subtilen Schleier umhüllst_**, gib 1 Vorrat aus und wähle 1:\n\n- Eine von dir benannte Art von Wesen (einschließlich \"Menschen\") wird dazu neigen, deine Anwesenheit zu ignorieren.\n- Menschen nehmen dich als jemand anderen wahr, allerdings musst du etwas von der betreffenden Person tragen, um sie nachzuahmen.\nWenn **_deine Täuschung auf die Probe gestellt wird_**, würfle +IN. **Bei einer 10+** hält der Schleier, und niemand schöpft Verdacht. **Bei 7–9** hält der Schleier, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
     },
     "moveResults/success/value": {
       "source": "The veil holds, and no one is the wiser.",
@@ -3820,7 +3820,7 @@
     },
     "description": {
       "source": "Each time you take this move, pick 1. You can also choose to reselect their Instinct and Cost.\n\n- Select 2 new tags for your Crew\n- Increase their damage die from d6 to d8\n- Increase their max HP by 2 each",
-      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle eines. Du kannst auch ihren Instinkt und ihre Kosten neu wählen.\n\n- Wähle zwei neue Eigenschaften für deine Truppe.\n- Erhöhe ihren Schadenswürfel von W6 auf W8.\n- Erhöhe ihre maximalen TP jeweils um 2."
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle 1. Du kannst auch ihren Instinkt und ihre Kosten neu wählen.\n\n- Wähle 2 neue Eigenschaften für deine Truppe.\n- Erhöhe ihren Schadenswürfel von W6 auf W8.\n- Erhöhe ihre maximalen TP jeweils um 2."
     }
   },
   "vision-unclouded": {
@@ -4006,15 +4006,15 @@
     },
     "description": {
       "source": "When you **_cleverly use your environment to harm or impede your foe(s)_**, roll +INT: **on a 10+**, pick 2; **_on a 7-9_**, pick 1:\n\n- Interrupt or thwart their action(s)\n- Create an opportunity that grants you or an ally advantage on the next roll to exploit it\n- Deal damage appropriate to the source (d4 for bruises/scrapes, d6 for bloodshed, d8 if it'd break bones, d10 if it'd kill a common person)",
-      "text": "Wenn du **_deine Umgebung geschickt nutzt, um deinen Gegnern zu schaden oder sie zu behindern_**, würfle +IN. **Bei einer 10+** wähle zwei. **Bei 7–9** wähle eines:\n\n- Unterbrich oder vereitle ihre Handlung(en).\n- Schaffe eine Gelegenheit, die dir oder einem Verbündeten einen Vorteil auf seinen nächsten Wurf verschafft, um sie auszunutzen.\n- Verursache Schaden entsprechend der Quelle: (W4 für Prellungen und Schürfwunden; W6 für blutige Verletzungen; W8, wenn dabei Knochen brechen würden; W10, wenn es einen gewöhnlichen Menschen töten würde)."
+      "text": "Wenn du **_deine Umgebung geschickt nutzt, um deinen Gegnern zu schaden oder sie zu behindern_**, würfle +IN. **Bei einer 10+** wähle 2. **Bei 7–9** wähle 1:\n\n- Unterbrich oder vereitle ihre Handlung(en).\n- Schaffe eine Gelegenheit, die dir oder einem Verbündeten einen Vorteil auf seinen nächsten Wurf verschafft, um sie auszunutzen.\n- Verursache Schaden entsprechend der Quelle: (W4 für Prellungen und Schürfwunden; W6 für blutige Verletzungen; W8, wenn dabei Knochen brechen würden; W10, wenn es einen gewöhnlichen Menschen töten würde)."
     },
     "moveResults/success/value": {
       "source": "Pick 2.",
-      "text": "Wähle zwei"
+      "text": "Wähle 2"
     },
     "moveResults/partial/value": {
       "source": "Pick 1.",
-      "text": "Wähle eines"
+      "text": "Wähle 1"
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
