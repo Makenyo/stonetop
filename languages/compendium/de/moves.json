@@ -2,21 +2,21 @@
   "a-bundle-of-sticks-unbroken": {
     "name": {
       "source": "A Bundle of Sticks Unbroken",
-      "text": ""
+      "text": "Ein Bündel unzerbrochener Stöcke"
     },
     "description": {
       "source": "When you **_Struggle as One_**, you and one ally of your choice have advantage.",
-      "text": ""
+      "text": "Wenn ihr gemeinsam vorgeht, haben du und ein Verbündeter deiner Wahl einen Vorteil."
     }
   },
   "a-candle-against-the-dark": {
     "name": {
       "source": "A Candle Against the Dark",
-      "text": ""
+      "text": "Eine Kerze gegen die Dunkelheit"
     },
     "description": {
       "source": "When you **_wield a holy light but go otherwise unarmed_**, you have 2 Armor.",
-      "text": ""
+      "text": "Wenn du **_ein heiliges Licht führst, aber ansonsten unbewaffnet bist_**, hast du 2 Rüstung."
     }
   },
   "a-flickering-flame": {
@@ -44,21 +44,21 @@
   "a-force-to-be-reckoned-with": {
     "name": {
       "source": "A Force to Be Reckoned With",
-      "text": ""
+      "text": "Eine Macht, mit der man rechnen muss"
     },
     "description": {
       "source": "Any intelligent creature who looks you in the eye or hears the steel in your voice instinctively knows that you are a force to be reckoned with, and treats you appropriately.\n\nWhen you **_Defy Danger against something trying to harm or constrain you_**, on a 12+ you turn the tables on them (the GM will say how, or ask you to). (Replaces Underestimated. First use crosses off \"Would-be\" on the front page.)",
-      "text": ""
+      "text": "Jedes intelligente Wesen, das dir in die Augen sieht oder den Stahl in deiner Stimme hört, weiß instinktiv, dass du eine Macht bist, mit der man rechnen muss, und behandelt dich entsprechend.\nWenn du **_einer Gefahr trotzt, die dir schaden zufügen oder dich einschränken will_**, drehst du bei einer 12+ den Spieß um (der SL sagt dir, wie, oder bittet dich, es zu tun)."
     }
   },
   "a-mighty-rampart": {
     "name": {
       "source": "A Mighty Rampart",
-      "text": ""
+      "text": "Ein mächtiges Bollwerk"
     },
     "description": {
       "source": "When you **_hold Readiness (from Defend)_**, you cannot be forced from your position. Also, you can spend 1 Readiness to completely ignore the effects/damage of an attack that you suffer. (Replaces Bulwark.)",
-      "text": ""
+      "text": "Wenn du **_Bereitschaft (durch Verteidigen) besitzt_**, kannst du nicht von deiner Position verdrängt werden. Außerdem kannst du 1 Bereitschaft ausgeben, um den Effekt/Schaden eines Angriffs, den du erleidest, vollständig zu ignorieren."
     }
   },
   "a-mighty-will": {
@@ -74,15 +74,15 @@
   "a-safe-place": {
     "name": {
       "source": "A Safe Place",
-      "text": ""
+      "text": "Ein sicherer Ort"
     },
     "description": {
       "source": "When you **_select and prepare the party's camp site_**, hold 1 Precaution, or 2 Precaution if you are well-versed with this area and its dangers.\n\nIf trouble finds your camp site, you can spend 1 Precaution to reveal a simple defense, warning, or trick that you prepared in advance. If you do, tell us how you knew to make that specific preparation.",
-      "text": ""
+      "text": "Wenn du **_für die Gruppe einen Lagerplatz auswählst und vorbereitest_**, nimm 1 Vorkehrung oder 2 Vorkehrung, wenn du dich in diesem Gebiet und seinen Gefahren gut auskennst.\n\nWenn euer Lagerplatz von Schwierigkeiten heimgesucht wird, kannst du 1 Vorkehrung ausgeben, um eine einfache Verteidigung, eine Warnung oder einen Trick zu offenbaren, den du im Voraus vorbereitet hast. Wenn du das tust, sag uns, woher du wusstest, genau diese Vorbereitung zu treffen."
     },
     "resource/title": {
       "source": "Precaution",
-      "text": ""
+      "text": "Vorkehrung"
     }
   },
   "advantage-disadvantage": {
@@ -98,11 +98,11 @@
   "aegis-of-faith": {
     "name": {
       "source": "Aegis of Faith",
-      "text": ""
+      "text": "Schild des Glaubens"
     },
     "description": {
       "source": "When you **_wield a shield_**, it can turn away spells, magical effects, and insubstantial attacks as if they were physical blows.",
-      "text": ""
+      "text": "Wenn du **_einen Schild führst_**, kann er Zauber, magische Effekte und körperlose Angriffe abwehren, als wären sie physische Schläge."
     }
   },
   "aid": {
@@ -118,201 +118,201 @@
   "all-in-the-wrist": {
     "name": {
       "source": "All in the Wrist",
-      "text": ""
+      "text": "Aus dem Handgelenk"
     },
     "description": {
       "source": "Any knife or dagger gets the thrown tag in your hands. Also, you keep a few iron throwing blades (near) on you; they don't take up space in your inventory. Reset your ammo whenever you Outfit.",
-      "text": ""
+      "text": "Messer und Dolche erhalten in deinen Händen die Eigenschaft Geworfen und Nah. Außerdem hast du immer ein paar Wurfmesser bei dir, die in deinem Inventar keinen Platz einnehmen. Fülle deine Munition jedes Mal wieder auf, wenn du dich Ausrüstest."
     },
     "resource/labels/a-few-left": {
       "source": "a few left",
-      "text": ""
+      "text": "noch ein paar übrig"
     },
     "resource/labels/out": {
       "source": "out",
-      "text": ""
+      "text": "alle aufgebraucht"
     }
   },
   "all-is-illuminated": {
     "name": {
       "source": "All is Illuminated",
-      "text": ""
+      "text": "Alles ist erleuchtet"
     },
     "description": {
       "source": "When you **_look closely on another and see their soul laid bare_**, roll +WIS: **on a 10+**, ask their player 1 question from the list below, plus \"And what would make them feel loved, beautiful, or worthy?\"; **_on a 7-9_**, ask them 1 question from the list. In any case, they must answer truthfully.\n\n- Of what are they most ashamed?\n- What do they most desire or covet?\n- What hope have they abandoned?\n- Who or what is most precious to them?",
-      "text": ""
+      "text": "Wenn du **_jemanden genau betrachtest und seine Seele unverhüllt vor dir siehst_**, würfle +WE. Bei einer 10+ stelle dem Spieler eine Frage aus der folgenden Liste sowie die Frage: „Und was würde ihm das Gefühl geben, geliebt, schön oder wertvoll zu sein?“ **Bei 7–9** stelle ihm eine Frage aus der Liste. In jedem Fall muss er wahrheitsgemäß antworten.\n\n- Wofür schämt er sich am meisten?\n- Was wünscht oder begehrt er am meisten?\n- Welche Hoffnung hat er aufgegeben?\n- Wer oder was ist ihm am kostbarsten?"
     },
     "moveResults/success/value": {
       "source": "Ask 1 question from the list plus “What would make them feel loved, beautiful, or worthy?”.",
-      "text": ""
+      "text": "Stelle dem Spieler eine Frage aus der Liste sowie die Frage: „Und was würde ihm das Gefühl geben, geliebt, schön oder wertvoll zu sein?“."
     },
     "moveResults/partial/value": {
       "source": "Ask 1 question from the list.",
-      "text": ""
+      "text": "Stelle ihm eine Frage aus der Liste."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "alpha": {
     "name": {
       "source": "Alpha",
-      "text": ""
+      "text": "Alpha"
     },
     "description": {
       "source": "When you **_assert dominance over another (beast, spirit, Fae, or person)_**, roll +WIS: **_on a 7+_**, they must pick 1 from the list below; **on a 10+**, you also have advantage on your next roll against them.\n\n- Accept your authority, at least for now\n- Slink away or flee, then avoid you\n- Fight you for dominance",
-      "text": ""
+      "text": "Wenn du **_deine Dominanz über ein anderes Wesen (ein Tier oder einen Geist, ein Feenwesen oder eine Person) geltend machst_**, würfle +WE. **Bei einer 7+** muss das Wesen eine der folgenden Optionen wählen. **Bei einer 10+** hast du außerdem einen Vorteil bei deinem nächsten Wurf gegen dieses Wesen.\n\n- Es akzeptiert deine Autorität, zumindest vorerst.\n- Es zieht sich zurück oder flieht und meidet dich anschließend.\n- Es kämpft mit dir um die Vorherrschaft."
     },
     "moveResults/success/value": {
       "source": "They pick 1 from the list and you have advantage on your next roll against them.",
-      "text": ""
+      "text": "Das Wesen muss eine der folgenden Optionen wählen. Außerdem hast du einen Vorteil bei deinem nächsten Wurf gegen dieses Wesen."
     },
     "moveResults/partial/value": {
       "source": "They pick 1 from the list.",
-      "text": ""
+      "text": "Das Wesen muss eine der folgenden Optionen wählen."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "ambush": {
     "name": {
       "source": "Ambush",
-      "text": ""
+      "text": "Hinterhältiger Angriff"
     },
     "description": {
       "source": "When you **_get the drop on a nearby foe_**, you can deal your damage or opt to roll +DEX: **on a 10+**, deal your damage and pick 2; **_on a 7-9_**, deal damage and pick 1:\n\n- Deal +1d4 damage\n- Stop them from making noise/raising an alarm\n- Slip away before they can react\n- Create an opportunity; you or an ally gains advantage on the next move to act on it",
-      "text": ""
+      "text": "Wenn du **_einen Gegner in deiner Nähe überraschst_**, kannst du deinen Schaden verursachen oder stattdessen +GE würfeln. **Bei einer 10+** verursachst du deinen Schaden und wählst 2. **Bei 7–9** verursachst du deinen Schaden und wählst 1.\n\n- Verursache +1W4 Schaden.\n- Hindere ihn daran, Lärm zu verursachen oder Alarm zu schlagen.\n- Entkomme, bevor er reagieren kann.\n- Schaffe eine Gelegenheit; du oder ein Verbündeter erhält einen Vorteil beim nächsten Spielzug, mit dem ihr diese nutzt."
     },
     "moveResults/success/value": {
       "source": "Deal your damage and pick 2 from the list.",
-      "text": ""
+      "text": "Du verursachst deinen Schaden und wählst 2."
     },
     "moveResults/partial/value": {
       "source": "Deal your damage and pick 1 from the list.",
-      "text": ""
+      "text": "Du verursachst deinen Schaden und wählst 1."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "amulets-talismans": {
     "name": {
       "source": "Amulets & Talismans",
-      "text": ""
+      "text": "Amulette & Talismane"
     },
     "description": {
       "source": "When you **_craft a protective charm for someone_**, spend 1 Stock and name a source of harm (fire, stabbing, etc.). When **_they would suffer such harm while bearing your charm_**, roll +INT: **on a 10+**, they ignore the harm entirely; **_on a 7-9_**, they suffer only half the damage or effect; **on a 6-**, they suffer the harm normally. One can benefit from only 1 charm at a time, and it loses its potency after 1 use.",
-      "text": ""
+      "text": "Wenn du **_für jemanden einen Schutzzauber anfertigst_**, gib 1 Vorrat aus und nenne eine Schadensquelle (Feuer, Stichverletzung usw.). Wenn die Person, **_die deinen Zauber trägt, solchen Schaden erleiden würde_**, würfle +IN. **Bei einer 10+** ignoriert sie den Schaden vollständig. **Bei 7–9** erleidet sie nur den halben Schaden oder Effekt. **Bei einer 6−** erleidet sie den Schaden wie üblich. Eine Person kann immer nur von 1 Zauber gleichzeitig profitieren, und nach einer Anwendung verliert der Zauber seine Wirkung."
     },
     "moveResults/success/value": {
       "source": "They ignore the harm entirely.",
-      "text": ""
+      "text": "Sie ignoriert den Schaden vollständig."
     },
     "moveResults/partial/value": {
       "source": "They suffer only half the damage or effect.",
-      "text": ""
+      "text": "Sie erleidet nur den halben Schaden oder Effekt."
     },
     "moveResults/failure/value": {
       "source": "They suffer the harm normally.",
-      "text": ""
+      "text": "Sie erleidet den Schaden wie üblich."
     }
   },
   "and-behold-a-pale-horse": {
     "name": {
       "source": "And Behold a Pale Horse",
-      "text": ""
+      "text": "Und siehe, ein fahles Pferd"
     },
     "description": {
       "source": "When you **_spend the night gazing into a flame_**, ask the GM to reveal an impending doom or grim portent that will come to pass unless you intervene, and how you might yet do so.",
-      "text": ""
+      "text": "Wenn du **_die Nacht damit verbringst, in eine Flamme zu starren_**, bitte den SL, dir ein drohendes Unheil oder ein düsteres Vorzeichen zu offenbaren, das eintreten wird, wenn du nicht eingreifst – und wie du es vielleicht noch abwenden kannst."
     }
   },
   "anger-is-a-gift": {
     "name": {
       "source": "Anger is a Gift",
-      "text": ""
+      "text": "Wut ist ein Geschenk"
     },
     "description": {
       "source": "When you **_burn with righteous anger (see Fear & Anger on back of playbook)_**, hold 2 Resolve. You can spend your Resolve 1-for-1 to:\n\n- Set aside fear and doubt to do what must be done\n- Act suddenly, catching them off-guard\n- Inspire allies or bystanders to follow your lead\n- Strike hard (+1d4 damage, forceful)\n- Keep your footing, position, and/or your course despite what befalls you",
-      "text": ""
+      "text": "Wenn du **_vor gerechtem Zorn brennst_** (siehe Angst & Wut auf der Rückseite des Klassenbuchs), nimm 2 Entschlossenheit. Du kannst Entschlossenheit im Verhältnis 1:1 ausgeben, um:\n\n- Furcht und Zweifel beiseitezuschieben und zu tun, was getan werden muss.\n- Plötzlich zu handeln und deine Gegner zu überraschen.\n- Verbündete oder Umstehende zu inspirieren, dir zu folgen.\n- Hart zuzuschlagen (+1W4 Schaden, *Wuchtig*).\n- Trotz allem, was dir widerfährt, den Stand, die Position und/oder deinen Kurs zu halten."
     },
     "resource/title": {
       "source": "Resolve",
-      "text": ""
+      "text": "Entschlossenheit"
     }
   },
   "animal-companion": {
     "name": {
       "source": "Animal Companion",
-      "text": ""
+      "text": "Tiergefährte"
     },
     "description": {
       "source": "You are accompanied by a beast of uncommon loyalty and cleverness. See the Animal Companion insert for details.",
-      "text": ""
+      "text": "Du wirst von einem Tier von ungewöhnlicher Treue und Klugheit begleitet. Siehe hierzu für weitere Einzelheiten in die Beilage Tiergefährte."
     }
   },
   "arcane-adept": {
     "name": {
       "source": "Arcane Adept",
-      "text": ""
+      "text": "Arkaner Adept"
     },
     "description": {
       "source": "When you **_wish to invent a spell or magical effect_**, detail its workings with the GM and Make a Plan to invent it. If you like, pick one requirement and ask the GM to provide an alternative.",
-      "text": ""
+      "text": "Wenn du **_einen Zauber oder einen magischen Effekt erfinden möchtest_**, besprich gemeinsam mit dem SL seine Funktionsweise und Mach einen Plan, um ihn zu entwickeln. Wenn du möchtest, wähle eine Voraussetzung aus und bitte den SL, eine Alternative dafür zu nennen (zum Beispiel könnte „Zuerst musst du ____“ zu „Zuerst musst du ____, oder es wird Monate dauern“ werden)."
     }
   },
   "armistice": {
     "name": {
       "source": "Armistice",
-      "text": ""
+      "text": "Waffenstillstand"
     },
     "description": {
       "source": "When you **_approach an enemy to negotiate in good faith_**, they will at least hear you out. Even the most debased and savage foe will delay violence until you've had your say.",
-      "text": ""
+      "text": "Wenn du **_dich einem Feind näherst, um in gutem Glauben zu verhandeln_**, wird er dir zumindest zuhören. Selbst der niederträchtigste und grausamste Gegner wird mit Gewalt warten, bis du gesagt hast, was du zu sagen hast."
     }
   },
   "armored": {
     "name": {
       "source": "Armored",
-      "text": ""
+      "text": "Gerüstet"
     },
     "description": {
       "source": "When you **_carry a shield_**, mark only ◆ (instead of ◆◆). Also, you can ignore the *cumbersome* tag on any armor you wear.\n\nIf you take this move at the start of play, add an ◇◇ iron hauberk, ◇◇ bronze cuirass, or ◇◇ scale coat to your inventory (all are 2 armor, warm, cumbersome).",
-      "text": ""
+      "text": "Wenn du **_einen Schild trägst_**, markiere nur ◆ (statt ◆◆). Außerdem kannst du bei Rüstung, die du trägst, die Eigenschaft Schwerfällig ignorieren.\n\nWenn du diesen Spielzug zu Beginn des Spiels wählst, füge deinem Inventar einen ◇◇ Eisenhauberk, einen ◇◇ Bronzekürass oder einen ◇◇ Schuppenpanzer hinzu (alle haben 2 Rüstung, Warm, Schwerfällig)."
     }
   },
   "arts-of-war": {
     "name": {
       "source": "Arts of War",
-      "text": ""
+      "text": "Kriegskunst"
     },
     "description": {
       "source": "Take a move from the Fox, Heavy, Judge, Ranger, or Seeker playbooks, for which you otherwise qualify. You can pick from a different playbook each time. You can't take Improved Stat or Superior Stat.",
-      "text": ""
+      "text": "Wähle einen Spielzug aus den Spielbücher Fuchs, Brecher, Richter, Waldläufer oder Suchender, für den du die Voraussetzungen erfüllst. Du kannst jedes Mal aus einem anderen Spielbuch wählen. Du kannst jedoch nicht Verbessertes Attribut oder Überragendes Attribut wählen."
     }
   },
   "attuned": {
     "name": {
       "source": "Attuned",
-      "text": ""
+      "text": "Empfindsam"
     },
     "description": {
       "source": "When you **_Seek Insight_**, you can always ask, \"What here is infused with magic?\" for free, even **on a 6-**.",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, kannst du immer fragen: „Was ist hier von Magie durchdrungen?“, selbst bei einer 6-."
     }
   },
   "barkskin": {
     "name": {
       "source": "Barkskin",
-      "text": ""
+      "text": "Rindenhaut"
     },
     "description": {
       "source": "When you **_are touching the earth_**, you have 2 armor. When you **_mark another with 1 Stock_**, they gain this benefit so long as the mark remains.",
-      "text": ""
+      "text": "Wenn du **_den Boden berührst_**, hast du 2 Rüstung. Wenn du **_jemand anderen markierst und 1 Vorrat verbrauchst_**, erhält er diesen Vorteil, solange die Markierung bestehen bleibt."
     }
   },
   "battery": {
@@ -328,133 +328,133 @@
   "battle-dancer": {
     "name": {
       "source": "Battle Dancer",
-      "text": ""
+      "text": "Kampftänzer"
     },
     "description": {
       "source": "When you **_roll +DEX to Clash_**, on a 12+ you deal your damage, avoid your enemy's attack, and impress/embarrass/overawe your foes.",
-      "text": ""
+      "text": "Wenn du **_beim hauen & stechen mit +GE würfelst und eine 12+ erzielst_**, fügst du deinen Schaden zu, weichst dem gegnerischen Angriff aus und beeindruckst, blamierst oder schüchterst deine Feinde ein."
     }
   },
   "battle-joy": {
     "name": {
       "source": "Battle Joy",
-      "text": ""
+      "text": "Kampfrausch"
     },
     "description": {
       "source": "When you **_spill blood—yours or another's—and lose yourself in battle_**, you ignore fear, pain, mind-control, and the effects of debilities as long as you keep fighting.\n\nWhen **_the action stops_**, roll +CON: **on a 10+**, that was a rush, regain 1d4 HP; **_on a 7-9_**, you're winded and out of it, but you'll be fine with a few minutes' rest; **on a 6-**, mark a debility but don't mark XP.",
-      "text": ""
+      "text": "Wenn **_Blut fließt – dein eigenes oder das eines anderen – und du dich im Kampf verlierst_**, ignorierst du Angst, Schmerzen, Gedankenkontrolle und die Auswirkungen von Beeinträchtigungen, solange du weiterkämpfst.\n\nWenn **_der Kampf vorüber ist_**, würfle +KO. **Bei einer 10+** war es ein Rausch und du erhältst 1W4 TP zurück. **Bei 7–9** bist du erschöpft und benommen, aber nach ein paar Minuten Ruhe wieder auf den Beinen. **Bei einer 6-** markiere eine Beeinträchtigung, aber markiere keine EP."
     },
     "moveResults/success/value": {
       "source": "That was a rush — regain 1d4 HP.",
-      "text": ""
+      "text": "Es war ein Rausch und du erhältst 1W4 TP zurück."
     },
     "moveResults/partial/value": {
       "source": "You're winded and out of it, but you'll be fine with a few minutes' rest.",
-      "text": ""
+      "text": "Du bist erschöpft und benommen, aber nach ein paar Minuten Ruhe wieder auf den Beinen."
     },
     "moveResults/failure/value": {
       "source": "Mark a debility but don't mark XP.",
-      "text": ""
+      "text": "Markiere eine Beeinträchtigung, aber markiere keine EP."
     }
   },
   "battlefield-grace": {
     "name": {
       "source": "Battlefield Grace",
-      "text": ""
+      "text": "Gnade auf dem Schlachtfeld"
     },
     "description": {
       "source": "When you **_take damage while leading your allies in battle_**, the damage roll has disadvantage.",
-      "text": ""
+      "text": "Wenn du **_Schaden erleidest, während du deine Verbündeten im Kampf anführst_**, hat der Schadenswurf einen Nachteil."
     }
   },
   "bear-witness": {
     "name": {
       "source": "Bear Witness",
-      "text": ""
+      "text": "Zeugnis ablegen"
     },
     "description": {
       "source": "When you **_speak the truth with conviction and candor_**, none can doubt you. They might deny what you say, but in their hearts they recognize the truth.",
-      "text": ""
+      "text": "Wenn du **_die Wahrheit mit Überzeugung und Offenheit aussprichst_**, kann niemand an dir zweifeln. Sie mögen leugnen, was du sagst, doch in ihrem Innersten erkennen sie die Wahrheit."
     }
   },
   "beast-of-legend": {
     "name": {
       "source": "Beast of Legend",
-      "text": ""
+      "text": "Sagenhafte Bestie"
     },
     "description": {
       "source": "Each time you take this move, pick 1:\n\n- They are *exceptional* (and roll +2 instead of +1)\n- They get +4 HP and +1 armor\n- They develop some unique ability or trait",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle 1:\n\n- Es ist außergewöhnlich (und würfelt mit +2 statt +1)\n- Es erhält +4 LP und +1 Rüstung\n- Es entwickelt eine einzigartige Fähigkeit oder Eigenschaft."
     }
   },
   "berserker": {
     "name": {
       "source": "Berserker",
-      "text": ""
+      "text": "Berserker"
     },
     "description": {
       "source": "While in your Battle Joy, add the area tag to your melee attacks, lashing out at anyone nearby (friend and foe alike). Roll damage separately for each target.",
-      "text": ""
+      "text": "Während **_deines Kampfrauschs_** erhalten deine Nahkampfangriffe die Eigenschaft **Bereich** und du schlägst auf alle in deiner Nähe befindlichen Personen ein (egal ob Freund oder Feind). Würfle den Schaden für jedes Ziel einzeln."
     }
   },
   "better-part-of-valor": {
     "name": {
       "source": "Better Part of Valor",
-      "text": ""
+      "text": "Die bessere Seite der Tapferkeit"
     },
     "description": {
       "source": "When you **_are outnumbered or facing a foe bigger than you_**, you have advantage to hide from, escape from, or sneak past them.",
-      "text": ""
+      "text": "Wenn du **_zahlenmäßig unterlegen bist oder einem größeren Gegner gegenüberstehst_**, hast du einen Vorteil, dich vor ihm zu verstecken, ihm zu entkommen oder dich an ihm vorbeizuschleichen."
     }
   },
   "big-damn-hero": {
     "name": {
       "source": "Big Damn Hero",
-      "text": ""
+      "text": "Verdammt großer Held"
     },
     "description": {
       "source": "When you **_first leap into danger to protect someone_**, don't roll to Defend. Instead, treat it as though you rolled a 10+.\n\nWhen you **_Defend_**, you can spend 1 Readiness to lock eyes with an attacker; they have disadvantage on damage rolls against you and your ward for the rest of the fight. (Replaces In Over Your Head. First use crosses off \"Would-be\" on the front page.)",
-      "text": ""
+      "text": "Wenn du **_dich zum ersten Mal in eine Gefahr stürzt, um jemanden zu beschützen_**, würfle nicht für Verteidigen. Behandle es stattdessen so, als hättest du eine 10+ gewürfelt.\nWenn du **_Verteidigst_**, kannst du 1 Bereitschaft ausgeben, um einem Angreifer direkt in die Augen zu sehen. Er hat für den Rest des Kampfes einen Nachteil bei Schadenswürfen gegen dich und die Verbündeten, die du verteidigst."
     }
   },
   "big-game-hunter": {
     "name": {
       "source": "Big Game Hunter",
-      "text": ""
+      "text": "Großwildjäger"
     },
     "description": {
       "source": "When you **_strike at the weak spot of a large or huge creature_**, you deal +2 damage.",
-      "text": ""
+      "text": "Wenn du **_die Schwachstelle einer großen oder riesigen Kreatur triffst_**, verursachst du +2 Schaden."
     }
   },
   "big-magic": {
     "name": {
       "source": "Big Magic",
-      "text": ""
+      "text": "Große Magie"
     },
     "description": {
       "source": "Each time you take this move, choose an additional remarkable trait for your sacred pouch and increase your max Stock by 2.",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle eine weitere außergewöhnliche Eigenschaft für deinen heiligen Beutel und erhöhe deinen maximalen Vorrat um 2."
     }
   },
   "binding-arbitration": {
     "name": {
       "source": "Binding Arbitration",
-      "text": ""
+      "text": "Verbindliches Schiedsgericht"
     },
     "description": {
       "source": "When you **_bear witness to someone's promise or oath_**, henceforth you may ask their player if they have kept their word. They must answer honestly. The character need not be present. If they have broken their word, you gain advantage on all rolls against them until they admit their wrong and suffer an appropriate consequence (your call).",
-      "text": ""
+      "text": "Wenn du **_Zeuge des Versprechens oder Eides einer Person wirst_**, kannst du ihren Spieler fortan fragen, ob sie ihr Wort gehalten hat. Er muss ehrlich antworten. Der Charakter muss dabei nicht anwesend sein. Wenn **_er sein Wort gebrochen hat_**, erhältst du bei allen Würfen gegen sie einen Vorteil, bis er sein Fehlverhalten eingesteht und eine angemessene Konsequenz erleidet (du entscheidest)."
     }
   },
   "blot-out-the-sun": {
     "name": {
       "source": "Blot Out the Sun",
-      "text": ""
+      "text": "Die Sonne verdunkeln"
     },
     "description": {
       "source": "When you **_Let Fly with a bow_**, you can deplete your ammunition (mark the next ammo status after your weapon) before you roll. If you do, choose 1:\n\n- Gain advantage on your damage roll\n- Add the area tag to your attack; roll damage separately for each target",
-      "text": ""
+      "text": "Wenn du **_mit einem Bogen eine Salve abgibst_**, kannst du deine Munition verbrauchen (reduziere deine Munition um 1), bevor du würfelst. Wenn du das tust, wähle 1:\n\n- Du erhältst einen Vorteil bei deinem Schadenswurf.\n- Füge deinem Angriff die Eigenschaft Bereich hinzu. Würfle den Schaden für jedes Ziel separat."
     }
   },
   "bolster": {
@@ -474,75 +474,75 @@
   "borrow-power": {
     "name": {
       "source": "Borrow Power",
-      "text": ""
+      "text": "Geliehene Kraft"
     },
     "description": {
       "source": "When **_a spirit or beast loans you power_**, ask the GM for one of its tags or moves. Store it in your pouch in place of 1 Stock. When you **_use the borrowed tag or move_**, roll +WIS.",
-      "text": ""
+      "text": "Wenn **_ein Geist oder eine Bestie dir eine Kraft verleiht_**, frage den SL nach einer seiner Eigenschaften oder einem seiner Spielzüge. Bewahre diese Kraft in deinem Beutel anstelle von 1 Vorrat auf. Wenn du **_die geliehene Eigenschaft oder den Spielzug einsetzt_**, würfle +WE. **Bei einer 10+** gelingt es dir, und du kannst die Kraft erneut einsetzen. **Bei 7–9** gelingt es dir, aber du verlierst die Kraft."
     },
     "moveResults/success/value": {
       "source": "You do it and can use the power again.",
-      "text": ""
+      "text": "Es gelingt dir, und du kannst die Kraft erneut einsetzen."
     },
     "moveResults/partial/value": {
       "source": "You do it, but lose the power.",
-      "text": ""
+      "text": "Es gelingt dir, aber du verlierst die Kraft."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "break-bread": {
     "name": {
       "source": "Break Bread",
-      "text": ""
+      "text": "Das Brot brechen"
     },
     "description": {
       "source": "When you **_share a proper meal with someone and each of you eats their fill_**, each of you recovers 1d8 (extra) HP.",
-      "text": ""
+      "text": "Wenn du **_mit jemandem eine ordentliche Mahlzeit teilst und ihr euch beide satt esst_**, regeneriert jeder von euch (zusätzlich) 1W8 TP."
     }
   },
   "bringer-of-ruin": {
     "name": {
       "source": "Bringer of Ruin",
-      "text": ""
+      "text": "Verderbnisbringer"
     },
     "description": {
       "source": "When you **_roll a 12+ to Clash and your foe survives_**, name something they possess (like their sword, their position, a limb, their dignity, etc.), but nothing that would kill them outright. Whatever you name, it is broken, shattered, lost. Tell us how.",
-      "text": ""
+      "text": "Wenn du **_beim Hauen & Stechen eine 12+ würfelst und dein Gegner überlebt_**, nenne etwas, das er besitzt (z. B. sein Schwert, seine Position, ein Körperteil, seine Würde usw.), aber nichts, was ihn unmittelbar töten würde. Was auch immer du nennst, es wird zerbrochen, zerschmettert oder geht verloren. Sag uns, wie."
     }
   },
   "bulwark": {
     "name": {
       "source": "Bulwark",
-      "text": ""
+      "text": "Bollwerk"
     },
     "description": {
       "source": "When you **_Defend_**, you can spend 1 Readiness to stand fast, holding your position despite what befalls you.",
-      "text": ""
+      "text": "Wenn du **_Verteidigst_**, kannst du 1 Bereitschaft ausgeben, um standhaft zu bleiben und deine Position trotz aller Widrigkeiten zu halten."
     }
   },
   "burgle": {
     "name": {
       "source": "Burgle",
-      "text": ""
+      "text": "Einbruch"
     },
     "description": {
       "source": "When you **_sneak off on your own into a dangerous place_**, roll +INT: **_on a 7+_**, you make it back, and the GM says where you got to and what you learned. Then, **on a 10+**, also pick 2; **_on a 7-9_**, also pick 1:\n\n- You got away clean, rousing no suspicion\n- You swiped something valuable (GM's choice)\n- You set something up to exploit on your return\n- Ask a Seek Insight question about what you saw\nOn a 6-, you either make it back but with trouble in tow, or you're missing in action (your call).",
-      "text": ""
+      "text": "Wenn du **_dich allein an einen gefährlichen Ort schleichst_**, würfle +IN. **Bei einer 7+** schaffst du es zurück, und die SL sagt dir, wo du warst  und was du herausgefunden hast. **Bei einer 10+** wählst du zusätzlich 2 der folgenden Optionen. **Bei 7–9** wählst du zusätzlich 1.\n\n- Du bist unbemerkt davongekommen und hast keinen Verdacht erregt.\n- Du hast etwas Wertvolles gestohlen (nach Wahl der SL).\n- Du hast etwas vorbereitet, das du bei deiner Rückkehr ausnutzen kannst.\n- Stelle eine Frage aus der Liste von Einsicht Suchen über das, was du gesehen hast.\n\nBei einer 6- schaffst du es entweder zurück, aber bringst Ärger mit dir, oder du wirst vermisst (deine Wahl)."
     },
     "moveResults/success/value": {
       "source": "You make it back. Pick 2 from the list.",
-      "text": ""
+      "text": "Du schaffst es und wähle 2 aus der Liste."
     },
     "moveResults/partial/value": {
       "source": "You make it back. Pick 1 from the list.",
-      "text": ""
+      "text": "Du schaffst es und wähle 1 aus der Liste."
     },
     "moveResults/failure/value": {
       "source": "You either make it back but with trouble in tow, or you're missing in action (your call).",
-      "text": ""
+      "text": "Du schaffst es entweder zurück, aber bringst Ärger mit dir, oder du wirst vermisst (deine Wahl)."
     }
   },
   "burn-brightly": {
@@ -558,11 +558,11 @@
   "burn-twice-as-bright": {
     "name": {
       "source": "Burn Twice as Bright",
-      "text": ""
+      "text": "Doppelt so hell brennen"
     },
     "description": {
       "source": "When you **_Invoke the Sun God_**, you may mark a debility to use 2 Invocations at once. Roll once, and apply any consequences to both Invocations.",
-      "text": ""
+      "text": "Wenn du **_den Sonnengott anrufst_**, kannst du eine Beeinträchtigung markieren, um 2 Anrufungen auf einmal zu wirken. Würfle nur einmal und wende alle Konsequenzen auf beide Anrufungen an."
     }
   },
   "burning-hatred": {
@@ -590,11 +590,11 @@
   "but-i-get-up-again": {
     "name": {
       "source": "But I Get Up Again",
-      "text": ""
+      "text": "Doch ich stehe wieder auf"
     },
     "description": {
       "source": "When you **_use I Get Knocked Down_**, you have advantage on your next roll against whatever dealt the damage and your next blow against them does +1d4 damage.",
-      "text": ""
+      "text": "Wenn du **_Ich mag zwar zu Boden gehen einsetzt_**, hast du bei deinem nächsten Wurf gegen denjenigen, der den Schaden verursacht hat, einen Vorteil, und dein nächster Treffer gegen ihn verursacht +1W4 Schaden."
     }
   },
   "call-forth-and-command": {
@@ -610,33 +610,33 @@
   "call-the-shot": {
     "name": {
       "source": "Call the Shot",
-      "text": ""
+      "text": "Gezielter Schuss"
     },
     "description": {
       "source": "When you **_take your time and calmly line up the perfect shot_**, either deal your damage or roll +DEX: **on a 10+**, deal your damage and pick 2; **_on a 7-9_**, deal your damage and pick 1.\n\n- Ignore armor or deal +1d4 damage (your call)\n- Stun, hobble, or hinder them\n- Make them trip or drop what they're holding\n- Do no harm; don't deal your damage after all",
-      "text": ""
+      "text": "Wenn du **_dir Zeit nimmst und dich in aller Ruhe auf den perfekten Schuss vorbereitest_**, verursachst du entweder deinen Schaden oder würfle +GE. **Bei einer 10+** verursachst du deinen Schaden und wähle 2. **Bei 7–9** verursachst du deinen Schaden und wähle 1.\n\n- Ignoriere Rüstung oder verursache +1W4 Schaden (du entscheidest).\n- Betäube, behindere oder schwäche sie.\n- Bringe sie zu Fall oder lasse sie fallen, was sie in den Händen halten.\n- Verursache keinen Schaden; niemand wird verletzt."
     },
     "moveResults/success/value": {
       "source": "Deal your damage and pick 2.",
-      "text": ""
+      "text": "Du verursachst deinen Schaden und wähle 2."
     },
     "moveResults/partial/value": {
       "source": "Deal your damage and pick 1.",
-      "text": ""
+      "text": "Du verursachst deinen Schaden und wähle 1."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "call-the-spirits": {
     "name": {
       "source": "Call the Spirits",
-      "text": ""
+      "text": "Geister rufen"
     },
     "description": {
       "source": "When you **_spend 1 Stock and perform a short rite_**, the spirit(s) of a place or object manifest and hear you out. What they do next is up to them.",
-      "text": ""
+      "text": "Wenn du **_1 Vorrat ausgibst und ein kurzes Ritual durchführst_**, manifestieren sich die Geister eines Ortes oder eines Gegenstands und hören dir zu. Was sie danach tun, liegt ganz bei ihnen."
     }
   },
   "call-up-the-deep-ones": {
@@ -664,11 +664,11 @@
   "carved-out-of-wood": {
     "name": {
       "source": "Carved Out of Wood",
-      "text": ""
+      "text": "Aus Holz geschnitzt"
     },
     "description": {
       "source": "Increase your max HP by 4.",
-      "text": ""
+      "text": "Erhöhe deine maximalen TP um 4."
     }
   },
   "cast-a-codex-spell": {
@@ -700,31 +700,31 @@
   "castigate": {
     "name": {
       "source": "Castigate",
-      "text": ""
+      "text": "Züchtigen"
     },
     "description": {
       "source": "When you **_Censure someone_**, your voice deals 1d4 damage to them (near, loud, ignores armor).",
-      "text": ""
+      "text": "Wenn du **_jemanden zurechtweist_**, fügt ihm deine Stimme 1W4 Schaden zu (Kurz, Laut, ignoriert Rüstung)."
     }
   },
   "catlike": {
     "name": {
       "source": "Catlike",
-      "text": ""
+      "text": "Katzenhaft"
     },
     "description": {
       "source": "When you **_carry a light load and act with care_**, you move silently. When you **_hide in shadows or darkness_**, you remain unseen until you draw attention to yourself, move positions, or attack.",
-      "text": ""
+      "text": "Wenn du **_eine leichte Last trägst und dich vorsichtig bewegst_**, gibst du keinerlei Geräusche von dir. Wenn du **_dich im Schatten oder in der Dunkelheit versteckst_**, bleibst du unsichtbar, bis du Aufmerksamkeit auf dich lenkst, die Position wechselst oder angreifst."
     }
   },
   "censure": {
     "name": {
       "source": "Censure",
-      "text": ""
+      "text": "Zurechtweisung"
     },
     "description": {
       "source": "When you **_first denounce an individual in your presence as an agent of chaos or anathema to civilization_**, they pick 1:\n\n- They are ashamed, and act accordingly\n- They are doubtful, and hesitate, pause\n- They are afraid, and seek to escape\n- They are enraged, and lash out predictably (the next roll against them has advantage)",
-      "text": ""
+      "text": "Wenn du **_eine Person in deiner Gegenwart zum ersten Mal als Handlanger des Chaos oder als Feind der Zivilisation anprangerst_**, wählt sie 1:\n\n- Sie schämt sich und handelt entsprechend.\n- Sie wird unsicher und zögert, hält inne.\n- Sie bekommt Angst und versucht zu fliehen.\n- Sie wird wütend und schlägt vorhersehbar um sich (der nächste Wurf gegen sie hat einen Vorteil)."
     }
   },
   "chart-a-course": {
@@ -740,11 +740,11 @@
   "cheap-shot": {
     "name": {
       "source": "Cheap Shot",
-      "text": ""
+      "text": "Fieser Trick"
     },
     "description": {
       "source": "When you **_Ambush with a hand weapon_**, you have advantage on your damage roll.",
-      "text": ""
+      "text": "Wenn du **_bei einem hinterhältigen Angriff eine Waffe mit der Eigenschaft Hand benutzt_**, hast du bei deinem Schadenswurf einen Vorteil."
     }
   },
   "chosen-of-the-storm-bringer": {
@@ -760,11 +760,11 @@
   "chronicler-of-stonetop": {
     "name": {
       "source": "Chronicler of Stonetop",
-      "text": ""
+      "text": "Chronist von Stonetop"
     },
     "description": {
       "source": "When you **_write up detailed session notes and share them with the other players_**, hold +1 Diligence. You can spend 1 Diligence at any time to add +1 to a roll that you or a fellow player just made.",
-      "text": ""
+      "text": "Wenn du **_ausführliche Notizen zu den Spielsitzungen verfasst und sie mit den anderen Spielern teilst_**, nimm +1 Fleiß.\n\nDu kannst jederzeit 1 Fleiß ausgeben, um +1 zu einem Wurf hinzuzufügen, den du oder ein anderer Spieler gerade gemacht hat."
     }
   },
   "clash": {
@@ -792,41 +792,41 @@
   "condemn": {
     "name": {
       "source": "Condemn",
-      "text": ""
+      "text": "Verurteilen"
     },
     "description": {
       "source": "When you **_Censure someone_**, they are marked with a mystical brand that cannot be removed or hidden until you dismiss it. Any intelligent creature who sees the mark recognizes the bearer as an agent of chaos and anathema to civilization.",
-      "text": ""
+      "text": "Wenn du **_jemanden zurechtweist_**, wird er mit einem mystischen Mal markiert, das weder entfernt noch verborgen werden kann, bis du es aufhebst. Jede intelligente Kreatur, die das Mal sieht, erkennt den Träger als Handlanger des Chaos und Feind der Zivilisation."
     }
   },
   "conduit-of-power": {
     "name": {
       "source": "Conduit of Power",
-      "text": ""
+      "text": "Kanalisieren der Macht"
     },
     "description": {
       "source": "When you **_would mark a Consequence from a major arcanum_**, you can mark 1 box here instead, with no negative effect. (These marks never clear.)",
-      "text": ""
+      "text": "Wenn du **_normalerweise eine Konsequenz durch ein großes Arkanum markieren müsstest_**, kannst du stattdessen ein Kästchen hier markieren, ohne dass dies negative Auswirkungen hat. Diese Markierungen werden niemals entfernt."
     }
   },
   "consecrated-flame": {
     "name": {
       "source": "Consecrated Flame",
-      "text": ""
+      "text": "Geweihte Flamme"
     },
     "description": {
       "source": "When you **_whisper words of consecration to a flame_**, the flame casts a holy light. Holy light is uncomfortable for creatures of darkness to look upon, but does no true harm. The holy light lasts until the flame goes out or until you consecrate another flame, whichever comes first.",
-      "text": ""
+      "text": "Wenn du **_einer Flamme flüsternd Worte der Weihe zusprichst_**, verbreitet sie ein heiliges Licht. Heiliges Licht ist für Kreaturen der Dunkelheit unangenehm anzusehen, fügt ihnen aber keinen wirklichen Schaden zu. Das heilige Licht hält an, bis die Flamme erlischt oder du eine andere Flamme weihst – je nachdem, was zuerst eintritt."
     }
   },
   "constant-vigilance": {
     "name": {
       "source": "Constant Vigilance",
-      "text": ""
+      "text": "Stets wachsam"
     },
     "description": {
       "source": "Unless you're dazed, you're never caught off guard—not even when asleep or if you roll a 6-. When you **_intercept a sudden threat (to yourself or an ally)_**, you have advantage on whatever move you make.",
-      "text": ""
+      "text": "Solange du nicht benommen bist, wirst du niemals überrascht – nicht einmal im Schlaf oder wenn du eine 6− würfelst. Wenn du **_eine plötzliche Bedrohung abwehrst_** (für dich selbst oder einen Verbündeten), hast du bei dem Spielzug, den du daraufhin ausführst, einen Vorteil."
     }
   },
   "convalesce": {
@@ -842,117 +842,117 @@
   "countermeasures": {
     "name": {
       "source": "Countermeasures",
-      "text": ""
+      "text": "Gegenmaßnahmen"
     },
     "description": {
       "source": "When you **_witness a magical effect_**, you may ask the GM, \"How can this be countered or interrupted?\" and get an honest answer. You or an ally gain advantage on your next roll to act on the answer.",
-      "text": ""
+      "text": "Wenn du **_einen magischen Effekt beobachtest_**, darfst du den SL fragen: „Wie kann man dem entgegenwirken oder es unterbrechen?“ und du erhältst eine ehrliche Antwort. Du oder ein Verbündeter erhaltet einen Vorteil auf den nächsten Wurf, wenn ihr auf Grundlage dieser Information handelt."
     }
   },
   "crew": {
     "name": {
       "source": "Crew",
-      "text": ""
+      "text": "Truppe"
     },
     "description": {
       "source": "You've got a crew of stalwarts, six or so residents of Stonetop with some steel to them. See the Crew insert for details.",
-      "text": ""
+      "text": "Du hast eine Truppe aus kampferprobten Leuten, etwa sechs Bewohner von Stonetop, die wissen, wie man mit Stahl umgeht. Einzelheiten findest du in der Truppen-Beilage."
     }
   },
   "cryptologist": {
     "name": {
       "source": "Cryptologist",
-      "text": ""
+      "text": "Kryptologe"
     },
     "description": {
       "source": "When you **_study encoded, forgotten, or arcane marks or writing_**, roll +INT: **on a 10+**, you can fully decipher them in just a few minutes; **_on a 7-9_**, you get the gist in a few minutes, but fully deciphering them will take you an hour or so.",
-      "text": ""
+      "text": "Wenn du **_verschlüsselte, vergessene oder arkane Zeichen oder Schriften untersuchst_**, würfle +IN. **Bei einer 10+** kannst du sie innerhalb weniger Minuten vollständig entschlüsseln. **Bei 7–9** verstehst du innerhalb weniger Minuten den wesentlichen Inhalt, aber eine vollständige Entschlüsselung dauert etwa eine Stunde."
     },
     "moveResults/success/value": {
       "source": "Fully decipher them in just a few minutes.",
-      "text": ""
+      "text": "Du kannst sie innerhalb weniger Minuten vollständig entschlüsseln. "
     },
     "moveResults/partial/value": {
       "source": "Get the gist in a few minutes; full deciphering takes an hour or so.",
-      "text": ""
+      "text": "Du verstehst innerhalb weniger Minuten den wesentlichen Inhalt, aber eine vollständige Entschlüsselung dauert etwa eine Stunde."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "cut-from-granite": {
     "name": {
       "source": "Cut from Granite",
-      "text": ""
+      "text": "Aus Granit gehauen"
     },
     "description": {
       "source": "Gain +1 armor (stacks with other sources) and increase your max HP by another 2 (+6 HP total from both moves).",
-      "text": ""
+      "text": "Erhalte +1 Rüstung (kumulierbar mit anderen Quellen) und erhöhe deine maximalen TP um weitere 2 (insgesamt +6 TP)."
     }
   },
   "dabbler": {
     "name": {
       "source": "Dabbler",
-      "text": ""
+      "text": "Alleskönner"
     },
     "description": {
       "source": "Each time you take this move, choose a move from the Heavy, Marshal, Ranger, or Seeker playbooks for which you otherwise qualify. (You can't take Improved Stat or Superior Stat.)",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle einen Spielzug aus den Klassenbüchern Brecher, Marschall, Waldläufer oder Suchender, für den du die Voraussetzungen erfüllst. Du kannst weder Verbessertes Attribut noch Überragendes Attribut wählen."
     }
   },
   "danger-sense": {
     "name": {
       "source": "Danger Sense",
-      "text": ""
+      "text": "Gefahrensinn"
     },
     "description": {
       "source": "You can always ask the GM, \"Is there an ambush or trap here?\" If they say \"yes,\" roll +INT: **on a 10+**, ask the GM both of the questions below; **_on a 7-9_**, ask 1; either way, gain advantage on your next roll to act on the answer(s).\n\n- What will trigger the ambush or trap?\n- What will happen once it's triggered?\nOn a 6-, don't mark XP; you know there's a trap or ambush, but nothing bad happens just yet.",
-      "text": ""
+      "text": "Du kannst den SL jederzeit fragen: „Gibt es hier einen Hinterhalt oder eine Falle?“ Wenn er „Ja“ sagt, würfle +IN. Bei einer 10+ stellst du dem SL beide der folgenden Fragen. Bei 7-9 stellst du eine. In jedem Fall erhältst du bei deinem nächsten Wurf einen Vorteil, wenn du entsprechend seiner Antwort(en) reagierst.\n\n- Wodurch wird der Hinterhalt oder die Falle ausgelöst?\n- Was wird passieren, wenn sie ausgelöst wird?\n\nBei einer 6- markierst du keine EP. Du weißt, dass es eine Falle oder einen Hinterhalt gibt, aber vorerst geschieht nichts Schlimmes."
     },
     "moveResults/success/value": {
       "source": "Ask both questions.",
-      "text": ""
+      "text": "Stelle beide Fragen."
     },
     "moveResults/partial/value": {
       "source": "Ask 1 question.",
-      "text": ""
+      "text": "Stelle 1 Frage."
     },
     "moveResults/failure/value": {
       "source": "Don't mark XP; you know there's a trap or ambush, but nothing bad happens just yet.",
-      "text": ""
+      "text": "Markiere keine EP. Du weißt, dass es eine Falle oder einen Hinterhalt gibt, aber vorerst geschieht nichts Schlimmes."
     }
   },
   "dangerous": {
     "name": {
       "source": "Dangerous",
-      "text": ""
+      "text": "Gefährlich"
     },
     "description": {
       "source": "When you **_deal your damage_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_deinen Schaden verursachst_**, hast du einen Vorteil."
     }
   },
   "danus-grasp": {
     "name": {
       "source": "Danu's Grasp",
-      "text": ""
+      "text": "Danus Griff"
     },
     "description": {
       "source": "When you **_call on the world itself to bind a spirit or a perversion of nature_**, spend 1 Stock and roll +WIS: **_on a 7+_**, roots, vines, and earth pull at them, and they pick 1; **on a 10+**, as a 7-9, but both apply.\n\n- They're restrained, unable to act freely until your focus slips or they tear their way free\n- They take 2d4 damage (ignores armor)\nIf this brings them to 0 HP, they are pulled into the earth and bound in rune-etched stone.",
-      "text": ""
+      "text": "Wenn du **_die Welt selbst anrufst, um einen Geist oder eine Perversion der Natur zu binden_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 7+** greifen Wurzeln, Ranken und Erde nach ihnen, und sie wählen 1. **Bei einer 10+**, wie bei 7–9, aber beide Effekte treten ein.\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung).\nWenn ihre TP dadurch auf 0 sinken, werden sie in die Erde gezogen und in einen mit Runen verzierten Stein verwandelt."
     },
     "moveResults/success/value": {
       "source": "As 7-9, but both apply.",
-      "text": ""
+      "text": "Wie bei 7–9, aber beides trifft zu."
     },
     "moveResults/partial/value": {
       "source": "Roots, vines, and earth pull at them, and they pick 1: restrained until your focus slips or they tear free; OR they take 2d4 damage (ignores armor).",
-      "text": ""
+      "text": "Wurzeln, Ranken und Erde greifen nach ihnen und sie wählen 1:\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "dark-succor": {
@@ -1030,11 +1030,11 @@
   "deep-insight": {
     "name": {
       "source": "Deep Insight",
-      "text": ""
+      "text": "Tiefe Einsicht"
     },
     "description": {
       "source": "When you **_Seek Insight about something magical_**, you may ask one additional question, not limited to the list. Even **on a 6-**, you get to ask this question.",
-      "text": ""
+      "text": "Wenn du **_über etwas Magisches Gewissheit erlangst_**, darfst du eine zusätzliche Frage stellen, ohne auf die Liste beschränkt zu sein, selbst bei einer 6-."
     }
   },
   "defend": {
@@ -1100,29 +1100,29 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "destined": {
     "name": {
       "source": "Destined",
-      "text": ""
+      "text": "Ausersehen"
     },
     "description": {
       "source": "At the **_start of a session_**, roll +Omens: **on a 7+**, lose all Omens and the GM will describe a vision or portent that points toward your fate and/or clarifies your current situation; also, **on a 10+**, ask the GM a follow-up question and get a clear, helpful answer; **on a 6-**, don’t mark XP, hold +1 Omen, and tell us of your recent nightmares or a troubling vision, and how your fears play into them.\n\n**_Until your destiny is fulfilled_**, treat a 6- on Death’s Door as a 7-9, and a 7-9 as a 10+.",
-      "text": ""
+      "text": "**_Zu Beginn einer Spielsitzung_** würfle +Omen. **Bei einer 7+** verlierst du sämtliches Omen, und der SL beschreibt eine Vision oder ein Vorzeichen, das auf dein Schicksal hindeutet und/oder deine aktuelle Situation erhellt. **Bei einer 10+** kannst du außerdem dem SL zusätzlich eine Folgefrage stellen und erhältst darauf eine klare, hilfreiche Antwort. **Bei einer 6-** markierst du keine EP, erhältst +1 Omen und erzählst uns von den Albträumen oder einer beunruhigenden Vision und davon, wie deine Angst dabei eine Rolle spielt. \n\n**_Solange sich dein Schicksal noch nicht erfüllt hat_**, behandle  bei Tor des Todes eine 6- wie 7–9 und 7–9 wie eine 10+."
     },
     "moveResults/success/value": {
       "source": "Lose all Omens and the GM will describe a vision or portent that points toward your fate and/or clarifies your current situation; also, ask the GM a follow-up question and get a clear, helpful answer.",
-      "text": ""
+      "text": "Du verlierst sämtliches Omen, und der SL beschreibt eine Vision oder ein Vorzeichen, das auf dein Schicksal hindeutet und/oder deine aktuelle Situation erhellt. Außerdem kannst du dem SL zusätzlich eine Folgefrage stellen und erhältst darauf eine klare, hilfreiche Antwort."
     },
     "moveResults/partial/value": {
       "source": "Lose all Omens and the GM will describe a vision or portent that points toward your fate and/or clarifies your current situation.",
-      "text": ""
+      "text": "Du verlierst sämtliches Omen, und der SL beschreibt eine Vision oder ein Vorzeichen, das auf dein Schicksal hindeutet und/oder deine aktuelle Situation erhellt."
     },
     "moveResults/failure/value": {
       "source": "Don’t mark XP, hold +1 Omen, and tell us of your recent nightmares or a troubling vision, and how your fears play into them.",
-      "text": ""
+      "text": "Du markierst keine EP, erhältst +1 Omen und erzählst uns von den Albträumen oder einer beunruhigenden Vision und davon, wie deine Angst dabei eine Rolle spielt. "
     }
   },
   "disembodied": {
@@ -1170,11 +1170,11 @@
   "empowered-invocations": {
     "name": {
       "source": "Empowered Invocations",
-      "text": ""
+      "text": "Mächtige Anrufungen"
     },
     "description": {
       "source": "When you **_Invoke the Sun God_**, you can choose an extra consequence before you roll. If you do, the Invocation has its empowered effect.",
-      "text": ""
+      "text": "Wenn du den Sonnengott anrufst, kannst du vor dem Wurf eine zusätzliche Konsequenz wählen. Wenn du das tust, hat die Anrufung ihren verstärkten Effekt."
     }
   },
   "end-of-session": {
@@ -1190,55 +1190,55 @@
   "everything-bleeds": {
     "name": {
       "source": "Everything Bleeds",
-      "text": ""
+      "text": "Alles blutet"
     },
     "description": {
       "source": "When you **_exploit an unnatural foe's specific weakness or vulnerability_**, deal +1d6 damage.",
-      "text": ""
+      "text": "Wenn du **_die spezifische Schwäche oder Verwundbarkeit eines unnatürlichen Gegners ausnutzt_**, verursachst du +1W6 Schaden."
     }
   },
   "everything-burns": {
     "name": {
       "source": "Everything Burns",
-      "text": ""
+      "text": "Alles brennt"
     },
     "description": {
       "source": "When you **_inspect a work of artifice or magic for a fatal flaw_**, roll +INT: **_on a 7+_**, the GM will reveal the best way to destroy/sabotage it; **on a 10+**, you or an ally also gain advantage to act on the info.",
-      "text": ""
+      "text": "Wenn du **_eine Vorrichtung oder ein magisches Werk auf einen fatalen Fehler untersuchst_**, würfle +IN. **Bei einer 7+** verrät dir der SL, wie du es am besten sabotieren/zerstören kannst. **Bei einer 10+** erhalten du und deine Verbündeten außerdem einen Vorteil, wenn ihr aufgrund dieser Information handelt."
     },
     "moveResults/success/value": {
       "source": "The GM reveals the best way to destroy/sabotage it, and you or an ally gain advantage to act on the info.",
-      "text": ""
+      "text": "Der SL verrät dir, wie du es am besten sabotieren/zerstören kannst, und du und deine Verbündeten erhalten außerdem einen Vorteil, wenn ihr aufgrund dieser Information handelt."
     },
     "moveResults/partial/value": {
       "source": "The GM reveals the best way to destroy/sabotage it.",
-      "text": ""
+      "text": "Der SL verrät dir, wie du es am besten sabotieren/zerstören kannst."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "expert-tracker": {
     "name": {
       "source": "Expert Tracker",
-      "text": ""
+      "text": "Erfahrener Spurenleser"
     },
     "description": {
       "source": "When you **_Seek Insight by searching for or studying the signs left by passing creatures_**, you can ask \"What happened here recently?\" for free, even **on a 6-**.\n\nWhen you **_follow a creature's trail_**, roll +WIS: **_on a 7+_** you follow it to a significant change in terrain or activity; **on a 10+**, you can ask the GM a reasonable question about your quarry and get a useful answer.",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst, indem du nach Spuren suchst oder Hinweise untersuchst, die von vorbeiziehenden Kreaturen hinterlassen wurden_**, kannst du kostenlos die Frage stellen: „Was ist hier kürzlich geschehen?“, selbst bei einer 6-.\n\nWenn du **_der Spur einer Kreatur folgst_**, würfle +WE. **Bei einer 7+** kannst du der Fährte so lange folgen, bis sich das Gelände oder die Art der Aktivität merklich geändert hat. **Bei einer 10+** kannst du dem SL auch Fragen über deine Beute stellen und bekommst eine nützliche Antwort."
     },
     "moveResults/success/value": {
       "source": "Follow the trail to a significant change and ask a reasonable question about your quarry.",
-      "text": ""
+      "text": "Du kannst der Fährte so lange folgen, bis sich das Gelände oder die Art der Aktivität merklich geändert hat, und du kannst dem SL auch Fragen über deine Beute stellen und bekommst eine nützliche Antwort."
     },
     "moveResults/partial/value": {
       "source": "Follow the trail to a significant change in terrain or activity.",
-      "text": ""
+      "text": "Du kannst der Fährte so lange folgen, bis sich das Gelände oder die Art der Aktivität merklich geändert hat."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "eye-of-the-storm": {
@@ -1262,23 +1262,23 @@
   "eye-on-the-door": {
     "name": {
       "source": "Eye on the Door",
-      "text": ""
+      "text": "Mit Blick auf die Tür"
     },
     "description": {
       "source": "When you **_and your allies need to get out of here_**, name your escape route and roll +INT: **on a 10+**, you're gone; **_on a 7-9_**, you can stay or go, but if you go, it costs you—the GM will tell you what (or who) you leave behind or take with you.",
-      "text": ""
+      "text": "Wenn du **_und deine Verbündeten von hier verschwinden müsst_**, nenne deinen Fluchtweg und würfle +IN. **Bei einer 10+** seid ihr weg. **Bei 7–9** könnt ihr bleiben oder gehen, aber wenn ihr geht, hat das seinen Preis – der SL sagt euch, was (oder wen) ihr zurücklasst oder mitnehmt."
     },
     "moveResults/success/value": {
       "source": "You're gone.",
-      "text": ""
+      "text": "Ihr seid weg."
     },
     "moveResults/partial/value": {
       "source": "You can stay or go, but if you go, it costs you—the GM will tell you what (or who) you leave behind or take with you.",
-      "text": ""
+      "text": "Ihr könnt bleiben oder gehen, aber wenn ihr geht, hat das seinen Preis – der SL sagt euch, was (oder wen) ihr zurücklasst oder mitnehmt."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "fanning-the-flames": {
@@ -1318,31 +1318,31 @@
   "fire-within": {
     "name": {
       "source": "Fire Within",
-      "text": ""
+      "text": "Inneres Feuer"
     },
     "description": {
       "source": "When you **_are in darkness_**, you are able to see by the light of your inner fire. When you **_take damage from cold or fire_**, reduce that damage by 2.",
-      "text": ""
+      "text": "Wenn du **_dich in der Dunkelheit befindest_**, bist du in der Lage, durch das Licht deines inneren Feuers sehen. Wenn du Schaden durch Kälte oder Feuer erleidest, reduziere diesen Schaden um 2."
     }
   },
   "focus-fire": {
     "name": {
       "source": "Focus Fire",
-      "text": ""
+      "text": "Konzentriertes Feuer"
     },
     "description": {
       "source": "You can spend 1 Command to order your allies to bring down a foe. If you do, each ally has advantage on their next damage roll against that foe.",
-      "text": ""
+      "text": "Du kannst 1 Kommando ausgeben, um deine Verbündeten anzuweisen, einen Gegner gemeinsam zu Fall zu bringen. Wenn du das tust, haben alle Verbündeten bei ihrem nächsten Schadenswurf gegen diesen Gegner einen Vorteil."
     }
   },
   "for-the-greater-good": {
     "name": {
       "source": "For the Greater Good",
-      "text": ""
+      "text": "Zum Wohle der Allgemeinheit"
     },
     "description": {
       "source": "When you **_Persuade someone to act in defense of their community or civilization at large_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_jemanden überredest, zum Schutz seiner Gemeinschaft oder der Zivilisation als Ganzes zu handeln_**, hast du einen Vorteil."
     }
   },
   "forage": {
@@ -1370,57 +1370,57 @@
   "formidable": {
     "name": {
       "source": "Formidable",
-      "text": ""
+      "text": "Eindrucksvoll"
     },
     "description": {
       "source": "When you **_wade into battle_**, you can choose to roll +CHA: **on a 10+**, both; **_on a 7-9_**, pick 1:\n\n- Lesser foes will quail, hesitate, or flee before you.\n- Doughty foes will focus on you, seeing you as the greatest threat.\nOn a 6-, pick 1 but ask the GM what you've missed.",
-      "text": ""
+      "text": "Wenn du **_dich ins Kampfgetümmel stürzt_**, kannst du dich entscheiden, +CH zu würfeln. **Bei einer 10+** trifft beides zu. **Bei 7–9** wähle 1.\n\n- Schwächere Gegner schrecken vor dir zurück, zögern oder fliehen.\n- Tapfere Gegner konzentrieren sich auf dich und sehen dich als größte Bedrohung an.\n- **Bei einer 6-** wähle 1, aber frage den SL, was du übersehen hast."
     },
     "moveResults/success/value": {
       "source": "Both: lesser foes quail AND doughty foes focus on you.",
-      "text": ""
+      "text": "Beides Schwächere Gegner schrecken zurück/fliehen UND tapfere Gegner konzentrieren sich auf dich."
     },
     "moveResults/partial/value": {
       "source": "Pick 1: lesser foes quail/flee OR doughty foes focus on you.",
-      "text": ""
+      "text": "Wähle 1: Schwächere Gegner schrecken zurück/fliehen ODER tapfere Gegner konzentrieren sich auf dich."
     },
     "moveResults/failure/value": {
       "source": "Pick 1 but ask the GM what you've missed.",
-      "text": ""
+      "text": "Wähle 1, aber frage den SL, was du übersehen hast."
     }
   },
   "free-running": {
     "name": {
       "source": "Free Running",
-      "text": ""
+      "text": "Freier Lauf"
     },
     "description": {
       "source": "When you **_carry a light load and move with speed and grace_**, gain advantage on any move to surmount or bypass a physical obstacle.",
-      "text": ""
+      "text": "Wenn du **_nur leichtes Gepäck trägst und dich schnell und geschmeidig bewegst_**, erhältst du bei jedem Spielzug einen Vorteil, bei dem du versuchst, ein physisches Hindernis zu überwinden oder zu umgehen."
     }
   },
   "front-line-leader": {
     "name": {
       "source": "Front Line Leader",
-      "text": ""
+      "text": "Frontlinienführer"
     },
     "description": {
       "source": "When you **_lead your crew into battle_**, hold 2 Presence. Spend Presence in lieu of your crew's Loyalty or as Readiness (as if you Defended them).",
-      "text": ""
+      "text": "Wenn du **_deine Truppe in die Schlacht führst_**, nimm 2 Präsenz. Gib Präsenz anstelle der Loyalität deiner Truppe oder als Bereitschaft aus (so, als hättest du sie verteidigt)."
     },
     "resource/title": {
       "source": "Presence",
-      "text": ""
+      "text": "Präsenz"
     }
   },
   "frosty": {
     "name": {
       "source": "Frosty",
-      "text": ""
+      "text": "Eiskalt"
     },
     "description": {
       "source": "When you **_Defy Danger by keeping calm and carrying on_**, **on a 10+** you can also ask the GM a question that you could ask when Seeking Insight. You have advantage on your next move to act on the answer.",
-      "text": ""
+      "text": "Wenn du **_einer Gefahr trotzt, indem du ruhig bleibst und unbeirrt weitermachst_**, kannst du **bei einer 10+** dem SL außerdem eine Frage stellen, die du auch stellen könntest, wenn du Gewissheit erlangst. Du hast bei deinem nächsten Spielzug einen Vorteil, wenn du auf Grundlage der Antwort handelst."
     }
   },
   "gather": {
@@ -1436,21 +1436,21 @@
   "giant-slayer": {
     "name": {
       "source": "Giant Slayer",
-      "text": ""
+      "text": "Riesentöter"
     },
     "description": {
       "source": "When you **_strike at a weak spot of a large or huge creature_**, you deal another +2 damage (+4 total).",
-      "text": ""
+      "text": "Wenn du **_die Schwachstelle einer großen oder riesigen Kreatur triffst_**, verursachst du zusätzlich +2 Schaden (insgesamt +4 Schaden)."
     }
   },
   "glorious-servant": {
     "name": {
       "source": "Glorious Servant",
-      "text": ""
+      "text": "Glorreicher Diener"
     },
     "description": {
       "source": "When you **_Invoke the Sun God and roll a 10+_**, you need not choose a consequence; **_on a 7-9_**, you choose a consequence but the GM does not.",
-      "text": ""
+      "text": "Wenn du **_den Sonnengott anrufst und eine 10+ würfelst_**, musst du keine Konsequenz wählen. Bei 7–9 wählst du eine Konsequenz, aber der SL tut es nicht."
     }
   },
   "greater-conduit": {
@@ -1466,55 +1466,55 @@
   "guardian": {
     "name": {
       "source": "Guardian",
-      "text": ""
+      "text": "Wächter"
     },
     "description": {
       "source": "When you **_Defend_**, hold 1 extra Readiness. Even **on a 6-**, hold 1 Readiness (plus whatever the GM says).",
-      "text": ""
+      "text": "Wenn du **_Verteidigst_**, nimm zusätzlich 1 Bereitschaft, selbst bei einer 6- (zusätzlich zu dem, was der SL sagt)."
     }
   },
   "guiding-light": {
     "name": {
       "source": "Guiding Light",
-      "text": ""
+      "text": "Leitendes Licht"
     },
     "description": {
       "source": "When you **_lead one or more NPCs through danger_**, roll +CHA: **on a 10+**, you all make it through (Helior be praised); **_on a 7-9_**, the GM will tell you what's required to get everyone through safely.",
-      "text": ""
+      "text": "Wenn du **_einen oder mehrere NSC durch eine Gefahr führst, würfle +CH. **Bei einer 10+** kommt ihr alle sicher hindurch (gelobt sei Helior). **Bei 7–9** sagt dir der SL, was erforderlich ist, damit ihr alle sicher hindurchkommt."
     },
     "moveResults/success/value": {
       "source": "You all make it through.",
-      "text": ""
+      "text": "Ihr kommt alle sicher hindurch."
     },
     "moveResults/partial/value": {
       "source": "The GM will tell you what's required to get everyone through safely.",
-      "text": ""
+      "text": "Der SL sagt dir, was erforderlich ist, damit ihr alle sicher hindurchkommt."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "hard-to-kill": {
     "name": {
       "source": "Hard to Kill",
-      "text": ""
+      "text": "Schwer zu töten"
     },
     "description": {
       "source": "When you **_are at Death's Door_**, you can roll +CON or +nothing (your choice). **_On a 7-9_**, you can mark a debility of your choice to regain 1 HP.",
-      "text": ""
+      "text": "Wenn du **_an der Schwelle des Todes stehst_**, kannst du +KO oder +0 würfeln (deine Wahl). **Bei 7–9** kannst du eine Beeinträchtigung deiner Wahl markieren, um 1 TP zurückzugewinnen."
     },
     "moveResults/success/value": {
       "source": "Stabilize — see Death's Door rules.",
-      "text": ""
+      "text": "Du stabilisierst dich – siehe die Regeln zu „An der Schwelle des Todes“."
     },
     "moveResults/partial/value": {
       "source": "Mark a debility of your choice to regain 1 HP.",
-      "text": ""
+      "text": "Markiere eine Beeinträchtigung deiner Wahl, um 1 TP zurückzugewinnen."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "have-what-you-need": {
@@ -1530,93 +1530,93 @@
   "healers-arts": {
     "name": {
       "source": "Healer's Arts",
-      "text": ""
+      "text": "Heilkunst"
     },
     "description": {
       "source": "When **_someone Recovers under your care_**, they recover extra HP equal to your WIS. If you also spend 1 Stock, they heal an extra 5 HP and their wounds/injuries are stabilized.",
-      "text": ""
+      "text": "Wenn **_sich jemand unter deiner Obhut Erholt_**, erhält die Person zusätzlich TP in Höhe deiner Weisheit. Wenn du **_außerdem 1 Vorrat ausgibst_**, heilt sie zusätzlich 5 TP, und ihre Wunden/Verletzungen werden stabilisiert."
     }
   },
   "heed-my-words": {
     "name": {
       "source": "Heed My Words",
-      "text": ""
+      "text": "Hör auf meine Worte"
     },
     "description": {
       "source": "When you **_Persuade by talking sense or warning against foolishness_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_durch vernünftige Argumente oder Warnungen vor törichtem Verhalten Überredest_**, hast du einen Vorteil."
     }
   },
   "heliors-unblinking-eye": {
     "name": {
       "source": "Helior's Unblinking Eye",
-      "text": ""
+      "text": "Helior’s unerschütterlicher Blick"
     },
     "description": {
       "source": "When you **_stare into the sun long enough to lose your vision_**, name a person or place that you know and roll +WIS: **on a 10+**, you briefly glimpse your subject as if from a great height, and choose 2 from the list below; **_on a 7-9_**, you briefly glimpse your subject as if from a great height, and choose 1.\n\n- The glimpse lasts as long as you wish\n- Your point of view shifts to very close range\n- You recover your vision quickly",
-      "text": ""
+      "text": "Wenn du **_so lange in die Sonne starrst, bis du das Augenlicht verlierst_**, nenne eine Person oder einen Ort, den du kennst, und würfle +WE. **Bei einer 10+** erhaschst du kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle 2 aus der folgenden Liste. **Bei 7–9** erhaschst du kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle 1:\n\n- Der Blick hält so lange an, wie du möchtest.\n- Dein Blickwinkel wechselt in unmittelbare Nähe.\n- Du erlangst dein Augenlicht schnell zurück."
     },
     "moveResults/success/value": {
       "source": "You briefly glimpse your subject from a great height — choose 2.",
-      "text": ""
+      "text": "Du erhaschst kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle 2."
     },
     "moveResults/partial/value": {
       "source": "You briefly glimpse your subject from a great height — choose 1.",
-      "text": ""
+      "text": "Du erhaschst kurz einen Blick auf dein Ziel, als würdest du es von großer Höhe aus betrachten, und wähle 1."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "heroes-to-the-last": {
     "name": {
       "source": "Heroes to the Last",
-      "text": ""
+      "text": "Helden bis zum Schluss"
     },
     "description": {
       "source": "Each time you take this move, pick 1:\n\n- They are *exceptional* (and roll +2 instead of +1)\n- They are inured to terror & horror\n- Increase their max HP by 4 each\n- Increase their damage die one size (max d10)",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle 1:\n\n- Sie sind außergewöhnlich (und würfeln +2 statt +1).\n- Sie sind abgehärtet gegen Angst und Schrecken.\n- Erhöhe ihre maximalen TP jeweils um 4.\n- Erhöhe ihren Schadenswürfel um eine Größe (max. W10)."
     }
   },
   "home-on-the-range": {
     "name": {
       "source": "Home on the Range",
-      "text": ""
+      "text": "In der Wildnis Zuhause"
     },
     "description": {
       "source": "When **_a journey requires you to Defy Danger or Struggle as One_**, treat a 6- as a 7-9.",
-      "text": ""
+      "text": "Wenn **_eine Reise es erfordert, dass du einer Gefahr trotzt oder mit deinen Kameraden gemeinsam vorzugehen hast_**, behandle eine 6- wie 7–9."
     }
   },
   "hound-of-aratis": {
     "name": {
       "source": "Hound of Aratis",
-      "text": ""
+      "text": "Aratis’ Spürhund"
     },
     "description": {
       "source": "When you **_Seek Insight_**, you can always ask \"What here is tainted by chaos?\" for free, even **on a 6-**.",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, kannst du immer kostenlos fragen: „Was hier ist vom Chaos befleckt?“, selbst bei einer 6−."
     }
   },
   "hungry-flames": {
     "name": {
       "source": "Hungry Flames",
-      "text": ""
+      "text": "Hungrige Flammen"
     },
     "description": {
       "source": "When you **_deal damage with a holy light_**, you deal +1d6 damage and your target is engulfed in holy light and flames.",
-      "text": ""
+      "text": "Wenn du **_mit einem heiligen Licht Schaden verursachst_**, verursachst du +1W6 Schaden, und dein Ziel wird in heiliges Licht und Flammen gehüllt."
     }
   },
   "i-get-knocked-down": {
     "name": {
       "source": "I Get Knocked Down",
-      "text": ""
+      "text": "Ich mag zwar zu Boden gehen"
     },
     "description": {
       "source": "When you **_take damage despite your best efforts to avoid it_**, you can choose to halve the damage but pick 1 of the following:\n\n- You lose something (footing, grip, etc.)\n- Something on your person breaks\n- You're out of it for a moment\nWhatever you choose, the GM will describe the details.",
-      "text": ""
+      "text": "Wenn du **_Schaden erleidest, trotz aller Bemühungen ihn zu vermeiden_**, kannst du dich entscheiden, den Schaden zu halbieren, aber wähle eine der folgenden Optionen:\n\n- Du verlierst etwas (den Halt, den Griff, usw.).\n- Etwas, das du bei dir trägst, geht kaputt.\n- Du bist für einen Moment außer Gefecht.\nWie auch immer du dich entscheidest, der SL wird die Details beschreiben."
     }
   },
   "implacable": {
@@ -1632,43 +1632,43 @@
   "improved-stat": {
     "name": {
       "source": "Improved Stat",
-      "text": ""
+      "text": "Verbessertes Attribut"
     },
     "description": {
       "source": "Each time you take this move, increase one of your stats by 1 (to a max of +2).",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, erhöhe eines deiner Attribute um +1 (max. +2)."
     }
   },
   "improvise": {
     "name": {
       "source": "Improvise",
-      "text": ""
+      "text": "Improvisieren"
     },
     "description": {
       "source": "When you **_wish to use an arcanum's move or option without having unlocked it_**, ask the GM what fool risk(s) it requires and/or what consequence(s) you'll incur. If you go for it, roll +INT: **_on a 7+_**, you get it to work this once; **on a 10+**, also mark one step towards unlocking the arcanum's mysteries.",
-      "text": ""
+      "text": "Wenn du **_einen Spielzug oder eine Option eines Arkanums verwenden möchtest, ohne es freigeschaltet zu haben_**, frage die SL, welches törichte Risiko bzw. welche Konsequenz(en) damit verbunden sind. Wenn du es trotzdem versuchst, würfle +IN. **Bei einer 7+** gelingt es dir dieses eine Mal – löse den Spielzug aus oder nutze die Option, als hättest du es freigeschaltet. **Bei einer 10+** markierst du außerdem einen Schritt auf dem Weg, die Geheimnisse des Arkanums zu entschlüsseln."
     },
     "moveResults/success/value": {
       "source": "It works and you mark one step towards unlocking the arcanum's mysteries.",
-      "text": ""
+      "text": "Es gelingt dir, und du markierst außerdem einen Schritt auf dem Weg, die Geheimnisse des Arkanums zu entschlüsseln."
     },
     "moveResults/partial/value": {
       "source": "It works this once.",
-      "text": ""
+      "text": "Es gelingt dir dieses eine Mal."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "in-over-your-head": {
     "name": {
       "source": "In Over Your Head",
-      "text": ""
+      "text": "Überfordert"
     },
     "description": {
       "source": "When **_another PC rescues you from danger_**, mark XP.",
-      "text": ""
+      "text": "Wenn **_ein anderer SC dich aus einer Gefahr rettet_**, markiere EP."
     }
   },
   "indomitable": {
@@ -1712,21 +1712,21 @@
   "initiate-of-the-secret-arts": {
     "name": {
       "source": "Initiate of the Secret Arts",
-      "text": ""
+      "text": "Eingeweihter der geheimen Künste"
     },
     "description": {
       "source": "You have a \"Sacred Pouch\" (3 Stock, magical), as per the Blessed, but with no remarkable traits. Each time you take this move, choose a Blessed move for which you otherwise qualify. (You can't take Improved Stat or Superior Stat.)",
-      "text": ""
+      "text": "Du besitzt einen „Heiligen Beutel“ (3 Vorräte, *Magisch*), wie der Gesegnete, jedoch ohne außergewöhnliche Eigenschaften. Jedes Mal, wenn du diesen Spielzug wählst, wählst du einen Spielzug des Gesegneten, für den du die Voraussetzungen erfüllst. Du kannst jedoch nicht Verbessertes Attribut oder Überragendes Attribut wählen."
     }
   },
   "inquiring-minds": {
     "name": {
       "source": "Inquiring Minds",
-      "text": ""
+      "text": "Wissbegierig"
     },
     "description": {
       "source": "When you **_seek out and receive honest advice_**, gain advantage on your next roll to follow that advice.",
-      "text": ""
+      "text": "Wenn du **_dir einen ehrlichen Rat suchst und ihn erhältst_**, hast du bei deinem nächsten Wurf einen Vorteil, wenn du diesem Rat folgst."
     }
   },
   "interfere": {
@@ -1754,63 +1754,63 @@
   "intimidating": {
     "name": {
       "source": "Intimidating",
-      "text": ""
+      "text": "Einschüchternd"
     },
     "description": {
       "source": "When you **_Persuade using violence or threats_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_beim Überreden Gewalt oder Drohungen einsetzt_**, hast du einen Vorteil."
     }
   },
   "into-the-lions-den": {
     "name": {
       "source": "Into the Lion's Den",
-      "text": ""
+      "text": "In die Höhle des Löwen"
     },
     "description": {
       "source": "When you **_approach a beast calmly and show no fear_**, it will not harm you (though it may threaten you and test your nerve). When you **_lay your hand gently upon a beast_**, it calms to your touch.",
-      "text": ""
+      "text": "Wenn du **_dich einem Tier ruhig näherst und keine Angst zeigst_**, wird es dir nichts tun – auch wenn es dich bedroht und deinen Mut auf die Probe stellen mag. Wenn du **_deine Hand sanft auf ein Tier legst_**, beruhigt es sich unter deiner Berührung."
     }
   },
   "invoke-the-sun-god": {
     "name": {
       "source": "Invoke the Sun God",
-      "text": ""
+      "text": "Den Sonnengott anrufen"
     },
     "description": {
       "source": "When you **_imbue a holy light with Helior's power_**, choose an Invocation you know and roll +WIS: **on a 10+**, it works as described but you must choose 1 consequence from the list below; **_on a 7-9_**, it works as described, but you and the GM each choose 1.\n\n- The Invocation has its reduced effect\n- The effort taxes you; mark a debility\n- The light is snuffed out when the Invocation is complete, its fuel consumed\n- You must bask in sunlight for an hour or so before using that Invocation again\nSee the Invocations insert for details.",
-      "text": ""
+      "text": "Wenn du **_ein heiliges Licht mit Heliors Macht erfüllst_**, wähle eine Anrufung, die du kennst, und würfle +WE. **Bei einer 10+** wirkt sie wie beschrieben, aber du musst 1 Konsequenz aus der folgenden Liste wählen. **Bei 7–9** wirkt sie wie beschrieben, aber du und der SL wählen jeweils 1 Konsequenz.\n\n- Die Anrufung hat eine abgeschwächte Wirkung.\n- Die Anstrengung belastet dich; markiere eine Beeinträchtigung.\n- Das Licht erlischt, sobald die Anrufung abgeschlossen ist; sein Brennstoff ist aufgebraucht.\n- Du musst dich etwa eine Stunde lang im Sonnenlicht baden, bevor du diese Anrufung erneut einsetzen kannst.\nWeitere Informationen findest du in der Anrufungen-Beilage."
     },
     "moveResults/success/value": {
       "source": "It works as described — you choose 1 consequence.",
-      "text": ""
+      "text": "Sie wirkt wie beschrieben, aber du musst 1 Konsequenz wählen."
     },
     "moveResults/partial/value": {
       "source": "It works as described — you and the GM each choose 1 consequence.",
-      "text": ""
+      "text": "Sie wirkt wie beschrieben, aber du und der SL wählen jeweils 1 Konsequenz."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "iron-will": {
     "name": {
       "source": "Iron Will",
-      "text": ""
+      "text": "Eiserner Wille"
     },
     "description": {
       "source": "When you **_are subject to mind control or magic that affects your feelings_**, you can take 1d4 damage (ignoring armor) to disregard its influence.",
-      "text": ""
+      "text": "Wenn du **_einer Gedankenkontrolle oder Magie ausgesetzt bist_**, die deine Gefühle beeinflusst, kannst du 1W4 Schaden (ignoriert Rüstung) erleiden, um ihren Einfluss zu ignorieren."
     }
   },
   "irresistible": {
     "name": {
       "source": "Irresistible",
-      "text": ""
+      "text": "Unwiderstehlich"
     },
     "description": {
       "source": "When you **_interact with someone_**, you can ask their player if they find you attractive and get an honest answer (usually \"yes\").\n\nWhen you **_Persuade by using your considerable charms as leverage_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_mit jemandem interagierst_**, kannst du dessen Spieler fragen, ob er dich attraktiv findet, und du erhältst darauf eine ehrliche Antwort (normalerweise „ja“).\n\nWenn du **_beim Verhandeln deinen beträchtlichen Charme als Druckmittel einsetzt_**, hast du einen Vorteil."
     }
   },
   "keep-company": {
@@ -1826,11 +1826,11 @@
   "keep-the-home-fires-burning": {
     "name": {
       "source": "Keep the Home-Fires Burning",
-      "text": ""
+      "text": "Halte das Feuer am Leben"
     },
     "description": {
       "source": "When you **_build a camp fire and sprinkle it with ash from your own hearth_**, anyone who Makes Camp with you is free from nightmares or bad dreams and recovers (extra) HP equal to your CHA.",
-      "text": ""
+      "text": "Wenn du **_ein Lagerfeuer errichtest und es mit Asche aus deinem eigenen Herd bestreust_**, bleibt jeder, der mit dir das Lager aufschlägt, von Albträumen und anderweitig schlechten Träumen verschont und regeneriert (zusätzlich) TP in Höhe deines CH."
     }
   },
   "know-things": {
@@ -1858,31 +1858,31 @@
   "knowledge-is-power": {
     "name": {
       "source": "Knowledge is Power",
-      "text": ""
+      "text": "Wissen ist Macht"
     },
     "description": {
       "source": "When you **_roll 10+ to Know Things_**, you or an ally gain advantage on the next roll to act on what you learn.",
-      "text": ""
+      "text": "Wenn du **_beim Wissen kundtun eine 10+ würfelst_**, erhältst du oder ein Verbündeter auf den nächsten Wurf einen Vorteil, mit dem ihr das gerade gewonnene Wissen in die Tat umsetzt."
     }
   },
   "lamplighter": {
     "name": {
       "source": "Lamplighter",
-      "text": ""
+      "text": "Entzünden"
     },
     "description": {
       "source": "When you **_whisper to a flammable object (a torch, a wick, kindling, etc.)_**, it ignites in moments.",
-      "text": ""
+      "text": "Wenn du **_einem brennbaren Gegenstand (Fackel, Docht, Zunder usw.) etwas zuflüsterst_**, entzündet er sich innerhalb weniger Augenblicke."
     }
   },
   "laugh-at-danger": {
     "name": {
       "source": "Laugh at Danger",
-      "text": ""
+      "text": "Der Gefahr ins Gesicht lachen"
     },
     "description": {
       "source": "When you **_are about to roll +CON and you make a joke about the adversity you face_**, you can roll +CHA instead.",
-      "text": ""
+      "text": "Wenn du **_im Angesicht von Widrigkeiten einen Witz machst_**, kannst du +CH statt +KO würfeln."
     }
   },
   "let-fly": {
@@ -1910,11 +1910,11 @@
   "lets-make-a-deal": {
     "name": {
       "source": "Let's Make a Deal",
-      "text": ""
+      "text": "Lass uns einen Handel abschließen"
     },
     "description": {
       "source": "When you **_Seek Insight_**, add \"What do they really want or need?\" to the list of questions. When you **_Persuade by offering them something that you know they want or need_**, treat a 7-9 as a 10+.",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, füge der Liste an Fragen diese Frage hinzu: „Was will oder braucht er wirklich?“. Wenn du **_jemanden überredest, indem du ihm etwas anbietest, von dem du weißt, dass er es will oder braucht_**, behandle eine 7–9 wie eine 10+."
     }
   },
   "level-up": {
@@ -1930,105 +1930,105 @@
   "light-fingers": {
     "name": {
       "source": "Light Fingers",
-      "text": ""
+      "text": "Flinke Finger"
     },
     "description": {
       "source": "When you **_perform sleight of hand on an unwary mark_**, you succeed and no one's the wiser. If you're being watched, roll +DEX: **on a 10+**, you succeed and no one's the wiser; **_on a 7-9_**, you succeed OR no one's the wiser (your choice).",
-      "text": ""
+      "text": "Wenn du **_ein ahnungsloses oder unaufmerksames Opfer bestiehlst_**, gelingt es dir, ohne dass jemand etwas bemerkt. Wenn du beobachtet wirst, würfle +GE. **Bei einer 10+** gelingt es dir, ohne dass jemand etwas bemerkt. **Bei 7–9** gelingt es dir ODER niemand bemerkt etwas (deine Wahl)."
     },
     "moveResults/success/value": {
       "source": "You succeed and no one's the wiser.",
-      "text": ""
+      "text": "Es gelingt dir, ohne dass jemand etwas bemerkt."
     },
     "moveResults/partial/value": {
       "source": "You succeed OR no one's the wiser (your choice).",
-      "text": ""
+      "text": "Es gelingt dir ODER niemand bemerkt etwas (deine Wahl)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "light-more-light": {
     "name": {
       "source": "Light, More Light",
-      "text": ""
+      "text": "Licht, mehr Licht"
     },
     "description": {
       "source": "When you **_consecrate a flame_**, it burns brighter than normal. A rushlight or candle illuminates to reach range, an oil lamp, lantern, or torch out to near range, and a bullseye lantern out to far range.",
-      "text": ""
+      "text": "Wenn du **_eine Flamme weihst_**, brennt sie heller als gewöhnlich. Ein Binsenlicht oder eine Kerze leuchtet mit Reichweite Lang, eine Öllampe, Laterne oder Fackel mit Reichweite *Nah* und eine Blendlaterne mit Reichweite *Fern*."
     }
   },
   "lightning-rod": {
     "name": {
       "source": "Lightning Rod",
-      "text": ""
+      "text": "Blitzableiter"
     },
     "description": {
       "source": "When you **_Defend while touching the earth_**, you can spend 1 Readiness to intercept a nearby magical attack and redirect it harmlessly into the ground.",
-      "text": ""
+      "text": "Wenn du **_Verteidigst, während du den Boden berührst_**, kannst du 1 Bereitschaft ausgeben, um einen magischen Angriff in der Nähe abzufangen und ihn harmlos in den Boden umzulenken."
     }
   },
   "like-a-dog-with-a-bone": {
     "name": {
       "source": "Like a Dog with a Bone",
-      "text": ""
+      "text": "Wie ein Hund mit einem Knochen"
     },
     "description": {
       "source": "When you **_attack something you know to be tainted by chaos_**, deal +1d6 damage.",
-      "text": ""
+      "text": "Wenn du **_etwas angreifst, von dem du weißt, dass es vom Chaos befleckt ist_**, verursachst du +1W6 Schaden."
     }
   },
   "like-an-open-book": {
     "name": {
       "source": "Like an Open Book",
-      "text": ""
+      "text": "Wie ein offenes Buch"
     },
     "description": {
       "source": "When you **_Take the Measure of someone who fears or respects you_**, your second question can be anything you want. The GM might ask how you could possibly know this; tell them or ask something else.",
-      "text": ""
+      "text": "Wenn du **_jemanden genau musterst, der dich fürchtet oder respektiert_**, kann deine zweite Frage alles sein, was du möchtest. Der SL kann dich fragen, wie du das überhaupt wissen kannst. Erkläre es ihm oder stelle eine andere Frage."
     }
   },
   "logbook": {
     "name": {
       "source": "Logbook",
-      "text": ""
+      "text": "Tagebuch"
     },
     "description": {
       "source": "You have a logbook (2 uses, slow) that doesn't take up space in your inventory. When you **_(and only you) consult your logbook and expend a use_**, you can ignore a Know Things roll you just made and treat the result as a 10+. When **_the Seasons Change_**, reset your logbook to 2 uses.",
-      "text": ""
+      "text": "Du hast ein Tagebuch (2 Anwendungen, Langsam), das keinen Platz in deinem Inventar einnimmt. Wenn du (und nur du) **_dein Tagebuch konsultierst und eine Anwendung verbrauchst_**, kannst du einen gerade durchgeführten Wurf auf Wissen kundtun ignorieren und das Ergebnis so behandeln, als hättest du eine 10+ gewürfelt. Wenn **_die Jahreszeiten wechseln_**, wird dein Tagebuch wieder auf 2 Anwendungen zurückgesetzt."
     }
   },
   "logistics": {
     "name": {
       "source": "Logistics",
-      "text": ""
+      "text": "Logistik"
     },
     "description": {
       "source": "When you **_have a steading Muster or Pull Together, or when you Requisition_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_die Siedlung zusammenrufst oder zusammen an einem Strang ziehst, oder Anforderungen stellst_**, hast du einen Vorteil. "
     }
   },
   "luminous-shield": {
     "name": {
       "source": "Luminous Shield",
-      "text": ""
+      "text": "Leuchtender Schild"
     },
     "description": {
       "source": "When you **_brandish a holy light to turn aside an attack against body, mind, or soul_**, roll +CHA: **on a 10+**, the attack is deflected and, if the attacker is in range of your light, they are briefly blinded; **_on a 7-9_**, the attack is deflected but your holy light flickers and dims, threatening to go out; **on a 6-**, your light snuffs out and the attack is unimpeded.",
-      "text": ""
+      "text": "Wenn du **_ein heiliges Licht schwenkst, um einen Angriff auf Körper, Geist oder Seele abzuwehren_**, würfle +CH. **Bei einer 10+** wird der Angriff abgewehrt, und wenn sich der Angreifer in Reichweite deines Lichts befindet, wird er kurzzeitig geblendet. **Bei 7–9** wird der Angriff zwar abgewehrt, doch dein heiliges Licht flackert und wird schwächer, sodass es zu erlöschen droht. Bei einer 6- erlischt dein Licht und der Angriff trifft ungehindert."
     },
     "moveResults/success/value": {
       "source": "The attack is deflected and the attacker (if in range) is briefly blinded.",
-      "text": ""
+      "text": "Der Angriff wird abgewehrt, und wenn sich der Angreifer in Reichweite deines Lichts befindet, wird er kurzzeitig geblendet."
     },
     "moveResults/partial/value": {
       "source": "The attack is deflected but your holy light flickers and dims, threatening to go out.",
-      "text": ""
+      "text": "Der Angriff wird zwar abgewehrt, doch dein heiliges Licht flackert und wird schwächer, sodass es zu erlöschen droht."
     },
     "moveResults/failure/value": {
       "source": "Your light snuffs out and the attack is unimpeded.",
-      "text": ""
+      "text": "Dein erlischt Licht und der Angriff trifft ungehindert."
     }
   },
   "maelstrom": {
@@ -2054,21 +2054,21 @@
   "magnificent-specimen": {
     "name": {
       "source": "Magnificent Specimen",
-      "text": ""
+      "text": "Prächtiges Exemplar"
     },
     "description": {
       "source": "Each time you take this move, your companion gains 2 additional options of your choice.",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, erhält dein Begleiter zwei zusätzliche Optionen deiner Wahl."
     }
   },
   "magpie": {
     "name": {
       "source": "Magpie",
-      "text": ""
+      "text": "Elster"
     },
     "description": {
       "source": "When you **_Have What You Need_**, you can produce something strange, specific, maybe even valuable or a little bit magical, but if you do, tell us where you got it and 2 of the following:\n\n- How it's not quite right, but maybe it'll do?\n- The trouble you caused back home by getting it\n- Why using it will draw unwanted attention\n- That it's the only thing like this that you've got, and why it'll only work the one time",
-      "text": ""
+      "text": "Wenn du **_hast, was du brauchst_**, kannst du einen seltsamen, sehr speziellen, vielleicht sogar wertvollen oder leicht magischen Gegenstand hervorzaubern. Wenn du das tust, erzähle, woher du ihn hast, und beantworte zwei der folgenden Fragen:\n\n- Warum ist es nicht ganz das Richtige, aber vielleicht trotzdem ausreichend?\n- Welchen Ärger hast du zu Hause verursacht, um es zu bekommen?\n- Warum zieht seine Anwendung unerwünschte Aufmerksamkeit auf sich?\n- Warum ist es das Einzige seiner Art, das du besitzt, und warum wird es nur dieses eine Mal funktionieren?"
     }
   },
   "make-a-plan": {
@@ -2094,11 +2094,11 @@
   "many-hands-make-light-work": {
     "name": {
       "source": "Many Hands Make Light Work",
-      "text": ""
+      "text": "Viele Hände machen der Arbeit ein Ende"
     },
     "description": {
       "source": "When you **_jump in to help another character who just rolled_**, tell us how and ask the GM what else is required or what the consequences will be. If you accept, increase your ally's roll by +1.",
-      "text": ""
+      "text": "Wenn du **_einem anderen Charakter, der gerade gewürfelt hat, hilfst_**, erkläre, wie, und frage den SL, was dafür noch erforderlich ist oder welche Konsequenzen es haben wird. Wenn du zustimmst, erhöhst du den Wurf deines Verbündeten um +1."
     }
   },
   "meet-with-disaster": {
@@ -2114,31 +2114,31 @@
   "mental-map": {
     "name": {
       "source": "Mental Map",
-      "text": ""
+      "text": "Mentale Landkarte"
     },
     "description": {
       "source": "You can always retrace your steps and can accurately gauge distances and directions. You might not know the way forward but can always find your way back.\n\nWhen you **_think back on a place you've been_**, you can Seek Insight retroactively, as if you were still there.",
-      "text": ""
+      "text": "Du kannst deine Schritte jederzeit zurückverfolgen und Entfernungen sowie Richtungen zuverlässig einschätzen. Vielleicht kennst du den Weg nach vorn nicht, aber du findest immer den Weg zurück.\n\nWenn du **_dich an einen Ort erinnerst, an dem du bereits gewesen bist_**, kannst du rückwirkend Gewissheit erlangen, so als wärst du immer noch dort."
     }
   },
   "mighty-thews": {
     "name": {
       "source": "Mighty Thews",
-      "text": ""
+      "text": "Gewaltige Muskeln"
     },
     "description": {
       "source": "When you **_perform a feat of extraordinary strength (bursting chains, smashing through a wall, heaving a boulder, etc.)_**, you do it (OH YEAH!) but pick 1:\n\n- It takes a while\n- You cause unwanted damage or harm\n- It takes a toll (mark a debility)",
-      "text": ""
+      "text": "Wenn du **_einen außergewöhnlichen Kraftakt vollbringst_** (Ketten sprengen, eine Wand durchschlagen, einen Felsbrocken bewegen usw.), schaffst du es, aber wähle 1:\n\n- Es dauert eine Weile.\n- Du verursachst unerwünschte Schäden oder Verletzungen.\n- Es fordert einen Tribut (markiere eine Beeinträchtigung)."
     }
   },
   "mind-over-magic": {
     "name": {
       "source": "Mind Over Magic",
-      "text": ""
+      "text": "Geister über Magie"
     },
     "description": {
       "source": "When you **_roll to study or use an arcanum_**, you can roll +INT instead of the stat you'd normally roll.",
-      "text": ""
+      "text": "Wenn du **_würfelst, um ein Arkanum zu erforschen oder zu benutzen_**, darfst du +IN würfeln, statt des Attributs mit dem du normalerweise würfeln würdest."
     }
   },
   "mindwalking": {
@@ -2166,25 +2166,25 @@
   "mirrorshield": {
     "name": {
       "source": "Mirrorshield",
-      "text": ""
+      "text": "Spiegelschild"
     },
     "description": {
       "source": "When you **_Defend with a shield_**, you can spend 1 Readiness to intercept a magical force and redirect it to a different target (or none).",
-      "text": ""
+      "text": "Wenn du **_mit einem Schild verteidigst_**, kannst du 1 Bereitschaft ausgeben, um eine magische Kraft abzufangen und auf ein anderes Ziel (oder auf gar kein Ziel) umzulenken."
     }
   },
   "musclebound": {
     "name": {
       "source": "Musclebound",
-      "text": ""
+      "text": "Kraftprotz"
     },
     "description": {
       "source": "When you **_make a hand-to-hand or thrown attack_**, it's forceful and messy. If it would already be forceful and/or messy, it's even more so.",
-      "text": ""
+      "text": "Wenn du **_einen Angriff im Nahkampf oder mit einer Wurfwaffe ausführst_**, ist er Wuchtig und Brutal. Wenn er bereits Wuchtig und/oder Brutal wäre, ist er es umso mehr."
     },
     "requirement/note": {
       "source": "Strength +2 or higher",
-      "text": ""
+      "text": "Stärke +2 oder höher"
     }
   },
   "muster": {
@@ -2206,77 +2206,77 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "naturalist": {
     "name": {
       "source": "Naturalist",
-      "text": ""
+      "text": "Naturkundler"
     },
     "description": {
       "source": "When you **_Know Things about beasts, natural environs, or spirits of the wild_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_über Tiere, natürliche Lebensräume oder Naturgeister Wissen kundtust_**, hast du einen Vorteil."
     }
   },
   "natures-wrath": {
     "name": {
       "source": "Nature's Wrath",
-      "text": ""
+      "text": "Zorn der Natur"
     },
     "description": {
       "source": "Danu's Grasp gains the area tag and can affect any creature. A mortal reduced to 0 HP is subdued or killed (your choice) rather than bound in stone.",
-      "text": ""
+      "text": "Danus Griff erhält die Eigenschaft Bereich und kann beliebig viele Wesen treffen. Ein Sterblicher, dessen TP auf 0 fallen, wird überwältigt oder getötet (deine Wahl), anstatt in Stein verwandelt zu werden."
     }
   },
   "nemesis": {
     "name": {
       "source": "Nemesis",
-      "text": ""
+      "text": "Erzfeind"
     },
     "description": {
       "source": "When you **_Clash and your foe survives_**, all of your future attacks against them do +1d6 damage.",
-      "text": ""
+      "text": "Wenn du **_haust & stichst und dein Gegner überlebt_**, verursachen alle deine zukünftigen Angriffe gegen ihn +1W6 Schaden."
     }
   },
   "never-at-a-loss": {
     "name": {
       "source": "Never at a Loss",
-      "text": ""
+      "text": "Niemals umsonst"
     },
     "description": {
       "source": "When you **_Know Things and roll a 6-_**, you may choose to not mark XP. If you don't mark XP, the worst that happens is that the GM tells you nothing interesting or useful about the subject, but instead tells you how you could learn more.",
-      "text": ""
+      "text": "Wenn du **_auf Wissen kundtun eine 6- würfelst_**, kannst du entscheiden, keine EP zu markieren. Wenn du keine EP markierst, erzählt dir der SL schlimmstenfalls nichts Interessantes oder Nützliches über das Thema, sondern sagt dir stattdessen, wie du mehr darüber erfahren könntest."
     }
   },
   "never-gonna-keep-me-down": {
     "name": {
       "source": "Never Gonna Keep Me Down",
-      "text": ""
+      "text": "Ich lasse mich nicht unterkriegen"
     },
     "description": {
       "source": "When you **_have 5 or fewer current HP_**, you impose disadvantage on any damage you take.\n\nOnce per session, when you are at Death's Door, don't roll. You get a 10+.",
-      "text": ""
+      "text": "Wenn du **_aktuell 5 oder weniger TP hast_**, erhalten alle Schadenswürfe gegen dich einen Nachteil.\n\nEinmal pro Sitzung, wenn du An der Schwelle des Todes stehst, würfle nicht. Du erzielst automatisch eine 10+."
     }
   },
   "noble-mien": {
     "name": {
       "source": "Noble Mien",
-      "text": ""
+      "text": "Edles Auftreten"
     },
     "description": {
       "source": "When you **_lead an NPC through danger and return them to safety_**, if they aren't part of your crew they will either offer to join your crew or pledge their future aid and support.",
-      "text": ""
+      "text": "Wenn du **_einen NSC durch eine Gefahr führst und ihn in Sicherheit bringst_**, wird er, sofern er nicht zu deiner Truppe gehört, entweder anbieten, sich deiner Truppe anzuschließen, oder dir seine zukünftige Hilfe und Unterstützung zusichern."
     }
   },
   "on-the-hoof": {
     "name": {
       "source": "On the Hoof",
-      "text": ""
+      "text": "Aus dem Stehgreif"
     },
     "description": {
       "source": "When you **_travel through the wilderness_**, you can procure 1d6 uses of provisions each day (roll with disadvantage in winter or barren terrain). Provisions can substitute for supplies when you Make Camp.",
-      "text": ""
+      "text": "Wenn du **_durch die Wildnis reist_**, kannst du jeden Tag 1W6 Anwendungen an Proviant beschaffen (würfle im Winter oder in kargem Gelände mit Nachteil). Proviant kann beim Aufschlagen des Lagers als Ersatz für Vorräte verwendet werden."
     }
   },
   "order-followers": {
@@ -2302,81 +2302,81 @@
   "overchannel": {
     "name": {
       "source": "Overchannel",
-      "text": ""
+      "text": "Überkanalisieren"
     },
     "description": {
       "source": "When you **_would mark a Consequence from a major arcanum_**, you may mark a debility instead.",
-      "text": ""
+      "text": "Wenn du **_normalerweise eine Konsequenz durch ein großes Arkanum markieren würdest_**, kannst du stattdessen eine Beeinträchtigung markieren."
     }
   },
   "pack-horse": {
     "name": {
       "source": "Pack Horse",
-      "text": ""
+      "text": "Packpferd"
     },
     "description": {
       "source": "You can carry up to 4 weight with a light load, 7 weight with a normal load, and 10 weight with a heavy load.",
-      "text": ""
+      "text": "Du kannst bis zu 4 ◆ als leichte Last, 7 ◆ als normale Last und 10 ◆ als schwere Last tragen. "
     }
   },
   "pants-on-fire": {
     "name": {
       "source": "Pants on Fire",
-      "text": ""
+      "text": "Schwindler"
     },
     "description": {
       "source": "When you **_Defy Danger, Persuade, or Interfere by being deceitful_**, you have advantage.\n\nWhen **_another move (like Seek Insight) allows a player to ask you a question_**, you can opt not to answer.",
-      "text": ""
+      "text": "Wenn du **_einer Gefahr trotzt, jemanden überredest oder behinderst und dabei hinterhältig vorgehst_**, hast du einen Vorteil.\n\nWenn ein anderer Spielzug (wie Einsicht suchen) es einem Spieler erlaubt, dir eine Frage zu stellen, kannst du dich entscheiden, nicht zu antworten."
     }
   },
   "parry-riposte": {
     "name": {
       "source": "Parry & Riposte",
-      "text": ""
+      "text": "Parade & Riposte"
     },
     "description": {
       "source": "When you **_Defend with a weapon that you can wield quickly_**, you can spend 1 Readiness to both halve an attack's effects/damage and strike back at the attacker (deal your damage with disadvantage), instead of spending 1 Readiness for each.",
-      "text": ""
+      "text": "Wenn du **_dich mit einer Waffe verteidigst, die du schnell führen kannst_**, kannst du 1 Bereitschaft ausgeben, um sowohl den Schaden/Effekt eines Angriffs zu halbieren als auch einen Gegenangriff auf den Angreifer auszuführen (würfle deinen Schaden mit Nachteil), anstatt für beides jeweils 1 Bereitschaft auszugeben."
     }
   },
   "pathfinder": {
     "name": {
       "source": "Pathfinder",
-      "text": ""
+      "text": "Pfadfinder"
     },
     "description": {
       "source": "When you **_lead your people to Pull Together or Deploy beyond sight of home_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_deine Leute dabei anführst, an einen Strang zu ziehen oder sie jenseits der Heimat entsendest_**, hast du einen Vorteil."
     }
   },
   "payback": {
     "name": {
       "source": "Payback",
-      "text": ""
+      "text": "Vergeltung"
     },
     "description": {
       "source": "When you **_deal damage to a foe that has harmed you or one of your allies_**, deal +1d4 damage.",
-      "text": ""
+      "text": "Wenn du **_einem Gegner Schaden zufügst, der dir oder einem deiner Verbündeten Schaden zugefügt hat_**, verursachst du +1W4 Schaden."
     }
   },
   "peace-through-strength": {
     "name": {
       "source": "Peace Through Strength",
-      "text": ""
+      "text": "Frieden durch Stärke"
     },
     "description": {
       "source": "When you **_stand ready to fight alongside like-minded allies_**, anything capable of fear recognizes you as a serious threat and treats you accordingly.",
-      "text": ""
+      "text": "Wenn du **_bereitstehst, um an der Seite gleichgesinnter Verbündeter zu kämpfen_**, erkennt jedes Wesen, das zu Furcht fähig ist, dich als ernsthafte Bedrohung und behandelt dich entsprechend."
     }
   },
   "perceptive": {
     "name": {
       "source": "Perceptive",
-      "text": ""
+      "text": "Aufmerksam"
     },
     "description": {
       "source": "When you **_Seek Insight_**, you may ask 1 additional question. Even **on a 6-**, you can ask 1 question (though you might not like how you learn the answer).",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, darfst du eine zusätzliche Frage stellen. Selbst bei einer 6- darfst du noch eine Frage stellen (auch wenn dir die Antwort vielleicht nicht gefallen wird)."
     }
   },
   "persuade-vs-npcs": {
@@ -2426,93 +2426,93 @@
   "piety": {
     "name": {
       "source": "Piety",
-      "text": ""
+      "text": "Frömmigkeit"
     },
     "description": {
       "source": "When you **_spend at least an hour in proper worship to Helior_**, hold 1 Blessing. Other faithful PCs who partake in this worship also hold 1 Blessing. At any time, you can spend 1 Blessing to add +1 to a roll you just made in pursuit of a righteous cause.",
-      "text": ""
+      "text": "Wenn du **_mindestens eine Stunde lang Helior auf angemessene Weise verehrst_**, nimm 1 Segen. Andere gläubige SC, die an dieser Verehrung teilnehmen, erhalten ebenfalls 1 Segen. Du kannst jederzeit 1 Segen ausgeben, um +1 auf einen soeben ausgeführten Wurf zu erhalten, mit dem du ein rechtschaffenes Ziel verfolgst."
     },
     "resource/title": {
       "source": "Blessing",
-      "text": ""
+      "text": "Segen"
     }
   },
   "polyglot": {
     "name": {
       "source": "Polyglot",
-      "text": ""
+      "text": "Polyglott"
     },
     "description": {
       "source": "When you **_first encounter a living language in play_**, describe your proficiency with it (if any) and how you came to acquire it.\n\nWhen you **_Know Things about any script, text, runes or symbols that you encounter_**, you have advantage.",
-      "text": ""
+      "text": "Wenn du **_im Spiel zum ersten Mal einer lebenden Sprache begegnest_**, beschreibe deine Kenntnisse dieser Sprache (falls vorhanden) und wie du sie erworben hast.\n\nWenn du **_über Schriften, Texte, Runen oder Symbole, denen du begegnest, Wissen kundtust_**, hast du einen Vorteil."
     }
   },
   "potent-workings": {
     "name": {
       "source": "Potent Workings",
-      "text": ""
+      "text": "Machtvolles wirken"
     },
     "description": {
       "source": "When you **_craft a protective charm_**, you may spend 1 additional Stock to choose 1:\n\n- Name an additional type of harm\n- **On a 10+**, the charm retains its potency",
-      "text": ""
+      "text": "Wenn du **_einen Schutzzauber anfertigst_**, kannst du 1 zusätzlichen Vorrat ausgeben, um 1 zu wählen:\n\n- Benenne eine zusätzliche Schadensquelle.\n- Bei einer 10+ behält der Schutzzauber seine Wirkung."
     }
   },
   "potential-for-greatness": {
     "name": {
       "source": "Potential for Greatness",
-      "text": ""
+      "text": "Potenzial für Größe"
     },
     "description": {
       "source": "Once per level, **_when you roll a stat and get a 10+_**, mark one of the following (note the level during which you marked it). You don't have to mark them in order.",
-      "text": ""
+      "text": "Einmal pro Stufe, **_wenn du auf ein Attribut würfelst und eine 10+ erzielst_**, markiere eine der folgenden Optionen (notiere die Stufe, auf der du sie markiert hast). Du musst sie nicht in der angegebenen Reihenfolge markieren."
     },
     "choices/stat1/input/placeholder": {
       "source": "level checked",
-      "text": ""
+      "text": "Die Stufe, in der du die Bedingung erfüllt hast."
     },
     "choices/stat2/input/placeholder": {
       "source": "level checked",
-      "text": ""
+      "text": "Die Stufe, in der du die Bedingung erfüllt hast."
     },
     "choices/stat3/input/placeholder": {
       "source": "level checked",
-      "text": ""
+      "text": "Die Stufe, in der du die Bedingung erfüllt hast."
     },
     "choices/stat4/input/placeholder": {
       "source": "level checked",
-      "text": ""
+      "text": "Die Stufe, in der du die Bedingung erfüllt hast."
     },
     "choices/hp/input/placeholder": {
       "source": "level checked",
-      "text": ""
+      "text": "Die Stufe, in der du die Bedingung erfüllt hast."
     },
     "choices/damage/input/placeholder": {
       "source": "level checked",
-      "text": ""
+      "text": "Die Stufe, in der du die Bedingung erfüllt hast."
     },
     "choices/stat1/text": {
       "source": "Increase the stat you rolled by 1, to a max of +2",
-      "text": ""
+      "text": "Erhöhe das gewürfelte Attribut um 1, bis maximal +2"
     },
     "choices/stat2/text": {
       "source": "Increase the stat you rolled by 1, to a max of +2",
-      "text": ""
+      "text": "Erhöhe das gewürfelte Attribut um 1, bis maximal +2"
     },
     "choices/stat3/text": {
       "source": "Increase the stat you rolled by 1, to a max of +2",
-      "text": ""
+      "text": "Erhöhe das gewürfelte Attribut um 1, bis maximal +2"
     },
     "choices/stat4/text": {
       "source": "Increase the stat you rolled by 1, to a max of +2",
-      "text": ""
+      "text": "Erhöhe das gewürfelte Attribut um 1, bis maximal +2"
     },
     "choices/hp/text": {
       "source": "Increase your max HP by 4",
-      "text": ""
+      "text": "Erhöhe deine maximalen TP um 4"
     },
     "choices/damage/text": {
       "source": "Increase your damage die to a d8",
-      "text": ""
+      "text": "Erhöhe deinen Schadenswürfel auf 1W8"
     }
   },
   "power-of-the-lidless-orb": {
@@ -2550,47 +2550,47 @@
   "predator": {
     "name": {
       "source": "Predator",
-      "text": ""
+      "text": "Raubtier"
     },
     "description": {
       "source": "When you **_Seek Insight_**, add the following to the list of questions you can ask. When **_acting on the answer to either question_**, deal an extra 1d4 damage.\n\n- Who or what here is the easiest prey?\n- How is ________ weak or vulnerable?",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, füge der Liste der Fragen, die du stellen kannst, die folgenden hinzu.\n\n- Wer oder was ist hier die leichteste Beute?\n- Inwiefern ist ________ schwach oder verwundbar?\nWenn du **_auf Grundlage der Antwort auf eine dieser Fragen handelst_**, verursachst du zusätzlich 1W4 Schaden."
     }
   },
   "prepare-a-welcome": {
     "name": {
       "source": "Prepare a Welcome",
-      "text": ""
+      "text": "Einen Empfang vorbereiten"
     },
     "description": {
       "source": "When you **_have your allies fortify a position and lie in wait for battle_**, hold 1 Surprise if you're rushed or 2 Surprises if you can take your time.\n\nOnce battle is joined, spend 1 Surprise to reveal a ploy, defense, or dirty trick you prepared in advance and roll +INT: **on a 10+**, it works as well as can be expected, and you've still got a few tricks up your sleeve—regain 1 Surprise; **_on a 7-9_**, it works as well as can be expected.",
-      "text": ""
+      "text": "Wenn du **_deine Verbündeten eine Position befestigen lässt und darauf wartest zuzuschlagen_**, nimm 1 Überraschung, wenn ihr euch beeilen müsst, oder 2 Überraschung, wenn ihr euch Zeit lassen könnt.\n\nSobald der Kampf beginnt, gib 1 Überraschung aus, um eine zuvor vorbereitete List, eine Verteidigungsmaßnahme oder einen schmutzigen Trick zu enthüllen und würfle +IN. **Bei einer 10+** funktioniert es so gut, wie man erwarten kann, und du hast noch ein paar Tricks auf Lager – du erhältst 1 Überraschung zurück. **Bei 7–9** funktioniert es so gut, wie man erwarten kann."
     },
     "moveResults/success/value": {
       "source": "It works as expected, and you regain 1 Surprise.",
-      "text": ""
+      "text": "Es funktioniert so gut, wie man erwarten kann und du erhältst 1 Überraschung zurück."
     },
     "moveResults/partial/value": {
       "source": "It works as expected.",
-      "text": ""
+      "text": "Es funktioniert so gut, wie man erwarten kann."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     },
     "resource/title": {
       "source": "Surprise",
-      "text": ""
+      "text": "Überraschung"
     }
   },
   "proclamation": {
     "name": {
       "source": "Proclamation",
-      "text": ""
+      "text": "Proklamation"
     },
     "description": {
       "source": "When you **_Censure_**, you may denounce a group or faction as long as you can clearly identify them. Apply the effects of Censure to every member of that group, regardless of distance.",
-      "text": ""
+      "text": "Wenn du **_zurechtweist_**, kannst du eine Gruppe oder Fraktion anprangern, solange du sie eindeutig identifizieren kannst. Die Auswirkungen von Zurechtweisung gelten für jedes Mitglied dieser Gruppe, unabhängig von der Entfernung."
     }
   },
   "promise-of-doom": {
@@ -2606,11 +2606,11 @@
   "proof-against-detection": {
     "name": {
       "source": "Proof Against Detection",
-      "text": ""
+      "text": "Schutz vor Entdeckung"
     },
     "description": {
       "source": "When you **_hold Protection_**, you can't be scried upon or sensed by magical means, and have advantage to Defy Danger by being stealthy.",
-      "text": ""
+      "text": "Solange du **_über Schutz verfügst_**, kannst du nicht durch magische Mittel wahrgenommen oder aufgespürt werden und du hast einen Vorteil, wenn du einer Gefahr trotzt, indem du dich heimlich verhältst."
     }
   },
   "proof-against-harm": {
@@ -2642,7 +2642,7 @@
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "purify": {
@@ -2658,51 +2658,51 @@
   "purifying-flames": {
     "name": {
       "source": "Purifying Flames",
-      "text": ""
+      "text": "Reinigende Flammen"
     },
     "description": {
       "source": "When you **_wield a holy light against a creature of darkness_**, it counts as a weapon (d10 damage, hand, close, area, 2 piercing) and you can choose to roll +WIS to Clash.",
-      "text": ""
+      "text": "Wenn du **_ein heiliges Licht gegen eine Kreatur der Dunkelheit einsetzt_**, zählt es als Waffe (W10 Schaden, Hand, Kurz, Bereich. Durchdringung 2) und du kannst wählen, ob du beim Hauen & Stechen +WE statt +ST würfeln möchtest."
     }
   },
   "quick-study": {
     "name": {
       "source": "Quick Study",
-      "text": ""
+      "text": "Schnelle Auffassungsgabe"
     },
     "description": {
       "source": "When you **_study something magical that should take months to understand_**, it instead takes mere weeks. If it should take weeks, it takes days. If it should take days, it takes only a few hours.",
-      "text": ""
+      "text": "Wenn du **_dich eingehend mit etwas Magischem beschäftigst, dessen Verständnis normalerweise Monate dauern würde_**, brauchst du dafür nur wenige Wochen. Sollte es Wochen dauern, brauchst du nur Tage. Sollte es Tage dauern, brauchst du nur ein paar Stunden."
     }
   },
   "radiant-countenance": {
     "name": {
       "source": "Radiant Countenance",
-      "text": ""
+      "text": "Strahlendes Antlitz"
     },
     "description": {
       "source": "When you **_give someone your fond attention_**, you can then Persuade them with advantage. If they are a follower, you can instead choose to Strengthen Your Bond (as if you paid their cost).",
-      "text": ""
+      "text": "Wenn du **_jemandem deine ungeteilte, wohlwollende Aufmerksamkeit schenkst_**, kannst du ihn anschließend mit Vorteil überreden. Wenn es sich um einen Gefolgsmann handelt, kannst du dich stattdessen dafür entscheiden, das Band zu stärken (als hättest du die Kosten dafür bezahlt)."
     }
   },
   "rapier-wit": {
     "name": {
       "source": "Rapier Wit",
-      "text": ""
+      "text": "Schlagfertig"
     },
     "description": {
       "source": "When you **_pierce an NPC's pride with a well-placed quip_**, they must do 1 (their choice):\n\n- Attack, doing +1d4 damage if they hit but giving you advantage on your next roll against them\n- Stoop to your level and respond in kind\n- Spend a few moments fuming, sputtering, or controlling their temper",
-      "text": ""
+      "text": "Wenn du **_mit einer treffenden Bemerkung den Stolz eines NSCs verletzt_**, muss er eine der folgenden Aktionen ausführen (seine Wahl):\n\n- Angreifen. Verursacht bei einem Treffer +1W4 Schaden, aber du erhältst einen Vorteil bei deinem nächsten Wurf gegen ihn.\n- Sich auf dein Niveau herablassen und dir auf gleiche Weise antworten.\n- Einige Augenblicke damit verbringen, vor Wut zu kochen, herumzustottern oder sich zu beherrschen."
     }
   },
   "read-the-land": {
     "name": {
       "source": "Read the Land",
-      "text": ""
+      "text": "Das Land lesen"
     },
     "description": {
       "source": "When you **_first take a moment to survey the terrain_**, ask the GM one of the following; gain advantage on your next roll to act on the answer.\n\n- What's the best way in, out, through, or past?\n- Where's the best spot for a trap or an ambush?\n- Where's the most defensible position?\n- What here is out of place?",
-      "text": ""
+      "text": "Wenn du **_dir einen Moment Zeit nimmst, um die Lage zu überblicken_**, stelle dem SL eine der folgenden Fragen. Du erhältst einen Vorteil bei deinem nächsten Wurf, wenn du auf Grundlage seiner Antwort handelst.\n\n- Was ist der beste Weg hinein, hinaus, hindurch oder daran vorbei?\n- Wo ist der beste Ort für eine Falle oder einen Hinterhalt?\n- Wo ist die am besten zu verteidigende Position?\n- Was ist hier fehl am Platz?"
     }
   },
   "recover": {
@@ -2718,11 +2718,11 @@
   "relentless": {
     "name": {
       "source": "Relentless",
-      "text": ""
+      "text": "Unnachgiebig"
     },
     "description": {
       "source": "When you **_Clash and your foe survives_**, you gain advantage the next time you Clash with them.",
-      "text": ""
+      "text": "Wenn du **_haust & stichst und dein Gegner überlebt_**, erhältst du bei deinem nächsten Angriff gegen ihn einen Vorteil."
     }
   },
   "requisition": {
@@ -2772,11 +2772,11 @@
   "resourceful": {
     "name": {
       "source": "Resourceful",
-      "text": ""
+      "text": "Einfallsreich"
     },
     "description": {
       "source": "When you **_Defy Danger and roll a 6-_**, ask the GM a question from Seek Insight after they describe what happens. Gain advantage on your next roll to act on the answer.",
-      "text": ""
+      "text": "Wenn du **_einer Gefahr trotzt und eine 6- würfelst_**, stelle dem SL eine Frage aus Gewissheit erlangen, nachdem er beschrieben hat, was passiert ist. Du erhältst bei deinem nächsten Wurf einen Vorteil, wenn du auf Grundlage dieser Antwort handelst."
     }
   },
   "return-triumphant": {
@@ -2792,33 +2792,33 @@
   "rise-like-the-sun": {
     "name": {
       "source": "Rise Like the Sun",
-      "text": ""
+      "text": "Wie die Sonne aufgehen"
     },
     "description": {
       "source": "When you **_draw attention to yourself by word or deed_**, roll +CHA: **on a 10+**, everyone turns and looks, and you hold their gaze as long as you keep giving them reason to look; **_on a 7-9_**, everyone turns and looks.",
-      "text": ""
+      "text": "Wenn du **_durch Worte oder Taten die Aufmerksamkeit auf dich lenkst, würfle +CH. **Bei einer 10+** drehen sich alle um und schauen dich an, und du hältst ihren Blick so lange fest, wie du ihnen Grund zum Hinschauen gibst. **Bei 7–9** drehen sich alle um und schauen dich an."
     },
     "moveResults/success/value": {
       "source": "Everyone turns and looks, and you hold their gaze as long as you keep giving them reason to look.",
-      "text": ""
+      "text": "Alle drehen sich um und schauen dich an, und du hältst ihren Blick so lange fest, wie du ihnen Grund zum Hinschauen gibst."
     },
     "moveResults/partial/value": {
       "source": "Everyone turns and looks.",
-      "text": ""
+      "text": "Alle drehen sich um und schauen dich an."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "rites-of-the-land": {
     "name": {
       "source": "Rites of the Land",
-      "text": ""
+      "text": "Riten des Landes"
     },
     "description": {
       "source": "Once per season, when you oversee the sacred rites, hold 1 Favor. If you also sacrifice 1 Surplus, hold 4 Favor instead. Spend Favor in lieu of Stock, 1-for-1.\n\nWhen you **_publicly sacrifice something or someone much-loved_**, either clear a steading debility or gain advantage when the steading next rolls +Fortunes.",
-      "text": ""
+      "text": "Einmal pro Jahreszeit, wenn du **_die heiligen Rituale leitest_**, erhältst du 1 Gunst. Opferst du zusätzlich 1 Überschuss, erhältst du stattdessen 4 Gunst. Gib Gunst im Verhältnis 1:1 anstelle von Vorrat aus.\n\nWenn du **_etwas oder jemanden, den du von Herzen liebst, öffentlich opferst_**, beseitige entweder eine Beeinträchtigung der Siedlung oder erhalte einen Vorteil, wenn die Siedlung das nächste Mal +Schicksal würfelt."
     }
   },
   "roots-of-the-elder-tree": {
@@ -2834,25 +2834,25 @@
   "safety-first": {
     "name": {
       "source": "Safety First",
-      "text": ""
+      "text": "Sicherheit geht vor"
     },
     "description": {
       "source": "When you **_spend an hour or so preparing your mystical defenses_**, hold 2 Protection. When you **_are affected by harmful magic_**, spend 1 Protection either to gain advantage on any roll to resist it or to halve its damage/effects.",
-      "text": ""
+      "text": "Wenn du **_etwa eine Stunde damit verbringst, deine mystische Verteidigung vorzubereiten_**, nimm 2 Schutz. Wenn du **_von schädlicher Magie betroffen bist_**, gib 1 Schutz aus, um entweder einen Vorteil auf einen beliebigen Wurf zum Widerstehen zu erhalten oder um ihren Schaden/Effekt zu halbieren."
     },
     "resource/title": {
       "source": "Protection",
-      "text": ""
+      "text": "Verteidigung"
     }
   },
   "sage-advice": {
     "name": {
       "source": "Sage Advice",
-      "text": ""
+      "text": "Weiser Ratschlag"
     },
     "description": {
       "source": "When **_another PC asks you for guidance_**, they get advantage on their next roll to follow your advice.",
-      "text": ""
+      "text": "Wenn **_ein anderer SC dich um Rat bittet_**, erhält er bei seinem nächsten Wurf einen Vorteil, um deinen Rat zu befolgen."
     }
   },
   "seal": {
@@ -2868,11 +2868,11 @@
   "seasoned-warrior": {
     "name": {
       "source": "Seasoned Warrior",
-      "text": ""
+      "text": "Erfahrener Krieger"
     },
     "description": {
       "source": "Take a move from the Fox, Marshal, Ranger, or Seeker playbooks, for which you otherwise qualify. You can pick from a different playbook each time. (You can't pick Improved Stat or Superior Stat.)",
-      "text": ""
+      "text": "Wähle einen Spielzug aus den Klassenbüchern Fuchs, Marschall, Waldläufer oder Sucher, für den du die Voraussetzungen erfüllst. Du kannst jedes Mal aus einem anderen Spielbuch wählen. Du kannst weder Verbessertes Attribut noch Überragendes Attribut wählen."
     }
   },
   "seasons-change-autumn": {
@@ -2966,11 +2966,11 @@
   "second-intent": {
     "name": {
       "source": "Second Intent",
-      "text": ""
+      "text": "Zweite Intention"
     },
     "description": {
       "source": "When you **_Defend and spend 1 Readiness to Parry & Riposte_**, also pick 1 option from the Ambush list.",
-      "text": ""
+      "text": "Wenn du **_Verteidigst und 1 Bereitschaft für Parade & Riposte ausgibst_**, kannst du zusätzlich noch 1 Option aus der Liste von Hinterhältiger Angriff auswählen."
     }
   },
   "seek-insight": {
@@ -2998,11 +2998,11 @@
   "set-up-strike": {
     "name": {
       "source": "Set-Up Strike",
-      "text": ""
+      "text": "Vorbereitender Schlag"
     },
     "description": {
       "source": "When you **_Clash and get a 7+_**, you can choose to deal damage with disadvantage. If you do, you create an opening for an ally to act on, as if you provided Aid. Describe it!",
-      "text": ""
+      "text": "Wenn du **_haust & stichst und eine 7+ würfelst_**, kannst du dich entscheiden, deinen Schaden mit einem Nachteil zu würfeln. Wenn du das tust, schaffst du eine Gelegenheit, die ein Verbündeter nutzen kann, als hättest du ihm geholfen. Beschreibe, wie!"
     }
   },
   "shadow-magic": {
@@ -3030,69 +3030,69 @@
   "shake-it-off": {
     "name": {
       "source": "Shake It Off",
-      "text": ""
+      "text": "Schüttel es ab"
     },
     "description": {
       "source": "When you **_order an ally to overcome fear, pain_**, doubt, or delusion, roll +CHA: **on a 10+**, they do it; **_on a 7-9_**, a PC gets advantage to do it; an NPC will do it, but they'll need time, they'll resent you, or they'll feel humiliated (GM decides).",
-      "text": ""
+      "text": "Wenn du **_einem Verbündeten befiehlst, Angst, Schmerz, Zweifel oder Wahn zu überwinden_**, würfle +CH. **Bei einer 10+** tun sie es. **Bei 7–9** erhält ein SC einen Vorteil, um es zu tun. Ein NSC wird es tun, aber er braucht Zeit, er wird es dir übel nehmen oder er wird sich gedemütigt fühlen (SL entscheidet)."
     },
     "moveResults/success/value": {
       "source": "They do it.",
-      "text": ""
+      "text": "Sie tun es."
     },
     "moveResults/partial/value": {
       "source": "A PC gets advantage to do it; an NPC does it but at a cost (GM decides).",
-      "text": ""
+      "text": "Ein SC erhält einen Vorteil, um es zu tun. Ein NSC wird es tun, aber es ist mit einem Preis verbunden (SL entscheidet)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "shared-souls": {
     "name": {
       "source": "Shared Souls",
-      "text": ""
+      "text": "Verbundene Seelen"
     },
     "description": {
       "source": "When you **_mark a beast with 1 Stock_**, you can direct its actions and perceive through its senses no matter the distance between you. Treat it as a follower with 3 Loyalty; when you spend its last Loyalty, the effect ends.",
-      "text": ""
+      "text": "Wenn du **_ein Tier mit 1 Vorrat markierst_**, kannst du seine Handlungen lenken und durch seine Sinne wahrnehmen, unabhängig davon, wie weit ihr voneinander entfernt seid. Behandle es wie einen Gefolgsmann mit 3 Loyalität. Wenn du seine letzte Loyalität aufgebraucht hast, endet der Effekt."
     }
   },
   "shield-wall": {
     "name": {
       "source": "Shield Wall",
-      "text": ""
+      "text": "Schildwall"
     },
     "description": {
       "source": "When you **_have your crew form a shield wall_**, they Defend with advantage and **_on a 7+_** they hold +2 Readiness (instead of the usual +1 for shields). As long as they maintain formation, they can go on the offensive without losing Readiness.",
-      "text": ""
+      "text": "Wenn du **_deinen Trupp einen Schildwall bilden lässt_**, Verteidigen sie mit Vorteil und erhalten **bei einer 7+** +2 Bereitschaft (statt der üblichen +1 für Schilde). **_Solange sie ihre Formation halten_**, können sie zum Angriff übergehen, ohne Bereitschaft zu verlieren."
     }
   },
   "silver-tongued": {
     "name": {
       "source": "Silver Tongued",
-      "text": ""
+      "text": "Silberne Zunge"
     },
     "description": {
       "source": "When you **_use words to avoid suspicion or trouble_**, roll +CHA: **on a 10+**, hold 3 Nerve; **_on a 7-9_**, hold 1 Nerve. You may spend Nerve, 1-for-1, to:\n\n- Move about or maneuver unchallenged\n- Withstand direct scrutiny or questioning\n- Direct suspicion or attention elsewhere",
-      "text": ""
+      "text": "Wenn du **_Worte nutzt, um Verdacht oder Ärger zu vermeiden_**, würfle+CH. **Bei einer 10+** nimm 3 Nerven. **Bei 7-9** nimm 1 Nerven. Gib jeweils 1 Nerven aus, um:\n\n- Dich unbehelligt fortzubewegen oder zu positionieren.\n- Einer genauen Prüfung oder Befragung standzuhalten.\n-  Verdacht oder Aufmerksamkeit auf etwas anderes zu lenken."
     },
     "moveResults/success/value": {
       "source": "Hold 3 Nerve.",
-      "text": ""
+      "text": "Nimm 3 Nerven"
     },
     "moveResults/partial/value": {
       "source": "Hold 1 Nerve.",
-      "text": ""
+      "text": "Nimm 1 Nerven"
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     },
     "resource/title": {
       "source": "Nerve",
-      "text": ""
+      "text": "Nerven"
     }
   },
   "siphon": {
@@ -3120,71 +3120,71 @@
   "sir-permission-to-die-sir": {
     "name": {
       "source": "Sir, Permission to Die, Sir",
-      "text": ""
+      "text": "Sir, Erlaubnis zum Sterben, Sir"
     },
     "description": {
       "source": "When **_one of your followers would die_**, you can spend 1 of their Loyalty to have them survive (out of the action, but alive). If you let them go, mark XP.",
-      "text": ""
+      "text": "Wenn **_einer deiner Gefolgsleute sterben würde_**, kannst du 1 Punkt seiner Loyalität ausgeben, damit er überlebt (außer Gefecht, aber am Leben). Wenn du ihn sterben lässt, erhältst du einen EP."
     }
   },
   "situational-awareness": {
     "name": {
       "source": "Situational Awareness",
-      "text": ""
+      "text": "Situationsbewusstsein"
     },
     "description": {
       "source": "When you **_Seek Insight_**, add the following to the list of questions you can ask:\n\n- Who or what here is the biggest threat?\n- What is my enemy's true position?\n- What here can I use as a weapon?\nWhen **_a fight breaks out_**, ask the GM 1 question that you could ask when Seeking Insight.",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, füge der Liste der Fragen, die du stellen kannst, Folgendes hinzu:\n\n- Wer oder was ist hier die größte Bedrohung?\n- Was ist die wahre Position meines Feindes?\n- Was hier kann ich als Waffe einsetzen?\n Wenn ein Kampf ausbricht, stelle dem SL eine Frage, die du stellen könntest, wenn du Gewissheit erlangst."
     }
   },
   "skill-at-arms": {
     "name": {
       "source": "Skill at Arms",
-      "text": ""
+      "text": "Kampfkunst"
     },
     "description": {
       "source": "When you **_wield a weapon with speed and grace_**, roll +DEX to Clash (instead of +STR).",
-      "text": ""
+      "text": "Wenn du **_eine Waffe mit Schnelligkeit und Anmut führst_**, darfst du beim hauen & stechen +GE statt +ST würfeln."
     }
   },
   "slippery": {
     "name": {
       "source": "Slippery",
-      "text": ""
+      "text": "Aalglatt"
     },
     "description": {
       "source": "When you **_roll to escape being caught or controlled_**, treat a 6- as a 7-9. On a 12+, say how you turn the tables or use the circumstances to your advantage.",
-      "text": ""
+      "text": "Wenn du **_würfelst, um einer Gefangennahme oder Kontrolle zu entgehen_**, behandle eine 6- wie eine 7-9. Bei einer 12+ beschreibe, wie du die Situation zu deinen Gunsten wendest oder die Umstände zu deinem Vorteil nutzt."
     }
   },
   "sniff-out-corruption": {
     "name": {
       "source": "Sniff Out Corruption",
-      "text": ""
+      "text": "Verderbnis wittern"
     },
     "description": {
       "source": "When you **_Seek Insight_**, you can ask, \"What here stinks of the unnatural?\" for free, even **on a 6-**.",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, kannst du immer die Frage stellen: „Was riecht hier nach etwas Unnatürlichem?“, selbst bei einer 6-."
     }
   },
   "something-to-remember-me-by": {
     "name": {
       "source": "Something to Remember Me By",
-      "text": ""
+      "text": "Etwas, das an mich erinnert"
     },
     "description": {
       "source": "When you **_spend Readiness (from Defend) to strike back at an attacker_**, you deal +1d4 damage and scar, mark, or diminish them in some way (the GM will say how, or ask you to).",
-      "text": ""
+      "text": "Wenn du **_Bereitschaft (durch Verteidigung) ausgibst, um einem Angreifer Schaden zuzufügen_**, verursachst du +1W4 Schaden und hinterlässt bei ihm auf irgendeine Weise eine Narbe, ein Mal oder eine andere dauerhafte Beeinträchtigung (der SL sagt dir, wie, oder bittet dich, es zu beschreiben)."
     }
   },
   "speak-softly": {
     "name": {
       "source": "Speak Softly",
-      "text": ""
+      "text": "Sprich leise"
     },
     "description": {
       "source": "When you **_offer peace but your enemy refuses_**, gain advantage on your next roll against them.",
-      "text": ""
+      "text": "Wenn du **_Frieden anbietest, dein Gegner aber ablehnt_**, erhältst du einen Vorteil bei deinem nächsten Wurf gegen ihn."
     }
   },
   "speak-the-unutterable": {
@@ -3212,21 +3212,21 @@
   "speak-truth-to-power": {
     "name": {
       "source": "Speak Truth to Power",
-      "text": ""
+      "text": "Den Mächtigen die Stirn bieten"
     },
     "description": {
       "source": "When you **_demand that someone does what is clearly good and right_**, you have advantage to Persuade. If they refuse, gain +1 Resolve.",
-      "text": ""
+      "text": "Wenn du **_von jemandem verlangst, etwas zu tun, das offensichtlich gut und richtig ist_**, hast du beim Überreden einen Vorteil. Wenn die Person sich weigert, erhältst du +1 Entschlossenheit."
     }
   },
   "spirit-tongue": {
     "name": {
       "source": "Spirit Tongue",
-      "text": ""
+      "text": "Geisterzunge"
     },
     "description": {
       "source": "You can speak with beasts and spirits. You can always ask the GM, \"What spirits are active here?\" and get an honest answer.",
-      "text": ""
+      "text": "Du kannst mit natürlichen Tieren und Geistern sprechen und die SL jederzeit fragen: \"Welche Geister sind hier aktiv?\". Du erhältst eine ehrliche Antwort."
     }
   },
   "spirits-of-the-herd": {
@@ -3254,67 +3254,67 @@
   "springs-first-thaw": {
     "name": {
       "source": "Spring's First Thaw",
-      "text": ""
+      "text": "Das erste Tauwetter des Frühlings"
     },
     "description": {
       "source": "When you **_spend time (an hour at least, maybe more) seeking to stir hope, kindness, or mercy in an NPC_**, roll +CHA: **on a 10+**, you light a fire deep within them and effect a lasting change; **_on a 7-9_**, you kindle goodness in their heart for now, but they will eventually return to their old ways; **on a 6-**, their heart hardens and, whatever else the GM says, you can't use this move on them again.",
-      "text": ""
+      "text": "Wenn du **_Zeit darauf verwendest (mindestens eine Stunde, vielleicht auch länger), bei einem NSC Hoffnung, Güte oder Barmherzigkeit zu wecken_**, würfle +CH. **Bei einer 10+** entzündest du tief in ihm ein Feuer und bewirkst eine dauerhafte Veränderung. **Bei 7–9** entfachst du vorerst das Gute in seinem Herzen, aber letztendlich wird er zu seinen alten Gewohnheiten zurückkehren. **Bei einer 6-** verhärtet sich sein Herz, und unabhängig davon, was der SL sonst sagt, kannst du diesen Spielzug bei ihm nicht erneut einsetzen."
     },
     "moveResults/success/value": {
       "source": "You light a fire deep within them and effect a lasting change.",
-      "text": ""
+      "text": "Du entzündest tief in ihm ein Feuer und bewirkst eine dauerhafte Veränderung."
     },
     "moveResults/partial/value": {
       "source": "You kindle goodness in their heart for now, but they will eventually return to their old ways.",
-      "text": ""
+      "text": "Du entfachst vorerst das Gute in seinem Herzen, aber letztendlich wird er zu seinen alten Gewohnheiten zurückkehren. "
     },
     "moveResults/failure/value": {
       "source": "Their heart hardens and you can't use this move on them again.",
-      "text": ""
+      "text": "Sein Herz verhärtet sich, und du kannst diesen Spielzug bei ihm nicht erneut einsetzen."
     }
   },
   "stalker": {
     "name": {
       "source": "Stalker",
-      "text": ""
+      "text": "Pirscher"
     },
     "description": {
       "source": "When you **_carry a normal or light load and move with care_**, you make no noise and leave no sign of your passing. When you **_hide yourself in a natural environment_**, you remain unseen until you draw attention to yourself, move positions, or attack.",
-      "text": ""
+      "text": "Wenn du **_eine normale oder leichte Last trägst und dich vorsichtig bewegst_**, machst du keine Geräusche und hinterlässt keine Spuren, die auf dein Vorbeikommen hindeuten. Wenn du **_dich in einer natürlichen Umgebung versteckst_**, bleibst du unentdeckt, bis du die Aufmerksamkeit auf dich ziehst, deine Position veränderst oder angreifst."
     }
   },
   "steadfast-guardian": {
     "name": {
       "source": "Steadfast Guardian",
-      "text": ""
+      "text": "Unerschütterlicher Wächter"
     },
     "description": {
       "source": "While you hold Readiness (from Defend), you can always suffer the damage/effects of an attack instead of your ward; no need to spend Readiness, you can just do it.",
-      "text": ""
+      "text": "Wenn du **_über Bereitschaft (durch Verteidigen) verfügst_**, kannst du den Schaden/Effekt eines Angriffs immer anstelle eines Verbündeten erleiden. Du musst dafür keine Bereitschaft ausgeben, du kannst es einfach tun."
     }
   },
   "stentorian": {
     "name": {
       "source": "Stentorian",
-      "text": ""
+      "text": "Schallende Stimme"
     },
     "description": {
       "source": "When you **_raise your voice_**, it carries far and cuts through even the din of battle. When you **_go into battle_**, hold 2 Command. Spend 1 Command to shout an order or warning and pick 1:\n\n- PCs get advantage on their next roll to do as you say\n- You have advantage to Order Followers or Deploy",
-      "text": ""
+      "text": "Wenn du **_deine Stimme erhebst_**, schallt sie weit und durchdringt selbst den Lärm der Schlacht. Wenn du **_in den Kampf ziehst_**, erhältst du 2 Kommando. Gib 1 Kommando aus, um einen Befehl oder eine Warnung zu rufen, und wähle 1:\n\n- SCs erhalten einen Vorteil auf ihren nächsten Wurf, sofern sie deinem Befehl folgen.\n- Du erhältst einen Vorteil auf Gefolgsleute befehligen oder Einsetzen."
     },
     "resource/title": {
       "source": "Command",
-      "text": ""
+      "text": "Kommando"
     }
   },
   "stone-cold": {
     "name": {
       "source": "Stone Cold",
-      "text": ""
+      "text": "Kalt wie Stein"
     },
     "description": {
       "source": "When you **_Defy Danger (or Struggle as One) by keeping calm and carrying on_**, treat a 6- as a 7-9.",
-      "text": ""
+      "text": "Wenn du **_einer Gefahr trotzt (oder gemeinsam vorgehst), indem du ruhig bleibst und unbeirrt weitermachst_**, behandle eine 6- wie 7–9."
     }
   },
   "storms-fury": {
@@ -3374,23 +3374,23 @@
   "suck-the-poison-out": {
     "name": {
       "source": "Suck the Poison Out",
-      "text": ""
+      "text": "Das Gift heraussaugen"
     },
     "description": {
       "source": "When you **_draw a malady from a patient's body, mind, or soul_**, spend 1 Stock and roll +WIS.",
-      "text": ""
+      "text": "Wenn du **_ein Leiden aus dem Körper, dem Geist oder der Seele eines Patienten ziehst_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 10+** entfernst du das Leiden und kannst es gefahrlos entsorgen oder in deinem heiligen Beutel aufbewahren (und dafür den Platz von 1 Vorrat beanspruchen), um es zu untersuchen oder um es auf jemand anderen zu übertragen. **Bei 7-9** entfernst du es, aber wähle 1:\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
     },
     "moveResults/success/value": {
       "source": "You remove the malady and can safely discard it or store it in your sacred pouch (taking the space of 1 Stock) to study or inflict on another.",
-      "text": ""
+      "text": "Du entfernst das Leiden und kannst es gefahrlos entsorgen oder in deinem heiligen Beutel aufbewahren (und dafür den Platz von 1 Vorrat beanspruchen), um es zu untersuchen oder um es auf jemand anderen zu übertragen. "
     },
     "moveResults/partial/value": {
       "source": "You remove it, but choose 1: your patient suffers lingering harm or trauma; OR you suffer some of the malady's effects; OR it will be harmful and dangerous to discard.",
-      "text": ""
+      "text": "Du entfernst es, aber wähle 1:\n\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "suffering-unleashed": {
@@ -3418,31 +3418,31 @@
   "superior-stat": {
     "name": {
       "source": "Superior Stat",
-      "text": ""
+      "text": "Überragendes Attribut"
     },
     "description": {
       "source": "Increase one of your stats by +1 (to a max of +3).",
-      "text": ""
+      "text": "Erhöhe eines deiner Attribute um +1 (max. +3)."
     }
   },
   "survivalist": {
     "name": {
       "source": "Survivalist",
-      "text": ""
+      "text": "Überlebenskünstler"
     },
     "description": {
       "source": "When you **_Forage_**, pick 1 extra choice (even **on a 6-**, pick 1) and add \"Find or fashion some useful item or supply (GM can veto)\" to the list of options.",
-      "text": ""
+      "text": "Wenn du **_Nahrung suchst_**, wähle eine zusätzliche Option aus, selbst bei einer 6-. Füge außerdem der Liste der Optionen Folgendes hinzu: Finde oder fertige einen nützlichen Gegenstand oder Vorrat an (die SL kann dies ablehnen)."
     }
   },
   "take-the-measure": {
     "name": {
       "source": "Take the Measure",
-      "text": ""
+      "text": "Nimm Maß"
     },
     "description": {
       "source": "When you **_size someone up_**, ask their player one of the questions below and get an honest answer. If they fear or respect you (their call), you can ask another question. You can't use this move on them again until your relationship significantly changes.\n\n- Can I trust them (to _____)?\n- What do they intend to do?\n- How are they most useful/dangerous?\n- What weakness of theirs can I exploit?",
-      "text": ""
+      "text": "Wenn du **_jemanden genau musterst_**, stelle seinem Spieler eine der folgenden Fragen und du erhältst eine ehrliche Antwort. Wenn er **_dich fürchtet oder respektiert_** (seine Entscheidung), kannst du eine weitere Frage stellen. Du kannst diesen Spielzug erst wieder bei ihm einsetzen, wenn sich eure Beziehung wesentlich verändert hat.\n\n- Kann ich ihm vertrauen (dass er______ )?\n- Was hat er vor?\n- Wie ist er am nützlichsten/gefährlichsten?\n- Welche seiner Schwächen kann ich ausnutzen?"
     }
   },
   "telepathy": {
@@ -3458,11 +3458,11 @@
   "terror-on-the-field": {
     "name": {
       "source": "Terror on the Field",
-      "text": ""
+      "text": "Schrecken auf dem Schlachtfeld"
     },
     "description": {
       "source": "When you **_reduce a foe to 0 HP_**, describe how you take them out. If you fell them in a particularly brutal or impressive manner, their allies are impressed, dismayed, or frightened and respond accordingly.",
-      "text": ""
+      "text": "Wenn **_durch dich ein Feind auf 0 TP fällt_**, beschreibe, wie du ihn ausschaltest. Wenn du ihn auf eine besonders brutale oder eindrucksvolle Weise zu Fall bringst, sind seine Verbündeten beeindruckt, bestürzt oder verängstigt und reagieren entsprechend."
     }
   },
   "tethered": {
@@ -3496,23 +3496,23 @@
   "the-hammer-and-the-book": {
     "name": {
       "source": "The Hammer and the Book",
-      "text": ""
+      "text": "Der Hammer und das Buch"
     },
     "description": {
       "source": "When you **_strike a thing of supernatural chaos_**, roll +WIS: **on a 10+**, deal your damage and choose 1 from the list below; **_on a 7-9_**, deal damage and choose 1, but you also expose yourself to harm or unwanted attention.\n\n- Deal +1d6 damage\n- Ignore the thing's armor or other defenses\n- Suppress one of its unnatural powers\n- Force it from its host",
-      "text": ""
+      "text": "Wenn du **_ein Wesen des übernatürlichen Chaos schlägst_**, würfle +WE. **Bei einer 10+** verursachst du deinen Schaden und wähle 1 aus der folgenden Liste. **Bei 7–9** verursachst du Schaden und wähle 1, aber du setzt dich dabei ebenfalls dem Schaden oder unerwünschter Aufmerksamkeit aus.\n\n- Verursache +1W6 Schaden.\n- Ignoriere die Rüstung oder andere Verteidigungsmaßnahmen dieses Wesens.\n- Unterdrücke eine seiner unnatürlichen Kräfte.\n- Zwinge es aus einem Körper der von ihm besessen ist."
     },
     "moveResults/success/value": {
       "source": "Deal your damage and choose 1 from the list.",
-      "text": ""
+      "text": "Du verursachst deinen Schaden und wähle 1 aus der Liste."
     },
     "moveResults/partial/value": {
       "source": "Deal damage and choose 1, but you also expose yourself to harm or unwanted attention.",
-      "text": ""
+      "text": "Du verursachst Schaden und wähle 1, aber du setzt dich dabei ebenfalls dem Schaden oder unerwünschter Aufmerksamkeit aus."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "the-roots-grow-deep": {
@@ -3528,11 +3528,11 @@
   "the-tower-eternal": {
     "name": {
       "source": "The Tower Eternal",
-      "text": ""
+      "text": "Der Ewige Turm"
     },
     "description": {
       "source": "When you **_Defy Danger against magic_**, treat a result of 6- as a 7-9.",
-      "text": ""
+      "text": "Wenn du **_einer magischen Gefahr trotzt_**, behandle ein Ergebnis von 6- als 7–9."
     }
   },
   "thoughtcrafter": {
@@ -3548,21 +3548,21 @@
   "tough-love": {
     "name": {
       "source": "Tough Love",
-      "text": ""
+      "text": "Liebevolle Strenge"
     },
     "description": {
       "source": "When you **_honestly think another PC is in the wrong and call them on it_**, they have disadvantage on any rolls against you until you two work it out.",
-      "text": ""
+      "text": "Wenn du **_ehrlich davon überzeugt bist, dass ein anderer SC im Unrecht ist_**, und ihn darauf ansprichst, haben alle Würfe gegen dich einen Nachteil, bis ihr beide die Sache geklärt habt."
     }
   },
   "trackless-step": {
     "name": {
       "source": "Trackless Step",
-      "text": ""
+      "text": "Spurloser Schritt"
     },
     "description": {
       "source": "When you **_move through nature with care and patience_**, you make no sound, leave no trace and can ignore any hindering or treacherous terrain (briars, mire, scree, etc.). When you **_spend 1 Stock and mark others_**, they each gain this benefit so long as the mark remains. 1 Stock can mark a number of individuals up to your level +INT.",
-      "text": ""
+      "text": "Wenn du **_dich mit Sorgfalt und Geduld durch die Natur bewegst_**, verursachst du keinen Laut, hinterlässt keine Spuren und kannst jedes hinderliche oder tückische Gelände ignorieren (Dornenranken, Sumpf, Geröll usw.). Wenn du **_1 Vorrat ausgibst und andere markierst_**, erhalten sie diesen Vorteil ebenfalls, solange die Markierung bestehen bleibt. Mit 1 Vorrat kannst du eine Anzahl von Personen markieren, die höchstens deiner Stufe +IN entspricht."
     }
   },
   "trade-barter": {
@@ -3590,61 +3590,61 @@
   "trailblazer": {
     "name": {
       "source": "Trailblazer",
-      "text": ""
+      "text": "Wegbereiter"
     },
     "description": {
       "source": "When **_a journey causes you to Defy Danger or Struggle as One_**, **on a 10+** you also learn or discover something interesting and useful—ask the GM what.",
-      "text": ""
+      "text": "Wenn **_eine Reise es erfordert, dass du einer Gefahr trotzt oder mit deinen Kameraden gemeinsam vorgehst_**, erfährst oder entdeckst du bei einer 10+ außerdem etwas Interessantes und Nützliches – frage die SL, was es ist."
     }
   },
   "truth-or-consequences": {
     "name": {
       "source": "Truth or Consequences",
-      "text": ""
+      "text": "Wahrheit oder Konsequenzen"
     },
     "description": {
       "source": "When you **_look into someone's eyes and gaze upon their soul_**, you can ask their player, \"Are you lying or hiding something from me?\" and get an honest answer. If the answer is \"Yes,\" you have advantage on your next roll against them.\n\nWhen you **_lie or otherwise deceive someone through words_**, you have disadvantage on your next roll against them.",
-      "text": ""
+      "text": "Wenn du **_jemandem in die Augen blickst und seine Seele ergründest_**, kannst du den Spieler fragen: „Belügst du mich oder verbirgst du etwas vor mir?“ und du erhältst eine ehrliche Antwort. Wenn die Antwort „Ja“ lautet, hast du auf deinen nächsten Wurf gegen diese Person einen Vorteil.\n\nWenn du **_jemanden anlügst oder ihn auf andere Weise durch Worte täuschst_**, hast du auf deinen nächsten Wurf gegen diese Person einen Nachteil."
     }
   },
   "uncanny-reflexes": {
     "name": {
       "source": "Uncanny Reflexes",
-      "text": ""
+      "text": "Unheimliche Reflexe"
     },
     "description": {
       "source": "When you **_are unarmored and carrying a normal or light load_**, you impose disadvantage on any damage you take that you could dodge or roll with.",
-      "text": ""
+      "text": "Wenn du **_keine Rüstung trägst und eine normale oder leichte Last mit dir führst_**, erhalten alle Schadenswürfe gegen dich, denen du ausweichen oder für die du würfeln könntest, einen Nachteil."
     }
   },
   "undaunted": {
     "name": {
       "source": "Undaunted",
-      "text": ""
+      "text": "Unerschrocken"
     },
     "description": {
       "source": "When you **_are outnumbered or facing a foe bigger than you_**, you get +1 armor and deal +1d6 damage. (Replaces Better Part of Valor. First use crosses off \"Would-be\" on the front page.)",
-      "text": ""
+      "text": "Wenn du **_zahlenmäßig unterlegen bist oder einem größeren Gegner gegenüberstehst_**, erhältst du +1 Rüstung und verursachst +1W6 Schaden."
     }
   },
   "under-your-skin": {
     "name": {
       "source": "Under Your Skin",
-      "text": ""
+      "text": "Unter die Haut gehen"
     },
     "description": {
       "source": "When you **_engage an NPC in conversation_**, you can ask the GM 1 of these and get an honest answer:\n\n- What are they expecting me to do?\n- What, in general, are they trying to hide?\n- What do they want to happen?",
-      "text": ""
+      "text": "Wenn du **_dich mit einem NSC unterhältst_**, kannst du dem SL eine der folgenden Fragen stellen und erhältst eine ehrliche Antwort:\n\n- Was erwartet er von mir?\n-  Was versucht er ganz allgemein zu verbergen?\n-  Was will er erreichen?"
     }
   },
   "underestimated": {
     "name": {
       "source": "Underestimated",
-      "text": ""
+      "text": "Unterschätzt"
     },
     "description": {
       "source": "As long as you avoid overt hostility, no enemy will consider you a threat.\n\nWhen you **_first make your move against an enemy who underestimates you_**, you have advantage.",
-      "text": ""
+      "text": "Solange du **_offene Feindseligkeit vermeidest_**, wird dich kein Gegner als Bedrohung ansehen.\n\nWenn du **_zum ersten Mal gegen einen Gegner vorgehst_**, der dich unterschätzt, hast du einen Vorteil."
     }
   },
   "undying": {
@@ -3672,11 +3672,11 @@
   "unfettered": {
     "name": {
       "source": "Unfettered",
-      "text": ""
+      "text": "Uneingeschränkt"
     },
     "description": {
       "source": "When you **_are subject to physical or mental restraint_**, you may mark a debility to immediately break free of that restraint.",
-      "text": ""
+      "text": "Wenn du körperlichen oder geistigen Einschränkungen unterworfen bist_**, kannst du eine Beeinträchtigung markieren, um dich sofort davon zu befreien."
     }
   },
   "unholy-vessel": {
@@ -3734,21 +3734,21 @@
   "unstoppable": {
     "name": {
       "source": "Unstoppable",
-      "text": ""
+      "text": "Unaufhaltsam"
     },
     "description": {
       "source": "When you **_are reduced to 0 HP in battle_**, you can keep fighting. Each time you take damage while at 0 HP, mark 1. If you would regain HP while fighting, clear one mark instead.\n\nWhen you **_stop fighting_**, roll for Death's Door with a -1 penalty for each circle marked. If you survive, clear all your circles.",
-      "text": ""
+      "text": "Wenn du **_im Kampf auf 0 TP fällst_**, kannst du weiterkämpfen. Jedes Mal, wenn du bei 0 TP Schaden erleidest, markiere eine freie Stelle. Wenn dich etwas heilen würde, während du weiterkämpfst, entferne stattdessen eine Markierung.\n\nWenn du **_aufhörst zu kämpfen_**, würfle für An der Schwelle des Todes mit einem Malus von -1 für jede Markierung. Wenn du überlebst, entferne alle Markierungen."
     }
   },
   "up-with-people": {
     "name": {
       "source": "Up With People",
-      "text": ""
+      "text": "Auf Augenhöhe"
     },
     "description": {
       "source": "When you converse with someone (PC or NPC) you can hold 2 Rapport with them. If you do, they hold 1 Rapport with you. During the conversation, either of you can spend 1 Rapport to ask the other player one of the following and get an honest answer.\n\n- What weighs you down or holds you back?\n- What drives you forward?\n- What lesson would you have me learn?\n- What do you think of me, truly?",
-      "text": ""
+      "text": "Wenn du **_dich mit jemandem (SC oder NSC) unterhältst_**, nimm 2 Vertrauen für ihn. Wenn du das tust, nimmt er 1 Vertrauen für dich. Während des Gesprächs kann jeder von euch 1 Vertrauen ausgeben, um dem anderen Spieler eine der folgenden Fragen zu stellen und eine ehrliche Antwort zu erhalten:\n\n- Was belastet dich oder hält dich zurück?\n- Was treibt dich an?\n- Welche Lektion sollte ich deiner Meinung nach lernen?\n- Was hältst du wirklich von mir?"
     },
     "resource/title": {
       "source": "Rapport",
@@ -3784,115 +3784,115 @@
   "veil": {
     "name": {
       "source": "Veil",
-      "text": ""
+      "text": "Schleier"
     },
     "description": {
       "source": "When you **_wrap yourself or another in a subtle veil_**, spend 1 Stock and choose 1:\n\n- A type of being you name (including \"people\") will tend to ignore your presence\n- People will perceive you as someone else, though you must wear something of an individual's in order to impersonate them\nWhen **_your deception comes under scrutiny_**, roll +INT.",
-      "text": ""
+      "text": "Wenn du **_dich selbst oder jemand anderen mit einem subtilen Schleier umhüllst_**, gib 1 Vorrat aus und wähle 1:\n\n- Eine von dir benannte Art von Wesen (einschließlich \"Menschen\") wird dazu neigen, deine Anwesenheit zu ignorieren.\n- Menschen nehmen dich als jemand anderen wahr, allerdings musst du etwas von der betreffenden Person tragen, um sie nachzuahmen.\nWenn **_deine Täuschung auf die Probe gestellt wird_**, würfle +IN. **Bei einer 10+** hält der Schleier, und niemand schöpft Verdacht. **Bei 7–9** hält der Schleier, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
     },
     "moveResults/success/value": {
       "source": "The veil holds, and no one is the wiser.",
-      "text": ""
+      "text": "Der Schleier hält, und niemand schöpft Verdacht."
     },
     "moveResults/partial/value": {
       "source": "The veil holds, but there is further scrutiny or a complication (GM's choice).",
-      "text": ""
+      "text": "Der Schleier hält, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "versatile": {
     "name": {
       "source": "Versatile",
-      "text": ""
+      "text": "Vielseitig"
     },
     "description": {
       "source": "Choose a move from any other playbook, as long as you meet its requirements. You can pick from a different playbook each time. You can't take Improved Stat or Superior Stat.",
-      "text": ""
+      "text": "Wähle einen Spielzug aus einem beliebigen anderen Spielbuch, sofern du dessen Voraussetzungen erfüllst. Du kannst jedes Mal ein anderes Klassenbuch wählen. Du kannst jedoch nicht Verbessertes Attribut oder Überragendes Attribut wählen."
     }
   },
   "veteran-crew": {
     "name": {
       "source": "Veteran Crew",
-      "text": ""
+      "text": "Veteranentruppe"
     },
     "description": {
       "source": "Each time you take this move, pick 1. You can also choose to reselect their Instinct and Cost.\n\n- Select 2 new tags for your Crew\n- Increase their damage die from d6 to d8\n- Increase their max HP by 2 each",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle 1. Du kannst auch ihren Instinkt und ihre Kosten neu wählen.\n\n- Wähle 2 neue Eigenschaften für deine Truppe.\n- Erhöhe ihren Schadenswürfel von W6 auf W8.\n- Erhöhe ihre maximalen TP jeweils um 2."
     }
   },
   "vision-unclouded": {
     "name": {
       "source": "Vision Unclouded",
-      "text": ""
+      "text": "Ungetrübte Sicht"
     },
     "description": {
       "source": "When you **_Seek Insight_**, you can always ask \"What here is hidden by illusion or magic?\" for free, even **on a 6-**.",
-      "text": ""
+      "text": "Wenn du **_Gewissheit erlangst_**, kannst du immer kostenlos fragen: „Was hier wird durch eine Illusion oder Magie verborgen?“, selbst bei einer 6−."
     }
   },
   "voice-of-experience": {
     "name": {
       "source": "Voice of Experience",
-      "text": ""
+      "text": "Stimme der Erfahrung"
     },
     "description": {
       "source": "When **_another PC comes to you for advice and you tell them what you think is best_**, they have advantage on their first roll to follow your advice.\n\nWhen you **_Seek Insight_**, you can always ask, \"What is about to happen?\" for free, even **on a 6-**. (Replaces Inquiring Minds. First use crosses off \"Would-be\" on the front page.)",
-      "text": ""
+      "text": "Wenn **_ein anderer SC zu dir kommt, um deinen Rat einzuholen, und du ihm sagst, was deiner Meinung nach das Beste ist_**, hat er bei seinem ersten Wurf, mit dem er deinen Rat befolgt, einen Vorteil.\nWenn du **_Gewissheit erlangst_**, kannst du jederzeit kostenlos fragen: „Was wird gleich geschehen?“, selbst bei einer 6-."
     }
   },
   "voice-of-the-earth-mother": {
     "name": {
       "source": "Voice of the Earth Mother",
-      "text": ""
+      "text": "Stimme der Erdmutter"
     },
     "description": {
       "source": "When you **_speak on behalf of Danu_**, natural beasts and spirits of the wild respect your authority. All but the most headstrong will do as you command, even against their instincts.",
-      "text": ""
+      "text": "Wenn du **_im Namen Danus sprichst_**, respektieren natürliche Tiere und Naturgeister deine Autorität. Alle außer den eigensinnigsten Wesen werden deinen Befehlen gehorchen, selbst wenn sie damit gegen ihre Instinkte handeln."
     }
   },
   "walk-it-off": {
     "name": {
       "source": "Walk It Off",
-      "text": ""
+      "text": "Wegstecken"
     },
     "description": {
       "source": "When **_you'd mark a debility_**, you can mark this move instead to no ill effect. Clear it as you would a debility.",
-      "text": ""
+      "text": "Wenn du **_eine Beeinträchtigung markieren würdest_**, kannst du stattdessen diesen Spielzug markieren, ohne negative Auswirkungen zu erleiden. Entferne diese Markierung auf die gleiche Weise wie eine Beeinträchtigung."
     }
   },
   "warden-of-the-wild": {
     "name": {
       "source": "Warden of the Wild",
-      "text": ""
+      "text": "Hüter der Wildnis"
     },
     "description": {
       "source": "When you **_defeat a perversion of nature_**, you can ask the GM 2 of the following and get a useful answer:\n\n- Will it come back? If so, how can I stop it?\n- Will its taint spread? If so, how can I contain it?\n- What useful (but grisly) bits can I harvest?\n- What else can I learn about it or its ilk?",
-      "text": ""
+      "text": "Wenn du **_eine Perversion der Natur besiegst_**, kannst du der SL zwei der folgenden Fragen stellen und erhältst eine hilfreiche Antwort:\n\n- Wird sie zurückkommen? Wenn ja, wie kann ich das verhindern?\n- Wird sich ihre Verderbnis ausbreiten? Wenn ja, wie kann ich sie eindämmen?\n- Welche nützlichen (wenn auch grausigen) Teile kann ich aus ihr gewinnen?\n- Was kann ich sonst noch über sie oder ihresgleichen erfahren?"
     }
   },
   "wards-bindings": {
     "name": {
       "source": "Wards & Bindings",
-      "text": ""
+      "text": "Mauern und Fesseln"
     },
     "description": {
       "source": "When you **_mark a boundary with sacred signs_**, spend 1 Stock and describe who or what they affect (using no more words than your level). Also, choose whether the affected beings are repelled or trapped by the signs.\n\nWhen **_your wards or bindings are first tested_**, roll +INT.",
-      "text": ""
+      "text": "Wenn du **_einen Bereich mit heiligen Zeichen versiehst_**, gib 1 Vorrat aus und beschreibe, wen oder was sie betreffen (verwende nicht mehr Worte als deine Stufe entspricht). Entscheide außerdem, ob die betroffenen Wesen von den Zeichen abgehalten oder durch sie gefangen werden.\n\nWenn **_deine Schutzzeichen oder Bannungen erstmals auf die Probe gestellt werden_**, würfle +IN. **Bei einer 10+** halten sie stand, solange die Zeichen unbeschädigt bleiben (und das betroffene Wesen nichts tun kann, um sie direkt zu beeinflussen). **Bei 7–9** halten sie vorerst stand, können aber durch körperliche Gewalt oder Willenskraft überwunden werden."
     },
     "moveResults/success/value": {
       "source": "They will hold as long as the signs remain unmarred, and the affected creature can do nothing to affect them directly.",
-      "text": ""
+      "text": "Sie halten stand, solange die Zeichen unbeschädigt bleiben (und das betroffene Wesen nichts tun kann, um sie direkt zu beeinflussen)."
     },
     "moveResults/partial/value": {
       "source": "They hold for now but may be overcome through might or will.",
-      "text": ""
+      "text": "Sie halten vorerst stand, können aber durch körperliche Gewalt oder Willenskraft überwunden werden."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "we-are-as-one": {
@@ -3908,43 +3908,43 @@
   "we-happy-few": {
     "name": {
       "source": "We Happy Few",
-      "text": ""
+      "text": "Wir, die Wenigen"
     },
     "description": {
       "source": "When you **_give an inspiring speech to your allies before facing a dire threat_**, roll +CHA: **on a 10+**, each ally holds 2 Inspiration; **_on a 7-9_**, each ally holds 1 Inspiration; **on a 6-**, each ally holds 1, but you have disadvantage on all rolls until you share your nagging doubts with someone else.\n\nOnce battle is joined, your allies can spend their Inspiration at any time, 1-for-1 to:\n\n- Act fearlessly in the face of terror or overwhelming odds\n- Keep 1 HP instead of being reduced to 0 HP\n- Add 1d6 to a damage roll they just made",
-      "text": ""
+      "text": "Wenn du **_vor deinen Verbündeten eine inspirierende Rede hältst, bevor du dich einer schrecklichen Bedrohung stellst_**, würfle +CH. **Bei einer 10+** nimmt  jeder Verbündete 2 Inspiration. **Bei 7–9** nimmt  jeder Verbündete 1 Inspiration. Bei einer 6- nimmt jeder Verbündete 1 Inspiration, aber du hast bei allen Proben einen Nachteil, bis du deine nagenden Zweifel mit jemand anderem teilst.\n\nSobald der Kampf beginnt, können deine Verbündeten ihre Inspiration jederzeit ausgeben, um Folgendes zu tun:\n\n- Furchtlos im Angesicht des Schreckens oder überwältigender Überzahl handeln.\n- 1 TP behalten, anstatt auf 0 TP zu fallen. \n- 1W6 zu einem gerade ausgeführten Schadenswurf addieren."
     },
     "moveResults/success/value": {
       "source": "Each ally holds 2 Inspiration.",
-      "text": ""
+      "text": "Jeder Verbündete nimmt 2 Inspiration."
     },
     "moveResults/partial/value": {
       "source": "Each ally holds 1 Inspiration.",
-      "text": ""
+      "text": "Jeder Verbündete nimmt 1 Inspiration."
     },
     "moveResults/failure/value": {
       "source": "Each ally holds 1 Inspiration, but you have disadvantage on all rolls until you share your nagging doubts with someone else.",
-      "text": ""
+      "text": "Jeder Verbündete nimmt 1 Inspiration, aber du hast bei allen Proben einen Nachteil, bis du deine nagenden Zweifel mit jemand anderem teilst."
     }
   },
   "well-read": {
     "name": {
       "source": "Well-Read",
-      "text": ""
+      "text": "Belesen"
     },
     "description": {
       "source": "When you **_name the source in which you read about the matter at hand_**, roll +WIS to Know Things instead of +INT.",
-      "text": ""
+      "text": "Wenn du **_die Quelle nennst, in der du über die betreffende Angelegenheit gelesen hast_**, kannst du +WE statt +IN würfeln, um Wissen kundzutun."
     }
   },
   "well-versed": {
     "name": {
       "source": "Well Versed",
-      "text": ""
+      "text": "Bewandert"
     },
     "description": {
       "source": "Mark 1 topic, in addition to the one noted in your Background. Each additional time you take this move, mark 2 more topics.\n\n- The Last Door, death, and the undead\n- The civilizations of humanity\n- The Fae and their strange ways\n- The Makers and their arts\n- The primordial powers\n- The Things Below\n- The wild world and its spirits\nWhen you **_Know Things about one of your topics_**, you can ask the GM a follow-up question of your choice (even **on a 6-**).",
-      "text": ""
+      "text": "Markiere ein Themengebiet, zusätzlich zu dem, das in deinem Hintergrund vermerkt ist. Jedes weitere Mal, wenn du diesen Spielzug wählst, markierst du zwei zusätzliche Themengebiete.\n\n- Das Schwarze Tor, der Tod und die Untoten\n- Die Zivilisationen der Menschheit\n- Die Feen und ihre seltsamen Bräuche\n- Die Schöpfer und ihre Künste\n- Die Urkräfte\n- Die Dinge unter der Erde\n- Die Natur und ihre Geister\nWenn du **_bei einem deiner Themengebiete Wissen kundtust_**, kannst du dem SL eine beliebige Folgefrage stellen, selbst bei einer 6-."
     }
   },
   "whispers": {
@@ -3960,165 +3960,165 @@
   "wielder-of-the-white-flame": {
     "name": {
       "source": "Wielder of the White Flame",
-      "text": ""
+      "text": "Träger der weißen Flamme"
     },
     "description": {
       "source": "When you **_channel Helior's essence into an object you carry_**, roll +WIS: **on a 10+**, it ignites with a white flame that casts a holy light (reach, area) and burns neither you nor the object, and you may Invoke the Sun God right now as if you rolled a 10+; **_on a 7-9_**, it ignites with a white flame that casts a holy light (reach, area) and burns neither you nor the object.",
-      "text": ""
+      "text": "Wenn du **_Helriors Essenz in einen Gegenstand leitest, den du bei dir trägst_**, würfle +WE. **Bei einer 10+** entzündet er sich mit einer weißen Flamme, die ein heiliges Licht verbreitet (Lang, Bereich) und weder dich noch den Gegenstand verbrennt. Außerdem kannst du augenblicklich den Sonnengott anrufen, als hättest du eine 10+ gewürfelt. **Bei 7–9** entzündet er sich mit einer weißen Flamme, die ein heiliges Licht verbreitet (Lang, Bereich) und weder dich noch den Gegenstand verbrennt."
     },
     "moveResults/success/value": {
       "source": "Ignites with white flame (reach, area) and you may Invoke the Sun God as if you rolled a 10+.",
-      "text": ""
+      "text": "Er entzündet sich mit einer weißen Flamme, die ein heiliges Licht verbreitet (Lang, Bereich) und du kannst augenblicklich den Sonnengott anrufen, als hättest du eine 10+ gewürfelt."
     },
     "moveResults/partial/value": {
       "source": "Ignites with white flame (reach, area).",
-      "text": ""
+      "text": "Er entzündet sich mit einer weißen Flamme, die ein heiliges Licht verbreitet (Lang, Bereich)."
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "wild-soul": {
     "name": {
       "source": "Wild Soul",
-      "text": ""
+      "text": "Wilde Seele"
     },
     "description": {
       "source": "Each time you take this move, gain a Ranger move of your choice for which you qualify. You can't pick Improved Stat or Superior Stat.",
-      "text": ""
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle einen Spielzug aus dem Spielbuch des Waldläufers deiner Wahl, für den du die Voraussetzungen erfüllst. Du kannst weder Verbessertes Attribut noch Überragendes Attribut wählen."
     }
   },
   "wild-speech": {
     "name": {
       "source": "Wild Speech",
-      "text": ""
+      "text": "Wilde Sprache"
     },
     "description": {
       "source": "The grunts, barks, chirps, and calls of natural beasts are as a language to you. You can understand their intentions and communicate basic ideas. When you **_Persuade a beast_**, you can choose to roll +WIS.",
-      "text": ""
+      "text": "Das Grunzen, Bellen, Zwitschern und Rufen natürlicher Tiere ist wie eine Sprache für dich. Du kannst ihre Absichten verstehen und dich mit ihnen über grundlegende Dinge verständigen. Wenn du **_ein Tier überredest_**, kannst du wählen, ob du +WE statt +CH würfelst."
     }
   },
   "work-with-what-youve-got": {
     "name": {
       "source": "Work With What You've Got",
-      "text": ""
+      "text": "Arbeite mit dem, was du hast"
     },
     "description": {
       "source": "When you **_cleverly use your environment to harm or impede your foe(s)_**, roll +INT: **on a 10+**, pick 2; **_on a 7-9_**, pick 1:\n\n- Interrupt or thwart their action(s)\n- Create an opportunity that grants you or an ally advantage on the next roll to exploit it\n- Deal damage appropriate to the source (d4 for bruises/scrapes, d6 for bloodshed, d8 if it'd break bones, d10 if it'd kill a common person)",
-      "text": ""
+      "text": "Wenn du **_deine Umgebung geschickt nutzt, um deinen Gegnern zu schaden oder sie zu behindern_**, würfle +IN. **Bei einer 10+** wähle 2. **Bei 7–9** wähle 1:\n\n- Unterbrich oder vereitle ihre Handlung(en).\n- Schaffe eine Gelegenheit, die dir oder einem Verbündeten einen Vorteil auf seinen nächsten Wurf verschafft, um sie auszunutzen.\n- Verursache Schaden entsprechend der Quelle: (W4 für Prellungen und Schürfwunden; W6 für blutige Verletzungen; W8, wenn dabei Knochen brechen würden; W10, wenn es einen gewöhnlichen Menschen töten würde)."
     },
     "moveResults/success/value": {
       "source": "Pick 2.",
-      "text": ""
+      "text": "Wähle 2"
     },
     "moveResults/partial/value": {
       "source": "Pick 1.",
-      "text": ""
+      "text": "Wähle 1"
     },
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
-      "text": ""
+      "text": "Der SL macht einen Spielzug."
     }
   },
   "worldly": {
     "name": {
       "source": "Worldly",
-      "text": ""
+      "text": "Welterfahren"
     },
     "description": {
       "source": "Take a move from the Blessed, Fox, Heavy, Marshal, or Seeker playbooks, for which you otherwise qualify. You can pick from a different playbook each time. You can't pick Improved Stat or Superior Stat.",
-      "text": ""
+      "text": "Wähle einen Spielzug aus den Spielbücher Gesegneter, Fuchs, Brecher, Marschall oder Suchender aus, für den du die Voraussetzungen erfüllst. Du kannst jedoch nicht Verbessertes Attribut oder Überragendes Attribut wählen."
     }
   },
   "_folders": {
     "ghost": {
       "source": "ghost",
-      "text": ""
+      "text": "Geist"
     },
     "revenant": {
       "source": "revenant",
-      "text": ""
+      "text": "Wiedergänger"
     },
     "thrall": {
       "source": "thrall",
-      "text": ""
+      "text": "Knecht"
     },
     "common": {
       "source": "common",
-      "text": ""
+      "text": "Allgemein"
     },
     "the-blessed": {
       "source": "The Blessed",
-      "text": ""
+      "text": "Der Gesegnete"
     },
     "the-fox": {
       "source": "The Fox",
-      "text": ""
+      "text": "Der Fuchs"
     },
     "the-heavy": {
       "source": "The Heavy",
-      "text": ""
+      "text": "Der Brecher"
     },
     "the-judge": {
       "source": "The Judge",
-      "text": ""
+      "text": "Der Richter"
     },
     "the-lightbearer": {
       "source": "The Lightbearer",
-      "text": ""
+      "text": "Der Lichtträger"
     },
     "the-marshal": {
       "source": "The Marshal",
-      "text": ""
+      "text": "Der Marschall"
     },
     "the-ranger": {
       "source": "The Ranger",
-      "text": ""
+      "text": "Der Waldläufer"
     },
     "the-seeker": {
       "source": "The Seeker",
-      "text": ""
+      "text": "Der Suchende"
     },
     "the-would-be-hero": {
       "source": "The Would-Be Hero",
-      "text": ""
+      "text": "Der Möchtegern-Held"
     },
     "arcana": {
       "source": "arcana",
-      "text": ""
+      "text": "Arkana"
     },
     "basic": {
       "source": "basic",
-      "text": ""
+      "text": "Grundspielzüge"
     },
     "expedition": {
       "source": "expedition",
-      "text": ""
+      "text": "Expedition"
     },
     "follower": {
       "source": "follower",
-      "text": ""
+      "text": "Gefolgsleute"
     },
     "homefront": {
       "source": "homefront",
-      "text": ""
+      "text": "Heimatfront"
     },
     "playbook": {
       "source": "playbook",
-      "text": ""
+      "text": "Klassenbücher"
     },
     "post-death": {
       "source": "post death",
-      "text": ""
+      "text": "Nach dem Tod"
     },
     "seasons": {
       "source": "seasons",
-      "text": ""
+      "text": "Jahreszeiten"
     },
     "special": {
       "source": "special",
-      "text": ""
+      "text": "Sonderspielzüge"
     }
   }
 }
