@@ -310,71 +310,71 @@
   "stonetop": {
     "name": {
       "source": "Stonetop",
-      "text": ""
+      "text": "Stonetop"
     },
     "assets/resources/farming-beans-potatoes-oats-barley": {
       "source": "Farming (beans, potatoes, oats, barley)",
-      "text": ""
+      "text": "Ackerbau (Bohnen, Kartoffeln, Hafer, Gerste)"
     },
     "assets/resources/hunting-trapping-fur-meat-hides": {
       "source": "Hunting/trapping (fur, meat, hides)",
-      "text": ""
+      "text": "Jagd/Fallenstellen (Felle, Fleisch, Häute)"
     },
     "assets/resources/distilling-whisky": {
       "source": "Distilling (whisky)",
-      "text": ""
+      "text": "Brennerei (Whisky)"
     },
     "assets/resources/stone-collected-from-the-old-wall": {
       "source": "Stone (collected from the Old Wall)",
-      "text": ""
+      "text": "Stein (gewonnen aus der alten Mauer)"
     },
     "assets/resources/cistern-filled-with-rain-snow": {
       "source": "Cistern (filled with rain, snow)",
-      "text": ""
+      "text": "Zisterne (gespeist durch Regen und Schnee)"
     },
     "assets/resources/tradesfolk-midwife-potter-publican-smith-tanner": {
       "source": "Tradesfolk (midwife, potter, publican, smith, tanner)",
-      "text": ""
+      "text": "Handwerker (Hebamme, Töpfer, Gastwirt, Schmied, Gerber)"
     },
     "assets/resources/trade-gordins-delve-metal-tools": {
       "source": "Trade: Gordin's Delve (metal, tools)",
-      "text": ""
+      "text": "Handel mit Gordins Binge (Metall, Werkzeuge)"
     },
     "assets/resources/trade-marshedge-textiles-herbs-glass": {
       "source": "Trade: Marshedge (textiles, herbs, glass)",
-      "text": ""
+      "text": "Handel mit Mooresrand (Textilien, Kräuter, Glas)"
     },
     "assets/fortifications/village-militia": {
       "source": "Village militia",
-      "text": ""
+      "text": "Dorfmiliz"
     },
     "assets/fortifications/the-ringwall-low-stone": {
       "source": "The Ringwall (low, stone)",
-      "text": ""
+      "text": "Der Ringwall  (Niedrig, Stein)"
     },
     "assets/fortifications/3-watchtowers": {
       "source": "3 watchtowers",
-      "text": ""
+      "text": "Drei Wachtürme"
     },
     "assets/fortifications/some-bows": {
       "source": "Some bows",
-      "text": ""
+      "text": "Einige Bögen"
     },
     "assets/items/a-pair-of-hardy-draft-horses-followers-large-powerful-keen-nosed-hardy-hp-10-each-damage-d6-3-hand-close-forceful-instinct-to-panic-cost-care-grooming": {
       "source": "A pair of hardy draft horses, followers (large, powerful, keen-nosed, hardy): HP 10 each; Damage d6+3 (hand, close, forceful); Instinct: to panic; Cost: care & grooming.",
-      "text": ""
+      "text": "Zwei robuste Zugpferde, Gefolgsleute (Groß, Kräftig, Guter Geruchssinn, Widerstandsfähig): Jeweils 10 TP, Schaden 1W6+3 (Hand, Kurz, Wuchtig), Instinkt: in Panik geraten, Kosten: Betreuung & Pflege."
     },
     "assets/items/a-pair-of-horse-drawn-plows-iron": {
       "source": "A pair of horse-drawn plows, iron",
-      "text": ""
+      "text": "Zwei von Pferden gezogene Pflüge, Eisen"
     },
     "assets/items/a-pair-of-carts-plus-horse-harness": {
       "source": "A pair of carts (plus horse harness)",
-      "text": ""
+      "text": "Zwei Karren (einschließlich Pferdegeschirr)"
     },
     "assets/items/a-wagon-plus-horse-harness": {
       "source": "A wagon (plus horse harness)",
-      "text": ""
+      "text": "Ein Wagen (einschließlich Pferdegeschirr)"
     },
     "residents/traits/all-thumbs": {
       "source": "all thumbs",
