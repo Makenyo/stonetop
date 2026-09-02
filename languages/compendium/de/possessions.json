@@ -978,7 +978,7 @@
     },
     "description": {
       "source": "chemics, reagents, vials, measures, ◇ scales, ◇ decanters, etc. Every season, produce [[/r 1d4-1]] uses of ◇ naphtha (*thrown, area, dangerous, ignores armor*)",
-      "text": "Chemikalien, Reagenzien, Fläschchen, Messgeräte, ◇ Waagen, ◇ Dekanter, usw. Produziere jede Jahreszeit 1W4-1 Anwendungen Naphtha (Geworfen, Bereich, Gefährlich, Ignoriert Rüstung)."
+      "text": "Chemikalien, Reagenzien, Fläschchen, Messgeräte, ◇ Waagen, ◇ Dekanter, usw. Produziere jede Jahreszeit [[/r 1d4-1]] Anwendungen Naphtha (Geworfen, Bereich, Gefährlich, Ignoriert Rüstung)."
     },
     "outfitItems/laboratory-scales/name": {
       "source": "Scales",
