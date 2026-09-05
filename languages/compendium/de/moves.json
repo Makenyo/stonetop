@@ -2058,7 +2058,7 @@
     },
     "description": {
       "source": "Each time you take this move, your companion gains 2 additional options of your choice.",
-      "text": "Jedes Mal, wenn du diesen Spielzug wählst, erhält dein Begleiter 2 zusätzliche Optionen deiner Wahl."
+      "text": "Jedes Mal, wenn du diesen Spielzug wählst, erhält dein Begleiter zwei zusätzliche Optionen deiner Wahl."
     }
   },
   "magpie": {
@@ -2068,7 +2068,7 @@
     },
     "description": {
       "source": "When you **_Have What You Need_**, you can produce something strange, specific, maybe even valuable or a little bit magical, but if you do, tell us where you got it and 2 of the following:\n\n- How it's not quite right, but maybe it'll do?\n- The trouble you caused back home by getting it\n- Why using it will draw unwanted attention\n- That it's the only thing like this that you've got, and why it'll only work the one time",
-      "text": "Wenn du **_hast, was du brauchst_**, kannst du einen seltsamen, sehr speziellen, vielleicht sogar wertvollen oder leicht magischen Gegenstand hervorzaubern. Wenn du das tust, erzähle, woher du ihn hast, und beantworte 2 der folgenden Fragen:\n\n- Warum ist es nicht ganz das Richtige, aber vielleicht trotzdem ausreichend?\n- Welchen Ärger hast du zu Hause verursacht, um es zu bekommen?\n- Warum zieht seine Anwendung unerwünschte Aufmerksamkeit auf sich?\n- Warum ist es das Einzige seiner Art, das du besitzt, und warum wird es nur dieses eine Mal funktionieren?"
+      "text": "Wenn du **_hast, was du brauchst_**, kannst du einen seltsamen, sehr speziellen, vielleicht sogar wertvollen oder leicht magischen Gegenstand hervorzaubern. Wenn du das tust, erzähle, woher du ihn hast, und beantworte zwei der folgenden Fragen:\n\n- Warum ist es nicht ganz das Richtige, aber vielleicht trotzdem ausreichend?\n- Welchen Ärger hast du zu Hause verursacht, um es zu bekommen?\n- Warum zieht seine Anwendung unerwünschte Aufmerksamkeit auf sich?\n- Warum ist es das Einzige seiner Art, das du besitzt, und warum wird es nur dieses eine Mal funktionieren?"
     }
   },
   "make-a-plan": {
@@ -3870,7 +3870,7 @@
     },
     "description": {
       "source": "When you **_defeat a perversion of nature_**, you can ask the GM 2 of the following and get a useful answer:\n\n- Will it come back? If so, how can I stop it?\n- Will its taint spread? If so, how can I contain it?\n- What useful (but grisly) bits can I harvest?\n- What else can I learn about it or its ilk?",
-      "text": "Wenn du **_eine Perversion der Natur besiegst_**, kannst du der SL 2 der folgenden Fragen stellen und erhältst eine hilfreiche Antwort:\n\n- Wird sie zurückkommen? Wenn ja, wie kann ich das verhindern?\n- Wird sich ihre Verderbnis ausbreiten? Wenn ja, wie kann ich sie eindämmen?\n- Welche nützlichen (wenn auch grausigen) Teile kann ich aus ihr gewinnen?\n- Was kann ich sonst noch über sie oder ihresgleichen erfahren?"
+      "text": "Wenn du **_eine Perversion der Natur besiegst_**, kannst du der SL zwei der folgenden Fragen stellen und erhältst eine hilfreiche Antwort:\n\n- Wird sie zurückkommen? Wenn ja, wie kann ich das verhindern?\n- Wird sich ihre Verderbnis ausbreiten? Wenn ja, wie kann ich sie eindämmen?\n- Welche nützlichen (wenn auch grausigen) Teile kann ich aus ihr gewinnen?\n- Was kann ich sonst noch über sie oder ihresgleichen erfahren?"
     }
   },
   "wards-bindings": {

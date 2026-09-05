@@ -739,6 +739,7 @@
       "angry": "Zornig",
       "annoying": "Lästig",
       "aquatic": "Aquatisch",
+      "annoying": "Lästig",
       "archers": "Bogenschützen",
       "area": "Bereich",
       "arrogant": "Arrogant",
@@ -929,6 +930,10 @@
       "willful": "Eigenwillig",
       "wooly": "Wollig",
       "wretched": "Erbärmlich",
+      "warm": "Warm",
+      "warrior": "Krieger",
+      "warriors": "Krieger",
+      "well-informed": "Gut Informiert",
       "young": "Jung"
     }
   }
