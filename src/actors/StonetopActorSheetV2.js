@@ -3,6 +3,8 @@ import { buildFocusSelector } from "./buildFocusSelector.js";
 import { enrichRichTextTree } from "../utils/enrichRichText.js";
 import { ADVICE_ACTIONS } from "../utils/adviceAction.js";
 import { EDIT_IMAGE_ACTIONS } from "../utils/editImageAction.js";
+import { OpenDisclosures } from "../utils/OpenDisclosures.js";
+import { RailState } from "../utils/SheetRail.js";
 
 /**
  * The shared ApplicationV2 base for all Stonetop actor sheets: HandlebarsApplicationMixin over
@@ -32,6 +34,25 @@ export function createStonetopActorSheetV2Class() {
 		}
 
 		/**
+		 * The collapsible regions this reader has opened or shut — move rows on every sheet, and the
+		 * steading's name lists. Every Stonetop actor sheet renders disclosures through shared
+		 * partials, so the one place that knows a region can be opened is also the one place that has
+		 * to put it back — here, rather than in each sheet.
+		 */
+		get openDisclosures() {
+			return this._openDisclosures ??= new OpenDisclosures();
+		}
+
+		/**
+		 * Which side rails this reader has put away — the character sheet's moves index, the
+		 * steading's arches. Same reason it lives here rather than on either sheet: both render the
+		 * one shared rail, so one place puts it back.
+		 */
+		get railState() {
+			return this._railState ??= new RailState();
+		}
+
+		/**
 		 * Every Stonetop actor sheet renders from a snapshot built by its typed actor, with the
 		 * rich text enriched in one pass. A subclass adds only what is its own — and can start any
 		 * independent async work BEFORE calling super, so it still overlaps the snapshot build.
@@ -40,6 +61,9 @@ export function createStonetopActorSheetV2Class() {
 			const context = await super._prepareContext(options);
 			context.actor    = this.actor;
 			context.editable = this.isEditable;
+			// Scopes every id this sheet's markup mints for aria-controls / aria-labelledby wiring.
+			// Per-application, because two sheets open at once must not mint the same ids.
+			context.sheetIdPrefix = this.id;
 			context.stonetop = await this.typedActor.buildSnapshot();
 			await enrichRichTextTree(context.stonetop, this.actor?.getRollData?.() ?? {});
 			return context;
@@ -55,21 +79,49 @@ export function createStonetopActorSheetV2Class() {
 			if (selector) state.focus = selector;
 		}
 
-		// Core restores focus with a bare `.focus()`, which scrolls EVERY scrollable ancestor of the
-		// refocused control into view — including ones outside our declared `scrollable` list (e.g.
-		// the window content), which then stay scrolled because only the declared containers get
-		// their scrollTop restored. That mismatch is the "page jumped to the top" glitch after a
-		// change re-render. Hand core the state with focus suppressed so it still owns scroll (and
-		// details) restore — the entry shape differs between v13 and v14 — then focus ourselves
-		// with preventScroll so nothing moves.
+		/**
+		 * Put every region this reader has opened, shut, hidden or filtered back the way they left
+		 * it, in a freshly rendered tree.
+		 *
+		 * Core rebuilds the part's DOM on every render, which takes all of that with it — so a pip
+		 * ticked anywhere on the sheet, or another player's edit arriving over the socket, shut the
+		 * move you were reading. Lives here rather than in each sheet: the markup is shared.
+		 *
+		 * A subclass extends this with what only it can collapse; it must not restore anything by
+		 * FOCUSING an element (see _syncPartState — focus is core's, and moves scroll).
+		 */
+		restoreViewState(root) {
+			this.openDisclosures.restore(root);
+			this.railState.restore(root);
+		}
+
+		// Everything that has to be true of the new DOM before core measures it, in the order core's
+		// own restore depends on.
+		//
+		// The view state goes back FIRST, because it changes how tall the part is: the template
+		// renders every disclosure shut, so restoring scroll against that tree writes a scrollTop
+		// the browser clamps to the shorter content — and re-opening the regions afterwards left the
+		// clamped value in place and set the browser's own scroll anchoring pushing against it. A
+		// checkbox ticked low on a long tab could throw the view several hundred pixels.
+		//
+		// Focus goes back LAST and by our own hand: core restores it with a bare `.focus()`, which
+		// scrolls EVERY scrollable ancestor of the refocused control into view — including ones
+		// outside our declared `scrollable` list (e.g. the window content), which then stay scrolled
+		// because only the declared containers get their scrollTop restored. Hand core the state with
+		// focus suppressed so it still owns scroll (and details) restore — the entry shape differs
+		// between v13 and v14 — then focus ourselves with preventScroll so nothing moves.
 		_syncPartState(partId, newElement, priorElement, state) {
 			const { focus } = state;
+			this.restoreViewState(newElement);
 			super._syncPartState(partId, newElement, priorElement, { ...state, focus: null });
 			if (focus) newElement.querySelector(focus)?.focus({ preventScroll: true });
 		}
 
 		async _onFirstRender(context, options) {
 			await super._onFirstRender(context, options);
+			// The first render has no prior element, so core never calls _syncPartState for it — and a
+			// rail nobody has touched still has to have its toggle pointed the way the layout went.
+			this.restoreViewState(this.element);
 			// Editability is checked per event, not at wiring time: first render happens exactly
 			// once, and a sheet can become editable later (ownership granted mid-session).
 			this.element.addEventListener("click", async ev => {

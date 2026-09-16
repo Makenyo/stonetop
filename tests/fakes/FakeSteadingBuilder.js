@@ -2,7 +2,7 @@ import { applyDocumentUpdate } from "./foundry/applyDocumentUpdate.js";
 
 // A fully-applied Stonetop steading in the NEW shape: ratings are actual game numbers, `size` is a
 // tier string, the Prosperity/Defenses source lists live under assets.resources/fortifications, the
-// resident name/trait pool is `residents` (the people are `residentPeople`), and improvements are an
+// resident name/trait pool is `residents` (the people are one `folk` roster), and improvements are an
 // owned slug list. Mirrors what applySteadfast(stonetop) produces.
 export class FakeSteadingBuilder {
 	_steadfast = "stonetop";
@@ -34,7 +34,7 @@ export class FakeSteadingBuilder {
 				notes:    "",
 				rollMode: "normal",
 				debilities: { diminished: false, lacking: false, malcontent: false },
-				content: { excluded: [], veiled: [], specialHandling: [], excludedText: "", veiledText: "", specialHandlingText: "" },
+				content: { excluded: [], veiled: [], specialHandling: [] },
 				attributes: { fortunes: 1, surplus: 1, size: "village", population: 0, prosperity: 0, defenses: 0 },
 				startingAttributes: { fortunes: 1, surplus: 1, size: "village", population: 0, prosperity: 0, defenses: 0 },
 				assets: {
@@ -73,12 +73,18 @@ export class FakeSteadingBuilder {
 					{ name: "Pavilion of the Gods",   linkUuid: "" },
 					{ name: "Watchtowers",            linkUuid: "" },
 				],
+				// Mirrors packs/src/steadfasts/stonetop.json. Only the two that are actually steadings carry a
+				// Size; the Steplands, Lygos and "Other places" are regions, and the book gives them none.
+				// Mirrors packs/src/steadfasts/stonetop.json. Only the places that are actually steadings
+				// carry a Size; the Steplands, Lygos and "Other places" are regions, and the book gives them
+				// none. Travel times are the GM playbook's printed table, "From Stonetop via the Roads to…".
 				neighborPlaces: [
-					{ slug: "marshedge",    name: "Marshedge",       subtitle: "",                                  note: "", names: "Abben, Ailen, Brin, Brogan, Catlin, Coln, Daedre, Dermos, Ennin, Finnen, Gilor, Isbeal, Kiran, Lile, Lim, Mathuin, Mirne, Noren, Owan, Ragan, Renan, Seadha, Seann, Tierney, Ulliam" },
-					{ slug: "gordins-delve",name: "Gordin's Delve",  subtitle: "",                                  note: "", names: "Choose from other lists; everyone comes to Gordin's Delve from somewhere else." },
-					{ slug: "steplands",    name: "The Steplands",   subtitle: "Hillfolk",                          note: "", names: "Adm, Blej, Cirl, Davth, Elst, Gwilm, Gwenl, Henri, Ines, Jenfir, Jown, Juda, Kiln, Laurl, Loic, Merrn, Maikl, Nanzl, Nolwn, Quent, Reegn, Ropr, Sabi, Stren, Yanz" },
-					{ slug: "lygos",        name: "Lygos",            subtitle: "and other points south",           note: "", names: "Agatte, Aref, Alix, Baraz, Canan, Darya, Demetra, Elene, Elios, Fotios, Faruza, Golza, Iasos, Iona, Kyriakos, Marika, Maayan, Osher, Natasa, Nivola, Rinat, Stamat, Thecla, Zhaleh" },
-					{ slug: "other",        name: "Other places",     subtitle: "Barrier Pass, the Manmarch, etc.", note: "", names: "" },
+					{ slug: "marshedge", name: "Marshedge", subtitle: "", note: "", size: "town", travel: "10 days", names: "Abben, Ailen, Brin, Brogan, Catlin, Coln, Daedre, Dermos, Ennin, Finnen, Gilor, Isbeal, Kiran, Lile, Lim, Mathuin, Mirne, Noren, Owan, Ragan, Renan, Seadha, Seann, Tierney, Ulliam" },
+					{ slug: "gordins-delve", name: "Gordin's Delve", subtitle: "", note: "", size: "town", travel: "4 days", names: "" },
+					{ slug: "steplands", name: "The Steplands", subtitle: "Hillfolk", note: "", size: "", travel: "4 days", names: "Adm, Blej, Cirl, Davth, Elst, Gwilm, Gwenl, Henri, Ines, Jenfir, Jown, Juda, Kiln, Laurl, Loic, Merrn, Maikl, Nanzl, Nolwn, Quent, Reegn, Ropr, Sabi, Stren, Yanz" },
+					{ slug: "lygos", name: "Lygos", subtitle: "and other points south", note: "", size: "", travel: "40 days", names: "Agatte, Aref, Alix, Baraz, Canan, Darya, Demetra, Elene, Elios, Fotios, Faruza, Golza, Iasos, Iona, Kyriakos, Marika, Maayan, Osher, Natasa, Nivola, Rinat, Stamat, Thecla, Zhaleh" },
+					{ slug: "barrier-pass", name: "Barrier Pass", subtitle: "", note: "", size: "village", travel: "5 days", names: "" },
+					{ slug: "other", name: "Other places", subtitle: "The Manmarch, etc.", note: "", size: "", travel: "", names: "" },
 				],
 				residents: {
 					names: "Aderyn, Aeronwen, Afanen, Afon, Alun, Andras, Aneirin, Awstin, Bedwyr, Berwyn, Betrys, Braith, Briallen, Bronwen, Bryn, Cadi, Cadoc, Cadwygan, Caron, Cefin, Ceinwen, Ceridwyn, Cerys, Colwyn, Deiniol, Dilwen, Dylis, Eifion, Eirlys, Eluned, Emrys, Enfys, Eurwen, Gaenor, Garet, Gethin, Glyndir, Heledd, Hywel, Ifan, Iorwerth, Iwan, Lewela, Leuca, Linos, Mado, Maldwyn, Malon, Mared, Marged, Martyn, Meirion, Menwen, Mererid, Neirin, Nia, Ofydd, Olwyn, Owain, Padrig, Parry, Pryce, Pryder, Rheinal, Rhisiart, Rhosyn, Rydderch, Sawyl, Siana, Sioned, Talfryn, Tegid, Tiwlip, Tomos, Tudyr, Winifred, Yorath",
@@ -103,8 +109,7 @@ export class FakeSteadingBuilder {
 						"wants to have kids", "well-read", "well-traveled", "widowed", "will eat anything",
 					],
 				},
-				residentPeople: [],
-				neighborPeople: [],
+				folk: [],
 				improvements: [
 					"additional-housing", "aurochs-hunting", "expanded-trades", "greater-harvest",
 					"harnessing-the-stream", "herd-of-horses", "heroic-reputation", "inn", "market",
@@ -158,6 +163,9 @@ export class FakeSteadingBuilder {
 		actor.chatItems = [];
 		actor.chatDescriptions = [];
 		actor.sendItemToChat = async item => { actor.chatItems.push(item); };
+		// Recorder for StonetopActor#rollItem — the seasonal turn rolls Seasons Change through it.
+		actor.rolledItems = [];
+		actor.rollItem = async (item, rollStat = null) => { actor.rolledItems.push({ item, rollStat }); };
 		actor.sendDescriptionToChat = async (label, description) => { actor.chatDescriptions.push({ label, description }); };
 
 		if (this._typedActorFactory) actor.typedActor = this._typedActorFactory(actor);

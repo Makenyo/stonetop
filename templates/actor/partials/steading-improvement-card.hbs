@@ -1,0 +1,101 @@
+{{!-- One improvement on the project board.
+
+      Shut, it is a name, a meter and its chips — how far along the work is, and what it buys. Open, it
+      reads the way the book does: what it REQUIRES, then what it GIVES YOU, with a control beside
+      each result the sheet can write.
+
+      The chips are the SHUT view and go when the card opens. They exist because a shut card would
+      otherwise say how far along the work is and nothing about what the work is for; an open one
+      states every payload in the book's words with a control beside it, so keeping the chips there
+      would be the same reward said twice, an inch apart. (They are not a summary SENTENCE either — a
+      card that paraphrased what the improvement did read oddly beside the real thing. A chip quotes
+      nothing: it carries the numbers the result already states as data.)
+
+      Context = an ImprovementProgress. --}}
+<div class="steading-improvement-card steading-block{{#if isComplete}} is-complete{{/if}}{{#if isUntouched}} is-untouched{{/if}}"
+     data-disclosure-row data-slug="{{slug}}" data-state="{{state}}"
+     data-board-owed="{{isOwed}}" data-board-season="{{firesThisSeason}}">
+
+	<div class="steading-improvement-card-top">
+
+		<button type="button" class="steading-improvement-disclosure" data-action="toggleImprovementCard"
+		        data-disclosure data-view-state
+		        aria-expanded="false" aria-controls="{{@root.sheetIdPrefix}}-improvement-{{slug}}">
+			<i class="fas fa-caret-right stonetop-move-caret" aria-hidden="true"></i>
+			<span class="steading-improvement-name">{{name}}</span>
+		</button>
+
+		{{!-- The meter says its own numbers out loud beside the pips: the pips are the shape of the
+		      progress, the count is the progress. A reader who cannot see the pips still gets it. --}}
+		<span class="steading-improvement-meter">
+			<span class="steading-improvement-pips" aria-hidden="true">
+				{{#each meter}}<i class="steading-improvement-pip{{#if this}} is-on{{/if}}"></i>{{/each}}
+			</span>
+			{{!-- ONE format, always. It used to print "done" for a finished card and "0 / 4" for the rest,
+			      so the column down the board alternated between a word and a fraction and could not be
+			      read vertically at all. `4 / 4` says the same thing in the shape its neighbours use;
+			      what makes a finished card look finished is its filled pips and `.is-complete`. --}}
+			<span class="steading-improvement-count">
+				{{localize "stonetop.steading.improvements.progress" ticked=ticked total=total}}
+			</span>
+		</span>
+
+		{{!-- Why this row wants attention, in a word — owed, firing now, or one box short. A word
+		      rather than a dot or a tint: a marker whose meaning has to be learned is not a marker,
+		      and colour is never the only carrier of anything here.
+
+		      It marks the row IN PLACE. Promoting these to a group above the board would move the card
+		      the moment it became owed — which is the moment someone ticked its last box, with the
+		      cursor still on it. --}}
+		{{#if attentionKey}}
+			<span class="steading-improvement-attention">{{localize attentionKey}}</span>
+		{{/if}}
+
+		{{#if @root.editable}}
+			<button type="button" class="steading-improvement-remove stonetop-icon-btn" data-action="revokeImprovement"
+			        data-slug="{{slug}}" data-name="{{name}}"
+			        title="{{localize 'stonetop.steading.improvementRemove'}}"
+			        aria-label="{{localize 'stonetop.steading.improvementRemove'}}">
+				<img src="systems/stonetop/assets/ui/controls/delete-icon.png" alt="">
+			</button>
+		{{/if}}
+
+	</div>
+
+	{{#if chips}}
+		{{!-- Dimmed until earned: a chip on an unfinished improvement is what it WILL do. Hidden while
+		      the card is open — see the header. --}}
+		<ul class="steading-effect-chips stonetop-unmarked">
+			{{#each chips}}
+				<li class="steading-effect-chip{{#unless earned}} is-pending{{/unless}}">
+					{{#each timingKeys}}
+						<span class="steading-effect-when">{{localize this}}</span>
+					{{/each}}
+					{{#if moveSlug}}
+						{{!-- Resolved by SLUG through the same lookup the statement's roll buttons use.
+						      Never by name: Babele rewrites names, and anything matched on one vanishes. --}}
+						{{#with (lookup @root.stonetop.grantedMoves moveSlug)}}
+							<i class="fas fa-dice-d6" aria-hidden="true"></i>
+							<span class="steading-effect-subject">{{name}}</span>
+						{{/with}}
+					{{else}}
+						{{#if amount}}<span class="steading-effect-amount">{{amount}}</span>{{/if}}
+						<span class="steading-effect-subject">{{localize subjectKey}}{{#if text}}:{{/if}}</span>
+						{{#if text}}<span class="steading-effect-entry">{{text}}</span>{{/if}}
+					{{/if}}
+				</li>
+			{{/each}}
+		</ul>
+	{{/if}}
+
+	{{!-- Requirements, then payoff, in one flow — which is the order the book prints them in and the
+	      order the work happens in. The payoff used to be bolted on ABOVE the header, where it floated
+	      with no context on a shut card and sat an inch from the prose that repeated it. --}}
+	<div class="steading-improvement-body" id="{{@root.sheetIdPrefix}}-improvement-{{slug}}" hidden>
+		{{#with group}}{{> "stonetop.improvement-group"}}{{/with}}
+		{{#unless payoff.isEmpty}}
+			{{#with payoff}}{{> "stonetop.steading-improvement-payoff"}}{{/with}}
+		{{/unless}}
+	</div>
+
+</div>

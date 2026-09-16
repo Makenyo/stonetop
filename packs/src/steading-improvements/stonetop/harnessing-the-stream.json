@@ -29,7 +29,18 @@
           "slug": "reservoir",
           "content": {
             "title": null,
-            "text": "A reservoir for the Stream to pool in, and some way for water to flow uphill"
+            "text": "A reservoir for the Stream to pool in"
+          },
+          "track": {
+            "max": 1
+          }
+        },
+        {
+          "type": "entry",
+          "slug": "water-uphill",
+          "content": {
+            "title": null,
+            "text": "Some way for water to flow uphill"
           },
           "track": {
             "max": 1
@@ -45,16 +56,57 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, add them to the Resources list and increase Fortunes by 1. Henceforth, when spring breaks forth and you roll a 7+ with Fortunes, the steading generates 1 Surplus."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "any": 2,
+      "of": [
+        "reservoir",
+        "water-uphill",
+        "aqueducts"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "Harnessing the Stream"
+        },
+        "text": "add them to the Resources list"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "spring"
+          ],
+          "phrase": "when **_spring breaks forth and you roll a 7+ with Fortunes_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": 1
+        },
+        "outcome": "7+",
+        "text": "the steading generates 1 Surplus"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, add them to the Resources list and increase Fortunes by 1. Henceforth, when spring breaks forth and you roll a 7+ with Fortunes, the steading generates 1 Surplus."
+  ]
 }

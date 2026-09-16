@@ -56,16 +56,49 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, add \"standing watch\" to the Fortifications list. At the start of each season, the watch consumes 1 Surplus or it disbands.\n\nWhen you specifically involve the watch in a move, treat Defenses as 1 higher than they are."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "veteran-warrior",
+        "six-warriors",
+        "village-leaders"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "fortifications",
+          "text": "Standing watch"
+        },
+        "text": "add \"standing watch\" to the Fortifications list"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "phrase": "at **_the start of each season_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": -1
+        },
+        "text": "the watch consumes 1 Surplus, or it disbands"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you specifically involve the watch in a move_**"
+        },
+        "text": "treat Defenses as 1 higher than they are"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, add \"standing watch\" to the Fortifications list. At the start of each season, the watch consumes 1 Surplus or it disbands.\n\nWhen you specifically involve the watch in a move, treat Defenses as 1 higher than they are."
+  ]
 }

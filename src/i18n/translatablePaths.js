@@ -84,6 +84,9 @@ const MOVE = [
 	// translator sees. The move references resolve to their own translated names.
 	"system.requirement.note",
 	"system.choices.list[].input.placeholder",
+	// A Seasons Change step's own line — the move's words for that step, quoted from its description.
+	// Prose on the same footing as the description it is quoted from, so it translates the same way.
+	"system.steps[].text",
 	...rowPaths("system.choices.list[]"),
 ];
 
@@ -133,6 +136,9 @@ const FOLLOWER = [
 	"system.instinct.selected[]",
 	"system.cost.options[]",
 	"system.cost.selected[]",
+	// The type's display label. A companion's chosen type is stored by SLUG, so translating the name
+	// moves nothing — see CompanionCatalog.
+	"system.companion.catalog[].name",
 	"system.companion.catalog[].damage",
 	"system.companion.catalog[].armor",
 	"system.companion.catalog[].variants[]",
@@ -156,20 +162,37 @@ const INSERT = [
 const IMPROVEMENT = [
 	"name",
 	"system.description",
+	// A result's own sentence — the book's words lifted out of the prose beside them, so it
+	// translates with that prose or the turnover is the one English thing left on a translated
+	// sheet. `requires` is slugs and `condition` is a flag — nothing to translate in either.
+	"system.effects[].text",
+	// The book's trigger clause, in markdown — "when **_summer comes and you roll a 7+ with
+	// Fortunes_**". Prose like the sentence it opens, and the improvement's card reads the two as one.
+	"system.effects[].when.phrase",
+	"system.effects[].listEntry.text",
+	// The tier a result SETS is a stored value, not prose — Size's word is translated once through
+	// stonetop.steading.tier.size.*, which is where the chip and the ledger both read it from.
 	...rowPaths("system.choices.list[]"),
 ];
 
 const STEADFAST = [
 	"name",
 	"system.description",
+	// The book's own sensory line for a season, quoted on the Season tab when the wheel turns. Prose,
+	// and it translates with the article it was lifted from.
+	"system.impressions[].text",
 	"system.assets.resources[]",
 	"system.assets.fortifications[]",
-	"system.assets.items[]",
+	"system.assets.items[].text",
 	"system.residents.traits[]",
 	"system.placesOfInterest[].name",
 	"system.placesOfInterest[].description",
 	"system.neighborPlaces[].name",
 	"system.neighborPlaces[].subtitle",
+	// "10 days" — the GM playbook's Travel Times table, in its own words. Prose, and a duration is
+	// one of the things every language writes differently. Size beside it is NOT here: it stores a
+	// tier key, translated once through stonetop.steading.tier.size.*.
+	"system.neighborPlaces[].travel",
 ];
 
 export const TEXT_PATHS = {
@@ -189,16 +212,23 @@ export const TEXT_PATHS = {
 // coverage test enforces that, so a builder that starts emitting a new field cannot leave it
 // untranslatable in silence.
 export const UNTRANSLATED_PATHS = {
+	improvement: {
+		// Not a field Foundry ever sees: an authoring-only key, stripped from the document on its way
+		// into the compiled pack (dropAuthoringKeys). It is the book's own payoff sentence, kept beside
+		// the effects modelled from it so the review can check one against the other — quoted English,
+		// checked against Book I/II, and never rendered.
+		"_prose[]":                                "The book's own sentence, kept for review. Authoring-only — stripped at compile, never rendered.",
+		"_review":                                 "A note to whoever reviews the model. Authoring-only — stripped at compile, never rendered.",
+		"system.effects[].change.formula":         "A dice expression (\"2d6 + @population\"), not prose. Translating it would break the roll.",
+		"system.effects[].advantage.moves[]":      "Move slugs; the reminder resolves them to the moves' own rows.",
+		"system.effects[].set.value":              "A stored value — a number, or one of Size's tier keys, translated through stonetop.steading.tier.size.*",
+	},
 	move: {
 		"system.requirement.moves[]": "Move slugs; the label resolves them to the moves' own names.",
 	},
 	follower: {
 		"system.tagOptions[]": "A tag — translated once through stonetop.tagLabels, not per follower.",
 		"system.companion.catalog[].options[]": "Tags, and they render as tag chips; see tagLabels.",
-		// CharacterFollowers resolves the chosen companion with `x.slug === wanted || x.name === wanted`
-		// and stores `t.name`, so a translated name stops resolving and silently loses the type's
-		// pickCount and pre-checked defaults.
-		"system.companion.catalog[].name": "Matched by name when resolving the chosen companion type.",
 	},
 	steadfast: {
 		"system.residents.names":         "Personal names.",
@@ -225,10 +255,46 @@ const UNKEYED_SEGMENTS = new Set(["system", "list", "content"]);
 // Content beats index because an index moves: insert one asset near the top of a list and every
 // translation below it silently slides onto the wrong string. A content key survives reordering and
 // insertion, and a reworded string orphans its own translation — which is the correct signal.
+// How a slugless object names itself, best first: a title is what a reader calls the row, its text
+// is the row, and the bare fields cover the shapes that carry no `content` block at all — effects,
+// steps, origins, members.
+const NAME_SOURCES = [
+	element => element?.content?.title,
+	element => element?.content?.subtitle,
+	element => element?.content?.text,
+	element => element?.text,
+	element => element?.name,
+	element => element?.region,
+	element => element?.label,
+];
+
+// Long enough to stay unique in practice, short enough that a key is still readable in a diff.
+const KEY_WORDS = 6;
+
+function contentSegment(element) {
+	for (const read of NAME_SOURCES) {
+		const value = read(element);
+		if (typeof value !== "string" || !value.trim()) continue;
+		const segment = toSlug(value).split("-").slice(0, KEY_WORDS).join("-");
+		if (segment) return segment;
+	}
+	return null;
+}
+
+// A slugless object has to be addressable by something other than its position: insert one row near
+// the top of a list and every index below it shifts, silently re-pointing each translation onto its
+// neighbour's sentence. The row's own content is the only stable identity available — the row IS its
+// words. That does make the key change when the English changes, which is the right trade: the entry
+// then comes back flagged for a human instead of staying quietly attached to a different string.
+//
+// Position remains the last resort, for rows that carry no words of their own (a picker that holds
+// nothing but its options).
 function keySegmentFor(element, index) {
 	const slug = element?.slug;
 	if (typeof slug === "string" && slug.trim()) return { segment: slug, fromContent: false };
 	if (typeof element === "string" && element.trim()) return { segment: toSlug(element), fromContent: true };
+	const named = contentSegment(element);
+	if (named) return { segment: named, fromContent: true };
 	return { segment: String(index), fromContent: false };
 }
 

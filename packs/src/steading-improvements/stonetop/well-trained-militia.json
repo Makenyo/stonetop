@@ -96,16 +96,75 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you Deploy using one of the militia's trained tactics, you are likely acting from a position of strength (you pick the consequence **on a 7-9**, not the GM).\n\nWhen the militia has trained in 2+ tactics, increase Defenses by 1.\n\nEach summer, the militia must spend 1 Surplus and a week or so practicing or else lose its training in 1 tactic."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "veteran-warrior"
+      ]
+    },
+    "effects": [
+      {
+        "requires": {
+          "all": [
+            "veteran-warrior"
+          ]
+        },
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you Deploy using one of the militia's trained tactics_**"
+        },
+        "text": "you are likely acting from a position of strength (you pick the consequence on a 7-9, not the GM)"
+      },
+      {
+        "requires": {
+          "all": [
+            "veteran-warrior",
+            {
+              "any": 2,
+              "of": [
+                "archery",
+                "cavalry",
+                "formations",
+                "readiness",
+                "skirmishing"
+              ]
+            }
+          ]
+        },
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "defenses",
+          "amount": 1
+        },
+        "text": "when the militia has trained in 2+ tactics, increase Defenses by 1"
+      },
+      {
+        "requires": {
+          "all": [
+            "veteran-warrior"
+          ]
+        },
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "summer"
+          ],
+          "phrase": "**_each summer_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": -1
+        },
+        "text": "the militia must spend 1 Surplus and a week or so practicing, or else lose its training in 1 tactic"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you Deploy using one of the militia's trained tactics, you are likely acting from a position of strength (you pick the consequence **on a 7-9**, not the GM).\n\nWhen the militia has trained in 2+ tactics, increase Defenses by 1.\n\nEach summer, the militia must spend 1 Surplus and a week or so practicing or else lose its training in 1 tactic."
+  ]
 }

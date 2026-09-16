@@ -7,10 +7,12 @@ import {
 	computeSelectable,
 	buildMoveSnapshot,
 	findMoveItemBySlug,
+	moveSlugOf,
 	openMoveSheet,
+	resolveMoveBySlug,
 } from "../embeddedMoves.js";
 import { CharacterMoveGrants } from "./CharacterMoveGrants.js";
-import { toSlug } from "../../utils/slug.js";
+import { OutfitEffects } from "../../model/data/character/OutfitEffect.js";
 
 export class CharacterMoves {
 	constructor(moveRepo, actor, resourceController, factory, grantedItems = new GrantedItems(actor), requirements) {
@@ -26,11 +28,20 @@ export class CharacterMoves {
 		this._grants             = new CharacterMoveGrants(moveRepo, actor, grantedItems);
 	}
 
-	/** The slugs of the moves this character has actually taken. Derived fresh: they take more. */
+	/** The moves this character has actually taken. Derived fresh: they take more. */
+	get acquiredMoves() {
+		return [...this._actor.items].filter(i => i.type === "move" && (i.system?.acquired ?? false));
+	}
+
+	/** The slugs of those moves. */
 	get acquiredSlugs() {
-		return new Set([...this._actor.items]
-			.filter(i => i.type === "move" && (i.system?.acquired ?? false))
-			.map(i => toSlug(i.system?.slug ?? i.name ?? "")));
+		return new Set(this.acquiredMoves.map(i => moveSlugOf(i)));
+	}
+
+	/** What the taken moves do to this character's gear — Armored's shield and its *cumbersome*. An
+	 *  untaken move on the sheet is one being weighed up, and changes nothing about what is carried. */
+	get outfitEffects() {
+		return OutfitEffects.from(this.acquiredMoves.flatMap(i => i.system?.outfitEffects ?? []));
 	}
 
 	// Which move items the character owns, and why. Delegated so a caller that only grants — the
@@ -51,9 +62,9 @@ export class CharacterMoves {
 	// A move the player dropped in. Matched on the STORED slug, like every other move lookup — matching
 	// on the name alone let a renamed move in as a second copy of one already there.
 	async addMoveToOther(moveData) {
-		const moveSlug = moveData.system?.slug ?? toSlug(moveData.name);
+		const moveSlug = moveSlugOf(moveData);
 		const existing = [...this._actor.items].filter(i => i.type === "move" && i.system?.categoryKey === "other");
-		if (existing.some(i => (i.system?.slug ?? toSlug(i.name)) === moveSlug)) return false;
+		if (existing.some(i => moveSlugOf(i) === moveSlug)) return false;
 		await this._grantedItems.addAuthored([{
 			...moveData,
 			name: moveData.name,
@@ -70,17 +81,37 @@ export class CharacterMoves {
 
 	async deleteMove(moveSlug) {
 		const item = [...this._actor.items].find(
-			i => i.type === "move" && i.system?.categoryKey === "other"
-				&& (i.system?.slug ?? toSlug(i.name)) === moveSlug
+			i => i.type === "move" && i.system?.categoryKey === "other" && moveSlugOf(i) === moveSlug
 		);
 		if (!item) return;
 		await this._actor.deleteEmbeddedDocuments("Item", [item._id]);
+	}
+
+	// Roll the move a rendered row stands for. Returns false when nothing carries the slug, so a
+	// caller with a fallback (an arcanum's inline move is text, not an item) can take over.
+	async roll(moveSlug) {
+		const item = await resolveMoveBySlug(this._actor, moveSlug, this._moveRepo);
+		if (!item) return false;
+		await this._actor.rollItem(item);
+		return true;
 	}
 
 	// Post the move's full text (description + all result tiers) to chat, without rolling. Returns
 	// false when no owned move item carries the slug (the caller may have a non-item fallback).
 	async sendToChat(moveSlug) {
 		const item = findMoveItemBySlug(this._actor, moveSlug);
+		if (!item) return false;
+		await this._actor.sendItemToChat(item);
+		return true;
+	}
+
+	// The same, for a move the character does NOT have: a background it has not taken grants one, and
+	// that row is drawn so the reader can weigh it up. Its die already rolls from the catalog
+	// (`roll`, via resolveMoveBySlug) — the chat bubble beside it was the only control on the row that
+	// silently did nothing. Last resort, so an owned copy and an arcanum's inline text both win: see
+	// StonetopCharacter#sendMoveToChat.
+	async sendCatalogToChat(moveSlug) {
+		const item = await resolveMoveBySlug(this._actor, moveSlug, this._moveRepo);
 		if (!item) return false;
 		await this._actor.sendItemToChat(item);
 		return true;
@@ -114,7 +145,13 @@ export class CharacterMoves {
 		await this._resourceController.setText("moves", moveSlug, value);
 	}
 
-	async buildSnapshot() {
+	/**
+	 * @param {Object<string, MoveSnapshot>} [referenced] moves a rendered row names by slug that the
+	 *   character does not own — a background it has not taken grants one, and the row is on screen so
+	 *   the reader can decide. They seed the registry; an owned move of the same slug replaces its
+	 *   entry below, because that one carries the item id the die rolls against.
+	 */
+	async buildSnapshot(referenced = {}) {
 		const allMoveItems = [...this._actor.items].filter(i => i.type === "move");
 		const resourceController = this._resourceController;
 		const acquired           = this.acquiredSlugs;
@@ -123,7 +160,7 @@ export class CharacterMoves {
 		// any choice row) resolves against, so it renders rollable with its resource. Built for EVERY move,
 		// including the categories kept off the tab below.
 		const snapById = new Map();
-		const bySlug   = {};
+		const bySlug   = { ...referenced };
 		for (const item of allMoveItems) {
 			const snap = buildMoveSnapshot(item, item.system?.categoryKey ?? "other",
 				computeSelectable(item), resourceController,
@@ -161,9 +198,7 @@ export class CharacterMoves {
 	}
 
 	countOwnedBySlug(moveSlug) {
-		const item = [...this._actor.items].find(
-			i => i.type === "move" && toSlug(i.name) === moveSlug
-		);
+		const item = findMoveItemBySlug(this._actor, moveSlug);
 		return item?.system?.instanceCount ?? 0;
 	}
 
@@ -180,10 +215,8 @@ export class CharacterMoves {
 	}
 
 	async onDropMove(itemData) {
-		const itemSlug = toSlug(itemData.name);
-		const existing = [...this._actor.items].find(
-			i => i.type === "move" && toSlug(i.name) === itemSlug
-		);
+		const itemSlug = moveSlugOf(itemData);
+		const existing = findMoveItemBySlug(this._actor, itemSlug);
 		if (existing) {
 			if (computeSelectable(existing)) {
 				await this.incrementMove(existing.system?.categoryKey, itemSlug);

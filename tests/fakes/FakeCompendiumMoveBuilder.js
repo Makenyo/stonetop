@@ -8,9 +8,17 @@ export class FakeCompendiumMoveBuilder {
 	_repeatMax = null;
 	_resource = null;
 	_choices = null;
+	_slug = null;
 
 	withName(name) {
 		this._name = name;
+		return this;
+	}
+
+	// Pin the slug so it disagrees with the name — what every move looks like in a translated world,
+	// where Babele localizes `name` and leaves `system.slug` alone.
+	withSlug(slug) {
+		this._slug = slug;
 		return this;
 	}
 
@@ -58,6 +66,18 @@ export class FakeCompendiumMoveBuilder {
 		return this;
 	}
 
+	// A move's own procedure — what the four Seasons Change moves carry. See SeasonProcedure.
+	withSteps(steps) {
+		this._steps = steps;
+		return this;
+	}
+
+	// What the move does to the character's gear — the Armored move's shield. See OutfitEffect.
+	withOutfitEffects(outfitEffects) {
+		this._outfitEffects = outfitEffects;
+		return this;
+	}
+
 	withMoveResults(moveResults) {
 		this._moveResults = moveResults;
 		return this;
@@ -65,7 +85,7 @@ export class FakeCompendiumMoveBuilder {
 
 	build() {
 		const name = this._name;
-		const slug = toSlug(name);
+		const slug = this._slug ?? toSlug(name);
 		const system = {
 			slug,
 			rollStat: this._rollStat,
@@ -74,6 +94,8 @@ export class FakeCompendiumMoveBuilder {
 			repeatMax: this._repeatMax,
 			resource: this._resource,
 			choices: this._choices,
+			steps: this._steps ?? [],
+			outfitEffects: this._outfitEffects ?? [],
 			moveType: this._moveType ?? null,
 			moveResults: this._moveResults ?? null,
 		};

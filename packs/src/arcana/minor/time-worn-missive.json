@@ -62,11 +62,11 @@
 							"type": "entry",
 							"content": {
 								"title": null,
-								"text": "… acquire a pouch of powdered cinnabar (1d4+8 uses, Value 2)."
+								"text": "… acquire a ◇ pouch of powdered cinnabar (1d4+8 uses, Value 2)."
 							},
 							"slug": "acquire-pouch",
 							"track": {
-								"max": 2
+								"max": 1
 							}
 						},
 						{

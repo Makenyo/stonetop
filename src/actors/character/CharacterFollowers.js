@@ -6,6 +6,7 @@ import { Tags } from "../../model/data/Tags.js";
 import { normalizeGroupTags, hasGroupTag, GROUP_TAG } from "../../model/data/groupTag.js";
 import { newMember } from "../../utils/followerMemberEdit.js";
 import { blankCompanion } from "../../utils/followerCompanionEdit.js";
+import { CompanionCatalog } from "../../model/data/character/CompanionCatalog.js";
 import { OutfitPage, toOutfitItemSnapshot, loadBand, MAX_OUTFIT_MARKS } from "../../model/snapshot/character/outfitSections.js";
 import { INVENTORY_INSERT_PAGE } from "../../model/data/character/inventoryInsertPage.js";
 import { GrantedItems } from "../GrantedItems.js";
@@ -312,14 +313,17 @@ export class CharacterFollowers {
 	// Pick a Type: pre-fill the editable hp/armor/damage from its template, set the chosen type,
 	// and reset the options pool + pre-checked defaults to that type's. (Pre-fill, not computed —
 	// the user can type over hp/armor/damage afterwards.)
-	async setCompanionType(slug, typeSlug) {
+	// `typeValue` arrives from the combobox, so it is the type's NAME — what the player sees. The SLUG
+	// is what gets stored: a name is prose, and a stored one stops resolving the moment the catalog is
+	// retyped or translated, taking the type's pickCount and pre-checked defaults with it. The type
+	// Selection carries no options of its own for the same reason — the snapshot names the catalog.
+	async setCompanionType(slug, typeValue) {
 		const item = _findFollowerItem(this._actor, slug);
 		if (!item) return;
 		const companion = _companion(item);
-		const wanted = _text(typeSlug);
-		const t = (companion.catalog ?? []).find(x => x.slug === wanted || x.name === wanted);
+		const t = CompanionCatalog.fromCompanion(companion).typeFor(_text(typeValue));
 		if (!t) return;
-		companion.type    = { selected: [t.name], options: (companion.catalog ?? []).map(x => x.name), multi: false, allowCustom: true };
+		companion.type    = { selected: [t.slug], options: [], multi: false, allowCustom: true };
 		companion.options = { selected: [...(t.defaults ?? [])], options: [...(t.options ?? [])], multi: true, allowCustom: true };
 		await this._actor.updateEmbeddedDocuments("Item", [{ _id: item._id, system: {
 			companion,
@@ -366,16 +370,20 @@ export class CharacterFollowers {
 	}
 
 	/**
-	 * The character's followers, normalized for the sheet — the single authority, derived entirely from
-	 * the actor:
-	 *  - `bySlug`: every follower card once — owned instances + definition previews for referenced-but-
-	 *    unowned followers (see buildSnapshot). A card resolves its slug against this.
+	 * The character's followers, normalized for the sheet:
+	 *  - `bySlug`: every follower card the sheet can draw, keyed by slug — the character's own, plus
+	 *    the ones a rendered row names but the character does not have (`referenced`). A card resolves
+	 *    its slug against this, and an owned follower always wins: that one carries the live loyalty
+	 *    and inventory.
 	 *  - `tab`: the OWNED followers whose granting authority placed them on the tab (`showOnTab`). A
-	 *    card-bound follower (the Ring) and an un-owned preview are both absent here.
+	 *    card-bound follower (the Ring) and a follower merely named by a row are both absent here.
+	 *
+	 * @param {Object<string, FollowerSnapshot>} [referenced] cards named by a row the character has
+	 *   not taken — a background it is still deciding on.
 	 */
-	async buildFollowersSnapshot() {
+	async buildFollowersSnapshot(referenced = {}) {
 		const owned  = await this.buildSnapshot();
-		const bySlug = Object.fromEntries(owned.map(f => [f.slug, f]));
+		const bySlug = { ...referenced, ...Object.fromEntries(owned.map(f => [f.slug, f])) };
 		const tab    = [...this._actor.items]
 			.filter(i => i.type === "follower" && i.system?.owned === true && i.system?.showOnTab !== false)
 			.map(i => i.system?.slug)

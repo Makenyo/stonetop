@@ -1,60 +1,38 @@
-{{!-- The Assets panel — the general `items` list — plus a framed Coinage panel below it, grouped one
-      block per currency (purses/handfuls/coins). Shared by the steading overview and the steadfast sheet.
-      Params: items (array of strings), coinage (array of {title, label, purses, handfuls, coins}),
-      and optionally advice (an "If you want to…" topic key). --}}
-<div class="steading-overview-field steading-panel-frame">
-	{{> "stonetop.panel-frame"}}
-	<h2>Assets</h2>
+{{!-- The steading's assets — what it owns that is not a number. Shared by the steading's Play tab
+      and the steadfast sheet. The coinage that used to hang off the foot of this file is its own
+      block now (steading-coinage.hbs); one partial, one block.
+      Params: items (Asset[]), note (the heading's "2 out"), requisition (whether an asset can be
+      marked out).
+
+      `requisition` is false on the steadfast: a steadfast is the DEFINITION of a place, and nothing
+      is out on loan from a definition. --}}
+<div class="steading-overview-field">
+	{{> "stonetop.section-heading" title=(localize "stonetop.steading.lists.assets") note=note}}
 	<div class="steading-attr-list">
 		{{#each items}}
-			<div class="steading-attr-row">
-				<input type="text" class="stonetop-asset-item" data-change-action="assetItem" data-index="{{@index}}" value="{{this}}"
-				       aria-label="{{localize 'stonetop.a11y.assetItem'}}">
-				<button class="stonetop-asset-item-remove stonetop-icon-btn" data-action="removeAssetItem" type="button" data-index="{{@index}}" data-name="{{this}}" title="Remove" aria-label="Remove">
+			<div class="steading-attr-row steading-asset-row{{#if requisitioned}} is-requisitioned{{/if}}">
+				{{!-- Grows downward as it wraps rather than scrolling sideways — see the note in
+				      steading-ratings-list.hbs; an asset is a phrase, and often a long one. --}}
+				<textarea rows="1" class="stonetop-asset-item stonetop-grow-field" data-change-action="assetItem" data-index="{{@index}}"
+				          aria-label="{{localize 'stonetop.a11y.assetItem'}}">{{text}}</textarea>
+				{{#if ../requisition}}
+					{{!-- At home, or out. The state word is a real label rather than a tooltip: it is the
+					      thing the table forgets, so it has to be readable without a pointer. --}}
+					<label class="steading-asset-state">
+						<input type="checkbox" class="stonetop-item-check" data-change-action="assetRequisitioned"
+						       data-index="{{@index}}" {{#if requisitioned}}checked{{/if}}
+						       aria-label="{{localize 'stonetop.a11y.assetRequisitioned'}}">
+						<span>{{#if requisitioned}}{{localize "stonetop.steading.lists.assetOut"}}{{else}}{{localize "stonetop.steading.lists.assetHome"}}{{/if}}</span>
+					</label>
+				{{/if}}
+				<button class="stonetop-asset-item-remove stonetop-icon-btn" data-action="removeAssetItem" type="button" data-index="{{@index}}" data-name="{{text}}" title="{{localize 'stonetop.steading.lists.removeAsset'}}" aria-label="{{localize 'stonetop.steading.lists.removeAsset'}}">
 					<img src="systems/stonetop/assets/ui/controls/delete-icon.png" alt="">
 				</button>
 			</div>
 		{{/each}}
-		<button class="stonetop-asset-item-add stonetop-icon-btn" data-action="addAssetItem" type="button" title="Add" aria-label="Add">
-			<img src="systems/stonetop/assets/ui/controls/plus-icon.png" alt="">
+		<button class="stonetop-asset-item-add stonetop-list-add" data-action="addAssetItem" type="button" aria-label="{{localize 'stonetop.steading.lists.addAsset'}}">
+			<img src="systems/stonetop/assets/ui/controls/plus-icon.png" alt=""><span>{{localize "stonetop.steading.lists.addAsset"}}</span>
 		</button>
 	</div>
 </div>
 
-<div class="steading-coinage steading-panel-frame">
-	{{> "stonetop.panel-frame"}}
-	{{#each coinage}}
-		<div class="steading-coinage-currency">
-			{{!-- This panel has no heading of its own, so the first currency's name row is the row the
-			      reader takes for one. The ? rides its end, after the hairline — which is a flex item,
-			      so it simply stops at the button instead of running underneath it. --}}
-			<span class="steading-coinage-name">{{label}}{{#if @first}}{{#if ../advice}}{{> "stonetop.advice-button" variant="inline" topic=../advice}}{{/if}}{{/if}}</span>
-			<div class="steading-coinage-fields">
-				<label class="steading-coinage-field">
-					<span>Purses</span>
-					<span class="stonetop-stepper">
-						<input type="number" class="stonetop-coinage-input stonetop-coinage-purses stonetop-step" data-change-action="coinagePurses" min="0"
-						       data-title="{{title}}" value="{{purses}}">
-						{{> "stonetop.stepper-buttons"}}
-					</span>
-				</label>
-				<label class="steading-coinage-field">
-					<span>Handfuls</span>
-					<span class="stonetop-stepper">
-						<input type="number" class="stonetop-coinage-input stonetop-coinage-handfuls stonetop-step" data-change-action="coinageHandfuls" min="0"
-						       data-title="{{title}}" value="{{handfuls}}">
-						{{> "stonetop.stepper-buttons"}}
-					</span>
-				</label>
-				<label class="steading-coinage-field">
-					<span>Coins</span>
-					<span class="stonetop-stepper">
-						<input type="number" class="stonetop-coinage-input stonetop-coinage-coins stonetop-step" data-change-action="coinageCoins" min="0"
-						       data-title="{{title}}" value="{{coins}}">
-						{{> "stonetop.stepper-buttons"}}
-					</span>
-				</label>
-			</div>
-		</div>
-	{{/each}}
-</div>

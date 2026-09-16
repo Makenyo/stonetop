@@ -45,16 +45,43 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, increase Fortunes by 1. Henceforth, when **_the autumn harvest is complete_**, gain +1d4 Surplus."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "any": 1,
+      "of": [
+        "double-yield",
+        "clear-fields"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "moment",
+          "moment": "autumn-harvest",
+          "phrase": "when **_the autumn harvest is complete_**"
+        },
+        "change": {
+          "target": "surplus",
+          "formula": "1d4"
+        },
+        "text": "gain +1d4 Surplus"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, increase Fortunes by 1. Henceforth, when **_the autumn harvest is complete_**, gain +1d4 Surplus."
+  ]
 }

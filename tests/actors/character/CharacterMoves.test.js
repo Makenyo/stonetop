@@ -1,4 +1,4 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import {CharacterMoves} from "../../../src/actors/character/CharacterMoves.js";
 import {ChoiceGroupControllerFactory} from "../../../src/actors/character/ChoiceGroupControllerFactory.js";
 import {ResourceController} from "../../../src/actors/character/ResourceController.js";
@@ -1214,6 +1214,30 @@ describe("CharacterMoves — rich-text enrichment (integration)", () => {
 	});
 });
 
+// ── roll ──────────────────────────────────────────────────────────────────────
+
+// The die on a move row whose move is named by SLUG rather than by an owned id — see
+// StonetopActor#_onRoll. Every rollable row on a character sheet IS owned, so this is the owned
+// lookup in practice; it answers the shared handler's one path so the mixin does not have to know
+// which actor types can take it.
+describe("CharacterMoves.roll", () => {
+	it("rolls the owned move the slug names", async () => {
+		const actor = new FakeCharacterActorBuilder()
+			.addItem({_id: "m1", type: "move", name: "Defend", system: {slug: "defend", categoryKey: "basic"}})
+			.build();
+		actor.rollItem = vi.fn(async () => {});
+		expect(await makeMoves({actor}).roll("defend")).toBe(true);
+		expect(actor.rollItem).toHaveBeenCalledWith(expect.objectContaining({_id: "m1"}));
+	});
+
+	it("rolls nothing, and says so, for a slug nothing carries", async () => {
+		const actor = makeActor();
+		actor.rollItem = vi.fn(async () => {});
+		expect(await makeMoves({actor}).roll("not-a-move")).toBe(false);
+		expect(actor.rollItem).not.toHaveBeenCalled();
+	});
+});
+
 // ── sendToChat ────────────────────────────────────────────────────────────────
 
 describe("CharacterMoves.sendToChat", () => {
@@ -1243,3 +1267,149 @@ describe("CharacterMoves.sendToChat", () => {
 		expect(actor.chatItems).toHaveLength(0);
 	});
 });
+
+// ── sendCatalogToChat ─────────────────────────────────────────────────────────
+
+// The chat bubble on a row for a move the character does NOT have — a background it has not taken
+// draws one, so the reader can decide. Its die already rolled from the catalog; the bubble beside it
+// was the one control on the row that silently did nothing.
+describe("CharacterMoves.sendCatalogToChat", () => {
+	const destined = () => new FakeCompendiumMoveBuilder()
+		.withName("Destined").withRollStat("omens").build();
+
+	it("posts a move the character does not own, out of the catalog", async () => {
+		const actor = makeActor();
+		const moves = makeMoves({actor, repo: new FakeMoveRepository([destined()])});
+		expect(await moves.sendCatalogToChat("destined")).toBe(true);
+		expect(actor.chatItems[0].name).toBe("Destined");
+	});
+
+	// The character's own copy carries their marks, so it is the one that gets posted when it exists.
+	it("prefers the character's own copy", async () => {
+		const actor = new FakeCharacterActorBuilder()
+			.addItem({_id: "m9", type: "move", name: "Destined", system: {slug: "destined", categoryKey: "background-destined"}})
+			.build();
+		const moves = makeMoves({actor, repo: new FakeMoveRepository([destined()])});
+		expect(await moves.sendCatalogToChat("destined")).toBe(true);
+		expect(actor.chatItems[0]._id).toBe("m9");
+	});
+
+	it("returns false (and posts nothing) for a slug the catalog does not know either", async () => {
+		const actor = makeActor();
+		const moves = makeMoves({actor});
+		expect(await moves.sendCatalogToChat("not-a-move")).toBe(false);
+		expect(actor.chatItems).toHaveLength(0);
+	});
+});
+
+// ── A move whose name disagrees with its slug ─────────────────────────────────
+
+// Babele localizes a move's `name` and never touches `system.slug`, so in a translated world the two
+// disagree for every move a character owns. The sheet renders a row from the STORED slug, so every
+// lookup has to match on that slug — deriving one from the name finds nothing, and the symptom is a
+// checkbox that silently does not tick.
+describe("CharacterMoves — a move whose name disagrees with its slug", () => {
+	const translated = (extra = b => b) =>
+		extra(new FakeCompendiumMoveBuilder().withName("Bollwerk").withSlug("bulwark")).build();
+
+	it("increments the move named by its stored slug", async () => {
+		const repo  = new FakeMoveRepository([translated(b => b.withRepeatMax(2))]);
+		const actor = makeActor();
+		const m     = makeMoves({repo, actor});
+		await initPlaybook(m, repo);
+		await m.incrementMove("playbook-the-heavy", "bulwark");
+		expect(actor.updatedDocs[0]?.system.instanceCount).toBe(1);
+	});
+
+	it("decrements it by its stored slug", async () => {
+		const repo  = new FakeMoveRepository([translated(b => b.asStarting().withRepeatMax(2))]);
+		const actor = makeActor();
+		const m     = makeMoves({repo, actor});
+		await initPlaybook(m, repo);
+		await m.decrementMove("playbook-the-heavy", "bulwark");
+		expect(actor.updatedDocs.at(-1)?.system.instanceCount).toBe(0);
+	});
+
+	it("counts it by its stored slug", async () => {
+		const repo  = new FakeMoveRepository([translated(b => b.asStarting().withRepeatMax(2))]);
+		const m     = makeMoves({repo, actor: makeActor()});
+		await initPlaybook(m, repo);
+		expect(m.countOwnedBySlug("bulwark")).toBe(1);
+	});
+
+	it("does not count it under a slug derived from the translated name", async () => {
+		const repo = new FakeMoveRepository([translated(b => b.asStarting())]);
+		const m    = makeMoves({repo});
+		await initPlaybook(m, repo);
+		expect(m.countOwnedBySlug("bollwerk")).toBe(0);
+	});
+
+	it("recognises a re-drop of one it already owns rather than adding a second copy", async () => {
+		const dropped = translated();
+		const repo    = new FakeMoveRepository([dropped]);
+		const actor   = makeActor();
+		const m       = makeMoves({repo, actor});
+		await initPlaybook(m, repo);
+		const before = actor.createdDocs.length;
+		await m.onDropMove(dropped);
+		expect(actor.createdDocs.length).toBe(before);
+	});
+
+	it("deletes a dropped-in move by its stored slug", async () => {
+		const dropped = translated();
+		const actor   = makeActor();
+		const m       = makeMoves({repo: new FakeMoveRepository(), actor});
+		await m.addMoveToOther(dropped);
+		await m.deleteMove("bulwark");
+		expect(actor.deletedIds).toHaveLength(1);
+	});
+});
+
+// ── outfitEffects ─────────────────────────────────────────────────────────────
+
+// What a move does to the character's gear (the Armored move's shield). Read off the moves the
+// character has TAKEN — an untaken move on the sheet is one being weighed up.
+describe("CharacterMoves.outfitEffects", () => {
+	function moveItem(slug, { acquired = true, outfitEffects = [] } = {}) {
+		return { _id: `move-${slug}`, type: "move", name: slug, system: { slug, acquired, outfitEffects } };
+	}
+
+	function movesWith(...items) {
+		const actor = new FakeCharacterActorBuilder().withItems(items).build();
+		return makeMoves({ actor });
+	}
+
+	const ARMORED = [{ slug: "shield", weight: 1 }, { slug: "hauberk-cuirass-scale-iron-or-bronze", removeTags: ["cumbersome"] }];
+
+	it("is empty for a character with no moves", () => {
+		expect(movesWith().outfitEffects.isEmpty).toBe(true);
+	});
+
+	it("collects what an acquired move declares", () => {
+		const effects = movesWith(moveItem("armored", { outfitEffects: ARMORED })).outfitEffects;
+		expect(effects.effects.map(e => e.slug)).toEqual(["shield", "hauberk-cuirass-scale-iron-or-bronze"]);
+	});
+
+	it("ignores a move the character has not taken", () => {
+		const effects = movesWith(moveItem("armored", { acquired: false, outfitEffects: ARMORED })).outfitEffects;
+		expect(effects.isEmpty).toBe(true);
+	});
+
+	it("ignores moves that say nothing about gear", () => {
+		expect(movesWith(moveItem("dangerous")).outfitEffects.isEmpty).toBe(true);
+	});
+
+	it("tolerates a move from a world that has never been refreshed", () => {
+		const actor = new FakeCharacterActorBuilder()
+			.withItems([{ _id: "m", type: "move", name: "Armored", system: { slug: "armored", acquired: true } }])
+			.build();
+		expect(makeMoves({ actor }).outfitEffects.isEmpty).toBe(true);
+	});
+
+	it("lists the moves the character has taken", () => {
+		const m = movesWith(moveItem("armored"), moveItem("dangerous", { acquired: false }));
+		expect(m.acquiredMoves.map(i => i.system.slug)).toEqual(["armored"]);
+		expect([...m.acquiredSlugs]).toEqual(["armored"]);
+	});
+});
+

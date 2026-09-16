@@ -103,16 +103,80 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, increase Defenses by 1 and add \"Weapons of War\" to the Fortifications list. Each spring, the village must expend 1 Surplus to maintain and replace the town's weapons.\n\nHenceforth, when you Outfit from Stonetop or Have What You Need after doing so, you can treat maces, flails, battleaxes, warhammers, and all types of swords as common items, as if they were already on the inventory inserts. Battleaxes and swords have \"x piercing,\" where x is the steading's current Prosperity."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        {
+          "any": 1,
+          "of": [
+            "buy-weapons",
+            {
+              "all": [
+                "smith-staff",
+                "iron-ore",
+                "smith-seasons"
+              ]
+            }
+          ]
+        },
+        "veteran-warrior",
+        "train-militia"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "defenses",
+          "amount": 1
+        },
+        "text": "increase Defenses by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "fortifications",
+          "text": "Weapons of War"
+        },
+        "text": "add \"Weapons of War\" to the Fortifications list"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "spring"
+          ],
+          "phrase": "**_each spring_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": -1
+        },
+        "text": "the village must expend 1 Surplus to maintain and replace the town's weapons"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you Outfit from Stonetop or Have What You Need after doing so_**"
+        },
+        "text": "you can treat maces, flails, battleaxes, warhammers, and all types of swords as common items"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "text": "battleaxes and swords have \"x piercing,\" where x is the steading's current Prosperity"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, increase Defenses by 1 and add \"Weapons of War\" to the Fortifications list. Each spring, the village must expend 1 Surplus to maintain and replace the town's weapons.\n\nHenceforth, when you Outfit from Stonetop or Have What You Need after doing so, you can treat maces, flails, battleaxes, warhammers, and all types of swords as common items, as if they were already on the inventory inserts. Battleaxes and swords have \"x piercing,\" where x is the steading's current Prosperity."
+  ]
 }

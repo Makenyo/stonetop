@@ -1,0 +1,19 @@
+{{!-- What Stonetop has built that bends a step this season does not have.
+
+      Every bend now hangs on the step it bends — Township on winter's 1d4+Population, Stone Wall
+      under what it consumes — which is where five of them were never shown. This is what is left:
+      the Golden Sapling generates +1 whenever the steading generates at all, and spring and winter
+      generate nothing, so there is no step of theirs to hang it on. Headed by the STEP, so the
+      heading states when it applies and no row has to.
+
+      Never a control: an adjustment changes an arithmetic the sheet does not perform.
+
+      Params: groups (AdjustmentGroup[]). --}}
+{{#if groups.length}}
+	<div class="steading-adjustments">
+		{{#each groups}}
+			<h5 class="steading-adjustments-head">{{localize labelKey}}</h5>
+			{{> "stonetop.steading-effect-lines" lines=lines}}
+		{{/each}}
+	</div>
+{{/if}}

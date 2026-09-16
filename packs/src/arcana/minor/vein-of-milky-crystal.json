@@ -29,11 +29,11 @@
 							"type": "entry",
 							"content": {
 								"title": null,
-								"text": "… personally extract a large hunk of crystal (Value 1) from the vein."
+								"text": "… personally extract a large ◇ hunk of crystal (Value 1) from the vein."
 							},
 							"slug": "personally-extract",
 							"track": {
-								"max": 2
+								"max": 1
 							}
 						},
 						{

@@ -27,7 +27,7 @@ const pips = n => Array.from({ length: n }, (_, i) =>
 
 const row = (name, track) => `
 <li class="item stonetop-move-item" data-item-id="${name}">
-  <span class="rollable move-rollable" data-roll="con"><i class="fas fa-dice-d6"></i></span>
+  <button type="button" class="rollable move-rollable" data-roll="con"><i class="fas fa-dice-d6"></i></button>
   <button type="button" class="stonetop-move-name stonetop-basic-move-open">${name}</button>
   <button type="button" class="stonetop-move-chat"><i class="fas fa-comment"></i></button>
   ${track ? `<span class="stonetop-item-resources">${pips(4)}</span>` : ""}
@@ -35,7 +35,7 @@ const row = (name, track) => `
 
 const FIXTURE = `
 <div class="application stonetop sheet character themed theme-light"><div class="window-content">
-  <div class="stonetop-sheet-layout"><div class="stonetop-moves-sidebar">
+  <div class="stonetop-rail-layout" data-side="right"><div class="stonetop-rail stonetop-moves-rail">
     <ol class="items-list">
       ${row("Aid or Interfere", false)}
       ${row("Defend", true)}

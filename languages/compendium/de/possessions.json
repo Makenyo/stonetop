@@ -182,7 +182,7 @@
     },
     "outfitItems/a-hunk-of-amber/note": {
       "source": "Value 2",
-      "text": ""
+      "text": "Wert 2"
     }
   },
   "a-large-urn": {
@@ -225,8 +225,8 @@
       "text": "Ein Topf voller „Gold“"
     },
     "description": {
-      "source": "◇◇ *magical*\n\nA small bronze cauldron, full of glittering coins. At least, that’s what it seems.\n\nWhen you **_fill the pot with small, natural_** **_items (leaves, stones, acorns, etc.) and hide_** **_it from light for a season_**, the contents are glamoured to become a purse of gold ◇ (Value 4).\n\nAny “coins” removed from the pot revert to their true form when…\n\n… an honest merchant touches them;<br>… their current owner tells a lie;<br>… someone sees through the glamour;<br>… something dispels the glamour; or<br>… the new moon comes and goes\n\n*An artifact of the wider world — see @UUID[Compendium.stonetop.wider-world-and-other-wonders.JournalEntry.YMV8KIodnoZL71Jl]{Fae}.*",
-      "text": "◇◇, *Magisch*\n\nEin kleiner Bronzekessel, gefüllt mit glitzernden Münzen. Zumindest scheint es so.\n\nWenn du **_den Topf mit kleinen natürlichen Dingen (Blätter, Steine, Eicheln usw.) füllst und ihn eine Jahreszeit lang vor Licht geschützt aufbewahrst_**, wird sein Inhalt verzaubert und verwandelt sich in einen Beutel voller Gold (Wert 4).\n\nAlle „Münzen“, die aus dem Topf entfernt werden, verwandeln sich wieder in ihre wahre Form, wenn …\n\n… ein ehrlicher Händler sie berührt; … ihr aktueller Besitzer lügt;<br>… jemand die Illusion durchschaut;<br>… etwas den Zauber aufhebt; oder<br>… der Neumond kommt und vergeht.\n\n*Ein Artefakt aus der weiten Welt — siehe @UUID[Compendium.stonetop.wider-world-and-other-wonders.JournalEntry.YMV8KIodnoZL71Jl]{Feen}.*"
+      "source": "◇◇ *magical*\n\nA small bronze cauldron, full of glittering coins. At least, that’s what it seems.\n\nWhen you **_fill the pot with small, natural_** **_items (leaves, stones, acorns, etc.) and hide_** **_it from light for a season_**, the contents are glamoured to become a ◇ purse of gold (Value 4).\n\nAny “coins” removed from the pot revert to their true form when…\n\n… an honest merchant touches them;<br>… their current owner tells a lie;<br>… someone sees through the glamour;<br>… something dispels the glamour; or<br>… the new moon comes and goes\n\n*An artifact of the wider world — see @UUID[Compendium.stonetop.wider-world-and-other-wonders.JournalEntry.YMV8KIodnoZL71Jl]{Fae}.*",
+      "text": "◇◇, *Magisch*\n\nEin kleiner Bronzekessel, gefüllt mit glitzernden Münzen. Zumindest scheint es so.\n\nWenn du **_den Topf mit kleinen natürlichen Dingen (Blätter, Steine, Eicheln usw.) füllst und ihn eine Jahreszeit lang vor Licht geschützt aufbewahrst_**, wird sein Inhalt verzaubert und verwandelt sich in einen Beutel voller Gold (Wert 4).\n\nAlle „Münzen“, die aus dem Topf entfernt werden, verwandeln sich wieder in ihre wahre Form, wenn…\n\n… ein ehrlicher Händler sie berührt; … ihr aktueller Besitzer lügt;<br>… jemand die Illusion durchschaut;<br>… etwas den Zauber aufhebt; oder<br>… der Neumond kommt und vergeht.\n\n*Ein Artefakt aus der weiten Welt — siehe @UUID[Compendium.stonetop.wider-world-and-other-wonders.JournalEntry.YMV8KIodnoZL71Jl]{Feen}.*"
     },
     "outfitItems/a-pot-of-gold/name": {
       "source": "A pot of “gold”",
@@ -432,7 +432,7 @@
     },
     "outfitItems/an-oversized-ring/note": {
       "source": "Value 4",
-      "text": ""
+      "text": "Wert 4"
     }
   },
   "apiary": {
@@ -574,7 +574,7 @@
     },
     "outfitItems/bronze-ring/note": {
       "source": "hours",
-      "text": ""
+      "text": "Stunden"
     }
   },
   "burglars-kit": {
@@ -716,7 +716,7 @@
     },
     "description": {
       "source": "◇ (*far*, +1 damage, x piercing; ○ low ammo, ○ all out)",
-      "text": "◇ (*Fern*, +1 Schaden, Durchdringung x, ○ geringe Munition, ○ alle verbraucht"
+      "text": "◇ (*Fern*, +1 Schaden, Durchdringung x, ○ wenig Munition, ○ alle verbraucht)"
     },
     "outfitItems/composite-bow/name": {
       "source": "Composite Bow",
@@ -728,7 +728,7 @@
     },
     "outfitItems/composite-bow/resource/labels/low-ammo": {
       "source": "low ammo",
-      "text": "geringe Munition"
+      "text": "wenig Munition"
     },
     "outfitItems/composite-bow/resource/labels/all-out": {
       "source": "all out",
@@ -1497,7 +1497,7 @@
       "text": ""
     },
     "description": {
-      "source": "◇ *beautiful*, *magical*, Value 4\n\nOne is a flawless silvered ◇ ◇ mirror (*magical*, *beautiful*, *fragile*, Value 4), 3 feet tall and set in a golden frame. Forge Lord runes adorn the frame, translated as: “To my beautiful Esé, my faithful, my rock.”\n\nThe other is a smaller, humble mirror ◇ (*magical*, *fragile*, Value 2), only 12 inches tall in a frame of bronze. It bears the same inscription as the other mirror, but inverted. A small needle protrudes from the frame, stained dark.\n\nWhen you **_prick your finger and touch the_** **_smaller mirror_**, it shows what is reflected in the larger mirror until you break contact. Your blood soaks into the surface, leaving no stain.\n\n*An artifact of the wider world — see @UUID[Compendium.stonetop.wider-world-and-other-wonders.JournalEntry.7CqkDvDTCiCWTus2]{Forge Lords}.*",
+      "source": "◇ *beautiful*, *magical*, Value 4\n\nOne is a flawless silvered ◇ ◇ mirror (*magical*, *beautiful*, *fragile*, Value 4), 3 feet tall and set in a golden frame. Forge Lord runes adorn the frame, translated as: “To my beautiful Esé, my faithful, my rock.”\n\nThe other is a smaller, humble ◇ mirror (*magical*, *fragile*, Value 2), only 12 inches tall in a frame of bronze. It bears the same inscription as the other mirror, but inverted. A small needle protrudes from the frame, stained dark.\n\nWhen you **_prick your finger and touch the_** **_smaller mirror_**, it shows what is reflected in the larger mirror until you break contact. Your blood soaks into the surface, leaving no stain.\n\n*An artifact of the wider world — see @UUID[Compendium.stonetop.wider-world-and-other-wonders.JournalEntry.7CqkDvDTCiCWTus2]{Forge Lords}.*",
       "text": ""
     },
     "outfitItems/two-mirrors/name": {
@@ -1506,7 +1506,7 @@
     },
     "outfitItems/two-mirrors/note": {
       "source": "Value 4",
-      "text": ""
+      "text": "Wert 4"
     }
   },
   "weapons-of-war-heavy": {
@@ -1584,7 +1584,7 @@
     },
     "choices/0/options/crossbow/outfitItems/crossbow/resource/labels/low-ammo": {
       "source": "low ammo",
-      "text": "geringe Munition"
+      "text": "wenig Munition"
     },
     "choices/0/options/crossbow/outfitItems/crossbow/resource/labels/all-out": {
       "source": "all out",
@@ -1654,7 +1654,7 @@
     },
     "choices/0/options/composite-bow/outfitItems/composite-bow/resource/labels/low-ammo": {
       "source": "low ammo",
-      "text": "geringe Munition"
+      "text": "wenig Munition"
     },
     "choices/0/options/composite-bow/outfitItems/composite-bow/resource/labels/all-out": {
       "source": "all out",

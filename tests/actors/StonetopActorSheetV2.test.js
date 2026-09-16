@@ -1,6 +1,11 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { createStonetopActorSheetV2Class } from "../../src/actors/StonetopActorSheetV2.js";
+import { Disclosure } from "../../src/utils/Disclosure.js";
+import { activateSteppers } from "../../src/utils/stepper.js";
+import { renderPartial } from "../fakes/renderTemplate.js";
+import { RatingSnapshot } from "../../src/model/snapshot/steading/SteadingSnapshot.js";
+import { SteadingDefaults } from "../../src/model/data/steading/SteadingDefaults.js";
 
 // A minimal stand-in for HandlebarsApplicationMixin(ActorSheetV2): a persistent root element
 // (unlike V1, V2 keeps the root across re-renders), the lifecycle hooks the class overrides, and
@@ -111,6 +116,36 @@ describe("StonetopActorSheetV2 base", () => {
 			expect(state.focus).toBe(`.stonetop-follower-hp[data-slug="bo"]`);
 		});
 
+		// The ▲▼ carets are the sheet's one control that fires a change WITHOUT the pointer landing on
+		// the field — and a caret has no identity of its own, so the selector built from a focused one
+		// matched the first caret in the part: stepping any rating put the focus on Fortunes' ▲, and
+		// the caret under the pointer (hover-revealed on the line) vanished with it.
+		it("names the rating's own field after its caret is clicked, not the sheet's first caret", () => {
+			const { sheet } = makeSheet();
+			const ratings = html => {
+				const el = document.createElement("div");
+				el.innerHTML = html;
+				document.body.appendChild(el);
+				return el;
+			};
+			const tiles = [SteadingDefaults.fortunes, SteadingDefaults.surplus]
+				.map(def => renderPartial("stonetop.steading-stat-panel", {
+					attr: def.slug, attrData: new RatingSnapshot(def, { current: 1 }), editable: true,
+				})).join("");
+			const prior = ratings(tiles);
+			const newElement = ratings(tiles);
+			activateSteppers(prior);
+
+			const surplus = prior.querySelector('.steading-tile[data-attr="surplus"]');
+			surplus.querySelector(".stonetop-stepper-btn--up").focus();
+			surplus.querySelector(".stonetop-stepper-btn--up").click();
+
+			const state = {};
+			sheet._preSyncPartState("form", newElement, prior, state);
+
+			expect(newElement.querySelector(state.focus)).toBe(newElement.querySelector('.steading-attr-input[data-attr="surplus"]'));
+		});
+
 		it("keeps core's id-based selector when buildFocusSelector has nothing better", () => {
 			const { sheet } = makeSheet();
 			const prior = document.createElement("div");
@@ -179,6 +214,66 @@ describe("StonetopActorSheetV2 base", () => {
 			sheet._onRender({}, {});
 
 			expect(scroller.scrollTop).toBe(300);
+		});
+	});
+
+	describe("view state goes back before core measures (_syncPartState)", () => {
+		// A region the reader opened, in a part the template always renders shut.
+		const partHtml = () => `
+			<div class="sheet-body">
+				<button data-disclosure aria-controls="region" aria-expanded="false"></button>
+				<div id="region" data-block hidden></div>
+				<div data-block></div>
+				<div data-block></div>
+				<div data-block></div>
+			</div>`;
+
+		// The browser clamps a scrollTop to what the content can actually offer. Modelled here
+		// because happy-dom has no layout, and the clamp IS the bug: each visible block is 100 tall
+		// in a 200-tall viewport, so the same part is worth 200 of scroll with the region open and
+		// 100 with it shut.
+		const clamping = el => {
+			let top = 0;
+			Object.defineProperty(el, "scrollTop", {
+				get: () => top,
+				set: v => {
+					const shown = [...el.querySelectorAll("[data-block]")].filter(b => !b.hidden).length;
+					top = Math.max(0, Math.min(v, shown * 100 - 200));
+				},
+			});
+			return el;
+		};
+
+		// The steading's improvement cards, and the character's move rows, are rendered shut and
+		// reopened by the sheet. Reopening them AFTER core restored scroll left the reader's position
+		// cut down to what the shut tree could offer — and the browser's own scroll anchoring then
+		// pushed against the correction, so a ticked checkbox threw the view hundreds of pixels.
+		it("reopens the reader's regions before the scroll position is restored", () => {
+			const { sheet } = makeSheet();
+			sheet.element.innerHTML = partHtml();
+			const opened = Disclosure.from(sheet.element.querySelector("[data-disclosure]"));
+			opened.setOpen(true);
+			sheet.openDisclosures.remember(opened);
+
+			// Core replaces the part's children: everything is shut again, as the template renders it.
+			sheet.element.innerHTML = partHtml();
+			const scroller = clamping(sheet.element.querySelector(".sheet-body"));
+
+			sheet._syncPartState("form", sheet.element, sheet.element,
+				{ scrollPositions: [[scroller, 180, 0]], details: {} });
+
+			expect(sheet.element.querySelector("#region").hidden, "the region shut on re-render").toBe(false);
+			expect(scroller.scrollTop, "the scroll position was clamped to the shut tree").toBe(180);
+		});
+
+		// The first render has no prior element, so core never calls _syncPartState for it.
+		it("restores view state on the first render too", async () => {
+			const { sheet } = makeSheet();
+			const restore = vi.spyOn(sheet, "restoreViewState");
+
+			await sheet._onFirstRender({}, {});
+
+			expect(restore).toHaveBeenCalledWith(sheet.element);
 		});
 	});
 

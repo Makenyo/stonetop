@@ -49,23 +49,51 @@
           "track": {
             "max": 4
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_mark all the requirements_**, add \"Golden Sapling\" to the Resources list and automatically mark the **Greater Harvest** improvement."
-          }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "Henceforth, when the steading generates Surplus, even just 1, it generates +1 Surplus."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "retrieve-acorn",
+        "plant-acorn",
+        "nurture-protect"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "Golden Sapling"
+        },
+        "text": "add \"Golden Sapling\" to the Resources list"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "text": "automatically mark the Greater Harvest improvement"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [],
+          "phrase": "when **_the steading generates Surplus, even just 1_**"
+        },
+        "adjustment": {
+          "step": "generation",
+          "at": "result",
+          "amount": 1
+        },
+        "text": "it generates +1 Surplus"
+      }
+    ]
   },
-  "folder": "1UlzxDTaEInlMvWC"
+  "folder": "1UlzxDTaEInlMvWC",
+  "_prose": [
+    "When you **_mark all the requirements_**, add \"Golden Sapling\" to the Resources list and automatically mark the **Greater Harvest** improvement.",
+    "Henceforth, when the steading generates Surplus, even just 1, it generates +1 Surplus."
+  ]
 }

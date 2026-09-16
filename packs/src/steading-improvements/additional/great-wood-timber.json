@@ -60,23 +60,64 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_mark all the requirements_**, increase Fortunes by 1 and add \"Timber from the Great Wood\" to the Resources list."
-          }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "Henceforth, the steading has a ready supply of timber for improvements and other projects, and it consumes 1 less Surplus every winter."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "proof-that",
+        "crew-brave",
+        "skilled-carpenter",
+        "pulling-together"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "Timber from the Great Wood"
+        },
+        "text": "add \"Timber from the Great Wood\" to the Resources list"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "text": "the steading has a ready supply of timber for improvements and other projects"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "winter"
+          ],
+          "phrase": "**_every winter_**"
+        },
+        "adjustment": {
+          "step": "consumption",
+          "at": "result",
+          "amount": -1
+        },
+        "text": "the steading consumes 1 less Surplus"
+      }
+    ]
   },
-  "folder": "1UlzxDTaEInlMvWC"
+  "folder": "1UlzxDTaEInlMvWC",
+  "_prose": [
+    "When you **_mark all the requirements_**, increase Fortunes by 1 and add \"Timber from the Great Wood\" to the Resources list.",
+    "Henceforth, the steading has a ready supply of timber for improvements and other projects, and it consumes 1 less Surplus every winter."
+  ]
 }

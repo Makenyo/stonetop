@@ -78,16 +78,59 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, increase Fortunes by 1. Name the inn, add it to both the Resources list and map.\n\nHenceforth, when the seasons change, whoever is friendliest rolls +Fortunes: **on a 10+**, ask the GM 3 questions about the wider world; **on a 7-9**, ask 1 question; **on a 6-**, ask 1 question, but the GM describes some trouble that stems from the inn or its guests.\n\nOnce per season, when you expend 1 Surplus and bring folks together at the inn (to talk, to celebrate, to recuperate), clear one of the steading's debilities."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "building-site",
+        "engineer-foreman",
+        "furnishings",
+        "pull-together",
+        "staff"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "The inn"
+        },
+        "text": "name the inn, add it to both the Resources list and map"
+      },
+      {
+        "when": {
+          "kind": "turn"
+        },
+        "text": "whoever is friendliest rolls +Fortunes for news of the wider world",
+        "grantsMove": "news-at-the-inn"
+      },
+      {
+        "when": {
+          "kind": "moment",
+          "moment": "inn-gathering",
+          "phrase": "once per season, when **_you expend 1 Surplus and bring folks together at the inn_**"
+        },
+        "condition": true,
+        "text": "clear one of the steading's debilities"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, increase Fortunes by 1. Name the inn, add it to both the Resources list and map.\n\nHenceforth, when the seasons change, whoever is friendliest rolls +Fortunes: **on a 10+**, ask the GM 3 questions about the wider world; **on a 7-9**, ask 1 question; **on a 6-**, ask 1 question, but the GM describes some trouble that stems from the inn or its guests.\n\nOnce per season, when you expend 1 Surplus and bring folks together at the inn (to talk, to celebrate, to recuperate), clear one of the steading's debilities."
+  ]
 }

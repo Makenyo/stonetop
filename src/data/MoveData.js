@@ -20,6 +20,10 @@ export class MoveData extends foundry.abstract.TypeDataModel {
 			// "You mark XP when you roll for a move and get a 6-, unless the move says otherwise" —
 			// false is how a move says otherwise.
 			xpOnMiss: new f.BooleanField({ initial: true }),
+			// Some moves are printed with no name at all — an arcanum's front trigger, the Would-Be
+			// Hero's Destined. They still need one to be referred to (a slug, a chat card, a screen
+			// reader), but a row that shows it as a heading shows a heading the book never printed.
+			nameless: new f.BooleanField({ initial: false }),
 			requirement: new f.SchemaField({
 				// Move SLUGS, resolved to the referenced moves' names for display — so the label reads in
 				// whatever language those moves are showing.
@@ -36,6 +40,16 @@ export class MoveData extends foundry.abstract.TypeDataModel {
 			slug:           new f.StringField({ nullable: true, initial: null }),
 			sortOrder:      new f.NumberField({ nullable: true, initial: null }),
 			choices:       new f.ObjectField({ nullable: true, initial: null }),
+			// A move's own procedure, step by step — what the four Seasons Change moves carry, so the
+			// sheet reads each season's steps instead of hardcoding one season's. STRUCTURE only (a
+			// kind, a die, a count, which list to pick from); the words are the move's description,
+			// which renders beside them. See SeasonProcedure.
+			steps:         new f.ArrayField(new f.ObjectField()),
+			// What taking this move does to the character's gear — the Armored move's shield marking one
+			// ◇ instead of two, and its bearer ignoring *cumbersome*. STRUCTURE only (a gear slug, a
+			// weight, tags that stop applying); the words are the move's description, which is what a
+			// player reads. See OutfitEffect.
+			outfitEffects: new f.ArrayField(new f.ObjectField()),
 			categoryKey:   new f.StringField({ nullable: true, initial: null }),
 			categoryLabel: new f.StringField({ nullable: true, initial: null }),
 			categoryNote:  new f.StringField({ nullable: true, initial: null }),

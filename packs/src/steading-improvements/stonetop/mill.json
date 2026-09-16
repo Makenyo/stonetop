@@ -78,16 +78,62 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, increase Fortunes by 1, add \"Mill\" to the Resources list and draw it on the map.\n\nHenceforth, when the autumn harvest is complete, the steading generates +1 Surplus. Also, when you Outfit from Stonetop or Have What You Need after doing so, each of supplies has 1 extra use."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "engineer-foreman",
+        "power-source",
+        "building-site",
+        "pull-together",
+        "full-time-miller"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "Mill"
+        },
+        "text": "add \"Mill\" to the Resources list and draw it on the map"
+      },
+      {
+        "when": {
+          "kind": "moment",
+          "moment": "autumn-harvest",
+          "phrase": "when **_the autumn harvest is complete_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": 1
+        },
+        "text": "the steading generates +1 Surplus"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you Outfit from Stonetop or Have What You Need after doing so_**"
+        },
+        "text": "each of supplies has 1 extra use"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, increase Fortunes by 1, add \"Mill\" to the Resources list and draw it on the map.\n\nHenceforth, when the autumn harvest is complete, the steading generates +1 Surplus. Also, when you Outfit from Stonetop or Have What You Need after doing so, each of ◇ supplies has 1 extra use."
+  ]
 }

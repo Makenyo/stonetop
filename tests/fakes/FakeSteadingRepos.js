@@ -3,8 +3,14 @@ import { FakeNpcRepository } from "./FakeNpcRepository.js";
 
 /** An art store with nothing installed — the default world, where no plate is available. */
 export class FakeSteadingArtRepository {
-	constructor(plate = null) { this._plate = plate; }
-	async seasonsPlate() { return this._plate; }
+	constructor({ seasons = null, resources = null, residents = null } = {}) {
+		this._seasons   = seasons;
+		this._resources = resources;
+		this._residents = residents;
+	}
+	async seasonsPlate()   { return this._seasons; }
+	async resourcesPlate() { return this._resources; }
+	async residentsPlate() { return this._residents; }
 }
 
 /**

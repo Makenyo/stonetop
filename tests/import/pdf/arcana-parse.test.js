@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseTrack, stripMarkers, tagText, stripLoyalty, parseItemLine, unlockSlug, followerChoiceEntry, followerChoices, isFollowerGroup, foldBackChoices, followerSectionIndex, isArcanaFollower, matchFollowerIcons, titleCase, majorMoveName, runInName, parseRequires, parseMoveRoll, resourceTracks, frontMoveResources, parseResourceLine, attachItemResource, parseNameFirstItem, parseFront, parseBack, splitAssignRows, numberBlanks, statblockMoveTail } from "../../../scripts/import/pdf/arcana-parse.js";
+import { parseTrack, triggerMove, moveGrantEntry, withTableLink, isCardFurniture, isStatBlockFragment, stripMarkers, joinSplitItemLine, uniqueUnlockSlugs, tagText, stripLoyalty, parseItemLine, unlockSlug, followerChoiceEntry, followerChoices, isFollowerGroup, foldBackChoices, followerSectionIndex, isArcanaFollower, matchFollowerIcons, titleCase, majorMoveName, runInName, parseRequires, parseMoveRoll, resourceTracks, frontMoveResources, parseResourceLine, attachItemResource, parseNameFirstItem, parseFront, parseBack, splitAssignRows, numberBlanks, statblockMoveTail } from "../../../scripts/import/pdf/arcana-parse.js";
 
 // Synthetic block factories (markers are literal glyphs in the line text, as the load pipeline injects).
 const _line = (text) => ({ text, bbox: [0, 0, 0, 0], spans: [{ font: "ACaslonPro-Regular", size: 9, text }] });
@@ -27,9 +27,38 @@ describe("parseTrack", () => {
 	});
 });
 
+describe("unlockSlug", () => {
+	it("closes up an apostrophe rather than splitting the word", () => {
+		expect(unlockSlug("… tell another’s secret", 3)).toBe("tell-anothers-secret");
+	});
+	it("takes the requested number of salient words", () => {
+		expect(unlockSlug("… learn the Words of Unbeing, which will send the spirit home.")).toBe("learn-words");
+		expect(unlockSlug("… learn the Words of Unbeing, which will send the spirit home.", 3)).toBe("learn-words-unbeing");
+	});
+});
+
 describe("stripMarkers", () => {
-	it("removes box/circle/diamond glyphs from markdown text, keeping emphasis", () => {
+	it("removes box/circle glyphs from markdown text, keeping emphasis", () => {
 		expect(stripMarkers("◻◻ **You** lose yourself ◻")).toBe("**You** lose yourself");
+	});
+	it("drops a leading ◇ — there it's the item's bullet, not prose", () => {
+		expect(stripMarkers("◇ A sack of seeds")).toBe("A sack of seeds");
+		expect(stripMarkers("○ ○ □ Your emotions dull.")).toBe("Your emotions dull.");
+	});
+	it("keeps an inline ◇ — the book writes its item-weight marker into the sentence", () => {
+		expect(stripMarkers("Manipulate an unattended item (small or ◇, no bigger)"))
+			.toBe("Manipulate an unattended item (small or ◇, no bigger)");
+		expect(stripMarkers("□ Retrieve an ◇◇ acorn")).toBe("Retrieve an ◇◇ acorn");
+	});
+	it("drops a ◇ welded into a word — a mark mis-placed from a neighbouring row", () => {
+		expect(stripMarkers("at least to s◇tar◇t).")).toBe("at least to start).");
+	});
+	it("sets adjacent pips tight, as the book prints them", () => {
+		expect(stripMarkers("a pair of hides into a magnificent ◇ ◇ beznpol scale coat"))
+			.toBe("a pair of hides into a magnificent ◇◇ beznpol scale coat");
+	});
+	it("drops a trailing ◇ track mark", () => {
+		expect(stripMarkers("You lose yourself in a blood-rage. ◇")).toBe("You lose yourself in a blood-rage.");
 	});
 });
 
@@ -40,6 +69,85 @@ describe("tagText (disguise tags for a diamond-less front)", () => {
 	});
 	it("returns null for an empty tag line", () => {
 		expect(tagText("  ◇  ")).toBeNull();
+	});
+});
+
+describe("uniqueUnlockSlugs", () => {
+	const row = (text, slug) => ({ type: "entry", slug, content: { title: null, text } });
+
+	it("widens a colliding slug with the next word of its own text", () => {
+		// The disturbing mask prints both of these; two salient words cannot tell them apart.
+		const list = [
+			row("… tell the mask a secret, something no one else knows about you.", "tell-mask"),
+			row("… tell the mask another person’s secret, something you promised never to tell.", "tell-mask"),
+		];
+		expect(uniqueUnlockSlugs(list).map((r) => r.slug)).toEqual(["tell-mask", "tell-mask-another"]);
+	});
+
+	it("keeps widening until the slugs are actually distinct", () => {
+		// The oversized crown's Words of Being / Words of Unbeing.
+		const list = [
+			row("… learn the Words of Being, which will force the spirit to manifest.", "learn-words"),
+			row("… learn the Words of Unbeing, which will send the spirit home.", "learn-words"),
+		];
+		expect(uniqueUnlockSlugs(list).map((r) => r.slug)).toEqual(["learn-words", "learn-words-unbeing"]);
+	});
+
+	it("leaves already-distinct slugs alone", () => {
+		const list = [row("… don the mask while alone.", "don-mask"), row("… watch someone unnoticed.", "watch-someone")];
+		expect(uniqueUnlockSlugs(list).map((r) => r.slug)).toEqual(["don-mask", "watch-someone"]);
+	});
+
+	it("separates identical text by widening while there are still words to add", () => {
+		const list = [row("… tell the mask a secret.", "tell-mask"), row("… tell the mask a secret.", "tell-mask")];
+		expect(uniqueUnlockSlugs(list).map((r) => r.slug)).toEqual(["tell-mask", "tell-mask-secret"]);
+	});
+
+	it("numbers rows when there are no further words to widen with", () => {
+		const list = [row("… tell.", "tell"), row("… tell.", "tell"), row("… tell.", "tell")];
+		expect(uniqueUnlockSlugs(list).map((r) => r.slug)).toEqual(["tell", "tell-2", "tell-3"]);
+	});
+
+	it("skips rows with no slug (the intro/description entries)", () => {
+		const list = [row("A stiff, leathery mask.", undefined), row("… don the mask.", "don-mask")];
+		expect(uniqueUnlockSlugs(list).map((r) => r.slug)).toEqual([undefined, "don-mask"]);
+	});
+});
+
+describe("joinSplitItemLine", () => {
+	// Opening the Way (time-worn missive): the book prints one line, but the leading ◇ reads as a
+	// bullet, so the layout hands back a one-item list plus a para holding the parenthesised tail.
+	const split = () => ([
+		_heading("Opening the Way"),
+		_list(["◇  pouch of powdered cinnabar "]),
+		_para(" ( ○ ○ ○   uses, Value 2) ○"),
+		_para("When you use ink of powdered cinnabar…"),
+	]);
+
+	it("rejoins the ◇-led name with the parenthesised tail as one para", () => {
+		const out = joinSplitItemLine(split());
+		expect(out).toHaveLength(3);
+		expect(out[1].type).toBe("para");
+		expect(out[1].lines.map((l) => l.text).join("")).toBe("◇  pouch of powdered cinnabar  ( ○ ○ ○   uses, Value 2) ○");
+		expect(out[2].lines[0].text).toBe("When you use ink of powdered cinnabar…");
+	});
+
+	it("leaves a ◇ item that carries its own '(' alone", () => {
+		const blocks = split();
+		blocks[1] = _list(["◇  a lantern (bright) "]);
+		expect(joinSplitItemLine(blocks)).toHaveLength(4);
+	});
+
+	it("leaves a ◇ item followed by ordinary prose alone", () => {
+		const blocks = split();
+		blocks[2] = _para("When you light it…");
+		expect(joinSplitItemLine(blocks)).toHaveLength(4);
+	});
+
+	it("leaves a multi-item list alone — that is a real bullet list", () => {
+		const blocks = split();
+		blocks[1] = _list(["◇  one "], ["◇  two "]);
+		expect(joinSplitItemLine(blocks)).toHaveLength(4);
 	});
 });
 
@@ -320,6 +428,28 @@ describe("parseMoveRoll", () => {
 	});
 });
 
+describe("parseMoveRoll — a shared 'on a 7+' outcome", () => {
+	// "on a 7+" is not a fourth tier; it is the part 10+ and 7-9 have in common, printed once. Each tier
+	// card is read on its own, so the shared outcome has to open both — otherwise the Mindgem's 10+ card
+	// says "pick 1" and never says that the gem answers you.
+	const text = "When you **_consult the Mindgem_**, ask a question and roll +INT: **on a 7+**, it answers but **on a 10+**, pick 1; **on a 7-9**, pick 2:";
+	it("opens both hit tiers with it, and leaves the miss alone", () => {
+		const { rollStat, moveResults } = parseMoveRoll(text + "\n\n**On a 6-**, choose 1:");
+		expect(rollStat).toBe("int");
+		expect(moveResults.success.value).toBe("it answers but pick 1");
+		expect(moveResults.partial.value).toBe("it answers but pick 2:");
+		expect(moveResults.failure.value).toBe("choose 1:");
+	});
+	it("leaves an ordinary three-tier move exactly as it was", () => {
+		const { moveResults } = parseMoveRoll("Roll +STR: **on a 10+**, deal damage; **on a 7-9**, deal damage and take some; **on a 6-**, the GM says.");
+		expect(moveResults).toEqual({
+			success: { label: "10+", value: "deal damage" },
+			partial: { label: "7-9", value: "deal damage and take some" },
+			failure: { label: "6-", value: "the GM says." },
+		});
+	});
+});
+
 describe("resourceTracks — right-aligned ○ resource pips on a move header", () => {
 	// Marker / text line factories with real geometry (the load pipeline injects each ○/□ as its own
 	// far-right `marker` line; the body/header are ACaslon text lines).
@@ -371,7 +501,7 @@ describe("resourceTracks — right-aligned ○ resource pips on a move header", 
 	});
 });
 
-describe("parseFront — major unlock (Marks track + trigger + trailing trim)", () => {
+describe("parseFront — major unlock (Marks track + trigger + trailing instruction)", () => {
 	const front = parseFront([
 		_heading("Azure Hand"),
 		_para("◇ , close, magical"),
@@ -387,11 +517,14 @@ describe("parseFront — major unlock (Marks track + trigger + trailing trim)", 
 		expect(marks.track).toEqual({ max: 4 });
 		expect(marks.content.text).toBe("Marks");
 	});
-	it("folds the description into a leading content entry, keeps the trigger, drops the trailing unlock line", () => {
+	it("folds the description into a leading content entry, keeps the trigger and the trailing unlock line", () => {
 		const list = front.choices[0].list;
-		expect(list.at(-1).slug).toBe("marks");                  // trailing 'last mark … unlock' dropped
 		expect(list[0].content.text).toContain("thick staff");   // description is the first entry now
 		expect(list[1].content.text).toContain("bear the Azure Hand");
+		// The gate instruction under the track is the card telling you what the marks are FOR — content,
+		// not furniture, and the book prints it.
+		expect(list.at(-1).content.text).toBe("When you make the last mark, you unlock the mysteries.");
+		expect(list.at(-1).track).toBeUndefined();
 	});
 	it("counts inline ◇ pips on the item line so a 2-pip item weighs 2", () => {
 		const f = parseFront([
@@ -1056,5 +1189,147 @@ describe("parseBack — a stat block inside Moves gives its swallowed trigger ba
 	it("still drops the rest of the stat block, and the Consequences section is unaffected", () => {
 		expect(back.moves[0].text).not.toContain("Instinct to devour");
 		expect(back.consequences.list).toHaveLength(1);
+	});
+});
+
+describe("parseTrack — a checkbox row's ◇ load pips are not ticks", () => {
+	it("counts only the boxes when the row carries both", () => {
+		// The Mindgem's tasks name gear you recover, and the book writes what each weighs into the
+		// sentence: one task, a ◇ heart. Counting the pips gave the row two checkboxes.
+		expect(parseTrack("□ Recover its ◇ “heart,” a chunk of makerglass")).toEqual({ max: 1, text: "Recover its “heart,” a chunk of makerglass" });
+		expect(parseTrack("□ Recover the intricate ◇ ◇ bronze helm")).toEqual({ max: 1, text: "Recover the intricate bronze helm" });
+	});
+	it("still counts a pip run that carries no box (a resource/Marks track)", () => {
+		expect(parseTrack("○ ○ ○")).toEqual({ max: 3, text: "" });
+	});
+});
+
+describe("triggerMove (a rollable front trigger → a nameless move)", () => {
+	const text = "When you **_consult the Mindgem about the Makers_**, ask a question and roll +INT: **on a 10+**, it answers.";
+	it("names the move with the book's own trigger phrase, and marks it nameless", () => {
+		// The book prints no heading over a front move, so the name exists to be referred to (chat, a
+		// screen reader, a lookup) and never to be drawn as a title.
+		expect(triggerMove(text)).toMatchObject({
+			id: "consult-mindgem-about",
+			name: "Consult the Mindgem about the Makers",
+			nameless: true,
+			text,
+		});
+	});
+	it("is not a move when the trigger does not roll", () => {
+		expect(triggerMove("When you **_touch the glass with bare skin_**, you contact the intelligence within.")).toBeNull();
+	});
+	it("is not a move when the block has no trigger phrase to name it", () => {
+		expect(triggerMove("Roll +INT to remember something.")).toBeNull();
+	});
+});
+
+describe("moveGrantEntry", () => {
+	it("is a row with no content of its own — the move IS the row", () => {
+		expect(moveGrantEntry("roil-anger")).toEqual({
+			type: "entry", slug: "roil-anger", content: { title: null, text: null },
+			grants: [{ type: "move", slug: "roil-anger", locations: ["inline"] }],
+		});
+	});
+});
+
+describe("withTableLink (a dice table referenced from the row that sends you to it)", () => {
+	it("appends the inline draw and drops the column-header echo", () => {
+		const text = "The GM will pick 1 or have you roll 1d4 on the table below. **1d4** purpose cost";
+		expect(withTableLink(text, { link: "@DrawTableInline[uuid]{1d4}", formula: "1d4" }))
+			.toBe("The GM will pick 1 or have you roll 1d4 on the table below.\n\n@DrawTableInline[uuid]{1d4}");
+	});
+	it("leaves prose that never echoed the header alone", () => {
+		expect(withTableLink("Roll on the table below.", { link: "@L", formula: "1d6" })).toBe("Roll on the table below.\n\n@L");
+	});
+});
+
+describe("isCardFurniture (what the column split strands at a card's edge)", () => {
+	it("catches the item's own tag line, a bare italic tag, and a ○ resource line", () => {
+		expect(isCardFurniture(", reach, magical", ", reach, magical")).toBe(true);
+		expect(isCardFurniture("*magical*", "magical")).toBe(true);
+		expect(isCardFurniture("Casting penalty", "Casting penalty ○")).toBe(true);
+	});
+	it("keeps the card's own prose", () => {
+		expect(isCardFurniture("When you’ve completed all the requirements, gain the Mighty Servant (see reverse).", "")).toBe(false);
+	});
+});
+
+describe("isStatBlockFragment (a follower's block, stranded as loose paragraphs)", () => {
+	it("catches the labels, the bare Armor number and a multi-field line", () => {
+		expect(isStatBlockFragment("**HP** **Armor**")).toBe(true);
+		expect(isStatBlockFragment("4")).toBe(true);
+		expect(isStatBlockFragment("Max 24 Made of stone **Damage** stone fists d10+1")).toBe(true);
+		expect(isStatBlockFragment("**Cost** wonder, excitement, joy (Loyalty)")).toBe(true);
+	});
+	it("keeps prose that merely mentions the follower", () => {
+		expect(isStatBlockFragment("When **_the Mighty Servant makes a move at your behest_**, on a 6-, mark a consequence.")).toBe(false);
+	});
+});
+
+describe("parseFront — a rollable trigger becomes an inline move, in the book's order", () => {
+	const front = parseFront([
+		_heading("Mindgem"),
+		_para("◇ ◇ , slow, indestructible"),
+		_para("A chunk of makerglass the size of a human head."),
+		_rule(),
+		_para("When you **_consult the Mindgem_**, ask a question and roll +INT: **on a 10+**, it answers."),
+		_list(["ä The answer is cryptic"]),
+		_rule(),
+		_para("To assemble the Mindgem’s body:"),
+		_list(["□ Recover its ◇ “heart”"], ["□ Puzzle out how to assemble all the pieces"]),
+		_para("When you’ve completed all the requirements, gain the Mighty Servant (see reverse)."),
+	], { name: "Mindgem", slug: "mindgem", major: true });
+	const list = front.choices[0].list;
+
+	it("puts the move grant where the trigger was printed, not at the end of the card", () => {
+		expect(list.map((e) => e.slug)).toEqual([undefined, "consult-mindgem", undefined, "recover-heart", "puzzle-out", undefined]);
+		expect(list[1].grants).toEqual([{ type: "move", slug: "consult-mindgem", locations: ["inline"] }]);
+	});
+	it("gives the move the whole block — its option bullets included", () => {
+		expect(front._frontMoves).toHaveLength(1);
+		expect(front._frontMoves[0].text).toBe("When you **_consult the Mindgem_**, ask a question and roll +INT: **on a 10+**, it answers.\n- The answer is cryptic");
+	});
+	it("ends the trigger at the rule, so the paragraph under it is the card's own row", () => {
+		expect(list[2].content.text).toBe("To assemble the Mindgem’s body:");
+	});
+	it("keeps each task a single checkbox and the ◇ load pips the book prints in it", () => {
+		expect(list[3].track).toEqual({ max: 1 });
+		expect(list[3].content.text).toBe("Recover its ◇ \"heart\"");
+	});
+	it("keeps the closing instruction under the task list", () => {
+		expect(list.at(-1).content.text).toBe("When you’ve completed all the requirements, gain the Mighty Servant (see reverse).");
+	});
+});
+
+describe("parseBack — a major card's own prose and its dice table", () => {
+	const back = parseBack([
+		_heading("Mysteries of the Mindgem"),
+		_para("When **_the Mighty Servant makes a move at your behest_**, on a 6-, mark a consequence."),
+		_para("**HP** **Armor**"),
+		_para("Max 24 Made of stone **Damage** stone fists d10+1"),
+		_heading("Consequences"),
+		_list(["□ It remembers its original purpose. Roll 1d4 below. **1d4** purpose cost"]),
+		{ type: "table", rows: [
+			{ roll: { text: "1" }, rest: [_line("To punish")] },
+			{ roll: { text: "2" }, rest: [_line("To preserve")] },
+			{ roll: { text: "3" }, rest: [_line("To purge")] },
+			{ roll: { text: "4" }, rest: [_line("To build")] },
+		] },
+	], { slug: "mindgem", name: "Mindgem", major: true });
+
+	it("keeps the prose printed before the first section as the back's own", () => {
+		expect(back.description).toBe("When **_the Mighty Servant makes a move at your behest_**, on a 6-, mark a consequence.");
+	});
+	it("drops the follower stat-block fragments the column split strands beside it", () => {
+		expect(back.description).not.toContain("Armor");
+		expect(back.description).not.toContain("stone fists");
+	});
+	it("promotes the dice table to a RollTable the consequence links inline", () => {
+		expect(back.rollTables).toHaveLength(1);
+		expect(back.rollTables[0]).toMatchObject({ formula: "1d4", name: "Mysteries of the Mindgem" });
+		expect(back.rollTables[0].results.map((r) => r.description)).toEqual(["To punish", "To preserve", "To purge", "To build"]);
+		const row = back.consequences.list[0];
+		expect(row.content.text).toBe(`It remembers its original purpose. Roll 1d4 below.\n\n@DrawTableInline[${back.rollTables[0].uuid}]{1d4}`);
 	});
 });

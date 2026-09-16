@@ -10,8 +10,8 @@ import {
 	incrementMove,
 	decrementMove,
 	buildMoveSnapshot,
-	findMoveItemBySlug,
 	openMoveSheet,
+	resolveMoveBySlug,
 } from "../embeddedMoves.js";
 import { toSlug } from "../../utils/slug.js";
 
@@ -112,10 +112,21 @@ export class SteadingMoves {
 	}
 
 
+	// Roll one of the steading's own moves by slug — the seasonal turn rolls Seasons Change through
+	// here so it goes out as an ordinary move roll rather than a second kind of card.
+	// Owned first, then the pack — the moves an improvement CONFERS are rendered from the pack and
+	// never seeded, so the aurochs hunt has no owned id to find it by. See resolveMoveBySlug.
+	async roll(moveSlug) {
+		const item = await resolveMoveBySlug(this._actor, moveSlug, this._repo);
+		if (item) await this._actor.rollItem(item);
+		return Boolean(item);
+	}
+
 	// Post the move's full text (description + all result tiers) to chat, without rolling.
 	async sendToChat(moveSlug) {
-		const item = findMoveItemBySlug(this._actor, moveSlug);
+		const item = await resolveMoveBySlug(this._actor, moveSlug, this._repo);
 		if (item) await this._actor.sendItemToChat(item);
+		return Boolean(item);
 	}
 
 	// One MoveCategorySnapshot per non-empty category the Moves TAB lists. Categories that claim a
@@ -124,22 +135,31 @@ export class SteadingMoves {
 	//
 	// Descriptions are left as RichText for the shared enrichRichTextTree pass (run in the sheet's
 	// getData) — buildMoveSnapshot wraps them, no bespoke enrichHTML here.
-	async buildSnapshot() {
-		const built = await Promise.all(SteadingMoveCategories.inMovesList().map(c => this._buildCategory(c)));
+	async buildSnapshot(rollNotes = new Map()) {
+		const built = await Promise.all(SteadingMoveCategories.inMovesList()
+			.map(c => this._buildCategory(c, rollNotes)));
 		return built.filter(Boolean);
 	}
 
-	/** One category by key, for the tab that owns it. Null when the steading carries none of its moves. */
-	async categorySnapshot(categoryKey) {
+	/**
+	 * One category by key, for the tab that owns it. Null when the steading carries none of its moves.
+	 *
+	 * `rollNotes` is what the row reminds the table with — see SteadingRollNotes. Passed IN rather than
+	 * asked for, because it is composed from the improvements and the debilities and a move has no way
+	 * to reach either. The Seasons Change category is asked for without any: no advantage clause names
+	 * a seasons move and no debility hinders one, so there is nothing for those rows to say.
+	 */
+	async categorySnapshot(categoryKey, rollNotes = new Map()) {
 		const category = SteadingMoveCategories.byKey(categoryKey);
-		return category ? this._buildCategory(category) : null;
+		return category ? this._buildCategory(category, rollNotes) : null;
 	}
 
-	async _buildCategory(category) {
-		const items = this._sortedMovesIn(category);
+	async _buildCategory(category, rollNotes = new Map()) {
+		const items = this._visibleMovesIn(category);
 		if (!items.length) return null;
 		const moves = await Promise.all(items.map(item =>
-			buildMoveSnapshot(item, category.key, computeSelectable(item), this._resourceController)
+			buildMoveSnapshot(item, category.key, computeSelectable(item), this._resourceController,
+				null, rollNotes.get(item.system?.slug ?? toSlug(item.name)) ?? null)
 		));
 		return new MoveCategorySnapshotBuilder()
 			.withKey(category.key)
@@ -162,5 +182,12 @@ export class SteadingMoves {
 
 	_movesIn(categoryKey) {
 		return [...this._actor.items].filter(i => i.type === "move" && i.system?.categoryKey === categoryKey);
+	}
+
+	// What the SHEET shows of a category — its moves less the ones it owns but does not draw. Applied
+	// on the way out rather than at seed time: the items stay on the actor, so nothing is lost and a
+	// later decision to show one again is a one-line change here.
+	_visibleMovesIn(category) {
+		return this._sortedMovesIn(category).filter(i => category.shows(i.system?.slug ?? toSlug(i.name)));
 	}
 }

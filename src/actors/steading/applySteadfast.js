@@ -1,17 +1,56 @@
+import { Impressions } from "../../model/data/steading/Impressions.js";
+import { NeighborPlace } from "./NeighborPlace.js";
+import { Seasons } from "../../model/data/steading/Seasons.js";
+import { isUnnamedActor } from "../unnamedActor.js";
 // Apply a steadfast's definition to a steading actor: copy the shared profile fields onto the actor
 // (independent copies it then edits in play — the character/playbook pattern, where the actor's live
 // state lives on the actor, seeded from the definition) and record which steadfast it came from. The
-// actor's runtime state (residentPeople, neighborPeople, debilities, content, improvementValues) is
+// actor's runtime state (folk, debilities, content, improvementValues) is
 // left untouched.
-const PROFILE_FIELDS = ["attributes", "assets", "placesOfInterest", "neighborPlaces", "residents", "improvements"];
+const PROFILE_FIELDS = ["attributes", "assets", "placesOfInterest", "neighborPlaces", "residents", "improvements", "impressions"];
 
-export async function applySteadfast(actor, steadfast) {
+// The update a steadfast writes onto a steading: its profile fields as independent copies, which
+// steadfast they came from, and the starting baselines derived from them.
+function steadfastUpdate(actor, steadfast) {
 	const src = steadfast.system;
-	const update = { "system.steadfast": src.slug, name: steadfast.name };
+	const update = { "system.steadfast": src.slug };
 	for (const field of PROFILE_FIELDS) update[`system.${field}`] = structuredClone(src[field]);
+	update["system.neighborPlaces"] = withTableRecord(update["system.neighborPlaces"], actor.system?.neighborPlaces);
 	// The steadfast's attributes are its starting values; keep an immutable copy so the "Starts at …"
 	// notes stay correct after the live `attributes` are edited in play.
 	update["system.startingAttributes"] = structuredClone(src.attributes);
+	// Every steading begins in spring, so it begins with something to say about spring: the wheel
+	// stamps an impression each time it turns, and without this the very first season — the one a
+	// new steading spends its whole first play in — would be the only one with none.
+	const impression = Impressions.fromRaw(src.impressions)
+		.pickFor(Seasons.byKey(actor.system?.season));
+	update["system.seasonImpression"] = impression ?? "";
+	return update;
+}
+
+// Half of a neighbour's row is not the steadfast's to give, so copying one wholesale would take the
+// table's half with it: the note they have kept on the place all campaign, and the travel time they
+// measured themselves. Both are carried across from the steading's existing rows — see
+// NeighborPlace.fromDefinition, which states which field is which and is read by the migration too.
+//
+// Re-applying a steadfast IS meant to overwrite the definition; a note is simply not part of one.
+function withTableRecord(places, current) {
+	const stored = new Map((current ?? []).map(place => [place.slug, place]));
+	return (places ?? []).map(place => ({ ...NeighborPlace.fromDefinition(place, stored.get(place.slug)) }));
+}
+
+// Adopt a steadfast wholesale, the steading taking its name too: the drop path and the name
+// combobox's picker, where naming the steading after the place is the point of the gesture.
+export async function applySteadfast(actor, steadfast) {
+	await actor.update({ ...steadfastUpdate(actor, steadfast), name: steadfast.name });
+}
+
+// Seed a brand-new steading with a steadfast's values while keeping the name its creator typed —
+// picking Stonetop's starting numbers is not a request to be called Stonetop. An actor nobody named
+// (the create dialog's blank box leaves Foundry's placeholder behind) does take the steadfast's name.
+export async function seedSteadfast(actor, steadfast) {
+	const update = steadfastUpdate(actor, steadfast);
+	if (isUnnamedActor(actor)) update.name = steadfast.name;
 	await actor.update(update);
 }
 

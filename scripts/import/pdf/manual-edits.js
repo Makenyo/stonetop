@@ -84,23 +84,6 @@ export const MANUAL_EDITS = {
 			note: "bugs.md 14b: service/favor — split 'Weeks of guided study' from the guide sub-header",
 		},
 	],
-	// A hyphen that ends a line is usually the book breaking a word ("aethe-" + "rium"), and the
-	// renderer heals it by dropping the hyphen. These two are real compounds that happen to break at
-	// their own hyphen, so healing them fuses a word that should keep it.
-	"ustrina": [
-		{
-			find: "goldembroidered cloak",
-			replace: "gold-embroidered cloak",
-			note: "real compound fused by the line-break de-hyphenator",
-		},
-	],
-	"primordial-powers": [
-		{
-			find: "with punchedout stencils",
-			replace: "with punched-out stencils",
-			note: "real compound fused by the line-break de-hyphenator",
-		},
-	],
 };
 
 // The same treatment for the arcana pack source, keyed by arcanum slug and applied by build-arcana.js
@@ -141,16 +124,9 @@ export const BOOK_ONE_EDITS = {
 			// groupRows treats it as a row of its own and orders it after the rest, which lands the
 			// comma at the end and runs the marks together. Repairing the row grouping is a change to
 			// how EVERY Book II column is read, so this one sentence is corrected instead.
-			find: /Mark the ◇◇◇, or next to an item to , indicate you are carrying it\./,
+			find: /Mark the ◇◇◇, or next to an item to □, indicate you are carrying it\./,
 			replace: "Mark the ◇, ◇◇, or □ next to an item to indicate you are carrying it.",
 			note: "Inventory: 'Mark the ◇, ◇◇, or □' — cells reordered by row grouping",
-		},
-		{
-			// A mark from the sample-insert illustration, which reaches above the bounds its extracted
-			// image reports, spliced into the middle of a word.
-			find: /fill out you○r Inventory insert/,
-			replace: "fill out your Inventory insert",
-			note: "Inventory: stray figure mark inside 'your'",
 		},
 	],
 };

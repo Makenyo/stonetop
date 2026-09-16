@@ -111,15 +111,36 @@ describe("tab toolbar contract", () => {
 		expect(ruleBlock(".stonetop-insert-remove")).not.toContain("position: absolute");
 	});
 
-	// Narrow layout floats a sidebar toggle in the tab's top-right corner (26px at right:2). Anything
-	// else that lives there — the pinned toolbars, the insert controls — has to clear it or ends up
-	// underneath.
-	it("clears the narrow-layout sidebar toggle in every corner control", () => {
+	// A shut rail folds to a strip down the tab's edge — at a narrow width, where the rail is a
+	// drawer over the tab, and at any width where the reader has put the rail away. The strip is
+	// positioned, so the tab runs clean underneath it unless something steps aside.
+	//
+	// The REGION steps aside, once, rather than the two or three controls that used to share a corner
+	// with a 26px button: a strip is against every line of the tab, not just the top one, and paying
+	// per control cost the Play tab the first characters of every row in it.
+	//
+	// A MARGIN, because on the character sheet that region is the scrolling box itself — padding
+	// moved its content and left its border box, and so its scrollbar, under the strip. The geometry
+	// that proves it is in tests/styles/rail-drawer.test.js; this only pins which property is used.
+	it("steps the whole tab aside for the folded rail, on both sides", () => {
+		for (const side of ["left", "right"]) {
+			const rule = `.stonetop-rail-layout[data-side="${side}"] > .stonetop-rail-main { margin-${side === "left" ? "left" : "right"}: var(--rail-toggle-gutter); }`;
+			expect(css, `a ${side}-hand rail's tab does not step aside for the strip`).toContain(rule);
+		}
+
+		// And no control pays it a second time: doubled, the gutter is a ragged edge where one tab
+		// indents twice as far as the one beside it.
+		for (const selector of [".stonetop-moves-toolbar", ".stonetop-playbook-toolbar", ".stonetop-insert-actions"]) {
+			const at = css.indexOf(`.stonetop-rail-layout[data-side="right"] ${selector}`);
+			expect(at, `${selector} spends the gutter the region already spent`).toBe(-1);
+		}
+
+		// Set where the region can read it, in both states that fold the rail — and set FROM the
+		// strip's own width, so widening the strip cannot leave the tab underneath it.
+		const gutter = "--rail-toggle-gutter: calc(var(--rail-strip) + 6px)";
 		const narrow = css.slice(css.indexOf("@container (max-width: 900px)"));
-		for (const selector of [".stonetop-moves-toolbar", ".stonetop-playbook-toolbar", ".stonetop-insert-actions"])
-			expect(narrow).toContain(selector);
-		expect(narrow).toContain("right: 32px");
-		expect(narrow).toContain("padding-right: 32px");
+		expect(narrow).toContain(gutter);
+		expect(css).toContain(`.rail-shut > .stonetop-rail-main { ${gutter}; }`);
 	});
 
 	it("marks the moves filter as the toggle that decorates rather than re-renders", () => {
@@ -173,9 +194,10 @@ describe("tab toolbar contract", () => {
 		expect(template.slice(toolbarClose + "</div>".length, groupAt)).not.toContain("<");
 	});
 
-	// ...and the sibling the selector names has to be what that partial actually emits.
+	// ...and the sibling the selector names has to be what that partial actually emits. A leading
+	// Handlebars comment emits nothing, so it is stripped first — the contract is about output.
 	it("renders each group behind the class the selector matches", () => {
-		expect(read("templates/actor/partials/move-group.hbs").trimStart())
-			.toMatch(/^<div class="stonetop-move-group">/);
+		const emitted = read("templates/actor/partials/move-group.hbs").replace(/^\s*\{\{!--.*?--\}\}/s, "").trimStart();
+		expect(emitted).toMatch(/^<div class="stonetop-move-group">/);
 	});
 });

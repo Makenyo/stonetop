@@ -59,20 +59,63 @@
         },
         {
           "type": "entry",
+          "slug": "pull-together",
           "content": {
             "title": null,
             "text": "Pulling Together, costing a month and 1 Surplus."
-          }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, increase Fortunes by 1, add \"Palisade\" to the Fortifications list and draw it on the map.\n\nHenceforth, when you take advantage of the palisade, you have advantage to Deploy."
+          },
+          "track": {
+            "max": 1
           }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "timber",
+        "engineer-foreman",
+        "rope-nails-pitch",
+        "pull-together"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "fortifications",
+          "text": "Palisade"
+        },
+        "text": "add \"Palisade\" to the Fortifications list and draw it on the map"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you take advantage of the palisade_**"
+        },
+        "condition": true,
+        "advantage": {
+          "moves": [
+            "deploy"
+          ]
+        },
+        "text": "you have advantage to Deploy"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, increase Fortunes by 1, add \"Palisade\" to the Fortifications list and draw it on the map.\n\nHenceforth, when you take advantage of the palisade, you have advantage to Deploy."
+  ]
 }

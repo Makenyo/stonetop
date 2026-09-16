@@ -1,6 +1,28 @@
-{{!-- One move row body (shared between the moves tab and the major-arcana card). Context is a
-      MoveSnapshot; params: showCheck (render the acquisition checkbox), categoryKey, allowAdditional.
-      The caller supplies the <li>/<ol> wrapper. --}}
+{{!-- One move row body (shared between the moves tab, the major-arcana card and the steading's rail).
+      Context is a MoveSnapshot; params: showCheck (render the acquisition checkbox), categoryKey,
+      allowAdditional, `disclosure` and `startOpen`. The caller supplies the <li>/<ol> wrapper.
+
+      `startOpen` renders the disclosure already open — for a surface whose whole point is the move's
+      text, like the season the turn is about to roll. The reader can still shut it, and
+      OpenDisclosures remembers that they did: what it stores is what the reader CHANGED, so the
+      template is still what decides where a region starts.
+
+      `disclosure` collapses the row: the name becomes a button that opens the move's text in flow,
+      and while it is shut the row says what the move is FOR — its own trigger, as a gloss. Six moves
+      printed in full is 1400px of a column; six rows is a list you can read.
+
+      The row keeps the SAME controls either way — the die and the chat bubble, in the same places,
+      doing the same things. A disclosure changes what the row SAYS, not what it can do, so it is not
+      a second vocabulary to learn. Opening the move's own item sheet is dropped from a disclosure
+      row on purpose: the body already IS the move's text, which is what that button was for.
+
+      Activation, not proximity. A hover card would be governed by SC 1.4.13 (dismissible, hoverable,
+      persistent) and would need a second path for touch and a third for the keyboard; a disclosure
+      announces itself through `aria-expanded` and behaves identically for all three. Rows shifting
+      below the one you open was an objection to HOVER — once the trigger is a click, the shift is
+      what the reader just asked for.
+
+      They are independent, not an accordion: opening one never closes another. --}}
 <div class="stonetop-item-header">
 	{{#if showCheck}}
 	{{#if (gt selection.max 1)}}
@@ -27,22 +49,65 @@
 	       {{#if (or locked (and (not (gt selection.value 0)) (not selectable)))}}disabled{{/if}}>
 	{{/if}}
 	{{/if}}
-	{{!-- The one place a move icon renders: every surface that shows a move goes through this body,
-	      so the moves tab, side-bar, arcanum cards and the seasons tab all match. --}}
-	{{#if icon}}<img class="stonetop-move-icon" src="{{icon}}" alt="">{{/if}}
 	{{!-- The name opens the move's own item sheet, the way the Items sidebar does. A <button>, not a
 	      <strong>: core binds click only for [data-action], so anything else is keyboard-dead.
-	      data-view-state keeps it live on a locked sheet — reading a move mutates nothing. --}}
+	      data-view-state keeps it live on a locked sheet — reading a move mutates nothing.
+
+	      As a disclosure it opens the text in place instead. The button is the NAME alone: the gloss
+	      is the row's second line and ends the header (see below), so it runs the row's full width
+	      rather than stopping where the controls begin — and the button's accessible name stays
+	      "Bolster" instead of the move's whole trigger read aloud after it. Opening the move's own
+	      sheet is then a button in the body. --}}
+	{{!-- A move the book prints with no name draws none: the row is the move's own words. It still HAS
+	      a name — the roll button and the chat card below say it — so nothing here goes unannounced. A
+	      disclosure row is the exception: there the name IS the control that opens the text, so a
+	      nameless move keeps it rather than collapsing behind nothing.
+
+	      Dropping the name is not enough on its own. The header is a LABEL line, and emptied of its
+	      label it still took a line — so the die and the chat bubble stood on a blank strip above the
+	      paragraph they act on, reading as decoration belonging to nothing. The row says so with a
+	      class (move-row.hbs) and the CSS puts them on the move's own first line instead. --}}
+	{{#if (and nameless (not disclosure))}}
+	{{else if disclosure}}
+	<button type="button" class="stonetop-item-name stonetop-move-disclosure" data-action="toggleMoveBody"
+	        data-disclosure data-view-state data-move-slug="{{slug}}"
+	        aria-expanded="{{#if startOpen}}true{{else}}false{{/if}}"
+	        aria-controls="{{@root.sheetIdPrefix}}-move-{{categoryKey}}-{{slug}}">
+		<i class="fas fa-caret-right stonetop-move-caret" aria-hidden="true"></i>
+		<span class="stonetop-move-disclosure-name">{{name}}</span>
+	</button>
+	{{else}}
 	<button type="button" class="stonetop-item-name stonetop-item-name--open" data-action="openMove"
 	        data-view-state data-move-slug="{{slug}}"
 	        title="{{localize 'stonetop.character.moves.openSource'}}">{{name}}</button>
-	{{#if sourceLabel}}<span class="stonetop-item-source">{{sourceLabel}}</span>{{/if}}
+	{{/if}}
+	{{!-- The caption beside the name — an arcanum move's "Requires: Battery". Never on a disclosure
+	      row: line two there is the gloss, and a caption ahead of it stands between the move's name
+	      and the move's own words. --}}
+	{{#if (and sourceLabel (not disclosure))}}<span class="stonetop-item-source">{{sourceLabel}}</span>{{/if}}
+	{{!-- On a disclosure row the controls are one group, so they can hold the first line together
+	      while the gloss runs the full width underneath them. Opened and closed around the same
+	      controls both variants render, so there is still one set of them.
+
+	      A nameless row groups them for the same reason and a different layout: with no name there is
+	      no label line, so the group is floated onto the move's OWN first line rather than left
+	      standing on an empty one above it. Either way it is one group, so it can be placed as one
+	      thing — see .stonetop-item--nameless in the CSS. --}}
+	{{#if (or disclosure nameless)}}<span class="stonetop-item-controls">{{/if}}
 	{{!-- Any move that rolls shows its die, ticked or not: the check marks what the character has
 	      taken, not what the table is allowed to roll. --}}
+	{{!-- A <button>, not a <span>: the die is a control, so it has to be reachable by the keyboard and
+	      look like one. It is styled exactly as the steading's rating die (`.steading-roll-die`) —
+	      faint at rest, the accent under a pointer — so the two dice on one sheet mean one thing. --}}
+	{{!-- The slug rides along so a move the ACTOR DOES NOT OWN still rolls as itself: the row's
+	      `.item[data-item-id]` is how an owned move is found, and a granted move has no such id. --}}
 	{{#if rollStat}}
-	<span class="rollable move-rollable" data-roll="{{rollStat}}" data-mod="">
-		<i class="fas fa-dice-d6"></i>
-	</span>
+	<button type="button" class="rollable move-rollable" data-roll="{{rollStat}}" data-mod=""
+	        data-move-slug="{{slug}}"
+	        title="{{localize 'stonetop.a11y.rollMove' name=name}}"
+	        aria-label="{{localize 'stonetop.a11y.rollMove' name=name}}">
+		<i class="fas fa-dice-d6" aria-hidden="true"></i>
+	</button>
 	{{/if}}
 	<button type="button" class="stonetop-move-chat" data-action="moveToChat" data-move-slug="{{slug}}"
 	   title="{{localize 'stonetop.character.moves.sendToChat'}}" aria-label="{{localize 'stonetop.character.moves.sendToChat'}}">
@@ -58,6 +123,40 @@
 		{{> "stonetop.resource-input" input=resource.input moveSlug=slug}}
 	</span>
 	{{/if}}
+	{{#if (or disclosure nameless)}}</span>{{/if}}
+	{{!-- The row's second line, and the last thing in the header so it wraps under everything above
+	      it rather than under the name alone. No dash in front of it: it is its own line, not a
+	      continuation of the name. --}}
+	{{#if disclosure}}{{#if (hasText gloss)}}<span class="stonetop-move-gloss">{{gloss}}</span>{{/if}}{{/if}}
+	{{!-- Why this move might not roll a flat 2d6 — the row's third line, and always there.
+
+	      A REMINDER, and it has to read as one. Three earlier attempts said it in the row's own voice
+	      ("Advantage", "Township gives advantage") and every one of them read as a state: the lines
+	      above are facts about the move, so a fourth joins them and claims advantage is already on. So
+	      the line says what CAN be applied, and names the improvement that permits it — the source is
+	      what makes it an offer rather than a status.
+
+	      Which is also why there is no collapsing: naming the source is only possible one source at a
+	      time. Trade & Barter can draw on three improvements at once and costs three lines. Height was
+	      the reason for the badge that replaced them, and a badge that reads as "already applied" is a
+	      worse problem than a tall row.
+
+	      A span and never a button: the roll-mode control is the table's, and nothing here touches it.
+	      Nothing is behind a hover either — `data-tooltip` binds pointer events only and is invisible to
+	      assistive tech.
+
+	      Deliberately NOT `stonetop-unmarked`: this is a list of prose, so it takes the book's swirl like
+	      every other one. The shared rule owns the indent the swirl is positioned into — see the CSS. --}}
+	{{#if rollNotes.all.length}}
+	<ul class="stonetop-move-rollnotes">
+		{{#each rollNotes.all}}
+		<li class="stonetop-move-rollnote">
+			<span class="stonetop-move-rollnote-verdict">{{localize verdictKey source=source mode=(localize modeKey)}}</span>
+			{{#if clause}}<span class="stonetop-move-rollnote-clause">{{rich clause}}</span>{{/if}}
+		</li>
+		{{/each}}
+	</ul>
+	{{/if}}
 	{{#if allowAdditional}}
 	<button type="button" class="stonetop-other-move-delete" data-action="deleteOtherMove" data-move-slug="{{slug}}" data-name="{{name}}" title="{{localize 'stonetop.character.moves.removeMove'}} — {{localize 'stonetop.confirm.deleteHint'}}" aria-label="{{localize 'stonetop.character.moves.removeMove'}} — {{localize 'stonetop.confirm.deleteHint'}}">
 		<i class="fas fa-trash"></i>
@@ -65,7 +164,14 @@
 	{{/if}}
 </div>
 {{#if requirement}}<div class="stonetop-item-requirement{{#unless requirement.met}} stonetop-item-requirement--unmet{{/unless}}">{{localize "stonetop.character.moves.requires"}}: {{requiresLabel}}{{#unless requirement.met}} ({{localize "stonetop.character.moves.notMet"}}){{/unless}}</div>{{/if}}
+
+{{!-- Everything below is the same content in both variants; a disclosure just wraps it in the region
+      its button controls. `hidden` rather than a class, because a hidden region leaves the tab order
+      and the accessibility tree for free — which is exactly what `aria-expanded="false"` promises. --}}
+{{#if disclosure}}<div class="stonetop-move-body" id="{{@root.sheetIdPrefix}}-move-{{categoryKey}}-{{slug}}" {{#unless startOpen}}hidden{{/unless}}>{{/if}}
+
 <div class="stonetop-item-description">{{rich description}}</div>
+
 {{#if choices}}
 <div class="stonetop-move-choices" data-move-slug="{{slug}}">
 	{{#each choices.list}}
@@ -73,3 +179,5 @@
 	{{/each}}
 </div>
 {{/if}}
+
+{{#if disclosure}}</div>{{/if}}

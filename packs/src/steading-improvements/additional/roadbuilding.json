@@ -71,16 +71,29 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_mark all the require_****_ments_**, you can expand or repair the Makers’ Roads. Every ~25 miles of road requires **Pulling Together**, one season of labor, 2 Surplus to feed the laborers, and a purse of silvers for payment and supplies."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "unlock-secrets",
+        "teach-runes",
+        "secure-nigh",
+        "recruit-foreman",
+        "recruit-maintain"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "text": "you can expand or repair the Makers' Roads. Every ~25 miles of road requires Pulling Together, one season of labor, 2 Surplus to feed the laborers, and a purse of silvers for payment and supplies"
+      }
+    ]
   },
-  "folder": "1UlzxDTaEInlMvWC"
+  "folder": "1UlzxDTaEInlMvWC",
+  "_prose": [
+    "When you **_mark all the requirements_**, you can expand or repair the Makers’ Roads. Every ~25 miles of road requires **Pulling Together**, one season of labor, 2 Surplus to feed the laborers, and a purse of silvers for payment and supplies."
+  ]
 }

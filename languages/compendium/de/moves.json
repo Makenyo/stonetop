@@ -205,7 +205,7 @@
       "text": "Amulette & Talismane"
     },
     "description": {
-      "source": "When you **_craft a protective charm for someone_**, spend 1 Stock and name a source of harm (fire, stabbing, etc.). When **_they would suffer such harm while bearing your charm_**, roll +INT: **on a 10+**, they ignore the harm entirely; **_on a 7-9_**, they suffer only half the damage or effect; **on a 6-**, they suffer the harm normally. One can benefit from only 1 charm at a time, and it loses its potency after 1 use.",
+      "source": "When you **_craft a protective charm for someone_**, spend 1 Stock and name a source of harm (fire, stabbing, etc.). When **_they would suffer such harm while bearing your charm_**, roll +INT: **on a 10+**, they ignore the harm entirely; **on a 7-9**, they suffer only half the damage or effect; **on a 6-**, they suffer the harm normally. One can benefit from only 1 charm at a time, and it loses its potency after 1 use.",
       "text": "Wenn du **_für jemanden einen Schutzzauber anfertigst_**, gib 1 Vorrat aus und nenne eine Schadensquelle (Feuer, Stichverletzung usw.). Wenn die Person, **_die deinen Zauber trägt, solchen Schaden erleiden würde_**, würfle +IN. **Bei einer 10+** ignoriert sie den Schaden vollständig. **Bei 7–9** erleidet sie nur den halben Schaden oder Effekt. **Bei einer 6−** erleidet sie den Schaden wie üblich. Eine Person kann immer nur von 1 Zauber gleichzeitig profitieren, und nach einer Anwendung verliert der Zauber seine Wirkung."
     },
     "moveResults/success/value": {
@@ -253,6 +253,24 @@
     "description": {
       "source": "You are accompanied by a beast of uncommon loyalty and cleverness. See the Animal Companion insert for details.",
       "text": "Du wirst von einem Tier von ungewöhnlicher Treue und Klugheit begleitet. Siehe hierzu für weitere Einzelheiten in die Beilage Tiergefährte."
+    }
+  },
+  "anoint-figurine-own": {
+    "name": {
+      "source": "Anoint a figurine with your own blood and then sleep in its presence",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_anoint a figurine with your own blood and then sleep in its presence_**, roll +CON: **on a 10+**, you dream lucidly of the spirit in the figurine, which speaks an archaic but intelligible dialect—it might be persuaded to reveal its name, or the name of its fellow spirit, or the method of calling them forth; **on a 7-9**, you dream of the spirit, but the dream is fleeting, strange, and disorienting—ask the GM what you learn of the spirit.",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "you dream lucidly of the spirit in the figurine, which speaks an archaic but intelligible dialect—it might be persuaded to reveal its name, or the name of its fellow spirit, or the method of calling them forth",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "you dream of the spirit, but the dream is fleeting, strange, and disorienting—ask the GM what you learn of the spirit.",
+      "text": ""
     }
   },
   "arcane-adept": {
@@ -463,8 +481,8 @@
       "text": "Vorbereiten"
     },
     "description": {
-      "source": "When you **_prepare for what's coming or seek the favor of the gods_**, say how and answer the GM's questions. Then, hold Preperation based on the amount of time you devote:\n\n- A week or so: 1 Preperation\n- A month or so: 2 Preperation\n- The better part of a season: 3 Preperation\n When you **_make any roll to which your efforts might apply_**, you may spend 1 Preperation to add +1 to that roll, after it is made (maximum +1 per roll).",
-      "text": "Wenn du **_dich auf das, was dir bevorsteht, vorbereitest oder die Gunst der Götter suchst_**, beschreibe, wie du dabei vorgehst, und beantworte die Fragen des SL. Nimm dann entsprechend der Zeit, die du dafür aufgewendet hast, Vorbereitung:\n\n- Etwa eine Woche: 1 Vorbereitung\n- Etwa einen Monat: 2 Vorbereitung\n- Den größten Teil einer Jahreszeit: 3 Vorbereitung\n Wenn du **_würfelst und deine Vorbereitung Einfluss auf das Ergebnis haben könnte_**, kannst du nach dem Würfeln 1 Vorbereitung ausgeben, um +1 auf das Ergebnis zu erhalten (maximal +1 je Wurf)."
+      "source": "When you **_prepare for what's coming or seek the favor of the gods_**, say how and answer the GM's questions. Then, hold Preparation based on the amount of time you devote:\n\n- A week or so: 1 Preparation\n- A month or so: 2 Preparation\n- The better part of a season: 3 Preparation\n\nWhen you **_make any roll to which your efforts might apply_**, you may spend 1 Preparation to add +1 to that roll, after it is made (maximum +1 per roll).",
+      "text": "Wenn du **_dich auf das, was dir bevorsteht, vorbereitest oder die Gunst der Götter suchst_**, beschreibe, wie du dabei vorgehst, und beantworte die Fragen des SL. Nimm dann entsprechend der Zeit, die du dafür aufgewendet hast, Vorbereitung:\n\n- Etwa eine Woche: 1 Vorbereitung\n- Etwa einen Monat: 2 Vorbereitung\n- Den größten Teil einer Jahreszeit: 3 Vorbereitung\n\n Wenn du **_würfelst und deine Vorbereitung Einfluss auf das Ergebnis haben könnte_**, kannst du nach dem Würfeln 1 Vorbereitung ausgeben, um +1 auf das Ergebnis zu erhalten (maximal +1 je Wurf)."
     },
     "resource/title": {
       "source": "Preparation",
@@ -477,7 +495,7 @@
       "text": "Geliehene Kraft"
     },
     "description": {
-      "source": "When **_a spirit or beast loans you power_**, ask the GM for one of its tags or moves. Store it in your pouch in place of 1 Stock. When you **_use the borrowed tag or move_**, roll +WIS.",
+      "source": "When **_a spirit or beast loans you power_**, ask the GM for one of its tags or moves. Store it in your pouch in place of 1 Stock. When you **_use the borrowed tag or move_**, roll +WIS: **on a 10+**, you do it and can use the power again; **on a 7-9**, you do it, but lose the power.",
       "text": "Wenn **_ein Geist oder eine Bestie dir eine Kraft verleiht_**, frage den SL nach einer seiner Eigenschaften oder einem seiner Spielzüge. Bewahre diese Kraft in deinem Beutel anstelle von 1 Vorrat auf. Wenn du **_die geliehene Eigenschaft oder den Spielzug einsetzt_**, würfle +WE. **Bei einer 10+** gelingt es dir, und du kannst die Kraft erneut einsetzen. **Bei 7–9** gelingt es dir, aber du verlierst die Kraft."
     },
     "moveResults/success/value": {
@@ -491,6 +509,28 @@
     "moveResults/failure/value": {
       "source": "The GM makes a move.",
       "text": "Der SL macht einen Spielzug."
+    }
+  },
+  "brandish-azure-hand": {
+    "name": {
+      "source": "Brandish the Azure Hand at a source of elemental energy",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_brandish the Azure Hand at a source of elemental energy_**, roll +CON: **on a 10+**, you gather the energy about the Hand in a swirling vortex for as long as you grip the staff or until you choose 1 from the list below; **on a 7-9**, as a 10+, but the vortex is unstable and maintaining it requires all your focus.\n- Direct the energy into a vessel able to contain it\n- Discharge the energy harmlessly into the earth\n- Fling the energy, rolling +INT to Let Fly (*thrown*, *dangerous*), inflicting damage and other effects of the GM’s choosing\n- Use the energy to fuel or empower some other magic.\n\n**On a 6-**, instead of marking XP, mark 1:",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "you gather the energy about the Hand in a swirling vortex for as long as you grip the staff or until you choose 1 from the list below",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "as a 10+, but the vortex is unstable and maintaining it requires all your focus.",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "instead of marking XP, mark 1:",
+      "text": ""
     }
   },
   "break-bread": {
@@ -661,6 +701,16 @@
       "text": ""
     }
   },
+  "call-upon-judge": {
+    "name": {
+      "source": "Call Upon a Judge",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_call upon the Judge of another steading for aid or information_**, they are oathbound to give it. You are likewise oathbound to support them.",
+      "text": "Wenn du **_den Richter einer anderen Siedlung um Hilfe oder Informationen bittest_**, ist dieser durch einen Eid verpflichtet, sie dir zu gewähren. Ebenso bist du durch einen Eid verpflichtet, ihn zu unterstützen."
+    }
+  },
   "carved-out-of-wood": {
     "name": {
       "source": "Carved Out of Wood",
@@ -789,6 +839,28 @@
       "text": "Dein Manöver misslingt, und du erleidest den Angriff deines Gegners (nach Ermessen des SL)."
     }
   },
+  "commune-with-aratis": {
+    "name": {
+      "source": "Commune with Aratis",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_spend a few days communing with Aratis about a threat facing Stonetop or civilization as a whole_**, roll +WIS: **on a 7+**, Aratis reveals the course of action she would have you take; **on a 10+**, you also hold 2 Sanction. While **_acting on her orders_**, spend 1 Sanction to add +1 to a roll you just made.",
+      "text": "Wenn du **_einige Tage damit verbringst, mit Aratis über eine Bedrohung für Stonetop oder die Zivilisation als Ganzes Zwiesprache zu halten_**, würfle +WE. Bei einer 7+ offenbart dir Aratis die Vorgehensweise, die sie von dir erwartet. Bei einer 10+ erhältst du außerdem 2 Gunst. Während du nach ihren Anweisungen handelst, kannst du 1 Gunst ausgeben, um +1 auf einen gerade abgelegten Wurf zu erhalten."
+    },
+    "moveResults/success/value": {
+      "source": "Aratis reveals the course of action she would have you take and hold 2 Sanction.",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "Aratis reveals the course of action she would have you take.",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "The GM makes a move.",
+      "text": "Der SL macht einen Spielzug."
+    }
+  },
   "condemn": {
     "name": {
       "source": "Condemn",
@@ -827,6 +899,28 @@
     "description": {
       "source": "Unless you're dazed, you're never caught off guard—not even when asleep or if you roll a 6-. When you **_intercept a sudden threat (to yourself or an ally)_**, you have advantage on whatever move you make.",
       "text": "Solange du nicht benommen bist, wirst du niemals überrascht – nicht einmal im Schlaf oder wenn du eine 6− würfelst. Wenn du **_eine plötzliche Bedrohung abwehrst_** (für dich selbst oder einen Verbündeten), hast du bei dem Spielzug, den du daraufhin ausführst, einen Vorteil."
+    }
+  },
+  "consult-mindgem-about": {
+    "name": {
+      "source": "Consult the Mindgem about the Makers, their arts, or their history",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_consult the Mindgem about the Makers, their arts, or their history_**, ask a question and roll +INT: **on a 7+**, it answers but **on a 10+**, pick 1; **on a 7-9**, pick 2:\n- The answer is cryptic, vague, or lacking crucial context\n- It takes a long time—hours or even days—to get the answer\n- Your mind is left reeling; take disadvantage on your next roll\n\n**On a 6-**, choose 1:\n- It wastes your time with irrelevant histories and data\n- It answers now, but refuses to answer further questions until you make progress towards restoring its body (or, if its body is assembled, until you pay its Cost).",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "it answers but pick 1",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "it answers but pick 2:",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "choose 1:",
+      "text": ""
     }
   },
   "convalesce": {
@@ -939,8 +1033,8 @@
       "text": "Danus Griff"
     },
     "description": {
-      "source": "When you **_call on the world itself to bind a spirit or a perversion of nature_**, spend 1 Stock and roll +WIS: **_on a 7+_**, roots, vines, and earth pull at them, and they pick 1; **on a 10+**, as a 7-9, but both apply.\n\n- They're restrained, unable to act freely until your focus slips or they tear their way free\n- They take 2d4 damage (ignores armor)\nIf this brings them to 0 HP, they are pulled into the earth and bound in rune-etched stone.",
-      "text": "Wenn du **_die Welt selbst anrufst, um einen Geist oder eine Perversion der Natur zu binden_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 7+** greifen Wurzeln, Ranken und Erde nach ihnen, und sie wählen 1. **Bei einer 10+**, wie bei 7–9, aber beide Effekte treten ein.\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung).\nWenn ihre TP dadurch auf 0 sinken, werden sie in die Erde gezogen und in einen mit Runen verzierten Stein verwandelt."
+      "source": "When you **_call on the world itself to bind a spirit or a perversion of nature_**, spend 1 Stock and roll +WIS: **on a 7+**, roots, vines, and earth pull at them, and they pick 1; **on a 10+**, as a 7-9, but both apply.\n\n- They're restrained, unable to act freely until your focus slips or they tear their way free\n- They take 2d4 damage (ignores armor)\n\nIf this brings them to 0 HP, they are pulled into the earth and bound in rune-etched stone.",
+      "text": "Wenn du **_die Welt selbst anrufst, um einen Geist oder eine Perversion der Natur zu binden_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 7+** greifen Wurzeln, Ranken und Erde nach ihnen, und sie wählen 1. **Bei einer 10+**, wie bei 7–9, aber beide Effekte treten ein.\n\n- Sie sind gefesselt und können nicht frei handeln, bis deine Konzentration nachlässt oder sie sich losreißen.\n- Sie erleiden 2W4 Schaden (ignoriert Rüstung).\n\nWenn ihre TP dadurch auf 0 sinken, werden sie in die Erde gezogen und in einen mit Runen verzierten Stein verwandelt."
     },
     "moveResults/success/value": {
       "source": "As 7-9, but both apply.",
@@ -1185,6 +1279,24 @@
     "description": {
       "source": "When a **_session ends_**, point out how you demonstrated or struggled with your instinct. If you can, mark XP.\n\nSay how your relationship with or opinion of a PC, NPC, or group has changed. If you can, mark XP.\n\nAnswer these questions as a group. For each “yes,” everyone marks XP.\n\n- Did we learn more about the world or its history?\n- Did we defeat a threat to Stonetop or the region?\n- Did we improve our standing with our neighbors?\n- Did we make a lasting improvement to Stonetop, or tangible progress towards doing so?\n\nPraise something about the session (in the fiction or around the table) that you enjoyed or appreciated.\n\nFinally, offer up a wish for future sessions: more __, less __, a chance to __, handling __ in a different way, etc. Wishes can be about what happens in the fiction or around the table. The GM will take notes.",
       "text": "Wenn **_eine Spielsitzung endet_**, erläutere, wie du deinem Instinkt gefolgt bist oder mit ihm gerungen hast. Wenn du es kannst, markiere EP.\n\nBeschreibe, wie sich deine Beziehung oder Meinung zu einem SC, NSC oder einer Gruppe verändert hat. Wenn du es kannst, markiere EP.\n\nBeantwortet diese Fragen gemeinsam in der Gruppe. Für jedes „Ja“ markiert jeder EP.\n\n- Haben wir mehr über die Welt oder ihre Geschichte erfahren?\n- Haben wir eine Bedrohung für Stonetop oder die Region besiegt?\n- Haben wir unser Ansehen bei unseren Nachbarn verbessert?\n- Haben wir Stonetop nachhaltig verbessert oder konkrete Fortschritte dabei gemacht?\n\nLobt etwas an der Spielsitzung (in der Spielwelt oder am Spieltisch), das euch gefallen oder das ihr zu schätzen gewusst habt.\n\nÄußere zum Schluss einen Wunsch für zukünftige Spielsitzungen: mehr von …, weniger von …, eine Gelegenheit, … zu tun, mit … auf eine andere Weise umzugehen usw. Wünsche können sich sowohl darauf beziehen, was in der Spielwelt geschieht, als auch auf das Geschehen am Spieltisch. Der SL wird sich dazu Notizen machen."
+    }
+  },
+  "enter-ecstatic-delirium": {
+    "name": {
+      "source": "Enter an ecstatic delirium and allow the Ineffable Words to pour forth",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_enter an ecstatic delirium and allow the Ineffable Words to pour forth_**, roll +CON: **on a 10+**, you speak Truth, revealing something new and interesting about the current situation—ask the GM what, and all present understand this Truth as though it were spoken in their native tongue; **on a 7-9**, the 10+ result applies, but choose 1 from the list below.\n- The Truth is cryptic, vague, incomplete\n- You are overcome, collapsing in a full-body seizure\n- You draw unwanted attention",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "you speak Truth, revealing something new and interesting about the current situation—ask the GM what, and all present understand this Truth as though it were spoken in their native tongue",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "the 10+ result applies, but choose 1 from the list below.",
+      "text": ""
     }
   },
   "everything-bleeds": {
@@ -1433,6 +1545,28 @@
       "text": ""
     }
   },
+  "gaze-deeply-ice": {
+    "name": {
+      "source": "Gaze deeply into the Ice Sphere and ponder a situation, puzzle, or mystery",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_gaze deeply into the Ice Sphere and ponder a situation, puzzle, or mystery_**, ask the GM one of the questions below. The GM will answer honestly.\n- Who benefits (or would benefit) from __?\n- What about __ isn’t what it seems to be?\n- How could I learn more about __?\n- What’s the most likely outcome if __?\n- What am I overlooking?\n\nAfter the GM answers, roll +INT: **on a 10+**, hold 2 Acumen; **on a 7-9**, hold 1. While acting on the GM’s answer, you can spend Acumen 1-for-1 to:\n- Ask another question from the list above, and get an honest answer\n- Treat a 6- that you rolled as a 7-9, or a 7-9 as a 10+ **On a 6-**, your connection to your body weakens—mark a debility and mark 1 circle. The debility lasts until you spend a few days living wholly in your body and averting your gaze from the Ice Sphere.",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "hold 2 Acumen",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "hold 1. While acting on the GM’s answer, you can spend Acumen 1-for-1 to:",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "your connection to your body weakens—mark a debility and mark 1 circle. The debility lasts until you spend a few days living wholly in your body and averting your gaze from the Ice Sphere.",
+      "text": ""
+    }
+  },
   "giant-slayer": {
     "name": {
       "source": "Giant Slayer",
@@ -1460,6 +1594,28 @@
     },
     "description": {
       "source": "When you **_perform the secret rite_**, hold 3 Conduit instead of 1 (and increase your max Conduit to 3). You no longer need the effigy on your person to use Surrogate Suffering. However, any magic that divines your location or spies on you also targets the effigy.",
+      "text": ""
+    }
+  },
+  "grip-staff-close": {
+    "name": {
+      "source": "Grip the staff, close your eyes, and see through the Lidless Orb",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_grip the staff, close your eyes, and see through the Lidless Orb_**, roll +CON: **on a 10+**, choose 3 from the list below; **on a 7-9**, choose 1.\n- The orb sees through darkness, natural or magical\n- The orb sees through illusion, glamour, and invisibility\n- The orb can see strong emotions as auras radiating from people and lingering\n- on places\n- You can move about and operate effectively while seeing through the orb (otherwise, not so much) Whatever you choose, the effect lasts until you open your eyes or let go of the staff.\n\n**On a 6-**, the orb shows you a terrible vision of some distant time or place. Mark 1 (or see below) and ask the GM what you see. While the vision lasts, you are oblivious to the world around you and have disadvantage on your first roll after coming to.",
+      "text": "Wenn du **_den Stab umfasst, die Augen schließt und durch die lidlose Kugel siehst_**, würfle +KO. **Bei einer 10+** wähle 3 aus der folgenden Liste. **Bei 7–9** wähle 1.\n\n\n- Die Kugel sieht durch natürliche oder magische Dunkelheit hindurch.\n- Die Kugel sieht durch Illusionen, Trugbilder und Unsichtbarkeit hindurch.\n- Die Kugel kann starke Emotionen als Auren erkennen, die von Menschen ausstrahlen und an Orten verweilen.\n- Du kannst dich bewegen und effektiv handeln, während du durch die Kugel siehst (andernfalls eher nicht).\n\nWas auch immer du wählst, der Effekt hält an, bis du die Augen öffnest oder den Stab loslässt.\n\nBei einer 6− zeigt dir die Kugel eine schreckliche Vision von einem fernen Ort oder einer fernen Zeit. Markiere 1 (oder siehe unten) und frage den SL, was du siehst. Solange die Vision andauert, nimmst du die Welt um dich herum nicht wahr und du hast bei deinem ersten Wurf, nachdem du wieder zu dir gekommen bist, einen Nachteil."
+    },
+    "moveResults/success/value": {
+      "source": "choose 3 from the list below",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "choose 1.",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "the orb shows you a terrible vision of some distant time or place. Mark 1 (or see below) and ask the GM what you see. While the vision lasts, you are oblivious to the world around you and have disadvantage on your first roll after coming to.",
       "text": ""
     }
   },
@@ -1577,6 +1733,28 @@
     "description": {
       "source": "Each time you take this move, pick 1:\n\n- They are *exceptional* (and roll +2 instead of +1)\n- They are inured to terror & horror\n- Increase their max HP by 4 each\n- Increase their damage die one size (max d10)",
       "text": "Jedes Mal, wenn du diesen Spielzug wählst, wähle 1:\n\n- Sie sind außergewöhnlich (und würfeln +2 statt +1).\n- Sie sind abgehärtet gegen Angst und Schrecken.\n- Erhöhe ihre maximalen TP jeweils um 4.\n- Erhöhe ihren Schadenswürfel um eine Größe (max. W10)."
+    }
+  },
+  "heroic-reputation": {
+    "name": {
+      "source": "Heroic Reputation",
+      "text": "Heldenhafter Ruf"
+    },
+    "description": {
+      "source": "When you **_first meet someone from beyond Stonetop_**, roll +Fortunes: **on a 10+**, say what they’ve heard about you or Stonetop, and gain advantage on your next move against them; **on a 7-9**, say what they’ve heard; **on a 6-**, the GM decides what they’ve heard.",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "Say what they’ve heard about you or Stonetop, and gain advantage on your next move against them.",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "Say what they’ve heard.",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "The GM decides what they’ve heard.",
+      "text": ""
     }
   },
   "home-on-the-range": {
@@ -1885,6 +2063,28 @@
       "text": "Wenn du **_im Angesicht von Widrigkeiten einen Witz machst_**, kannst du +CH statt +KO würfeln."
     }
   },
+  "lead-the-aurochs-hunt": {
+    "name": {
+      "source": "Lead the Aurochs Hunt",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_lead the aurochs hunt in spring,_** roll +Defenses: **on a 10+**, gain 1d4 Surplus; **on a 7-9**, gain 1d4 Surplus, but pick 1 from the list below; **on a 6-**, pick 1 from the list below, or pick 2 and gain 1d4 Surplus.\n\n- 1d4 of the town’s horses are lamed or killed\n- A number of locals are injured; the steading marks diminished (disadvantage to Deploy, Muster, or Pull Together)\n- The GM picks an NPC present for the hunt; they are killed\n- The Hillfolk are somehow offended\n- The herd is weak; if you hunt next year they’ll be wiped out",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "Gain 1d4 Surplus.",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "Gain 1d4 Surplus, but pick 1 from the list below.",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "Pick 1 from the list below, or pick 2 and gain 1d4 Surplus.\n\n- 1d4 of the town’s horses are lamed or killed\n- A number of locals are injured; the steading marks diminished (disadvantage to Deploy, Muster, or Pull Together)\n- The GM picks an NPC present for the hunt; they are killed\n- The Hillfolk are somehow offended\n- The herd is weak; if you hunt next year they’ll be wiped out",
+      "text": ""
+    }
+  },
   "let-fly": {
     "name": {
       "source": "Let Fly",
@@ -2147,7 +2347,7 @@
       "text": ""
     },
     "description": {
-      "source": "When you **_use the Ice Sphere as a psychic anchor_**, your consciousness leaves your body and walks the world as a spirit, invisible and insubstantial. Roll +INT: **on a 10+**, hold 3 Power; **on a 7-9**, hold 2 Power; **on a 6-**, hold 2 Power and mark a Consequence. While mindwalking, you may spend your Power, 1-for-1 to:\n- Manifest as a ghostly voice and/or presence\n- Manipulate an unattended item (small or\n- Return instantly to the Ice Sphere from any distance For every 2 Consequences you mark, gain one of the following moves:",
+      "source": "When you **_use the Ice Sphere as a psychic anchor_**, your consciousness leaves your body and walks the world as a spirit, invisible and insubstantial. Roll +INT: **on a 10+**, hold 3 Power; **on a 7-9**, hold 2 Power; **on a 6-**, hold 2 Power and mark a Consequence. While mindwalking, you may spend your Power, 1-for-1 to:\n- Manifest as a ghostly voice and/or presence\n- Manipulate an unattended item (small or ◇, no bigger)\n- Return instantly to the Ice Sphere from any distance For every 2 Consequences you mark, gain one of the following moves:",
       "text": ""
     },
     "moveResults/success/value": {
@@ -2257,6 +2457,28 @@
     "description": {
       "source": "When you **_have 5 or fewer current HP_**, you impose disadvantage on any damage you take.\n\nOnce per session, when you are at Death's Door, don't roll. You get a 10+.",
       "text": "Wenn du **_aktuell 5 oder weniger TP hast_**, erhalten alle Schadenswürfe gegen dich einen Nachteil.\n\nEinmal pro Sitzung, wenn du An der Schwelle des Todes stehst, würfle nicht. Du erzielst automatisch eine 10+."
+    }
+  },
+  "news-at-the-inn": {
+    "name": {
+      "source": "News at the Inn",
+      "text": ""
+    },
+    "description": {
+      "source": "When **_the seasons change_**, whoever is friendliest rolls +Fortunes: **on a 10+**, ask the GM 3 questions about the wider world; **on a 7-9**, ask 1 question; **on a 6-**, ask 1 question, but the GM describes some trouble that stems from the inn or its guests.",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "Ask the GM 3 questions about the wider world.",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "Ask 1 question.",
+      "text": "Stelle 1 Frage."
+    },
+    "moveResults/failure/value": {
+      "source": "Ask 1 question, but the GM describes some trouble that stems from the inn or its guests.",
+      "text": ""
     }
   },
   "noble-mien": {
@@ -2821,6 +3043,28 @@
       "text": "Einmal pro Jahreszeit, wenn du **_die heiligen Rituale leitest_**, erhältst du 1 Gunst. Opferst du zusätzlich 1 Überschuss, erhältst du stattdessen 4 Gunst. Gib Gunst im Verhältnis 1:1 anstelle von Vorrat aus.\n\nWenn du **_etwas oder jemanden, den du von Herzen liebst, öffentlich opferst_**, beseitige entweder eine Beeinträchtigung der Siedlung oder erhalte einen Vorteil, wenn die Siedlung das nächste Mal +Schicksal würfelt."
     }
   },
+  "roil-anger": {
+    "name": {
+      "source": "Roil with anger",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_roil with anger_**, you do +1 damage until you calm down. But when you **_try to control your_** **_temper_**, roll +WIS: **on a 10+**, you keep your cool and act as you wish; **on a 7-9**, choose 1 from the list below; **on a 6-**, you just lose it—tell the GM what damn fool thing you end up doing.\n- Take some deep breaths and count to ten, fuming all the while\n- Vent your rage, but tell us how and on what",
+      "text": "Wenn du **_vor Wut kochst_**, verursachst du +1 Schaden, bis du dich wieder beruhigt hast. Wenn du **_jedoch versuchst, dein Temperament zu zügeln_**, würfle +WE. **Bei einer 10+** behältst du einen kühlen Kopf und handelst, wie du willst. **Bei 7–9** wählst du 1 aus der folgenden Liste. **Bei einer 6-** drehst du einfach durch – sag dem SL, was für eine Dummheiten du am Ende anstellst.\n- Atme einige Male tief durch und zähle bis zehn, während du die ganze Zeit vor Wut kochst.\n- Lass deiner Wut freien Lauf, aber erzähle uns, wie und worüber."
+    },
+    "moveResults/success/value": {
+      "source": "you keep your cool and act as you wish",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "choose 1 from the list below",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "you just lose it—tell the GM what damn fool thing you end up doing.",
+      "text": ""
+    }
+  },
   "roots-of-the-elder-tree": {
     "name": {
       "source": "Roots of the Elder Tree",
@@ -2881,20 +3125,32 @@
       "text": "Jahreszeitenwechsel: Herbst"
     },
     "description": {
-      "source": "When **_autumn falls and the land is ripe for harvest_**, whoever is most determined rolls +Fortunes: **on a 10+**, pick 1 seasonal gain; **on a 7-9**, pick 1 seasonal gain, but a threat to the steading makes itself known or gets worse; **on a 6-**, threats abound (and don't mark XP).\n\nWhatever the result, reset Fortunes to +1.\n\nWhen the harvest is complete, roll 1d4; the steading generates that much Surplus.\n\n**Seasonal gains** (pick from these when the move tells you to):\n\n- **Population boom:** A number of youth come of age, and/or outsiders settle here. Increase Population by 1 (max +3).\n- **Tor's blessing:** Fine weather abounds. Take +1 to Pull Together this season, and any time you roll the Die of Fate for weather, roll twice and take your pick.\n- **Unexpected bounty:** A sudden influx of wild game, trade profits, or some other resource generates 1 Surplus, now.\n- **Trade opportunity:** At some point this season, someone offers to trade something valuable at a good price or something unique/unusual at a reasonable price. Pay what they're asking and it's yours.\n- **Interesting news:** There's an opportunity to improve your fortunes, knowledge, or relations, and/or to make progress towards a steading improvement.\n- **Valuable insight:** You learn something that gives you a chance to address a threat that's been plaguing the steading.",
+      "source": "When **_autumn falls and the land is ripe for harvest_**, whoever is most determined rolls +Fortunes: **on a 10+**, pick 1 seasonal gain; **on a 7-9**, pick 1 seasonal gain, but a threat to the steading makes itself known or gets worse; **on a 6-**, threats abound (and don't mark XP).\n\nWhatever the result, reset Fortunes to +1.\n\nWhen **_the harvest is complete_**, roll 1d4; the steading generates that much Surplus.\n\n**Seasonal gains** (pick from these when the move tells you to):\n\n- **Population boom:** A number of youth come of age, and/or outsiders settle here. Increase Population by 1 (max +3).\n- **Tor's blessing:** Fine weather abounds. Take +1 to Pull Together this season, and any time you roll the Die of Fate for weather, roll twice and take your pick.\n- **Unexpected bounty:** A sudden influx of wild game, trade profits, or some other resource generates 1 Surplus, now.\n- **Trade opportunity:** At some point this season, someone offers to trade something valuable at a good price or something unique/unusual at a reasonable price. Pay what they're asking and it's yours.\n- **Interesting news:** There's an opportunity to improve your fortunes, knowledge, or relations, and/or to make progress towards a steading improvement.\n- **Valuable insight:** You learn something that gives you a chance to address a threat that's been plaguing the steading.",
       "text": "Wenn **_der Herbst hereinbricht und das Land reif für die Ernte ist_**, würfelt derjenige, der am entschlossensten ist, 2W6+Schicksal. **Bei einer 10+** wähle 1 saisonalen Gewinn. **Bei 7–9** wähle 1 saisonalen Gewinn, aber eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich. **Bei einer 6-** nehmen die Bedrohungen überhand (markiere keine EP).\n\nUnabhängig vom Ergebnis wird Schicksal auf +1 zurückgesetzt.\n\nWenn **_die Ernte abgeschlossen ist_**, würfle 1W4. Die Siedlung erzeugt diese Menge an Überschuss."
     },
     "moveResults/success/value": {
-      "source": "Pick 1 seasonal gain.\n\nThen reset Fortunes to +1. When the harvest is complete, roll 1d4; the steading generates that much Surplus.",
-      "text": "Wähle 1 saisonalen Gewinn.\n\nSetze dann Schicksal auf +1 zurück. Wenn die Ernte abgeschlossen ist, würfle 1W4. Die Siedlung erzeugt diese Menge an Überschuss."
+      "source": "Pick 1 seasonal gain.",
+      "text": "Wähle 1 saisonalen Gewinn."
     },
     "moveResults/partial/value": {
-      "source": "Pick 1 seasonal gain, but a threat to the steading makes itself known or gets worse.\n\nThen reset Fortunes to +1. When the harvest is complete, roll 1d4; the steading generates that much Surplus.",
-      "text": "Wähle 1 saisonalen Gewinn, aber eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich.\n\nSetze dann Schicksal auf +1 zurück. Wenn die Ernte abgeschlossen ist, würfle 1W4. Die Siedlung erzeugt diese Menge an Überschuss."
+      "source": "Pick 1 seasonal gain, but a threat to the steading makes itself known or gets worse.",
+      "text": "Wähle 1 saisonalen Gewinn, aber eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich."
     },
     "moveResults/failure/value": {
-      "source": "Threats abound (and don't mark XP).\n\nThen reset Fortunes to +1. When the harvest is complete, roll 1d4; the steading generates that much Surplus.",
-      "text": "Die Bedrohungen nehmen überhand (markiere keine EP).\n\nSetze dann Schicksal auf +1 zurück. Wenn die Ernte abgeschlossen ist, würfle 1W4. Die Siedlung erzeugt diese Menge an Überschuss."
+      "source": "Threats abound (and don't mark XP).",
+      "text": "Die Bedrohungen nehmen überhand (markiere keine EP)."
+    },
+    "steps/when-autumn-falls-and-the-land/text": {
+      "source": "When **_autumn falls and the land is ripe for harvest_**, whoever is most determined rolls +Fortunes.",
+      "text": ""
+    },
+    "steps/whatever-the-result-reset-fortunes-to/text": {
+      "source": "Whatever the result, reset Fortunes to +1.",
+      "text": ""
+    },
+    "steps/when-the-harvest-is-complete-roll/text": {
+      "source": "When **_the harvest is complete_**, roll 1d4; the steading generates that much Surplus.",
+      "text": ""
     }
   },
   "seasons-change-spring": {
@@ -2907,16 +3163,24 @@
       "text": "Wenn **_der Frühling über das Land hereinbricht_**, würfelt derjenige, der am hoffnungsvollsten ist, 2W6+Schicksal. **Bei einer 10+** wähle 1 saisonalen Gewinn. **Bei 7–9** wähle 1 saisonalen Gewinn, aber eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich. **Bei einer 6-** nehmen die Bedrohungen überhand (markiere keine EP).\n\nUnabhängig vom Ergebnis wird Schicksal auf +1 zurückgesetzt."
     },
     "moveResults/success/value": {
-      "source": "Pick 1 seasonal gain.\n\nThen reset Fortunes to +1.",
-      "text": "Wähle 1 saisonalen Gewinn.\n\nSetze dann Schicksal auf +1 zurück."
+      "source": "Pick 1 seasonal gain.",
+      "text": "Wähle 1 saisonalen Gewinn."
     },
     "moveResults/partial/value": {
-      "source": "Pick 1 seasonal gain, but a threat to the steading makes itself known or gets worse.\n\nThen reset Fortunes to +1.",
-      "text": "Wähle 1 saisonalen Gewinn, aber eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich.\n\nSetze dann Schicksal auf +1 zurück."
+      "source": "Pick 1 seasonal gain, but a threat to the steading makes itself known or gets worse.",
+      "text": "Wähle 1 saisonalen Gewinn, aber eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich."
     },
     "moveResults/failure/value": {
-      "source": "Threats abound (and don't mark XP).\n\nThen reset Fortunes to +1.",
-      "text": "Die Bedrohungen nehmen überhand (markiere keine EP).\n\nSetze dann Schicksal auf +1 zurück."
+      "source": "Threats abound (and don't mark XP).",
+      "text": "Die Bedrohungen nehmen überhand (markiere keine EP)."
+    },
+    "steps/when-spring-bursts-forth-upon-the/text": {
+      "source": "When **_spring bursts forth upon the land_**, whoever is the most hopeful rolls +Fortunes.",
+      "text": ""
+    },
+    "steps/reset-fortunes-to-1/text": {
+      "source": "Reset Fortunes to +1.",
+      "text": ""
     }
   },
   "seasons-change-summer": {
@@ -2929,16 +3193,28 @@
       "text": "Wenn **_sich die heißen Sommertage über das Land legen_**, würfelt derjenige, der am zufriedensten ist, 2W6+Schicksal. **Bei einer 10+** wähle 2 saisonale Gewinne. **Bei 7–9** wähle 1 saisonalen Gewinn. **Bei einer 6-** zeichnet sich eine Bedrohung für die Siedlung ab oder verschlimmert sich (markiere keine EP).\n\nUnabhängig vom Ergebnis erzeugt die Siedlung 1W4−1 Überschuss. Anschließend wird Schicksal auf +1 zurückgesetzt."
     },
     "moveResults/success/value": {
-      "source": "Pick 2 seasonal gains.\n\nThe steading generates 1d4-1 Surplus. Then reset Fortunes to +1.",
-      "text": "Wähle 2 saisonalen Gewinne.\n\nDie Siedlung erzeugt  1W4−1 Überschuss. Setze dann Schicksal auf +1 zurück."
+      "source": "Pick 2 seasonal gains.",
+      "text": "Wähle 2 saisonalen Gewinne."
     },
     "moveResults/partial/value": {
-      "source": "Pick 1 seasonal gain.\n\nThe steading generates 1d4-1 Surplus. Then reset Fortunes to +1.",
-      "text": "Wähle 1 saisonalen Gewinn.\n\nDie Siedlung erzeugt  1W4−1 Überschuss. Setze dann Schicksal auf +1 zurück."
+      "source": "Pick 1 seasonal gain.",
+      "text": "Wähle 1 saisonalen Gewinn."
     },
     "moveResults/failure/value": {
-      "source": "A threat to the steading makes itself known or gets worse (and don't mark XP).\n\nThe steading generates 1d4-1 Surplus. Then reset Fortunes to +1.",
-      "text": "Eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich.\n\nDie Siedlung erzeugt  1W4−1 Überschuss. Setze dann Schicksal auf +1 zurück."
+      "source": "A threat to the steading makes itself known or gets worse (and don't mark XP).",
+      "text": "Eine Bedrohung für die Siedlung zeichnet sich ab oder verschlimmert sich (markiere keine EP)."
+    },
+    "steps/when-the-hot-days-of-summer/text": {
+      "source": "When **_the hot days of summer settle across the land_**, whoever is most content rolls +Fortunes.",
+      "text": ""
+    },
+    "steps/the-steading-generates-1d4-1-surplus/text": {
+      "source": "The steading generates 1d4-1 Surplus.",
+      "text": ""
+    },
+    "steps/then-reset-fortunes-to-1/text": {
+      "source": "Then, reset Fortunes to +1.",
+      "text": ""
     }
   },
   "seasons-change-winter": {
@@ -2947,20 +3223,40 @@
       "text": "Jahreszeitenwechsel: Winter"
     },
     "description": {
-      "source": "When **_winter grips the land_**, whoever is weariest rolls 1d4+Population; the steading consumes that much Surplus. If there's not enough, reduce Surplus to 0 and Meet with Disaster. Then, pick 1:\n\n- Reduce Population by 1 (min -1) due to death, decrepitude, and departure\n- An important resource (one of the horses, the cistern, etc.) is lost or not maintained\n- An important NPC dies, their role unfilled\n- Your PC dies, leaves, or retires from play\n\nThen, roll +Fortunes: **on a 10+**, the winter is relatively mild, and each player can name a local NPC with whom their relationship improves at least a little (work together to figure out how); **on a 7-9**, the steading must consume additional Surplus equal to 1d4+Population before winter ends or suffer the consequences as above; **on a 6-**, as a 7-9, but also threats abound (and don't mark XP).\n\nWhatever the result, reset Fortunes to +1.",
-      "text": "Wenn **_der Winter das Land fest im Griff hat_**, würfelt derjenige, der am erschöpftesten ist, 1W4+Bevölkerung (Minimum 0). Die Siedlung verbraucht so viel Überschuss. Wenn nicht genügend Überschuss vorhanden ist, setze Überschuss auf 0, senke Schicksal um 1 und wähle 1:\n\n- Reduziere die Bevölkerung um 1 (Minimum −1) aufgrund von Tod, Gebrechlichkeit und Abwanderung.\n- Eine wichtige Ressource (eines der Pferde, die Zisterne usw.) geht verloren oder wird nicht instand gehalten.\n- Ein wichtiger NSC stirbt; seine Position bleibt unbesetzt.\n- Dein SC stirbt, geht fort oder zieht sich aus dem Spiel zurück.\nWürfle anschließend 2W6+Schicksal. **Bei einer 10+** ist der Winter vergleichsweise mild, und jeder Spieler darf einen lokalen NSC nennen, zu dem sich seine Beziehung zumindest ein wenig verbessert. Überlegt gemeinsam, wie es dazu kommt. **Bei 7–9** muss die Siedlung vor Ende des Winters zusätzlichen Überschuss in Höhe von 1W4+Bevölkerung verbrauchen. Andernfalls treten die oben genannten Konsequenzen ein. **Bei einer 6-** gilt dasselbe wie bei 7–9, aber zusätzlich nehmen die Bedrohungen überhand (markiere keine EP).\n\nUnabhängig vom Ergebnis wird Schicksal auf +1 zurückgesetzt."
+      "source": "When **_winter grips the land_**, whoever is weariest rolls 1d4+Population; the steading consumes that much Surplus. If there's not enough, reduce Surplus to 0 and @UUID[Compendium.stonetop.moves.Item.4TYC5OYdPbAxWHQp]{Meet with Disaster}. Then, pick 1:\n\n- Reduce Population by 1 (min -1) due to death, decrepitude, and departure\n- An important resource (one of the horses, the cistern, etc.) is lost or not maintained\n- An important NPC dies, their role unfilled\n- Your PC dies, leaves, or retires from play\n\nThen, roll +Fortunes: **on a 10+**, the winter is relatively mild, and each player can name a local NPC with whom their relationship improves at least a little (work together to figure out how); **on a 7-9**, the steading must consume additional Surplus equal to 1d4+Population before winter ends or suffer the consequences as above; **on a 6-**, as a 7-9, but also threats abound (and don't mark XP).\n\nWhatever the result, reset Fortunes to +1.",
+      "text": "Wenn **_der Winter das Land fest im Griff hat_**, würfelt derjenige, der am erschöpftesten ist, 1W4+Bevölkerung (Minimum 0). Die Siedlung verbraucht so viel Überschuss. Wenn nicht genügend Überschuss vorhanden ist, setze Überschuss auf 0, senke Schicksal um 1 und wähle 1:\n\n- Reduziere die Bevölkerung um 1 (Minimum −1) aufgrund von Tod, Gebrechlichkeit und Abwanderung.\n- Eine wichtige Ressource (eines der Pferde, die Zisterne usw.) geht verloren oder wird nicht instand gehalten.\n- Ein wichtiger NSC stirbt; seine Position bleibt unbesetzt.\n- Dein SC stirbt, geht fort oder zieht sich aus dem Spiel zurück.\n\nWürfle anschließend 2W6+Schicksal. **Bei einer 10+** ist der Winter vergleichsweise mild, und jeder Spieler darf einen lokalen NSC nennen, zu dem sich seine Beziehung zumindest ein wenig verbessert. Überlegt gemeinsam, wie es dazu kommt. **Bei 7–9** muss die Siedlung vor Ende des Winters zusätzlichen Überschuss in Höhe von 1W4+Bevölkerung verbrauchen. Andernfalls treten die oben genannten Konsequenzen ein. **Bei einer 6-** gilt dasselbe wie bei 7–9, aber zusätzlich nehmen die Bedrohungen überhand (markiere keine EP).\n\nUnabhängig vom Ergebnis wird Schicksal auf +1 zurückgesetzt."
     },
     "moveResults/success/value": {
-      "source": "The winter is relatively mild, and each player can name a local NPC with whom their relationship improves at least a little (work together to figure out how).\n\nThen reset Fortunes to +1.",
-      "text": "Der Winter ist vergleichsweise mild, und jeder Spieler darf einen lokalen NSC nennen, zu dem sich seine Beziehung zumindest ein wenig verbessert. Überlegt gemeinsam, wie es dazu kommt.\n\nSetze dann Schicksal auf +1 zurück."
+      "source": "The winter is relatively mild, and each player can name a local NPC with whom their relationship improves at least a little (work together to figure out how).",
+      "text": "Der Winter ist vergleichsweise mild, und jeder Spieler darf einen lokalen NSC nennen, zu dem sich seine Beziehung zumindest ein wenig verbessert. Überlegt gemeinsam, wie es dazu kommt."
     },
     "moveResults/partial/value": {
-      "source": "The steading must consume additional Surplus equal to 1d4+Population before winter ends or suffer the consequences as above.\n\nThen reset Fortunes to +1.",
-      "text": "Die Siedlung muss vor Ende des Winters zusätzlichen Überschuss in Höhe von 1W4+Bevölkerung verbrauchen. Andernfalls treten die oben genannten Konsequenzen ein.\n\nSetze dann Schicksal auf +1 zurück."
+      "source": "The steading must consume additional Surplus equal to 1d4+Population before winter ends or suffer the consequences as above.",
+      "text": "Die Siedlung muss vor Ende des Winters zusätzlichen Überschuss in Höhe von 1W4+Bevölkerung verbrauchen. Andernfalls treten die oben genannten Konsequenzen ein."
     },
     "moveResults/failure/value": {
-      "source": "As a 7-9, but also threats abound (and don't mark XP).\n\nThen reset Fortunes to +1.",
-      "text": "Wie bei 7-9 aber die Bedrohungen nehmen überhand (markiere keine EP).n\nSetze dann Schicksal auf +1 zurück."
+      "source": "As a 7-9, but also threats abound (and don't mark XP).",
+      "text": "Wie bei 7-9 aber die Bedrohungen nehmen überhand (markiere keine EP)."
+    },
+    "steps/when-winter-grips-the-land-whoever/text": {
+      "source": "When **_winter grips the land_**, whoever is weariest rolls 1d4+Population.",
+      "text": ""
+    },
+    "steps/the-steading-consumes-that-much-surplus/text": {
+      "source": "The steading consumes that much Surplus. If there's not enough, reduce Surplus to 0 and @UUID[Compendium.stonetop.moves.Item.4TYC5OYdPbAxWHQp]{Meet with Disaster}.",
+      "text": ""
+    },
+    "steps/then-pick-1/text": {
+      "source": "Then, pick 1:",
+      "text": ""
+    },
+    "steps/then-roll-fortunes/text": {
+      "source": "Then, roll +Fortunes.",
+      "text": ""
+    },
+    "steps/reset-fortunes-to-1/text": {
+      "source": "Reset Fortunes to +1.",
+      "text": ""
     }
   },
   "second-intent": {
@@ -3219,6 +3515,68 @@
       "text": "Wenn du **_von jemandem verlangst, etwas zu tun, das offensichtlich gut und richtig ist_**, hast du beim Überreden einen Vorteil. Wenn die Person sich weigert, erhältst du +1 Entschlossenheit."
     }
   },
+  "spend-few-days": {
+    "name": {
+      "source": "Spend a few days practicing, playing",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_spend a few days practicing, playing_** **_the flute where the wind can hear you_**, roll +CHA: **on a 10+**, mark 1 circle; **on a 7-9**, mark 1 circle, but you summon an irate zephyr spirit; **on a 6-**, you make no progress but do manage to summon an irate zephyr.",
+      "text": "Wenn du **_einige Tage lang übst und dabei die Flöte dort spielst, wo der Wind dich hören kann_**, würfle +CH. **Bei einer 10+** markiere 1 Kreis. **Bei 7–9** markiere 1 Kreis, aber du beschwörst einen zornigen Zephyrgeist. Bei einer **6−** machst du keine Fortschritte, schaffst es aber dennoch, einen zornigen Zephyrgeist zu beschwören."
+    },
+    "moveResults/success/value": {
+      "source": "mark 1 circle",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "mark 1 circle, but you summon an irate zephyr spirit",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "you make no progress but do manage to summon an irate zephyr.",
+      "text": ""
+    }
+  },
+  "spend-few-hours": {
+    "name": {
+      "source": "Spend a few hours staring into the stones and listening to their whispers",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_spend a few hours staring into the stones and listening to their whispers_**, name someone you know but on whom you have never used this power before. Then, roll +INT: **on a 10+**, the stones reveal a secret about them; **on a 7-9**, the stones reveal a secret, but you must first reveal a secret to the stones (about your hopes, fears, regrets, desires); **on a 6-**, the stones pry a secret from you.",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "the stones reveal a secret about them",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "the stones reveal a secret, but you must first reveal a secret to the stones (about your hopes, fears, regrets, desires)",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "the stones pry a secret from you.",
+      "text": ""
+    }
+  },
+  "spend-weeks-in": {
+    "name": {
+      "source": "Spend weeks in ascetic contemplation of the incommunicable words within you",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_spend weeks in ascetic contemplation of the incommunicable words within you_**, roll +WIS: **on a 10+**, you gain insight into the power within you—mark 1 below; **on a 7-9**, gain advantage on your next attempt to contemplate the words.",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "you gain insight into the power within you—mark 1 below",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "gain advantage on your next attempt to contemplate the words.",
+      "text": ""
+    }
+  },
   "spirit-tongue": {
     "name": {
       "source": "Spirit Tongue",
@@ -3240,7 +3598,7 @@
     },
     "moveResults/success/value": {
       "source": "the effect occurs as described",
-      "text": ""
+      "text": "Der Effekt tritt wie beschrieben ein"
     },
     "moveResults/partial/value": {
       "source": "the effect occurs, but only if you mark 1 Consequence",
@@ -3377,7 +3735,7 @@
       "text": "Das Gift heraussaugen"
     },
     "description": {
-      "source": "When you **_draw a malady from a patient's body, mind, or soul_**, spend 1 Stock and roll +WIS.",
+      "source": "When you **_draw a malady from a patient's body, mind, or soul_**, spend 1 Stock and roll +WIS: **on a 10+**, you remove the malady and can safely discard it or store it in your sacred pouch (taking the space of 1 Stock) to study or inflict on another; **on a 7-9**, you remove it, but choose 1:\n\n- Your patient suffers lingering harm or trauma\n- You suffer some of the malady's effects\n- It will be harmful and dangerous to discard",
       "text": "Wenn du **_ein Leiden aus dem Körper, dem Geist oder der Seele eines Patienten ziehst_**, gib 1 Vorrat aus und würfle +WE. **Bei einer 10+** entfernst du das Leiden und kannst es gefahrlos entsorgen oder in deinem heiligen Beutel aufbewahren (und dafür den Platz von 1 Vorrat beanspruchen), um es zu untersuchen oder um es auf jemand anderen zu übertragen. **Bei 7-9** entfernst du es, aber wähle 1:\n- Dein Patient erleidet bleibenden Schaden oder ein Trauma.\n- Du erleidest einige der Auswirkungen des Leidens.\n- Es zu entsorgen wird schädlich und gefährlich sein."
     },
     "moveResults/success/value": {
@@ -3787,8 +4145,8 @@
       "text": "Schleier"
     },
     "description": {
-      "source": "When you **_wrap yourself or another in a subtle veil_**, spend 1 Stock and choose 1:\n\n- A type of being you name (including \"people\") will tend to ignore your presence\n- People will perceive you as someone else, though you must wear something of an individual's in order to impersonate them\nWhen **_your deception comes under scrutiny_**, roll +INT.",
-      "text": "Wenn du **_dich selbst oder jemand anderen mit einem subtilen Schleier umhüllst_**, gib 1 Vorrat aus und wähle 1:\n\n- Eine von dir benannte Art von Wesen (einschließlich \"Menschen\") wird dazu neigen, deine Anwesenheit zu ignorieren.\n- Menschen nehmen dich als jemand anderen wahr, allerdings musst du etwas von der betreffenden Person tragen, um sie nachzuahmen.\nWenn **_deine Täuschung auf die Probe gestellt wird_**, würfle +IN. **Bei einer 10+** hält der Schleier, und niemand schöpft Verdacht. **Bei 7–9** hält der Schleier, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
+      "source": "When you **_wrap yourself or another in a subtle veil_**, spend 1 Stock and choose 1:\n\n- A type of being you name (including \"people\") will tend to ignore your presence\n- People will perceive you as someone else, though you must wear something of an individual's in order to impersonate them\n\nWhen **_your deception comes under scrutiny_**, roll +INT: **on a 10+**, the veil holds, and no one is the wiser; **on a 7-9**, the veil holds, but there is further scrutiny or a complication (GM's choice).",
+      "text": "Wenn du **_dich selbst oder jemand anderen mit einem subtilen Schleier umhüllst_**, gib 1 Vorrat aus und wähle 1:\n\n- Eine von dir benannte Art von Wesen (einschließlich \"Menschen\") wird dazu neigen, deine Anwesenheit zu ignorieren.\n- Menschen nehmen dich als jemand anderen wahr, allerdings musst du etwas von der betreffenden Person tragen, um sie nachzuahmen.\n\nWenn **_deine Täuschung auf die Probe gestellt wird_**, würfle +IN. **Bei einer 10+** hält der Schleier, und niemand schöpft Verdacht. **Bei 7–9** hält der Schleier, aber es kommt zu einer weiteren Überprüfung oder einer Komplikation (Wahl des SL)."
     },
     "moveResults/success/value": {
       "source": "The veil holds, and no one is the wiser.",
@@ -3879,7 +4237,7 @@
       "text": "Mauern und Fesseln"
     },
     "description": {
-      "source": "When you **_mark a boundary with sacred signs_**, spend 1 Stock and describe who or what they affect (using no more words than your level). Also, choose whether the affected beings are repelled or trapped by the signs.\n\nWhen **_your wards or bindings are first tested_**, roll +INT.",
+      "source": "When you **_mark a boundary with sacred signs_**, spend 1 Stock and describe who or what they affect (using no more words than your level). Also, choose whether the affected beings are repelled or trapped by the signs.\n\nWhen **_your wards or bindings are first tested_**, roll +INT: **on a 10+**, they will hold as long as the signs remain unmarred, and the affected creature can do nothing to affect them directly; **on a 7-9**, they hold for now but may be overcome through might or will.",
       "text": "Wenn du **_einen Bereich mit heiligen Zeichen versiehst_**, gib 1 Vorrat aus und beschreibe, wen oder was sie betreffen (verwende nicht mehr Worte als deine Stufe entspricht). Entscheide außerdem, ob die betroffenen Wesen von den Zeichen abgehalten oder durch sie gefangen werden.\n\nWenn **_deine Schutzzeichen oder Bannungen erstmals auf die Probe gestellt werden_**, würfle +IN. **Bei einer 10+** halten sie stand, solange die Zeichen unbeschädigt bleiben (und das betroffene Wesen nichts tun kann, um sie direkt zu beeinflussen). **Bei 7–9** halten sie vorerst stand, können aber durch körperliche Gewalt oder Willenskraft überwunden werden."
     },
     "moveResults/success/value": {
@@ -3925,6 +4283,50 @@
     "moveResults/failure/value": {
       "source": "Each ally holds 1 Inspiration, but you have disadvantage on all rolls until you share your nagging doubts with someone else.",
       "text": "Jeder Verbündete nimmt 1 Inspiration, aber du hast bei allen Proben einen Nachteil, bis du deine nagenden Zweifel mit jemand anderem teilst."
+    }
+  },
+  "wear-ring-press": {
+    "name": {
+      "source": "Wear the ring and press it firmly into the skin of a living thing",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_wear the ring and press it firmly into the skin of a living thing_**, the ring draws the life-force from your victim. If your victim is helpless or unable to struggle, they are reduced to 0 HP (see below).\n\nIf **_your victim struggles_**, roll +CON: **on a 10+**, deal 1d10 damage (ignores armor) and they are left reeling (a PC or follower marks a debility, an NPC or monster grants advantage on any moves made against it until it recovers); **on a 7-9**, deal 1d10 damage (ignores armor) but you suffer whatever counterattack they dish out; **on a 6-**, ask the GM what happens (which may or may not involve marking a consequence; see reverse).",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "deal 1d10 damage (ignores armor) and they are left reeling (a PC or follower marks a debility, an NPC or monster grants advantage on any moves made against it until it recovers)",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "deal 1d10 damage (ignores armor) but you suffer whatever counterattack they dish out",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "ask the GM what happens (which may or may not involve marking a consequence; see reverse).",
+      "text": ""
+    }
+  },
+  "wear-rune-laden": {
+    "name": {
+      "source": "Wear the Rune-laden Scales and stand fast against a magical attack",
+      "text": ""
+    },
+    "description": {
+      "source": "When you **_wear the Rune-laden Scales and stand fast against a magical attack_**, roll +CON: **on a 10+**, the magic washes over you, unpleasant perhaps but with no ill effect; **on a 7-9**, you’re only partially affected—suffer half damage (if any) and a reduced effect; **on a 6-**, mark XP, and the magic affects you fully.",
+      "text": ""
+    },
+    "moveResults/success/value": {
+      "source": "the magic washes over you, unpleasant perhaps but with no ill effect",
+      "text": ""
+    },
+    "moveResults/partial/value": {
+      "source": "you’re only partially affected—suffer half damage (if any) and a reduced effect",
+      "text": ""
+    },
+    "moveResults/failure/value": {
+      "source": "mark XP, and the magic affects you fully.",
+      "text": ""
     }
   },
   "well-read": {
@@ -4103,6 +4505,10 @@
     "homefront": {
       "source": "homefront",
       "text": "Heimatfront"
+    },
+    "improvement": {
+      "source": "improvement",
+      "text": ""
     },
     "playbook": {
       "source": "playbook",

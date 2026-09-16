@@ -1,39 +1,17 @@
-{{!-- The Seasons Change spread (Book I, p.85): the four seasonal moves, each bulleted with its
-      glyph, and the Seasonal gains panel. Params: seasons (SeasonsSnapshot). --}}
+{{!-- The Season tab: the wheel, the season you are in, and the control that ends it.
+
+      It used to run wheel → a "Turn to <next>" panel → a "During <current>" section → the improvement
+      board, which split one season across two blocks: the numbered steps described the season being
+      rolled INTO while the gain, the checklist and the adjustments all belonged to the one the
+      steading was IN. The box could be headed "Winter" over a line reading "Autumn, year 3".
+
+      One box now, and it is the current season's. Turning the wheel is the small control under it.
+
+      Params: seasons (SeasonsSnapshot). --}}
 <div class="steading-seasons">
 
-	{{!-- Installer-provided (copyrighted), so absent in a world without Book I art. The frame is what
-	      the grid sizes; the image fills it absolutely, so the plate can never be what makes the row
-	      taller than the gains panel beside it. --}}
-	{{#if seasons.plate}}
-		<div class="steading-seasons-plate">
-			<img src="{{seasons.plate}}" alt="">
-		</div>
-	{{/if}}
+	{{> "stonetop.steading-season-wheel" seasons=seasons}}
 
-	<section class="steading-seasons-gains steading-panel-frame">
-		{{> "stonetop.panel-frame"}}
-		<h2>{{localize "stonetop.steading.seasons.gainsTitle"}}</h2>
-		<p class="steading-seasons-hint">{{localize "stonetop.steading.seasons.gainsHint"}}</p>
-		{{#with seasons.gains}}{{> "stonetop.choice-group" cgContext="steading"}}{{/with}}
-	</section>
-
-	<section class="steading-seasons-moves steading-panel-frame">
-		{{> "stonetop.panel-frame"}}
-		{{#if seasons.moves}}
-			{{!-- alwaysShowResource: the seasonal moves are a fixed set, so their resource pips show
-			      whether or not the move reads as "acquired". --}}
-			{{> "stonetop.move-group"
-			    title=seasons.moves.label
-			    note=seasons.moves.note
-			    moves=seasons.moves.moves
-			    categoryKey=seasons.moves.key
-			    allowAdditional=false
-			    alwaysShowResource=true}}
-		{{else}}
-			<h2>{{localize "stonetop.steading.seasons.movesTitle"}}</h2>
-			<p class="stonetop-moves-empty">{{localize "stonetop.steading.seasons.movesEmpty"}}</p>
-		{{/if}}
-	</section>
+	{{> "stonetop.steading-season-box" seasons=seasons}}
 
 </div>

@@ -27,27 +27,29 @@ export function steadingChangeHandlers(s, { availableSteadfasts }) {
 		attributeItem: el => s.updateAttributeItem(el.dataset.attr, el.dataset.index, el.value),
 
 		debility:    el => s.setDebility(el.dataset.slug, el.checked),
-		contentText: el => s.updateContentText(el.dataset.type, el.value),
+
+		// The three content-policy lists. Keyed by section slug + row index, the same pair the
+		// ratings lists use — an entry is a line in a list, not a field with a name of its own.
+		contentItem: el => s.updateContentItem(el.dataset.slug, el.dataset.index, el.value),
 
 		// Assets + coinage
-		assetItem:       el => s.updateAssetItem(parseInt(el.dataset.index), el.value),
+		assetItem:          el => s.updateAssetItem(parseInt(el.dataset.index), el.value),
+		assetRequisitioned: el => s.setAssetRequisitioned(parseInt(el.dataset.index), el.checked),
 		coinagePurses:   el => s.updateCoinagePurses(el.dataset.title, parseInt(el.value) || 0),
 		coinageHandfuls: el => s.updateCoinageHandfuls(el.dataset.title, parseInt(el.value) || 0),
 		coinageCoins:    el => s.updateCoinageCoins(el.dataset.title, parseInt(el.value) || 0),
 
-		// Residents
-		residentName:         el => s.updateResidentName(el.dataset.id, el.value),
-		residentOccupation:   el => s.updateResidentOccupation(el.dataset.id, el.value),
-		residentTraits:       el => s.updateResidentTraits(el.dataset.id, el.value),
-		// Residents owns the one-per-line parse.
-		residentTraitsSource: el => s.updateResidentTraitsSource(el.value),
+		// Folk — one roster; a blank home means this steading.
+		personName:       el => s.updatePersonName(el.dataset.id, el.value),
+		personOccupation: el => s.updatePersonOccupation(el.dataset.id, el.value),
+		personTraits:     el => s.updatePersonTraits(el.dataset.id, el.value),
+		personHome:       el => s.updatePersonHome(el.dataset.id, el.value),
+		// Folk owns the one-per-line parse.
 
-		// Neighbors — people and places
-		neighborName:       el => s.updateNeighborName(el.dataset.id, el.value),
-		neighborOccupation: el => s.updateNeighborOccupation(el.dataset.id, el.value),
-		neighborTraits:     el => s.updateNeighborTraits(el.dataset.id, el.value),
-		neighborHome:       el => s.updateNeighborHome(el.dataset.id, el.value),
-		neighborPlaceNote:  el => s.updateNeighborPlaceNote(el.dataset.id, el.value),
+		// Neighboring places. Size is definitional and edited on the steadfast item sheet, so the
+		// steading emits no action for it — it reads the word and nothing more.
+		neighborPlaceNote:   el => s.updateNeighborPlaceNote(el.dataset.id, el.value),
+		neighborPlaceTravel: el => s.updateNeighborPlaceTravel(el.dataset.id, el.value),
 
 		// Places of Interest
 		placeField: el => s.setPlaceValue(parseInt(el.dataset.index), el.value),

@@ -67,16 +67,60 @@
           "track": {
             "max": 4
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, add \"Stone Wall\" to the Fortifications list (erase \"Palisade\" if you had it) and draw it on the map.\n\nHenceforth: When you take advantage of the stone wall, you have advantage to Deploy. When winter grips the land, the steading consumes 1 less Surplus than normal."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "engineer-foreman",
+        "stonecutter",
+        "equipment-tools",
+        "pull-together"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "fortifications",
+          "text": "Stone Wall"
+        },
+        "text": "add \"Stone Wall\" to the Fortifications list (erase \"Palisade\" if you had it) and draw it on the map"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you take advantage of the stone wall_**"
+        },
+        "condition": true,
+        "advantage": {
+          "moves": [
+            "deploy"
+          ]
+        },
+        "text": "you have advantage to Deploy"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "winter"
+          ],
+          "phrase": "when **_winter grips the land_**"
+        },
+        "adjustment": {
+          "step": "consumption",
+          "at": "result",
+          "amount": -1
+        },
+        "text": "the steading consumes 1 less Surplus than normal"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, add \"Stone Wall\" to the Fortifications list (erase \"Palisade\" if you had it) and draw it on the map.\n\nHenceforth: When you take advantage of the stone wall, you have advantage to Deploy. When winter grips the land, the steading consumes 1 less Surplus than normal."
+  ]
 }

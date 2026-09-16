@@ -53,9 +53,10 @@ export function createStonetopSteadfastSheetClass(Base) {
 			const root = this.element;
 			const s = this._steadfast;
 
-			// Ratings (size / population / prosperity / defenses). Size stores its tier string; the ±N
-			// ratings store a number.
-			bindAll(root, ".steading-box-input[data-attr]", "change", async ev => {
+			// Ratings (size / population / prosperity / defenses / fortunes / surplus). Size stores its
+			// tier string; the others store a number. The selector is the tile partial's input class —
+			// this sheet has no change router, so the two have to move together.
+			bindAll(root, ".steading-attr-input[data-attr]", "change", async ev => {
 				const { attr } = ev.currentTarget.dataset;
 				const raw = ev.currentTarget.value;
 				await s.attributes.setValue(attr, attr === "size" ? raw : parseInt(raw));
@@ -97,9 +98,19 @@ export function createStonetopSteadfastSheetClass(Base) {
 				await s.placesOfInterest.setPlaceValue(parseInt(ev.currentTarget.dataset.index), ev.currentTarget.value);
 			});
 
-			// Neighbouring places (note per place)
+			// Neighbouring places. Size is authored HERE and nowhere else — it is what the book calls
+			// the place, so it belongs to the definition, and migrateNeighborPlaces keeps every
+			// steading's copy in step with it. The steading sheet only reads the word.
 			bindAll(root, ".stonetop-neighbor-place-note", "change", async ev => {
 				await s.neighborPlaces.updateNote(ev.currentTarget.dataset.id, ev.currentTarget.value);
+			});
+			bindAll(root, ".steading-neighbor-size-select", "change", async ev => {
+				await s.neighborPlaces.updateSize(ev.currentTarget.dataset.id, ev.currentTarget.value);
+			});
+			// And the travel times, for the same reason: the steading shows a time only once it has
+			// one, so a row the book prints nothing for is given its time here or nowhere.
+			bindAll(root, ".steading-neighbor-travel", "change", async ev => {
+				await s.neighborPlaces.updateTravel(ev.currentTarget.dataset.id, ev.currentTarget.value);
 			});
 
 			// Resident name/trait pool

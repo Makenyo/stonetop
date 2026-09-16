@@ -85,16 +85,55 @@
           "track": {
             "max": 4
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_meet the requirements_**, increase Prosperity by 1. If you **_cease to meet the requirements_**, decrease Prosperity by 1.\n\nWhen the Seasons Change to spring, summer, or autumn and the market is active, and Population is +1 or better, the Market generates 1 Surplus."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        {
+          "any": 1,
+          "of": [
+            "compelling-good",
+            "other-reason"
+          ]
+        },
+        "market-site",
+        "arbiter",
+        "four-seasons"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "prosperity",
+          "amount": 1
+        },
+        "text": "increase Prosperity by 1 (and decrease it by 1 if you cease to meet the requirements)"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn"
+          ],
+          "phrase": "when **_the seasons change to spring, summer, or autumn, and the market is active, and Population is +1 or better_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": 1
+        },
+        "condition": true,
+        "text": "the market generates 1 Surplus"
+      }
+    ]
   },
-  "folder": "K6GCg2kg3hRVE3nl"
+  "folder": "K6GCg2kg3hRVE3nl",
+  "_prose": [
+    "When you **_meet the requirements_**, increase Prosperity by 1. If you **_cease to meet the requirements_**, decrease Prosperity by 1.\n\nWhen the Seasons Change to spring, summer, or autumn and the market is active, and Population is +1 or better, the Market generates 1 Surplus."
+  ]
 }

@@ -82,23 +82,66 @@
           "track": {
             "max": 1
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_mark all the requirements_**, add \"Aetherium Crucible\" to the Resources list and the map. As long as you trade aetherium to the outside world, increase Prosperity by 1."
-          }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "Henceforth, small amounts of raw aetherium (*magical*, Value 1) are commonly available in Stonetop, and you have advantage to **Trade &** **Barter** for the aetherium items with special characteristics (+2 Value)."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "learning-process",
+        "learning-imbue",
+        "reliable-means",
+        "securing-steady",
+        "securing-steady-2",
+        "exceptional-smith"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "Aetherium Crucible"
+        },
+        "text": "add \"Aetherium Crucible\" to the Resources list and the map"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "**_as long as you trade aetherium to the outside world_**"
+        },
+        "change": {
+          "target": "prosperity",
+          "amount": 1
+        },
+        "condition": true,
+        "text": "increase Prosperity by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "text": "small amounts of raw aetherium (magical, Value 1) are commonly available in Stonetop"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you Trade & Barter for aetherium items with special characteristics (+2 Value)_**"
+        },
+        "condition": true,
+        "advantage": {
+          "moves": [
+            "trade-barter"
+          ]
+        },
+        "text": "you have advantage"
+      }
+    ]
   },
-  "folder": "1UlzxDTaEInlMvWC"
+  "folder": "1UlzxDTaEInlMvWC",
+  "_prose": [
+    "When you **_mark all the requirements_**, add \"Aetherium Crucible\" to the Resources list and the map. As long as you trade aetherium to the outside world, increase Prosperity by 1.",
+    "Henceforth, small amounts of raw aetherium (*magical*, Value 1) are commonly available in Stonetop, and you have advantage to **Trade &** **Barter** for the aetherium items with special characteristics (+2 Value)."
+  ]
 }

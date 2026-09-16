@@ -34,14 +34,37 @@ describe("SteadingData defaults (blank = empty place)", () => {
 		expect(d.content.excluded).toEqual([]);
 		expect(d.content.veiled).toEqual([]);
 		expect(d.content.specialHandling).toEqual([]);
-		expect(d.content.excludedText).toBe("");
 	});
 
 	it("defaults the runtime instance lists + pick state to empty", () => {
 		const d = new SteadingData();
-		expect(d.residentPeople).toEqual([]);
-		expect(d.neighborPeople).toEqual([]);
+		expect(d.folk).toEqual([]);
 		expect(d.improvementValues).toEqual({});
+	});
+});
+
+// Travel rides the shared neighbour shape, seeded from the steadfast that owns the rows — "from
+// here" is unambiguous because only Stonetop's steadfast has neighbour rows at all (build-steadfasts
+// writes an empty list for every steadfast it generates).
+describe("SteadingData — a neighbouring place's travel time", () => {
+	it("carries travel on the neighbour shape, defaulting to empty", () => {
+		const d = new SteadingData({ neighborPlaces: [{ slug: "marshedge", name: "Marshedge", size: "town" }] });
+		expect(d.neighborPlaces).toEqual(
+			[{ slug: "marshedge", name: "Marshedge", subtitle: "", note: "", names: "", size: "town", travel: "" }],
+		);
+	});
+
+	it("stores whatever prose the table wrote, since the book states these inconsistently", () => {
+		const d = new SteadingData({ neighborPlaces: [{ slug: "steplands", travel: "at least a few days' travel" }] });
+		expect(d.neighborPlaces[0].travel).toBe("at least a few days' travel");
+	});
+
+	// The steadfast is where the book's printed times are AUTHORED, so it holds the field too — that
+	// is what makes seeding possible at all.
+	it("holds the same field on a steadfast, which is where the book's times are authored", async () => {
+		const { SteadfastData } = await import("../../src/data/SteadfastData.js");
+		const s = new SteadfastData({ neighborPlaces: [{ slug: "marshedge", travel: "10 days" }] });
+		expect(s.neighborPlaces[0].travel).toBe("10 days");
 	});
 });
 
@@ -59,13 +82,14 @@ describe("SteadingData with applied values", () => {
 		expect(d.improvements).toEqual(["market", "mill"]);
 	});
 
-	it("keeps the resident pool distinct from the resident people", () => {
+	// `residents` is the name/trait POOL the place seeds; `folk` is the people themselves.
+	it("keeps the resident pool distinct from the roster", () => {
 		const d = new SteadingData({
 			residents: { names: "Aderyn, Bryn", traits: ["curious"] },
-			residentPeople: [{ id: "1", name: "Afon" }],
+			folk: [{ id: "1", name: "Afon", home: "" }],
 		});
 		expect(d.residents).toEqual({ names: "Aderyn, Bryn", traits: ["curious"] });
-		expect(d.residentPeople).toEqual([{ id: "1", name: "Afon" }]);
+		expect(d.folk).toEqual([{ id: "1", name: "Afon", home: "" }]);
 	});
 
 	it("accepts debilities overrides", () => {

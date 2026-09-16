@@ -81,6 +81,137 @@ describe("reconcile", () => {
 		expect(result.countOf(EntryStatus.ORPHANED)).toBe(0);
 	});
 
+	// A row that gains a slug keeps its English, so the translation is still correct at the new key.
+	it("rehomes an orphan onto a vacant key whose English is identical", () => {
+		const result = run([seeker()], { "the-seeker": {
+			"choices/5/text": { source: "Look at us.", text: "Sieh uns an." },
+		} });
+		expect(entryFor(result, "the-seeker", "description").status).toBe(EntryStatus.TRANSLATED);
+		expect(entryFor(result, "the-seeker", "description").text).toBe("Sieh uns an.");
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(0);
+	});
+
+	it("leaves an orphan alone when its English is nowhere in the document", () => {
+		const result = run([seeker()], { "the-seeker": {
+			"choices/5/text": { source: "Not in the packs any more", text: "Weg" },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+	});
+
+	it("does not overwrite a key the translator has already filled in", () => {
+		const result = run([seeker()], { "the-seeker": {
+			description:     { source: "Look at us.", text: "Schon uebersetzt" },
+			"choices/5/text": { source: "Look at us.", text: "Sieh uns an." },
+		} });
+		expect(entryFor(result, "the-seeker", "description").text).toBe("Schon uebersetzt");
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+	});
+
+	// Which of the two was meant is unknowable, and picking one would be a guess.
+	it("leaves an orphan orphaned when two vacant keys share that English", () => {
+		const twins = seeker({ description: "Same words.", statsNote: "Same words." });
+		const result = run([twins], { "the-seeker": {
+			"choices/5/text": { source: "Same words.", text: "Gleiche Worte." },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+		expect(result.countOf(EntryStatus.TRANSLATED)).toBe(0);
+	});
+
+	it("gives a contested vacant key to one orphan and flags the rest", () => {
+		const result = run([seeker()], { "the-seeker": {
+			"choices/5/text": { source: "Look at us.", text: "Erste." },
+			"choices/6/text": { source: "Look at us.", text: "Zweite." },
+		} });
+		expect(entryFor(result, "the-seeker", "description").text).toBe("Erste.");
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+	});
+
+	// Two addresses, one translation: we rehomed it last installment, they still file it at the old
+	// key. Flagging that would ask a human to re-file words the document already carries.
+	it("drops an orphan whose German is already live in the same document", () => {
+		const result = run([seeker()], { "the-seeker": {
+			description:      { source: "Look at us.", text: "Sieh uns an." },
+			"choices/5/text": { source: "Look at us.", text: "Sieh uns an." },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(0);
+		expect(entryFor(result, "the-seeker", "description").status).toBe(EntryStatus.TRANSLATED);
+	});
+
+	it("keeps an orphan whose German differs from anything live, even by a word", () => {
+		const result = run([seeker()], { "the-seeker": {
+			description:      { source: "Look at us.", text: "Sieh uns an." },
+			"choices/5/text": { source: "Look at us.", text: "Sieh uns an!" },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+	});
+
+	it("does not drop an orphan that merely duplicates another orphan", () => {
+		const result = run([seeker()], { "the-seeker": {
+			"choices/5/text": { source: "Gone", text: "Weg" },
+			"choices/6/text": { source: "Gone", text: "Weg" },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(2);
+	});
+
+	// The Lightbearer case: a heading folded into the row below it, leaving the live entry holding a
+	// translation of only the tail ("(wähle 1)") while the heading's German sat orphaned.
+	it("composes a folded heading back onto the row that absorbed it", () => {
+		const folded = seeker({ description: "You Came Into Your Powers… (choose 1)" });
+		const result = run([folded], { "the-seeker": {
+			description:      { source: "You Came Into Your Powers… (choose 1)", text: "(wähle 1)" },
+			"choices/0/title": { source: "You Came Into Your Powers…", text: "Du erlangtest deine Kräfte…" },
+		} });
+		expect(entryFor(result, "the-seeker", "description").text).toBe("Du erlangtest deine Kräfte… (wähle 1)");
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(0);
+	});
+
+	it("reports each composition rather than performing it silently", () => {
+		const folded = seeker({ description: "You Came Into Your Powers… (choose 1)" });
+		const composed = [];
+		reconcile("de", "playbooks", englishCatalog([folded]), { "the-seeker": {
+			description:      { source: "You Came Into Your Powers… (choose 1)", text: "(wähle 1)" },
+			"choices/0/title": { source: "You Came Into Your Powers…", text: "Du erlangtest deine Kräfte…" },
+		} }, { onCompose: c => composed.push(c) });
+		expect(composed).toHaveLength(1);
+		expect(composed[0]).toMatchObject({ slug: "the-seeker", key: "choices/0/title", hostKey: "description" });
+	});
+
+	// Without the prefix proof the two halves might belong in either order, or not together at all.
+	it("refuses to compose when the live English does not start with the orphan's", () => {
+		const other = seeker({ description: "Something else entirely (choose 1)" });
+		const result = run([other], { "the-seeker": {
+			description:      { source: "Something else entirely (choose 1)", text: "(wähle 1)" },
+			"choices/0/title": { source: "You Came Into Your Powers…", text: "Du erlangtest deine Kräfte…" },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+	});
+
+	it("does not compose onto a row that has no translation of its own", () => {
+		const folded = seeker({ description: "You Came Into Your Powers… (choose 1)" });
+		const result = run([folded], { "the-seeker": {
+			"choices/0/title": { source: "You Came Into Your Powers…", text: "Du erlangtest deine Kräfte…" },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+		expect(entryFor(result, "the-seeker", "description").status).toBe(EntryStatus.UNTRANSLATED);
+	});
+
+	it("does not compose twice when the heading is already in the live German", () => {
+		const folded = seeker({ description: "You Came Into Your Powers… (choose 1)" });
+		const result = run([folded], { "the-seeker": {
+			description:      { source: "You Came Into Your Powers… (choose 1)", text: "Du erlangtest deine Kräfte… (wähle 1)" },
+			"choices/0/title": { source: "You Came Into Your Powers…", text: "Du erlangtest deine Kräfte…" },
+		} });
+		expect(entryFor(result, "the-seeker", "description").text).toBe("Du erlangtest deine Kräfte… (wähle 1)");
+	});
+
+	it("does not rehome an orphan that never recorded what it was translating", () => {
+		const result = run([seeker()], { "the-seeker": {
+			"choices/5/text": { source: "", text: "Sieh uns an." },
+		} });
+		expect(result.countOf(EntryStatus.ORPHANED)).toBe(1);
+		expect(entryFor(result, "the-seeker", "description").status).toBe(EntryStatus.UNTRANSLATED);
+	});
+
 	it("ships only entries that are translated and current", () => {
 		const result = run([seeker()], { "the-seeker": {
 			name:        { source: "The Seeker", text: "Der Sucher" },

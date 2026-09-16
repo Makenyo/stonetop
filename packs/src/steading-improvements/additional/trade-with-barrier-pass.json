@@ -85,23 +85,77 @@
           "track": {
             "max": 2
           }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "When you **_mark all the requirements_**, increase Fortunes by 1 and add \"Trade with Barrier Pass (timber, ivory, parchment, fine wool, goats, sheep)\"."
-          }
-        },
-        {
-          "type": "entry",
-          "content": {
-            "title": null,
-            "text": "Henceforth, when **_spring bursts forth_** **_and Stonetop has at least 1 Surplus_**, Stonetop gains +1 Surplus from trade. Also, when you **_Trade & Barter_** **_for timber, ivory, fine wool, goats,_** **_sheep, parchment, vellum, or ink_**, you have advantage."
-          }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        {
+          "any": 1,
+          "of": [
+            "bringing-them",
+            "resident-in"
+          ]
+        },
+        "making-compelling",
+        "convincing-least",
+        "two-successful"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "Trade with Barrier Pass (timber, ivory, parchment, fine wool, goats, sheep)"
+        },
+        "text": "add \"Trade with Barrier Pass (timber, ivory, parchment, fine wool, goats, sheep)\""
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "spring"
+          ],
+          "phrase": "when **_spring bursts forth and Stonetop has at least 1 Surplus_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": 1
+        },
+        "condition": true,
+        "text": "Stonetop gains +1 Surplus from trade"
+      },
+      {
+        "when": {
+          "kind": "completed",
+          "phrase": "when **_you Trade & Barter for timber, ivory, fine wool, goats, sheep, parchment, vellum, or ink_**"
+        },
+        "condition": true,
+        "advantage": {
+          "moves": [
+            "trade-barter"
+          ]
+        },
+        "text": "you have advantage"
+      }
+    ]
   },
-  "folder": "1UlzxDTaEInlMvWC"
+  "folder": "1UlzxDTaEInlMvWC",
+  "_prose": [
+    "When you **_mark all the requirements_**, increase Fortunes by 1 and add \"Trade with Barrier Pass (timber, ivory, parchment, fine wool, goats, sheep)\".",
+    "Henceforth, when **_spring bursts forth_** **_and Stonetop has at least 1 Surplus_**, Stonetop gains +1 Surplus from trade. Also, when you **_Trade & Barter_** **_for timber, ivory, fine wool, goats,_** **_sheep, parchment, vellum, or ink_**, you have advantage."
+  ]
 }

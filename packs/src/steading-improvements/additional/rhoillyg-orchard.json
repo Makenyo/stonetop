@@ -33,10 +33,17 @@
           "slug": "herbalist-considerable",
           "content": {
             "title": null,
-            "text": "An herbalist of considerable skill and patience And either of these, to germinate the seeds:"
+            "text": "An herbalist of considerable skill and patience"
           },
           "track": {
             "max": 1
+          }
+        },
+        {
+          "type": "entry",
+          "content": {
+            "title": null,
+            "text": "And either of these, to germinate the seeds:"
           }
         },
         {
@@ -55,10 +62,17 @@
           "slug": "advice-knowledgeable",
           "content": {
             "title": null,
-            "text": "Advice from a knowledgeable source And then each of these:"
+            "text": "Advice from a knowledgeable source"
           },
           "track": {
             "max": 1
+          }
+        },
+        {
+          "type": "entry",
+          "content": {
+            "title": null,
+            "text": "And then each of these:"
           }
         },
         {
@@ -88,14 +102,82 @@
           "slug": "protecting-orchard",
           "content": {
             "title": null,
-            "text": "Protecting the orchard through two more summers When you **_mark all the requirements_**, increase Fortunes by 1 and add \"Rhoillyg Orchard\" to both the Resources list and the steading map. Henceforth, the steading generates +1 Surplus in summer and another +1 Surplus when the autumn harvest is complete."
+            "text": "Protecting the orchard through two more summers"
           },
           "track": {
             "max": 2
           }
         }
       ]
-    }
+    },
+    "requires": {
+      "all": [
+        "sack-full",
+        "herbalist-considerable",
+        {
+          "any": 1,
+          "of": [
+            "year-so",
+            "advice-knowledgeable"
+          ]
+        },
+        "full-spring",
+        "pulling-together",
+        "protecting-orchard"
+      ]
+    },
+    "effects": [
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "change": {
+          "target": "fortunes",
+          "amount": 1
+        },
+        "text": "increase Fortunes by 1"
+      },
+      {
+        "when": {
+          "kind": "completed"
+        },
+        "listEntry": {
+          "list": "resources",
+          "text": "Rhoillyg Orchard"
+        },
+        "text": "add \"Rhoillyg Orchard\" to both the Resources list and the steading map"
+      },
+      {
+        "when": {
+          "kind": "turn",
+          "seasons": [
+            "summer"
+          ],
+          "phrase": "**_in summer_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": 1
+        },
+        "text": "the steading generates +1 Surplus"
+      },
+      {
+        "when": {
+          "kind": "moment",
+          "moment": "autumn-harvest",
+          "phrase": "when **_the autumn harvest is complete_**"
+        },
+        "change": {
+          "target": "surplus",
+          "amount": 1
+        },
+        "text": "the steading generates another +1 Surplus"
+      }
+    ]
   },
-  "folder": "1UlzxDTaEInlMvWC"
+  "folder": "1UlzxDTaEInlMvWC",
+  "_prose": [
+    "When you **_mark all the requirements_**, increase Fortunes by 1 and add \"Rhoillyg Orchard\" to both the Resources list and the steading map. Henceforth, the steading generates +1 Surplus in summer and another +1 Surplus when the autumn harvest is complete."
+  ],
+  "_review": "MIS-EXTRACTED. improvements.js glued each header onto the end of the preceding row ('An herbalist of considerable skill and patience And either of these, to germinate the seeds:'), and the outcome prose onto the last requirement. The real structure is: both (seeds, herbalist) / either of these (experimentation, advice) / each of these (spring, pulling together, protecting). Modelled here as all-of pending the extractor fix."
 }

@@ -112,9 +112,14 @@ export class Reconciliation {
 	}
 
 	get isClean() {
-		return !this.countOf(EntryStatus.NEEDS_REVIEW)
-			&& !this.countOf(EntryStatus.ORPHANED)
-			&& !this.countOf(EntryStatus.BROKEN_MARKUP);
+		return !this.flaggedEntries.length;
+	}
+
+	/** Everything a human has to look at, tagged with the pack so it can be acknowledged by address. */
+	get flaggedEntries() {
+		return [EntryStatus.NEEDS_REVIEW, EntryStatus.BROKEN_MARKUP, EntryStatus.ORPHANED]
+			.flatMap(status => this.entriesWith(status))
+			.map(found => ({ ...found, pack: this.pack }));
 	}
 
 	toAuthoring() {
@@ -171,28 +176,112 @@ function reconcileEntry(key, english, authored) {
 	return new ReconciledEntry(key, english, text, EntryStatus.TRANSLATED);
 }
 
+const translated = (entry) => typeof entry?.text === "string" && entry.text.trim().length > 0;
+
+// A row that gains a slug takes its English with it: same row, same words, new address. When an
+// orphan's English is still in the document under a different key, and that key has no translation
+// of its own, the German belongs there — handing it back would have the translator retype words
+// they already wrote. The move is decided by English equality alone, so it never guesses: the
+// string being translated is byte-for-byte the one they translated.
+//
+// A unique vacant match only. Two live keys holding the same English is legitimate data and there
+// is no way to tell which one was meant, so those stay orphaned for a human.
+function rehomeOrphans(strings, authored) {
+	const homeless = Object.entries(authored).filter(([key, entry]) =>
+		!strings.has(key) && translated(entry) && entry.source);
+	if (!homeless.length) return authored;
+
+	const vacantByEnglish = new Map();
+	for (const [key, english] of strings) {
+		if (translated(authored[key])) continue;
+		if (!vacantByEnglish.has(english)) vacantByEnglish.set(english, []);
+		vacantByEnglish.get(english).push(key);
+	}
+
+	const rehomed = { ...authored };
+	for (const [key, entry] of homeless) {
+		const vacant = vacantByEnglish.get(entry.source);
+		if (vacant?.length !== 1) continue;
+		// An earlier orphan may already have claimed it; first one wins, the rest stay flagged.
+		if (translated(rehomed[vacant[0]])) continue;
+		rehomed[vacant[0]] = entry;
+		delete rehomed[key];
+	}
+	return rehomed;
+}
+
+// A title that was folded into the row below it. The new English is the old title followed by the
+// old text, and the translation of each half already exists — the title's under the orphaned key,
+// the remainder under the live one, where on its own it reads as a fragment. Four Lightbearer rows
+// were shipping "(wähle 1)" as the whole of a heading because of exactly this.
+//
+// Composition is allowed only when the English proves it: the live English must START with the
+// orphan's English, so the two halves are known to be in that order and nothing else came between.
+// It joins two human translations rather than writing one — but it is still a join, so every one is
+// reported rather than applied silently.
+function composeFoldedOrphans(strings, authored, onCompose) {
+	const composed = { ...authored };
+	for (const [key, orphan] of Object.entries(authored)) {
+		if (strings.has(key) || !translated(orphan) || !orphan.source) continue;
+
+		const hosts = [...strings].filter(([liveKey, english]) =>
+			english !== orphan.source
+			&& english.startsWith(orphan.source)
+			&& translated(composed[liveKey])
+			&& !composed[liveKey].text.includes(orphan.text.trim()));
+		if (hosts.length !== 1) continue;
+
+		const [hostKey, english] = hosts[0];
+		const text = `${orphan.text.trim()} ${composed[hostKey].text.trim()}`;
+		composed[hostKey] = { source: english, text };
+		delete composed[key];
+		onCompose?.({ key, hostKey, text });
+	}
+	return composed;
+}
+
+// The same German at two addresses is not two translations. An incoming installment still files a
+// string under the key it had before that row gained a slug, so once the identical German is live
+// at the new key the leftover is a duplicate, not lost work. This is the one case where an orphan
+// is dropped rather than handed back: byte-identical text, same document, already filed correctly.
+function withoutDuplicateOrphans(strings, authored) {
+	const live = new Set();
+	for (const [key, entry] of Object.entries(authored)) {
+		if (strings.has(key) && translated(entry)) live.add(entry.text.trim());
+	}
+	if (!live.size) return authored;
+
+	const kept = {};
+	for (const [key, entry] of Object.entries(authored)) {
+		if (!strings.has(key) && translated(entry) && live.has(entry.text.trim())) continue;
+		kept[key] = entry;
+	}
+	return kept;
+}
+
 /**
  * @param {string} lang
  * @param {string} pack
  * @param {Map<string, Map<string, Map<string, string>>>} english  type → slug → key → English
  * @param {object} authoring  the translator's file, slug → key → {source, text, ...}
  */
-export function reconcile(lang, pack, english, authoring = {}) {
+export function reconcile(lang, pack, english, authoring = {}, { onCompose } = {}) {
 	const documentsByType = new Map();
 
 	for (const [type, bySlug] of english) {
 		const documents = [];
 		for (const [slug, strings] of bySlug) {
-			const authored = authoring?.[slug] ?? {};
+			const rehomed  = rehomeOrphans(strings, authoring?.[slug] ?? {});
+			const folded   = composeFoldedOrphans(strings, rehomed, composed =>
+				onCompose?.({ pack, slug, ...composed }));
+			const authored = withoutDuplicateOrphans(strings, folded);
 			const entries  = [...strings].map(([key, text]) => reconcileEntry(key, text, authored[key]));
 
 			// Anything the translator has that the packs no longer do. Kept, never deleted: a key can
 			// vanish because a row gained a slug, and their words are still worth moving by hand.
 			for (const [key, authored_] of Object.entries(authored)) {
-				if (strings.has(key)) continue;
-				const text = typeof authored_?.text === "string" ? authored_.text : "";
-				if (!text.trim()) continue;
-				entries.push(new ReconciledEntry(key, authored_?.source ?? "", text, EntryStatus.ORPHANED));
+				if (strings.has(key) || !translated(authored_)) continue;
+				entries.push(new ReconciledEntry(key, authored_?.source ?? "", authored_.text, EntryStatus.ORPHANED));
 			}
 			documents.push(new ReconciledDocument(slug, groupOrdered(entries)));
 		}
